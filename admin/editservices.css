@@ -1,0 +1,235 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body{
+    background-color: rgba(236, 236, 236, 0.959)
+}   
+
+/* for sticky navbar */
+.content {
+    padding: 16px;
+  }
+  
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  .sticky + .content {
+    padding-top: 60px;
+  }
+
+/* end */
+
+
+li, a, button{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    
+}
+
+.navbar{ 
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+    padding: 0.6rem 5%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.671);
+    background:#182B4D no-repeat;   
+}
+
+.logo {
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-right: auto;  
+}
+
+.nav-links{
+    list-style: none;
+}
+
+.nav-links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav-links li a{
+    transition: all 0.3s ease 0s;
+}
+
+.nav-links li a:hover{
+    color: #617DBF;
+}
+
+button
+{
+    margin-left: 20px;
+    padding: 5px 25px;
+    background-color:#E5ECFA;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    border: none;
+    color: black;
+}
+button:hover{
+    background-color:#5972ac;
+    color: white;
+}
+
+/* body css */
+
+.container{
+    background: linear-gradient(360deg, rgb(61, 107, 145) 0.5%, rgb(112, 135, 155) 5%, rgb(216, 222, 235)  40%, rgb(229, 236, 250)  70%);
+    display: grid;
+    height: 92.9vh;
+    grid-template-columns: .5fr 2fr .5fr 2fr .5fr 2fr .5fr;
+    grid-template-rows: .6fr 2fr .6fr;
+}
+
+.form1{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:2;
+    grid-row-end:3;
+    background-color: white;
+    box-shadow: 0 1px 4px rgb(122, 122, 122);
+    display: grid;
+    grid-template-columns: .03fr 2fr .03fr;
+    grid-template-rows: .015fr 1fr .015fr .2fr .015fr;
+    
+}
+
+.form1_pic{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:2;
+    grid-row-end:3;
+    background: url("../img/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form1_lbl{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:4;
+    grid-row-end:5;
+    background:#182B4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-left: 0;
+    font-size: 18px;
+}
+
+.form1_lbl:hover{
+    background:#182b4de8;
+}
+.form2{
+    border-radius: 5px;
+    grid-column-start:4;
+    grid-column-end:5;
+    grid-row-start:2;
+    grid-row-end:3;
+    background-color: white;
+    box-shadow: 0 1px 4px rgb(122, 122, 122);
+    display: grid;
+    grid-template-columns: .03fr 2fr .03fr;
+    grid-template-rows: .015fr 1fr .015fr .2fr .015fr;
+}
+
+.form2_pic{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:2;
+    grid-row-end:3;
+    background: url("../img/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form2_lbl{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:4;
+    grid-row-end:5;
+    background:#182B4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-left: 0;
+    font-size: 18px;
+}
+
+.form2_lbl:hover{
+    background:#182b4de8;
+}
+
+.form3{
+    border-radius: 5px;
+    grid-column-start:6;
+    grid-column-end:7;
+    grid-row-start:2;
+    grid-row-end:3;
+    background-color: white;
+    box-shadow: 0 1px 4px rgb(122, 122, 122);
+    display: grid;
+    grid-template-columns: .03fr 2fr .03fr;
+    grid-template-rows: .015fr 1fr .015fr .2fr .015fr;
+}
+
+
+.form3_pic{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:2;
+    grid-row-end:3;
+    background-color: rgb(58, 58, 58);
+    background: url("../img/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+
+.form3_lbl{
+    border-radius: 5px;
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:4;
+    grid-row-end:5;
+    background:#182B4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-left: 0;
+    font-size: 18px;
+}
+
+.form3_lbl:hover{
+    background:#182b4de8;
+}
