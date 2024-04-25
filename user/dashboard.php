@@ -1,102 +1,73 @@
-<?php 
-include('../dbconnect.php');
+<?php
+include ('dbconnect.php');
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location:../login.php');
     exit();
 }
 
-$username = $_SESSION['username'];
 
-$query= "SELECT fname FROM royale_reg_tbl WHERE username='$username'";
-$result = mysqli_query($con, $query);
-
-if (mysqli_num_rows($result) == 1)  {
-    $row = mysqli_fetch_assoc($result);
-    $first_name = $row['fname'];
-} else {
-    $error_message = "There was an error fetching your data.";
-}
 ?>
+
+
+
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="../fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="../fontawesome/css/solid.css" rel="stylesheet" />
+
+    <script src="javascript/imgUpload.js" defer></script>
+
+    <script src="../sweetalert/sweetalert.js"></script>
+
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
-    <title>Dashboard</title>
-
-
-    
+    <title>Settings</title>
 </head>
-    <body>
-        <div class="navbar"> 
-        <a class="logo">Royale</a>
-        <nav>
-        <ul class="nav-links">      
-                <li><a href="index.php">HOME</a></li>
-                <li><a href="services.php">SERVICES</a></li>
-                <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="contact.php">CONTACT</a></li>
-        </ul>
+
+<body>
+
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a class="logoLabel">R O Y A L E</a>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="services.php">Services</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="contact.php">Contact </i></a></li>
+                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i>Settings</a>
+            </ul>
+
         </nav>
-        <a href="dashboard.php" ><button>SETTINGS</button></a>
+    </div>
+
+    <div class="container">
+        <div class="profile-pic"></div>
+        <div class="side-nav">
+            
+            <div class="button-holder">
+                <div><button>Profile</button></div>
+                <div><button>Request</button></div>
+                <div><button>Transaction History</button></div>
+
+
+            </div>
+            <div class="logout-btn"><a href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i>Log out</a></div>
         </div>
-
-        <div class="container"> 
-
-            <div class="side-container">
-
-                <div class="side-profile">
-                    <div class="pic-container">
-                        <img class="profile-pic" src="../img/profile.png">
-                    </div>
-                    <div class="name-container">
-                        <label class="name-container-label" ><?php echo $first_name ?></label>
-                    </div>
-                </div>
-                <div class="side-nav">
-                    <div class="side-nav-list">
-                <ul >
-                <li><a href="../user/dashboard.php" class="underline">Profile</a></li><hr>
-                <li><a href="../user/dashboard-request.php">Request</a></li><hr>
-                <li><a href="../user/dashboard-transaction.php">Transaction History</a></li><hr>
-                <li><a href="../user/dashboard-customer-services.php">Customer<br>Services</a></li><hr>
-                </ul>
-                    </div>
-                    <div class="side-nav-button">
-                <a href="../logout.php"><button class="logout-btn">Log out</button></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="center-dashboard">
-                <div class="up-dashboard-title"> 
-                     <label class="up-dashboard-label">Profile</label>
-                </div>
-
-                <div class="up-dashboard-content">
-                    <label>Welcome <?php echo $first_name ?>! this is your Dashboard</label>
-                </div>
-                <div class="side-nav-dashboard">
-                     <div class="side-nav-dashboard-list">
-                        <ul>
-                            <li><a href="#" class="underline">News</a></li><hr>
-                            <li><a href="#">Profile Settings</a></li><hr>
-                            <li><a href="#">Account Settings</a></li><hr>
-                        </ul>
-                        </div>
-                </div>
-                <div class="center-dashboard-content"></div>
-            </div>
-
-
+        <div class="middle-content">
 
         </div>
+    </div>
+</body>
 
-    </body>
 </html>

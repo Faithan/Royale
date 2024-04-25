@@ -1,16 +1,16 @@
-<?php 
-include('dbconnect.php');
+<?php
+include ('dbconnect.php');
 session_start();
 
-if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     header('Location: user/dashboard.php'); // Redirect to a common dashboard
     exit();
 }
 
 // for user
 
-if(isset($_POST['login'])) {
-    $username= $_POST['username'];
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
     $login_query = "SELECT * FROM royale_reg_tbl WHERE username='$username' AND password='$password' ";
@@ -29,8 +29,8 @@ if(isset($_POST['login'])) {
 // for admin
 
 
-if(isset($_POST['login'])) {
-    $adminusername= $_POST['username'];
+if (isset($_POST['login'])) {
+    $adminusername = $_POST['username'];
     $adminpassword = $_POST['password'];
 
     $login_query = "SELECT * FROM admin_tbl WHERE adminusername='$adminusername' AND adminpassword='$adminpassword' ";
@@ -47,7 +47,6 @@ if(isset($_POST['login'])) {
 }
 
 
-
 ?>
 
 <!-- Your HTML form goes here -->
@@ -55,40 +54,66 @@ if(isset($_POST['login'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
+
+    <link href="fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="fontawesome/css/solid.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="login.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="img/Logo.png" type="image/png">
     <title>Login</title>
 </head>
 
+<body>
 
-<body class="login-container">
-        <div>
-        <form class="login-form" method="post">
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a class="logoLabel">R O Y A L E</a>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Services</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <a class="settings-btn"><i class="fa-solid fa-right-to-bracket"></i>Sign up</a>
+            </ul>
 
-        <label for="Login" class="textbold">Log in</label><br>
-        <img src="img/Logo.png" class="picture1">    
-
-        <label class="label-signup">Dont have an account?<a href="user/signup.php" class="register-btn">Sign up</a></label><br>
-
-        <label class="label-username">Username:</label><br> 
-        <input class="input-username" type="text" name="username" placeholder="" required><br>
-
-        <label class="label-password"> Password:</label><br>
-        <input class="input-password" type="password" name="password" placeholder="" required><br>
-
-        <!-- <input type="submit" name="login" value="Login" class="login-btn" ><br><br> -->
-        <button type="submit" name="login" value="Login" class="login-btn">Log in</button>
-        <?php 
-        if (isset($error_message)) {
-            echo "<p class='error-msg' style='color:red;'>$error_message</p>";
-        }
-        ?>
-        <!-- <input type="submit" name="register" value="Register" class="Register-btn" href="registration.php" > -->
-        </form> 
+        </nav>
     </div>
-    
+
+    <div class="container">
+        <div class="container2">
+            <form class="login-form" method="post">
+
+                <div class="textbold"><label for="Login">Log in</label></div>
+                <img src="img/Logo.png" class="picture1">
+
+                <div class="label-signup"><label>Dont have an account?<a href="user/signup.php"> Sign
+                            up</a></label></div>
+
+                <div class="label-username"><label>Username:</label></div>
+                <div class="input-username"><input type="text" name="username" placeholder="" required></div>
+
+                <div class="label-password"><label> Password:</label></div>
+                <div class="input-password"><input type="password" name="password" placeholder="" required></div>
+                <?php
+                if (isset($error_message)) {
+                    echo "<p class='error-msg' style='color:red;'>$error_message</p>";
+                }
+                ?>
+
+
+                <div class="login-btn"><button type="submit" name="login" value="Login">Log in</button></div>
+            </form>
+        </div>
+    </div>
+
+
 </body>
+
 </html>

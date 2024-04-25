@@ -1,79 +1,74 @@
-<?php 
-include('../dbconnect.php');
+<?php
+include ('dbconnect.php');
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location:../login.php');
     exit();
 }
 
-$username = $_SESSION['username'];
 
-$query= "SELECT fname FROM royale_reg_tbl WHERE username='$username'";
-$result = mysqli_query($con, $query);
-
-if (mysqli_num_rows($result) == 1)  {
-    $row = mysqli_fetch_assoc($result);
-    $first_name = $row['fname'];
-} else {
-    $error_message = "There was an error fetching your data.";
-}
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="../fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="../fontawesome/css/solid.css" rel="stylesheet" />
+
+    <script src="javascript/imgUpload.js" defer></script>
+
+    <script src="../sweetalert/sweetalert.js"></script>
+
     <link rel="stylesheet" href="index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Home</title>
 </head>
 
-
-<header>
-    <a class="logo">Royale</a>
-        <nav>
-        <ul class="nav-links">      
-                <li><a href="index.php" class="underline">HOME</a></li>
-                <li><a href="services.php">SERVICES</a></li>
-                <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="contact.php">CONTACT</a></ul>
-            </li> 
-        </ul>
-        </nav>
-        <a href="dashboard.php" ><button>SETTINGS</button></a>
- </header>
 <body>
+
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a class="logoLabel">R O Y A L E</a>
+            <ul>
+                <li><a class="bold-text" href="index.php">Home</a></li>
+                <li><a href="services.php">Services</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i> Settings</a>
+            </ul>
+
+        </nav>
+    </div>
+
     <div class="container">
-        <!-- left content -->
         <div class="left-content">
-
-                <div class="left-content-1">
-                WELCOME TO ROYALE 
-                <br>
-                <h6>Your Effortless Online Appointment Solution!</h6>
-                 </div>
-                 <br>
-                 <br>
-                <div class="left-content-2">
-                Royale simplifies appointment scheduling with its user-friendly platform. Enjoy 24/7 access, 
-                instant confirmations, and automated reminders. Businesses can integrate it seamlessly and 
-                offer secure payment options. Say hello to a smarter way to book appointments with Royale!
-                </div>
-                <br><br><br>
-                <div>
-                    <a href="aboutus.php" ><button class="reserve-btn">LEARN MORE</button></a>
-                </div>
+            <div class="header-text"><label for="">WELCOME TO ROYALE</label></div>
+            <div class="header-subtext"><label for="">Your Effortless Online Appointment Solution!</label></div>
+            <div class="middle-text">
+                <p>
+                    Royale simplifies appointment scheduling with its user-friendly platform. Enjoy 24/7 access,
+                    instant confirmations, and automated reminders. Say hello to a smarter way to book appointments with Royale!
+                </p>
             </div>
-        <!-- end -->
-
-        <!-- right content -->
+            <div class="learn-btn">
+                <a href="about.php">LEARN MORE</a>
+            </div>
+        </div>
         <div class="right-content">
         <img src="../img/Logo.png" class="picture1">  
         </div>
-        <!-- end -->
-
     </div>
 </body>
- </html>
+
+</html>

@@ -10,7 +10,7 @@ if (!$con){
 $edit_data = ['id' => '', 'fname' => '', 'mname'=>'', 'lname'=>'', 'contactnumber'=>'', 'email'=>'', 'address'=>'', 'username'=>'', 'password'=>''];
     if (isset($_POST['submit'])){
         $fname=$_POST['fname'];
-        $mname=$_POST['mname'];
+        $mname=$_POST['mname']; 
         $lname=$_POST['lname'];
         $contactnumber=$_POST['contactnumber'];
         $email=$_POST['email'];

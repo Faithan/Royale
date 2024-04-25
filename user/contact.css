@@ -1,137 +1,111 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-body{
-    background-color: rgba(236, 236, 236, 0.959)
-}   
-
-li, a, button{
-
-    font-weight: 500;
-    font-size: 15px;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-}
-
-.underline{
-    text-decoration: underline 2px;
-    text-underline-offset:  7px;
-}
-
-header{ 
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content:flex-end;
-    align-items: center;
-    padding: 0.6rem 5%;
-    position: sticky;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.671);
-    background:#182B4D no-repeat;
-
-}
-
-.logo {
-    cursor: pointer;
-    font-size: 30px;
-    font-weight: bolder;
-    margin-right: auto;  
-}
-
-.nav-links{
-    list-style: none;
-}
-
-.nav-links li{
-    display: inline-block;
-    padding: 0px 20px;
-}
-
-.nav-links li a{
-    transition: all 0.3s ease 0s;
-}
-
-.nav-links li a:hover{
-    color: #617DBF;
-}
-
-button
-{
-    margin-left: 20px;
-    padding: 5px 25px;
-    background-color:#E5ECFA;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    border: none;
-    color: black;
-}
-button:hover{
-    background-color:#5972ac;
-    color: white;
-}
-
-.underline{
-    text-decoration: underline 2px;
-    text-underline-offset:  7px;
-}
-
-/* Style for dropdown menu */
-/* .dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background:#182B4D no-repeat;
-    min-width: 60px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 15px 2px;
-    text-decoration: none;
-    display: block;
-    font-size: 15px;
-}
-
-.dropdown-content a:hover {
-    background:#182B4D no-repeat;   
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-} */
-
-/* body css */
-
-.container{
-    margin-top:0;
+.container {
+    height: 93vh;
+    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
     display: grid;
-    height: 92.9vh;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    background: linear-gradient(360deg, rgb(61, 107, 145) 0.5%, rgb(112, 135, 155) 5%, rgb(216, 222, 235)  40%, rgb(229, 236, 250)  70%);
+    grid-template-columns:  0.2fr  2fr  0.2fr;
+    grid-template-rows: 0.2fr  2fr  0.2fr;
 }
 
-.example1{  
-    border: 1px solid rgb(146, 146, 146);
-    grid-column-start: 2;
+
+.middle-content{
+    grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 2;
-    grid-row-end: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    grid-row-end: 3;
+    background: rgb(246, 246, 246);
+    box-shadow: 0 2px 3px rgb(61, 61, 61);
+    display: grid;
+    grid-template-columns:  0.1fr  1fr 0.1fr 1fr  0.1fr;
+    grid-template-rows: 0.1fr  2fr  0.1fr;
 }
 
+.left-content{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: white;
+    border-radius:5px;
+
+}
+
+
+
+
+.right-content{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: white;
+    border-radius:5px;
+    padding: 50px;
+
+}
+
+
+.header-text {
+    padding-bottom: 10px;
+}
+.header-text label {
+   font-weight: bold; 
+   font-size: 30px;
+   color: #182B4D;
+}
+
+.subheader-text {
+    padding-bottom: 30px;
+}
+.subheader-text label {
+   font-size:18px;
+   color: #3f5377;
+}
+.email{
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.email input{
+    width: 96%;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(145, 145, 145);
+}
+
+.help{
+    padding-top: 10px;
+}
+.help textarea{
+    padding: 10px;
+    width: 96%;
+    border-radius: 5px;
+    border: 1px solid rgb(145, 145, 145);
+}
+
+.blue-line{
+    width: 80px;
+    border: 2px solid rgb(112, 112, 245);
+
+}
+
+.send-btn{
+    padding-top: 20px;
+}
+.send-btn button{
+   width: 100%;
+   font-size: 15px;
+   font-weight: bold;
+   color: white;
+   background-color: #182B4D;
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+.send-btn button:hover{
+
+    background-color: #101d33;
+    transition: 0.3s;
+ }
+ 

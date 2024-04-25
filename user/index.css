@@ -1,166 +1,83 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+.container {
+    height: 93vh;
+    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
+    display: grid;
+    grid-template-columns:  1fr  1fr;
+    grid-template-rows: 2fr;
+}
+
+.left-content{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding:60px;
+}
+
+.left-content .header-text{
+    padding-top: 140px;
+    padding-bottom: 5px;
+}
+
+.left-content .header-text label{
+    font-weight: bold;
+    font-size: 40px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-
-
-li, a, button{
-
-    font-weight: 500;
-    font-size: 15px;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
+.left-content .header-subtext label{
+    font-weight: bold;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.underline{
-    text-decoration: underline 2px;
-    text-underline-offset:  7px;
+.left-content .middle-text{
+    padding-top: 50px;
 }
 
-header{ 
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content:flex-end;
-    align-items: center;
-    padding: 0.6rem 5%;
-    position: sticky;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.671);
-    background:#182B4D no-repeat;
-
-}
-
-.logo {
-    cursor: pointer;
-    font-size: 30px;
-    font-weight: bolder;
-    margin-right: auto;  
-}
-
-.nav-links{
-    list-style: none;
-}
-
-.nav-links li{
-    display: inline-block;
-    padding: 0px 20px;
-}
-
-.nav-links li a{
-    transition: all 0.3s ease 0s;
-}
-
-.nav-links li a:hover{
-    color: #617DBF;
-}
-
-button
-{
-    margin-left: 20px;
-    padding: 5px 25px;
-    background-color:#E5ECFA;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    border: none;
-    color: black;
-}
-button:hover{
-    background-color:#5972ac;
-    color: white;
-}
-
-/* Style for dropdown menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background:#182B4D no-repeat;
-    min-width: 60px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 15px 2px;
-    text-decoration: none;
-    display: block;
-    font-size: 15px;
-}
-
-.dropdown-content a:hover {
-    background:#182B4D no-repeat;   
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-/* body css */
-
-.container{
-    margin-top:0;
-    display: grid;
-    height: 92.9vh;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    background: linear-gradient(360deg, rgb(61, 107, 145) 0.5%, rgb(112, 135, 155) 5%, rgb(216, 222, 235)  40%, rgb(229, 236, 250)  70%);   
-}
-.left-content{
-    
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 5;
-    display: block;
-    padding-top: 11rem;
-    padding-left: 5rem;
-
-
-}
-
-.left-content-1{
-    font-size: 40px;
-    font-weight: bolder;
-}   
-.left-content-2{
-    font-size: 1.2rem;
+.left-content .middle-text p{
+    font-size: 20px;
     text-align: justify;
-
 }
+
+
+.left-content .learn-btn{
+    padding-top: 40px;
+}
+
+.left-content .learn-btn a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #182B4D;
+    text-decoration: none;
+    color: white;
+    border: 1px solid;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px #3d3d3d;
+}
+
+.left-content .learn-btn a:hover{
+
+    background-color: #0e192c;
+  
+}
+
+
+
+
+
+
 
 .right-content{
-    grid-column-start: 3;
-    grid-column-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 1;
-    grid-row-end: 5;
+    grid-row-end: 2;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.picture1{
-    margin-bottom: 60px;
-    height:auto;
-    width: auto;
-}
 
-.reserve-btn{
-    color: white;
-    background-color: #182B4D;
-    font-size: 15px;
-    font-weight: bold;
-    border: 1px solid rgb(235, 235, 235);
-    box-shadow: 0 2px 2px rgb(65, 65, 65);
-    margin-left: 0;
-    
-}

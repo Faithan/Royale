@@ -1,0 +1,119 @@
+/* body */
+body {
+    height: 100vh;
+}
+
+.container {
+    height: 93vh;
+    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+
+}
+
+.container2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: white;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgb(84, 84, 84);
+    position: relative;
+    padding: 40px;
+}
+
+.container2 .picture1 {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    top: 0;
+    right: 5px;
+}
+
+.container2 .textbold {
+    padding-top: 20px;
+    padding-bottom: 40px;   
+}
+
+.container2 .textbold label{
+    font-weight: bolder;
+    font-size:40px;
+    text-shadow: 0 2px 2px rgb(192, 192, 192);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.container2 .label-signup{
+    font-size: 15px;
+    color: rgb(148, 148, 148);
+    padding-bottom: 40px;
+}
+
+.container2 .label-signup a{
+    font-size: 15px;
+    color: rgb(129, 129, 129);
+}
+
+.container2 .label-username{
+    padding-bottom: 10px;
+}
+
+.container2 .label-username label{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.container2 .input-username{
+    padding-bottom: 15px;
+    width: 100%;
+}
+
+.container2 .input-username input{
+    width: 99%;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 5px ;
+}
+
+.container2 .label-password{
+    padding-bottom: 10px;
+}
+
+.container2 .label-password label{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.container2 .input-password{
+    padding-bottom: 15px;
+    width: 100%;
+}
+
+.container2 .input-password input{
+    width: 99%;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 5px ;
+}
+
+.container2 .login-btn{
+    padding-top: 20px;
+   
+}
+
+.container2 .login-btn button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    background-color: #182B4D;
+    color: white;
+}
