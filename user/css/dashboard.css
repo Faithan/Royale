@@ -1,6 +1,7 @@
 .container {
     height: 93vh;
-    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
+    /* background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%); */
+        background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%);
     display: grid;
     grid-template-columns: 0.1fr 0.05fr 0.05fr 0.05fr 0.05fr 0.05fr 0.05fr 0.05fr 2fr 0.1fr;
     grid-template-rows: 0.2fr 0.2fr 0.2fr 0.4fr 0.1fr 2fr 0.2fr;

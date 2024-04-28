@@ -1,6 +1,7 @@
 .container {
     height: 93vh;
-    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
+    /* background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%); */
+    background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%);
     display: grid;
     grid-template-columns: 0.15fr 0.15fr 0.30fr 0.30fr 3fr 0.25fr;
     grid-template-rows: 0.15fr 0.15fr 0.25fr 4fr 0.5fr;
@@ -50,7 +51,7 @@
     grid-row-end: 5;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 0 4px rgb(154, 154, 154);
+    /* box-shadow: 0 0 4px rgb(154, 154, 154); */
     border: 1px solid rgb(187, 187, 187);
     display: grid;
     grid-template-columns: 0.1fr 4fr 0.1fr;
@@ -99,7 +100,7 @@
     grid-column-end: 3;
     grid-row-start: 4;
     grid-row-end: 5;
-    background-color: aliceblue;
+    background-color: rgb(221, 229, 235);
     height: 67vh;
     overflow-y: scroll;
     margin: 0;
@@ -125,13 +126,14 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
-    border: 1px solid rgb(168, 168, 168);
+    border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
 }
 
 .image-holder img {
     height: 200px;
     width: auto;
+    cursor: pointer;
 
 }
 
@@ -150,80 +152,35 @@
     grid-row-start: 4;
     grid-row-end: 5;
     background-color: white;
-    border: 1px solid rgb(168, 168, 168);
+    border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
     padding: 20px;
-
-}
-
-.button-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 60px;
-    gap: 10px;
+
 }
-
-.button-container .approved-btn button {
-   padding-top: 10px;
-   padding-bottom: 10px;
-   padding-left: 5px;
-   padding-right: 5px;
-   background-color: #182B4D;
-   color: white;
-   border-radius: 5px;
-   border: 1px solid transparent;
-   box-shadow: 0 2px 4px rgb(138, 138, 138)    ;
-}
-
-.button-container .approved-btn button:hover{
-    background-color: #09111d;
-    color: rgb(218, 218, 218);
-    transition: 0.3s;
- }
-
- 
-.button-container .reject-btn button {
+.back-btn a{
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: #910011;
+    background-color:#182B4D;
     color: white;
     border-radius: 5px;
     border: 1px solid transparent;
-    box-shadow: 0 2px 4px rgb(138, 138, 138)    ;
- }
- .button-container .reject-btn button:hover{
-    background-color: #54000a;
-    color: rgb(218, 218, 218);
+    text-decoration: none;
+    
+}
+
+.back-btn a:hover{
+    background-color:#244276;
     transition: 0.3s;
- }
 
-
-.back-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top:20px;
-}
-.back-btn button {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color:gray;
-    color: white;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    box-shadow: 0 2px 4px rgb(138, 138, 138)    ;
+    cursor: pointer;  
 }
 
-.back-btn button:hover{
-    background-color: rgb(70, 70, 70);
-    transition: 0.3s;
-    color: rgb(218, 218, 218);
-}
+
 
 
 
@@ -244,7 +201,7 @@
     background-color: white;
     height: 58.5vh;
     overflow-y: scroll;
-    border: 1px solid rgb(168, 168, 168);
+    border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
     padding: 20px;
     color: #182B4D;
@@ -258,7 +215,7 @@
 }
 
 .info-holder .id-holder label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -267,8 +224,8 @@
     height: 30px;
     padding-left: 5px;
     border: 1px solid transparent;
-    font-size: 16px;
-    background-color: aliceblue;
+    font-size: 15px;
+    background-color: rgb(239, 248, 253);
 }
 
 .info-holder .row-info {
@@ -279,7 +236,7 @@
 }
 
 .info-holder .row-info label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -289,46 +246,89 @@
     padding-left: 5px;
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
-    font-size: 16px;
+    font-size: 15px;
     background-color: aliceblue;
 }
 
 .info-holder .additional-info-holder label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
 .info-holder .additional-info-holder textarea {
     width: 100%;
+    padding-top: 5px;
     padding-left: 5px;
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
-    font-size: 16px;
+    font-size: 15px;
     background-color: aliceblue;
 }
 
-.edit-holder{
+
+
+
+.button-container {
     display: flex;
     justify-content: flex-end;
+    padding-top: 20px;
+    gap: 10px;
 }
 
-.edit-holder .edit-btn{
-   padding-top: 20px;
+.button-container .approved-btn button {
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 5px;
+   padding-right: 5px;
+   background-color: #294981;
+   color: white;
+   border-radius: 5px;
+   border: 1px solid transparent;
+
 }
 
-.edit-holder .edit-btn button{
+.button-container .approved-btn button:hover{
+    background-color: #142641;
+    transition: 0.3s;
+    cursor: pointer;    
+ }
+
+ 
+.button-container .reject-btn button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #910011;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid transparent;
+
+ }
+ .button-container .reject-btn button:hover{
+    background-color: #54000a;
+
+    transition: 0.3s;
+    cursor: pointer;  
+ }
+
+
+
+
+.button-container .edit-btn button{
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 5px;
     padding-right: 5px;
     color: white;
-    background-color: gray;
+    background-color: gray; 
     border-radius: 5px;
     border: 1px solid transparent;
  }
 
- .edit-holder .edit-btn button:hover{
-    color: rgb(218, 218, 218);
+ .button-container .edit-btn button:hover{
+
     background-color: rgb(70, 70, 70);
     transition: 0.3s;
+    cursor: pointer;  
  }

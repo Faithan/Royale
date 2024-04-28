@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
     $reqgender = $_POST['req-gender'];
     $reqtype = $_POST['req-type'];
     $deadline = $_POST['deadline'];
-    $comment = $_POST['comment'];
+    $add_info = $_POST['add_info'];
 
     $photo = $_FILES['photo'];
 
@@ -50,8 +50,8 @@ if (isset($_POST['submit'])) {
                     move_uploaded_file($filetempname, $filedestination);
                 }
 
-                $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, comment, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$comment' ,'../all_transaction_img/$filenewname','','','','','' )";
+                $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$add_info' ,'../all_transaction_img/$filenewname','','','','','' )";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
@@ -91,8 +91,8 @@ if (isset($_POST['submit'])) {
 
     <script src="../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="services.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/services.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Services</title>
 </head>
@@ -255,15 +255,21 @@ if (isset($_POST['submit'])) {
 
                 <select name="req-type" id="">
                     <option disabled selected value="">Type of Request</option>
-                    <option value="Repair">For Clothing Repair </option>
-                    <option value="Making">For Cloth Making </option>
-                    <option value="Renting">For Cloth Renting</option>
-                    <option value="Purchasing">For Cloth Buying</option>
+                    <option value="For Repair">For Clothing Repair </option>
+                    <option value="For Making">For Cloth Making </option>
+                    <option value="For Renting">For Cloth Renting</option>
+                    <option value="For Purchasing">For Cloth Buying</option>
                 </select>
 
                 <input type="date" name="deadline" class="req-input" placeholder="Prospective Date" required>
 
-                <input type="text" name="comment" placeholder="Additional info . . .">
+                <input class="invisible" type="text" name="" >
+
+            </div>
+            
+            <div class="info-line">
+
+               <textarea name="add_info" id="" cols="10" rows="10"  placeholder="Additional info . . ."></textarea>
 
             </div>
 

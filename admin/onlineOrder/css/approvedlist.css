@@ -1,9 +1,10 @@
 .container {
     height: 93vh;
-    background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
+    background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%);
     display: grid;
     grid-template-columns: 0.15fr 0.15fr 0.30fr 0.30fr 3fr 0.25fr;
     grid-template-rows: 0.15fr 0.15fr 0.25fr 4fr 0.5fr;
+
 }
 
 
@@ -50,7 +51,6 @@
     grid-row-end: 5;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 0 4px rgb(154, 154, 154);
     border: 1px solid rgb(187, 187, 187);
     display: grid;
     grid-template-columns: 0.1fr 4fr 0.1fr;
@@ -99,11 +99,13 @@
     grid-column-end: 3;
     grid-row-start: 4;
     grid-row-end: 5;
-    background-color: aliceblue;
+    background-color: rgb(221, 229, 235);
     height: 67vh;
     overflow-y: scroll;
     margin: 0;
-    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    
 }
 
 table {
@@ -115,20 +117,20 @@ table {
 }
 
 table th {
-    border: 1px solid rgb(143, 143, 143);
+    border: 1px solid rgb(221, 229, 235);
     padding: 5px;
     font-weight: bold;
     font-size: 15px;
     color: #182B4D;
     top: 0;
-    position: -webkit-sticky;
+    position: -webkit-sticky;   
     position: sticky;
     z-index: 1;
     background-color: white;
 }
 
 table td {
-    border: 1px solid rgb(201, 201, 201);
+    border: 1px solid rgb(221, 229, 235);
     padding: 5px;
     font-size: 14px;
     color: #182B4D;
@@ -136,14 +138,16 @@ table td {
 }
 
 
-
-
-td .photo {
-    max-height: 30px;
-    width: auto;
+.table-photo{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.table-photo img {
+    max-height: 30px;
+    width: auto;
+    cursor: pointer;
 }
 
 

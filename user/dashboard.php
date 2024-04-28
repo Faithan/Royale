@@ -29,8 +29,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
     <script src="../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/dashboard.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Settings</title>
 </head>

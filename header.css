@@ -16,7 +16,7 @@
     display: flex;
     justify-content: center;
     background-color:white;
-    box-shadow: 0 3px 4px #cbcbcb;
+    box-shadow: 0 2px 4px #b0b0b0;
     gap: 200px;
 }
 

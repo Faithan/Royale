@@ -29,8 +29,8 @@
 
     <script src="../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="contact.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="header.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/contact.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Contact</title>
 </head>
