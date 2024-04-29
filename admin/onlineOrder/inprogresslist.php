@@ -35,11 +35,11 @@ if (isset($_GET['manage_id'])) {
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/requestlist.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/inprogresslist.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>Request List</title>
+    <title>In-Progress List</title>
 </head>
 
 <body>
@@ -69,7 +69,7 @@ if (isset($_GET['manage_id'])) {
     </div>
 
     <div class="container">
-        <div class="header-text"><label for="">REQUEST LIST</label></div>
+        <div class="header-text"><label for="">IN-PROGRESS LIST</label></div>
         <div class="middle-content">
             <div class="search-holder">
                 <div class="search"><input type="text" id="search" name="search" placeholder="Search..."></div>
@@ -89,7 +89,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Action</th>
                     </tr>
                     <br>
-                    <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='request' ORDER BY order_id DESC";
+                    <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='ongoing' ORDER BY order_id DESC";
                     $result = mysqli_query($con, $fetchdata);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $id = $row['order_id'];
@@ -117,7 +117,7 @@ if (isset($_GET['manage_id'])) {
                             </td>
 
                             <td class="button-holder">
-                                <a class="open-btn" href="view_request.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
+                                <a class="open-btn" href="view_inprogress.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
                             </td>
                         </tr>
 

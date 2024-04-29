@@ -7,8 +7,9 @@ session_start();
 //     exit();
 // }
 
-$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => ''];
-
+$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '',
+'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => '', 'fee' => '',
+'payment' => '', 'balance' => ''];
 
 if (isset($_GET['manage_id'])) {
     $manage_id = $_GET['manage_id'];
@@ -32,20 +33,26 @@ if (isset($_POST['save'])) {
     $add_info = $_POST['add_info'];
     $deadline = $_POST['deadline'];
     $measurements = $_POST['measurements'];
+    $fee = $_POST['fee'];
+    $payment = $_POST['payment'];
+    $balance = $_POST['balance'];
 
     $update_query = "UPDATE royale_orders_tbl SET status='ongoing', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
      req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
-     deadline='$deadline', measurements='$measurements' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => ''];
+     deadline='$deadline', measurements='$measurements', fee='$fee', payment='$payment', balance='$balance' WHERE order_id='$order_id'";
+
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '',
+     'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => '', 'fee' => '',
+     'payment' => '', 'balance' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
 
     if ($query) {
-        $message = "Accepted Successfully!";
+        $message = "Accepted Successfully!";    
         $isSuccess = true;
 
-    } else {
+    } else {    
         $message = "Failed!";
         $isSuccess = false;
     }
@@ -140,7 +147,7 @@ if (isset($_POST['cancel'])) {
                     <div class="dropdown-content">
                         <a href="requestlist.php">Request List</a>
                         <a href="approvedlist.php">Approved List</a>
-                        <a href="ongoinglist.php">Ongoing List</a>
+                        <a href="inprogresslist.php">In-progress List</a>
                         <a href="finishedlist.php">Finished/Recieved List</a>
                         <a class="red-text" href="returnedlist.php">Returned/Refunded List</a>
                         <a class="red-text" href="rejectedlist.php">Rejected/Cancelled List</a>
@@ -220,10 +227,6 @@ if (isset($_POST['cancel'])) {
 
 
 
-
-
-
-                    
                     <hr>
 
                     <div class="row-info">
@@ -237,8 +240,20 @@ if (isset($_POST['cancel'])) {
                                 required><?php echo $manage_data['measurements']; ?></textarea></div>
                     </div>
 
+                    <hr>
 
+                    <div class="row-info">
+                        <div><label for="">Fee:</label><br><br><input name="fee" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                                <div class="operation">-</div>
+                        <div><label for="">Payment:</label><br><br><input name="payment" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                                <div class="operation">=</div>
+                        <div><label for="">Balance:</label><br><br><input name="balance" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                    </div>
 
+                    <hr>
 
 
 

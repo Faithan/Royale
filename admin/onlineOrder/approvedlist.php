@@ -54,7 +54,7 @@ if (isset($_GET['manage_id'])) {
                     <div class="dropdown-content">
                         <a href="requestlist.php">Request List</a>
                         <a href="approvedlist.php">Approved List</a>
-                        <a href="ongoinglist.php">Ongoing List</a>
+                        <a href="inprogresslist.php">In-progress List</a>
                         <a href="finishedlist.php">Finished/Recieved List</a>
                         <a class="red-text" href="returnedlist.php">Returned/Refunded List</a>
                         <a class="red-text" href="rejectedlist.php">Rejected/Cancelled List</a>

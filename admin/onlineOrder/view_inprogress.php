@@ -7,7 +7,7 @@ session_start();
 //     exit();
 // }
 
-$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => ''];
 
 
 if (isset($_GET['manage_id'])) {
@@ -19,7 +19,7 @@ if (isset($_GET['manage_id'])) {
 
 
 
-if (isset($_POST['accept'])) {
+if (isset($_POST['save'])) {
     $order_id = $_POST['order_id'];
     $req_fname = $_POST['req_fname'];
     $req_mname = $_POST['req_mname'];
@@ -30,9 +30,13 @@ if (isset($_POST['accept'])) {
     $req_type = $_POST['req_type'];
     $req_date = $_POST['req_date'];
     $add_info = $_POST['add_info'];
+    $deadline = $_POST['deadline'];
+    $measurements = $_POST['measurements'];
 
-    $update_query = "UPDATE royale_orders_tbl SET status='approved', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+    $update_query = "UPDATE royale_orders_tbl SET status='ongoing', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
+     req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
+     deadline='$deadline', measurements='$measurements' WHERE order_id='$order_id'";
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -48,7 +52,7 @@ if (isset($_POST['accept'])) {
 }
 
 
-if (isset($_POST['reject'])) {
+if (isset($_POST['cancel'])) {
     $order_id = $_POST['order_id'];
     $req_fname = $_POST['req_fname'];
     $req_mname = $_POST['req_mname'];
@@ -60,8 +64,9 @@ if (isset($_POST['reject'])) {
     $req_date = $_POST['req_date'];
     $add_info = $_POST['add_info'];
 
-    $update_query = "UPDATE royale_orders_tbl SET status='rejected', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+    $update_query = "UPDATE royale_orders_tbl SET status='cancelled', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type',
+     req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -98,11 +103,11 @@ if (isset($_POST['reject'])) {
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/view_request.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/view_inprogress.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>View Approved</title>
+    <title>View In-Progress</title>
 </head>
 
 <body>
@@ -150,7 +155,7 @@ if (isset($_POST['reject'])) {
     </div>
 
     <div class="container">
-        <div class="header-text"><label for="">VIEW REQUEST</label></div>
+        <div class="header-text"><label for="">VIEW IN-PROGRESS</label></div>
         <div class="middle-content">
             <div class="search-holder">
                 <div class="search"><input type="text" id="search" name="search" placeholder="Search..."></div>
@@ -170,7 +175,7 @@ if (isset($_POST['reject'])) {
 
                 <div class="button-holder">
                     <div class="back-btn">
-                        <div><a href="requestlist.php"><i class="fa-solid fa-rotate-left"></i> back</a></div>
+                        <div><a href="inprogresslist.php"><i class="fa-solid fa-rotate-left"></i> back</a></div>
                     </div>
                 </div>
 
@@ -206,17 +211,61 @@ if (isset($_POST['reject'])) {
                     </div>
 
                     <div class="additional-info-holder">
-                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" id="" cols="30"
-                                rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea></div>
+                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" id=""
+                                cols="30" rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
+                        </div>
                     </div>
 
+
+
+
+
+
+
+
+
+                    <hr>
+
+                    <div class="row-info">
+                        <div><label for="">Add Deadline:</label><br><br><input name="deadline" type="date"
+                                class="open-input" value="<?php echo $manage_data['deadline']; ?>" required></div>
+                    </div>
+
+                    <div class="additional-info-holder">
+                        <div><label for="">Add Measurement:</label><br><br><textarea name="measurements" id="" cols="30"
+                                class="open-input" rows="10" value=""
+                                required><?php echo $manage_data['measurements']; ?></textarea></div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row-info">
+                        <div><label for="">Fee:</label><br><br><input name="fee" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                        <div class="operation">-</div>
+                        <div><label for="">Payment:</label><br><br><input name="payment" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                        <div class="operation">=</div>
+                        <div><label for="">Balance:</label><br><br><input name="balance" type="number" placeholder="Php"
+                                class="open-input" required></div>
+                    </div>
+
+                    <hr>
+
+
+
+
+
+
+
+
                     <div class="button-container">
-                        <div class="approved-btn"><button name="accept" type="submit"><i class="fa-solid fa-check"></i>
-                                Accept</button>
+                        <div class="approved-btn"><button name="save" type="submit"><i class="fa-solid fa-check"></i>
+                                Save Changes</button>
                         </div>
 
-                        <div class="reject-btn"><button name="reject" type="submit"><i class="fa-solid fa-xmark"></i>
-                                Reject</button>
+                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-xmark"></i>
+                                Cancel Order</button>
                         </div>
 
 
@@ -225,14 +274,16 @@ if (isset($_POST['reject'])) {
                         </div>
                     </div>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
-        <!-- for fullscreen -->
-        <div id="fullscreen-overlay">
-            <span class="close" onclick="closeFullScreen()">&times;</span>
-            <img id="fullscreen-image" src="" alt="">
-        </div>
+    </div>
+
+
+    <!-- for fullscreen -->
+    <div id="fullscreen-overlay">
+        <span class="close" onclick="closeFullScreen()">&times;</span>
+        <img id="fullscreen-image" src="" alt="">
+    </div>
 </body>
 
 </html>
