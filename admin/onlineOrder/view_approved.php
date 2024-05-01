@@ -107,6 +107,7 @@ if (isset($_POST['cancel'])) {
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
     <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/editButton.js" defer></script>
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -170,7 +171,7 @@ if (isset($_POST['cancel'])) {
 
 
 
-            <form method="post" action="" class="form-holder">
+            <form method="post" action="" class="form-holder" id="myForm">
 
 
 
@@ -261,17 +262,18 @@ if (isset($_POST['cancel'])) {
 
 
                     <div class="button-container">
-                        <div class="approved-btn"><button name="save" type="submit"><i class="fa-solid fa-check"></i>
+                        <div class="approved-btn"><button name="save" type="submit"><i class="fa-solid fa-floppy-disk"></i>
                                 Save Changes</button>
                         </div>
 
-                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-xmark"></i>
+                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-trash"></i>
                                 Cancel Order</button>
                         </div>
 
 
-                        <div class="edit-btn"><button><i class="fa-solid fa-pen-to-square"></i>
-                                Edit Details</button>
+                        <div class="edit-btn"><button type="button" id="toggleButton" onclick="toggleReadOnly()">
+                                <i id="toggleIcon" class="fas fa-lock"></i> Edit Details
+                            </button>
                         </div>
                     </div>
                 </div>

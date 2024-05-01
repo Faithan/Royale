@@ -2,7 +2,7 @@
 include ('../dbconnect.php');
 session_start();
 
-if (!isset ($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location:../login.php');
     exit();
 }
@@ -75,7 +75,6 @@ if (isset($_POST['submit'])) {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,7 +86,8 @@ if (isset($_POST['submit'])) {
     <link href="../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/imgUpload.js" defer></script>
+    <script src="javascript/upload.js" defer></script>
+    <script src="javascript/clearSelect.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
@@ -263,13 +263,13 @@ if (isset($_POST['submit'])) {
 
                 <input type="date" name="deadline" class="req-input" placeholder="Prospective Date" required>
 
-                <input class="invisible" type="text" name="" >
+                <input class="invisible" type="text" name="">
 
             </div>
-            
+
             <div class="info-line">
 
-               <textarea name="add_info" id="" cols="10" rows="10"  placeholder="Additional info . . ."></textarea>
+                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . ."></textarea>
 
             </div>
 
@@ -279,12 +279,15 @@ if (isset($_POST['submit'])) {
                 <label for="">Photo:</label>
             </div>
 
-            <div class="center-image-container">
-                <div class="image-holder" id="photo_preview"></div>
-            </div>
+           
+                <div class="image-box" id="preview-box"></div>
+        
 
-            <div class="center-label">
-                <input type="file" id="photo_input" name="photo" accept="image/*" required>
+            <div class="center-label-a">
+                <input type="file" name="images[]" id="images" class="input-file" multiple required onchange="previewImages()">
+                <label for="images" class="file-label"><i class="fa-regular fa-image"></i> Select Images</label>
+                <button type="button" class="clear-selection" onclick="clearSelection()"><i
+                        class="fa-solid fa-eraser"></i> Clear Selection</button>
             </div>
 
 
@@ -306,6 +309,7 @@ if (isset($_POST['submit'])) {
             });
         </script>
     <?php endif; ?>
+
 </body>
 
 </html>

@@ -116,7 +116,7 @@ if (isset($_GET['manage_id'])) {
                                 <div class="table-photo"><img onclick="openFullScreen()" src="../<?php echo $photo ?>"></div>
                             </td>
 
-                            <td class="button-holder">
+                            <td class="button-holder">  
                                 <a class="open-btn" href="view_approved.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
                             </td>
                         </tr>

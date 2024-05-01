@@ -7,7 +7,7 @@ session_start();
 //     exit();
 // }
 
-$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
 
 
 if (isset($_GET['manage_id'])) {
@@ -32,7 +32,7 @@ if (isset($_POST['accept'])) {
     $add_info = $_POST['add_info'];
 
     $update_query = "UPDATE royale_orders_tbl SET status='approved', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -61,7 +61,7 @@ if (isset($_POST['reject'])) {
     $add_info = $_POST['add_info'];
 
     $update_query = "UPDATE royale_orders_tbl SET status='rejected', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '','photo' => ''];
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -95,6 +95,8 @@ if (isset($_POST['reject'])) {
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
     <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/editButton.js" defer></script>
+
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -102,7 +104,8 @@ if (isset($_POST['reject'])) {
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>View Approved</title>
+    <title>View Request</title>
+
 </head>
 
 <body>
@@ -158,7 +161,7 @@ if (isset($_POST['reject'])) {
 
 
 
-            <form method="post" action="" class="form-holder">
+            <form method="post" action="" class="form-holder" id="myForm">
 
 
 
@@ -185,29 +188,30 @@ if (isset($_POST['reject'])) {
                     </div>
 
                     <div class="row-info">
-                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text"
+                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text" 
                                 value="<?php echo $manage_data['req_fname']; ?>" readonly></div>
                         <div><label for="">Middle Name:</label><br><br><input name="req_mname" type="text"
                                 value="<?php echo $manage_data['req_mname']; ?>" readonly></div>
-                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text"
+                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text" 
                                 value="<?php echo $manage_data['req_lname']; ?>" readonly></div>
-                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number"
+                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number" 
                                 value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
                     </div>
                     <div class="row-info">
-                        <div><label for="">Address:</label><br><br><input name="req_address" type="text"
+                        <div><label for="">Address:</label><br><br><input name="req_address" type="text" 
                                 value="<?php echo $manage_data['req_address']; ?>" readonly></div>
-                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text"
+                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text" 
                                 value="<?php echo $manage_data['req_gender']; ?>" readonly></div>
-                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text"
+                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text" 
                                 value="<?php echo $manage_data['req_type']; ?>" readonly></div>
                         <div><label for="">Measurement Date:</label><br><br><input name="req_date" type="date"
-                                value="<?php echo $manage_data['req_date']; ?>" readonly></div>
+                                id="myInput" value="<?php echo $manage_data['req_date']; ?>" readonly></div>
                     </div>
 
                     <div class="additional-info-holder">
-                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" id="" cols="30"
-                                rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea></div>
+                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" 
+                                cols="30" rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
+                        </div>
                     </div>
 
                     <div class="button-container">
@@ -215,24 +219,27 @@ if (isset($_POST['reject'])) {
                                 Accept</button>
                         </div>
 
-                        <div class="reject-btn"><button name="reject" type="submit"><i class="fa-solid fa-xmark"></i>
+                        <div class="reject-btn"><button name="reject" type="submit"><i class="fa-solid fa-trash"></i>
                                 Reject</button>
                         </div>
 
 
-                        <div class="edit-btn"><button><i class="fa-solid fa-pen-to-square"></i>
-                                Edit Details</button>
+                        <div class="edit-btn"><button type="button" id="toggleButton" onclick="toggleReadOnly()">
+                                <i id="toggleIcon" class="fas fa-lock"></i> Edit Details
+                            </button>
                         </div>
                     </div>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
-        <!-- for fullscreen -->
-        <div id="fullscreen-overlay">
-            <span class="close" onclick="closeFullScreen()">&times;</span>
-            <img id="fullscreen-image" src="" alt="">
-        </div>
+    </div>
+    <!-- for fullscreen -->
+    <div id="fullscreen-overlay">
+        <span class="close" onclick="closeFullScreen()">&times;</span>
+        <img id="fullscreen-image" src="" alt="">
+    </div>
+
+
 </body>
 
 </html>
