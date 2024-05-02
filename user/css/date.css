@@ -1,0 +1,11 @@
+
+.req-input {
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.show-placeholder::before {
+    content: attr(placeholder);
+    color: #999;
+}

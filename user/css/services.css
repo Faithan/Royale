@@ -59,7 +59,14 @@
     width: 30%;
     border-radius: 5px;
     border: 1px solid #b2b2b2;
+    text-transform: capitalize;
 }
+
+.left-container .info-line input[name="req-date"],
+.left-container .info-line input[name="deadline"] {
+    text-transform: none;
+}
+
 
 .left-container .info-line select {
     width: 31.3%;
@@ -74,6 +81,7 @@
     padding-left: 5px;
     border: 1px solid #b2b2b2;
     border-radius: 5px;
+    text-transform: capitalize;
 }
 
 .center-label {
@@ -171,10 +179,6 @@
     border: 1px solid rgb(224, 224, 224);
     margin: 10px;
 }
-
-
-
-
 
 
 

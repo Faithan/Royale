@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
     $reqaddress = $_POST['req-address'];
     $reqgender = $_POST['req-gender'];
     $reqtype = $_POST['req-type'];
-    $deadline = $_POST['deadline'];
+    $reqdate = $_POST['req-date'];
     $add_info = $_POST['add_info'];
 
     $photo = $_FILES['photo'];
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
     // $imageNamesSerialized = json_encode($imageNames);
 
                 $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$add_info' ,'$imageNamesSerialized','','','','','' )";
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','','','','','' )";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
@@ -150,15 +150,18 @@ if (isset($_POST['submit'])) {
     <script src="javascript/uploadphoto.js" defer></script>
     <script src="javascript/clearSelect.js" defer></script>
     <script src="javascript/fullscreen.js" defer></script>
-
+    <script src="javascript/date.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
     <link rel="stylesheet" href="css/services.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/date.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Services</title>
+   
+
 </head>
 
 <body>
@@ -252,7 +255,7 @@ if (isset($_POST['submit'])) {
             </div>
             <!-- available services content -->
             <div class="custom-head">
-                <label class="for-label-text2"> CUSTOMIZE YOUR OWN STYLE WITH OUR PRE-SETS</label>
+                <label class="for-label-text2"> TYPE OF PRODUCTS WE MAKE AND OFFER</label>
             </div>
 
             <div class="right-custom">
@@ -274,7 +277,7 @@ if (isset($_POST['submit'])) {
 
                 </div>
                 <div class="custom-browse">
-                    <label class="browse-text">CUSTOMIZE</label><br>
+                    <label class="browse-text">BROWSE</label><br>
                 </div>
             </div>
 
@@ -316,7 +319,8 @@ if (isset($_POST['submit'])) {
             <hr>
 
             <div class="info-line">
-                <input type="text" name="req-fname" class="req-input" placeholder="First Name" required>
+                <input type="text" name="req-fname" id="req-fname"  class="req-input" placeholder="First Name" required>
+            
 
                 <input type="text" name="req-mname" placeholder="Middle Name" required>
 
@@ -345,9 +349,9 @@ if (isset($_POST['submit'])) {
                     <option value="For Purchasing">For Cloth Buying</option>
                 </select>
 
-                <input type="date" name="deadline" class="req-input" placeholder="Prospective Date" required>
+                <input type="date" name="req-date" id="req-date" class="req-input show-placeholder" placeholder="Date of measurements" required>
 
-                <input class="invisible" type="text" name="">
+                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline" >
 
             </div>
 
@@ -386,7 +390,9 @@ if (isset($_POST['submit'])) {
         </form> <!-- form -->
 
 
-    </div>
+    </div> <!-- container-end -->
+                       
+
 
     <!-- sweetalert -->
     <?php if (!empty($message)): ?>
@@ -398,7 +404,9 @@ if (isset($_POST['submit'])) {
             });
         </script>
     <?php endif; ?>
-     
+
+
+ 
 </body>
 
 </html>
