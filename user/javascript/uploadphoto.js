@@ -1,4 +1,3 @@
-
 function previewImages() {
     var previewBox = document.getElementById("preview-box");
     previewBox.innerHTML = "";
@@ -19,7 +18,7 @@ function previewImages() {
                 img.src = e.target.result;
                 img.className = "preview-image";
                 img.onclick = function() {
-                    this.classList.toggle("selected");
+                    openFullscreen(this);
                 };
 
                 imageContainer.appendChild(img);

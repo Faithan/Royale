@@ -115,6 +115,11 @@
     justify-content: space-between;
     padding-top: 10px;
 }
+
+#preview-box{
+    height: 205px;
+}
+
 .center-label-a .clear-selection {
 
     border: 1px solid #ccc;
@@ -160,27 +165,7 @@
     overflow-x: scroll;
 }
 
-.image-box {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: white;
-}
 
-.image-box .image-container {
-    position: relative;
-    margin-right: 10px;
-
-}
-
-.image-box img {
-    width: auto;
-    height: 200px;
-    object-fit: cover;
-    cursor: pointer;
-}
 
 .left-container hr {
     border: 1px solid rgb(224, 224, 224);
@@ -688,3 +673,6 @@ left content */
 .invisible {
     z-index: -1;
 }
+
+
+

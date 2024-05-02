@@ -19,6 +19,7 @@ $isSuccess = false;
 
 
 if (isset($_POST['submit'])) {
+
     $reqfname = $_POST['req-fname'];
     $reqmname = $_POST['req-mname'];
     $reqlname = $_POST['req-lname'];
@@ -31,27 +32,39 @@ if (isset($_POST['submit'])) {
 
     $photo = $_FILES['photo'];
 
-    $filename = $_FILES['photo']['name'];
-    $filetempname = $_FILES['photo']['tmp_name'];
-    $filsize = $_FILES['photo']['size'];
-    $fileerror = $_FILES['photo']['error'];
-    $filetype = $_FILES['photo']['type'];
+  // Set the target directory
+  $target_dir = "../all_transaction_img/"; // Update this path to your desired folder
 
-    $fileext = explode('.', $filename);
-    $filetrueext = strtolower(end($fileext));
-    $array = ['jpg', 'png', 'jpeg', 'webp'];
+  // Array to store the image file names
+  $imageNames = array();
 
-    if (in_array($filetrueext, $array)) {
-        if ($fileerror === 0) {
-            if ($filsize < 10000000) {
-                $filenewname = $filename;
-                $filedestination = '../all_transaction_img/' . $filenewname;
-                if ($filename) {
-                    move_uploaded_file($filetempname, $filedestination);
-                }
+  // Loop through each uploaded image
+  foreach ($photo['tmp_name'] as $key => $tmp_name) {
+      $image_name = $photo['name'][$key];
+      $image_tmp = $tmp_name; // Use the temporary file path
+      $image_type = $photo['type'][$key];
+
+      // Check if the uploaded file is an image
+      if (strpos($image_type, 'image') !== false) {
+          // Move the uploaded image to the target directory
+          $target_file = $target_dir . basename($image_name);
+          if (move_uploaded_file($image_tmp, $target_file)) {
+              // Add the image file name to the array
+              $imageNames[] = $target_file;
+          } else {
+              echo "Error uploading file: " . $image_name;
+          }
+      } else {
+          echo "Invalid file type: " . $image_name;
+      }
+  }
+
+    // Serialize the image names array or convert it to JSON
+    $imageNamesSerialized = serialize($imageNames);
+    // $imageNamesSerialized = json_encode($imageNames);
 
                 $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$add_info' ,'../all_transaction_img/$filenewname','','','','','' )";
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$add_info' ,'$imageNamesSerialized','','','','','' )";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
@@ -61,16 +74,64 @@ if (isset($_POST['submit'])) {
                     $message = "Form Submission Failed!";
                     $isSuccess = false;
                 }
-            } else {
-                $message = "Form Submission Failed!";
-                $isSuccess = false;
             }
-        }
-    } else {
-        $message = "Form Submission Failed!";
-        $isSuccess = false;
-    }
-}
+
+
+
+
+
+//     $reqfname = $_POST['req-fname'];
+//     $reqmname = $_POST['req-mname'];
+//     $reqlname = $_POST['req-lname'];
+//     $reqcontact = $_POST['req-contact'];
+//     $reqaddress = $_POST['req-address'];
+//     $reqgender = $_POST['req-gender'];
+//     $reqtype = $_POST['req-type'];
+//     $deadline = $_POST['deadline'];
+//     $add_info = $_POST['add_info'];
+
+//     $photo = $_FILES['photo'];
+
+//     $filename = $_FILES['photo']['name'];
+//     $filetempname = $_FILES['photo']['tmp_name'];
+//     $filsize = $_FILES['photo']['size'];
+//     $fileerror = $_FILES['photo']['error'];
+//     $filetype = $_FILES['photo']['type'];
+
+//     $fileext = explode('.', $filename);
+//     $filetrueext = strtolower(end($fileext));
+//     $array = ['jpg', 'png', 'jpeg', 'webp'];
+
+//     if (in_array($filetrueext, $array)) {
+//         if ($fileerror === 0) {
+//             if ($filsize < 10000000) {
+//                 $filenewname = $filename;
+//                 $filedestination = '../all_transaction_img/' . $filenewname;
+//                 if ($filename) {
+//                     move_uploaded_file($filetempname, $filedestination);
+//                 }
+
+//                 $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
+//                  VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$deadline','$add_info' ,'../all_transaction_img/$filenewname','','','','','' )";
+
+//                 $query = (mysqli_query($con, $savedata));
+//                 if ($query) {
+//                     $message = "Reservation Sent Successfully! please wait for confirmation";
+//                     $isSuccess = true;
+//                 } else {
+//                     $message = "Form Submission Failed!";
+//                     $isSuccess = false;
+//                 }
+//             } else {
+//                 $message = "Form Submission Failed!";
+//                 $isSuccess = false;
+//             }
+//         }
+//     } else {
+//         $message = "Form Submission Failed!";
+//         $isSuccess = false;
+//     }
+// }
 
 ?>
 
@@ -86,13 +147,16 @@ if (isset($_POST['submit'])) {
     <link href="../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/upload.js" defer></script>
+    <script src="javascript/uploadphoto.js" defer></script>
     <script src="javascript/clearSelect.js" defer></script>
+    <script src="javascript/fullscreen.js" defer></script>
+
 
     <script src="../sweetalert/sweetalert.js"></script>
 
     <link rel="stylesheet" href="css/services.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Services</title>
 </head>
@@ -114,6 +178,19 @@ if (isset($_POST['submit'])) {
     </div>
 
     <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- right content -->
         <div class="right-content">
@@ -224,7 +301,14 @@ if (isset($_POST['submit'])) {
 
 
 
+
+
+
+
+
+
         <!-- left-content -->
+       
 
         <form method="post" action="" class="left-container" enctype="multipart/form-data">
             <div class="header-text-container"><label>QUICK REQUEST FORM</label></div>
@@ -276,18 +360,22 @@ if (isset($_POST['submit'])) {
             <hr>
 
             <div class="center-label">
-                <label for="">Photo:</label>
+                <label for="">Upload Photo/s:</label>
             </div>
 
            
-                <div class="image-box" id="preview-box"></div>
+            <div class="image-box" id="preview-box"></div>
         
 
             <div class="center-label-a">
-                <input type="file" name="images[]" id="images" class="input-file" multiple required onchange="previewImages()">
+
+                <input type="file" name="photo[]" id="images" class="input-file" multiple required onchange="previewImages()">
+
                 <label for="images" class="file-label"><i class="fa-regular fa-image"></i> Select Images</label>
+
                 <button type="button" class="clear-selection" onclick="clearSelection()"><i
                         class="fa-solid fa-eraser"></i> Clear Selection</button>
+
             </div>
 
 
@@ -296,6 +384,7 @@ if (isset($_POST['submit'])) {
                     Submit</button>
             </div>
         </form> <!-- form -->
+
 
     </div>
 
@@ -309,7 +398,7 @@ if (isset($_POST['submit'])) {
             });
         </script>
     <?php endif; ?>
-
+     
 </body>
 
 </html>
