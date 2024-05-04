@@ -66,8 +66,10 @@
 .left-container .info-line input[name="deadline"] {
     text-transform: none;
 }
-
-
+input::placeholder {
+    /* Adjust the placeholder styles for all input fields */
+    font-size: 14px;
+  }
 .left-container .info-line select {
     width: 31.3%;
     border-radius: 5px;
@@ -81,7 +83,16 @@
     padding-left: 5px;
     border: 1px solid #b2b2b2;
     border-radius: 5px;
-    text-transform: capitalize;
+}
+
+
+.tip{
+    padding-top: 5px;
+}
+.tip p{
+    text-align: justify ;
+    font-style: italic;
+    font-size: 12px;
 }
 
 .center-label {
@@ -89,7 +100,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 5px;
+    padding-top: 0;
     padding-bottom: 5px;
 }
 
@@ -97,6 +108,8 @@
 
 .center-label label {
     font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-shadow: 0 1px 1px rgb(175, 175, 175);
 
 }
 
@@ -131,11 +144,12 @@
 .center-label-a .clear-selection {
 
     border: 1px solid #ccc;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border-radius: 4px;
     white-space: nowrap;
     background-color: #eaeaea;
     color:#182B4D;
+    font-size: 13px;
 }
 
 .center-label-a .clear-selection:hover {
@@ -148,9 +162,9 @@
 }
 
 .file-label {
-    font-size: 14px;
+    font-size: 13px;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 15px;
     background-color: #eaeaea;
     color: #333;
     border: 1px solid #ccc;

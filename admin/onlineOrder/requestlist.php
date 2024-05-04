@@ -31,7 +31,7 @@ if (isset($_GET['manage_id'])) {
     <link href="../../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/fullscreen2.js" defer></script>
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -40,6 +40,8 @@ if (isset($_GET['manage_id'])) {
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
     <title>Request List</title>
+    
+   
 </head>
 
 <body>
@@ -47,17 +49,21 @@ if (isset($_GET['manage_id'])) {
     <div class="navbar-container">
         <nav class="navbar">
             <a class="logoLabel">R O Y A L E</a>
+
             <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text">Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order
+                        <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
-                        <a href="requestlist.php">Request List</a>
-                        <a href="approvedlist.php">Approved List</a>
-                        <a href="inprogresslist.php">In-progress List</a>
-                        <a href="finishedlist.php">Finished/Recieved List</a>
-                        <a class="red-text" href="returnedlist.php">Returned/Refunded List</a>
-                        <a class="red-text" href="rejectedlist.php">Rejected/Cancelled List</a>
+                        <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
+                        <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
+                        <a href="inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
+                        <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
+                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
+                            List</a>
+                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
+                            Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
@@ -85,7 +91,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Gender</th>
                         <th>Type of Request</th>
                         <th>Date for Measurement</th>
-                        <th>Photo</th>
+                        <th>Photos</th>
                         <th>Action</th>
                     </tr>
                     <br>
@@ -100,7 +106,13 @@ if (isset($_GET['manage_id'])) {
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
                         $reqdate = $row['req_date'];
-                        $photo = $row['photo'];
+                        $imageNamesSerialized = $row['photo'];
+
+
+                        $imageNames = unserialize($imageNamesSerialized);
+                        // $imageNames = json_decode($imageNamesSerialized);
+                        foreach ($imageNames as $imageName)
+                            ;
                         ?>
                         <tr>
                             <td><?php echo $id ?></td>
@@ -113,11 +125,17 @@ if (isset($_GET['manage_id'])) {
                             <td><?php echo $reqdate ?></td>
 
                             <td>
-                                <div class="table-photo"><img onclick="openFullScreen()" src="../<?php echo $photo ?>"></div>
+                                <div class="table-photo">
+                                    <?php foreach ($imageNames as $imageName) {
+                                        echo "<img src='../$imageName' alt='Image'  onclick='openFullscreen(this)'> ";
+                                    }
+                                    ?>
+                                </div>
                             </td>
 
                             <td class="button-holder">
-                                <a class="open-btn" href="view_request.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
+                                <a class="open-btn" href="view_request.php?manage_id=<?php echo $id; ?>"><i
+                                        class="fa-solid fa-square-up-right"></i> Open</a></button>
                             </td>
                         </tr>
 
@@ -128,11 +146,13 @@ if (isset($_GET['manage_id'])) {
     </div>
 
 
-     <!-- for fullscreen -->
-     <div id="fullscreen-overlay">
-        <span class="close" onclick="closeFullScreen()">&times;</span>
-        <img id="fullscreen-image" src="" alt="">
+    <!-- for fullscreen -->
+    <div class="fullscreen" onclick="closeFullscreen()">
+        <span class="close-icon">&times;</span>
+        <img id="fullscreen-image">
     </div>
+
+
 </body>
 
 </html>

@@ -47,17 +47,18 @@ if (isset($_GET['manage_id'])) {
     <div class="navbar-container">
         <nav class="navbar">
             <a class="logoLabel">R O Y A L E</a>
-            <ul>
+
+           <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text">Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
-                        <a href="requestlist.php">Request List</a>
-                        <a href="approvedlist.php">Approved List</a>
-                        <a href="inprogresslist.php">In-progress List</a>
-                        <a href="finishedlist.php">Finished/Recieved List</a>
-                        <a class="red-text" href="returnedlist.php">Returned/Refunded List</a>
-                        <a class="red-text" href="rejectedlist.php">Rejected/Cancelled List</a>
+                        <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
+                        <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
+                        <a href="inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
+                        <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
+                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded List</a>
+                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i> Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>

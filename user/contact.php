@@ -44,7 +44,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="services.php">Services</a></li>
                 <li><a  href="about.php">About</a></li>
-                <li><a class="bold-text" href="contact.php">Contact </i></a></li>
+                <li><a class="bold-text" href="contact.php"><i class="fa-solid fa-address-card"></i> Contact </i></a></li>
                 <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i>Settings</a>
             </ul>
 

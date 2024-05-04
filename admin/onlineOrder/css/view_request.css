@@ -124,14 +124,16 @@
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: auto;
+    overflow-x:scroll;
+    overflow-y: hidden;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
+    gap: 10px;
+    padding: 10px;
 }
 
 .image-holder img {
-    height: 200px;
+    height: 150px;
     width: auto;
     cursor: pointer;
 
@@ -225,7 +227,7 @@
     padding-left: 5px;
     border: 1px solid transparent;
     font-size: 15px;
-    background-color: rgb(239, 248, 253);
+    background-color: rgb(245, 252, 255);
 }
 
 .info-holder .row-info {
@@ -247,7 +249,7 @@
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
     font-size: 15px;
-    background-color: aliceblue;
+    background-color: rgb(245, 252, 255);
 }
 
 .info-holder .additional-info-holder label {
@@ -262,7 +264,7 @@
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
     font-size: 15px;
-    background-color: aliceblue;
+    background-color: rgb(245, 252, 255);
 }
 
 

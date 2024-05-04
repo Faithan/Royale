@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
-                    $message = "Reservation Sent Successfully! please wait for confirmation";
+                    $message = "Reservation Sent Successfully!, wait for confirmation";
                     $isSuccess = true;
                 } else {
                     $message = "Form Submission Failed!";
@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
             <a class="logoLabel">R O Y A L E</a>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a class="bold-text" href="services.php">Services</a></li>
+                <li><a class="bold-text" href="services.php"><i class="fa-solid fa-address-book"></i> Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i>Settings</a>
@@ -351,7 +351,7 @@ if (isset($_POST['submit'])) {
 
                 <input type="date" name="req-date" id="req-date" class="req-input show-placeholder" placeholder="Date of measurements" required>
 
-                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline" >
+                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline (optional)" >
 
             </div>
 
@@ -361,15 +361,17 @@ if (isset($_POST['submit'])) {
 
             </div>
 
-            <hr>
+            <hr>    
 
             <div class="center-label">
-                <label for="">Upload Photo/s:</label>
+                <label for="">Upload Photo:</label>
             </div>
 
            
-            <div class="image-box" id="preview-box"></div>
-        
+            <div class="image-box" id="preview-box"></div
+            >
+            <div class="tip"><p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
+                 clicking on the desired images. This allows you to choose multiple images simultaneously.</p></div>           
 
             <div class="center-label-a">
 
@@ -378,8 +380,7 @@ if (isset($_POST['submit'])) {
                 <label for="images" class="file-label"><i class="fa-regular fa-image"></i> Select Images</label>
 
                 <button type="button" class="clear-selection" onclick="clearSelection()"><i
-                        class="fa-solid fa-eraser"></i> Clear Selection</button>
-
+                        class="fa-solid fa-eraser"></i> Clear Selection</button>         
             </div>
 
 

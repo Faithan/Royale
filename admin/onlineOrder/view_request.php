@@ -10,11 +10,21 @@ session_start();
 $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
 
 
+// if (isset($_GET['manage_id'])) {
+//     $manage_id = $_GET['manage_id'];
+//     $manage_query = "SELECT * FROM royale_orders_tbl WHERE order_id = $manage_id";
+//     $manage_result = mysqli_query($con, $manage_query);
+//     $manage_data = mysqli_fetch_assoc($manage_result);
+// }
+
+
 if (isset($_GET['manage_id'])) {
     $manage_id = $_GET['manage_id'];
     $manage_query = "SELECT * FROM royale_orders_tbl WHERE order_id = $manage_id";
     $manage_result = mysqli_query($con, $manage_query);
     $manage_data = mysqli_fetch_assoc($manage_result);
+    $imageNamesSerialized = $manage_data['photo'];
+    $imageNames = unserialize($imageNamesSerialized);
 }
 
 
@@ -94,7 +104,7 @@ if (isset($_POST['reject'])) {
     <link href="../../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/fullscreen2.js" defer></script>
     <script src="javascript/editButton.js" defer></script>
 
 
@@ -131,23 +141,28 @@ if (isset($_POST['reject'])) {
     <div class="navbar-container">
         <nav class="navbar">
             <a class="logoLabel">R O Y A L E</a>
+
             <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text">Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order
+                        <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
-                        <a href="requestlist.php">Request List</a>
-                        <a href="approvedlist.php">Approved List</a>
-                        <a href="inprogresslist.php">In-progress List</a>
-                        <a href="finishedlist.php">Finished/Recieved List</a>
-                        <a class="red-text" href="returnedlist.php">Returned/Refunded List</a>
-                        <a class="red-text" href="rejectedlist.php">Rejected/Cancelled List</a>
+                        <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
+                        <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
+                        <a href="inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
+                        <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
+                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
+                            List</a>
+                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
+                            Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
                 <li><a href="#">Calender</a></li>
                 <a class="settings-btn" href="#"><i class="fa-solid fa-gear"></i> Settings</a>
             </ul>
+
 
         </nav>
     </div>
@@ -166,14 +181,17 @@ if (isset($_POST['reject'])) {
 
 
                 <div class="image-holder">
-                    <img name="photo" onclick="openFullScreen()" src="../<?php echo $manage_data['photo']; ?>" alt="">
+                    <?php foreach ($imageNames as $imageName) {
+                        echo "<img src='../$imageName' alt='Image' >";
+                    } ?>
                 </div>
 
 
 
                 <div class="button-holder">
                     <div class="back-btn">
-                        <div><a href="requestlist.php"><i class="fa-solid fa-rotate-left"></i> back</a></div>
+                        <div><a href="requestlist.php"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
+                                back</a></div>
                     </div>
                 </div>
 
@@ -188,29 +206,29 @@ if (isset($_POST['reject'])) {
                     </div>
 
                     <div class="row-info">
-                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text" 
+                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text"
                                 value="<?php echo $manage_data['req_fname']; ?>" readonly></div>
                         <div><label for="">Middle Name:</label><br><br><input name="req_mname" type="text"
                                 value="<?php echo $manage_data['req_mname']; ?>" readonly></div>
-                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text" 
+                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text"
                                 value="<?php echo $manage_data['req_lname']; ?>" readonly></div>
-                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number" 
+                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number"
                                 value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
                     </div>
                     <div class="row-info">
-                        <div><label for="">Address:</label><br><br><input name="req_address" type="text" 
+                        <div><label for="">Address:</label><br><br><input name="req_address" type="text"
                                 value="<?php echo $manage_data['req_address']; ?>" readonly></div>
-                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text" 
+                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text"
                                 value="<?php echo $manage_data['req_gender']; ?>" readonly></div>
-                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text" 
+                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text"
                                 value="<?php echo $manage_data['req_type']; ?>" readonly></div>
                         <div><label for="">Measurement Date:</label><br><br><input name="req_date" type="date"
                                 id="myInput" value="<?php echo $manage_data['req_date']; ?>" readonly></div>
                     </div>
 
                     <div class="additional-info-holder">
-                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" 
-                                cols="30" rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
+                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" cols="30"
+                                rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
                         </div>
                     </div>
 
@@ -234,11 +252,10 @@ if (isset($_POST['reject'])) {
         </div>
     </div>
     <!-- for fullscreen -->
-    <div id="fullscreen-overlay">
-        <span class="close" onclick="closeFullScreen()">&times;</span>
-        <img id="fullscreen-image" src="" alt="">
+    <div class="fullscreen" onclick="closeFullscreen()">
+        <span class="close-icon">&times;</span>
+        <img id="fullscreen-image">
     </div>
-
 
 </body>
 

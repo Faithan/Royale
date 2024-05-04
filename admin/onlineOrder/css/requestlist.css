@@ -143,12 +143,14 @@ table td {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 .table-photo img {
     max-height: 30px;
     width: auto;
     cursor: pointer;
+    
 }
 
 
