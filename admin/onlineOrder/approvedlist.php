@@ -31,7 +31,7 @@ if (isset($_GET['manage_id'])) {
     <link href="../../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/fullscreen2.js" defer></script>
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -101,7 +101,13 @@ if (isset($_GET['manage_id'])) {
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
                         $reqdate = $row['req_date'];
-                        $photo = $row['photo'];
+                        $imageNamesSerialized = $row['photo'];
+
+
+                        $imageNames = unserialize($imageNamesSerialized);
+                        // $imageNames = json_decode($imageNamesSerialized);
+                        foreach ($imageNames as $imageName)
+                            ;
                         ?>
                         <tr>
                             <td><?php echo $id ?></td>
@@ -114,7 +120,12 @@ if (isset($_GET['manage_id'])) {
                             <td><?php echo $reqdate ?></td>
 
                             <td>
-                                <div class="table-photo"><img onclick="openFullScreen()" src="../<?php echo $photo ?>"></div>
+                                <div class="table-photo">
+                                    <?php foreach ($imageNames as $imageName) {
+                                        echo "<img src='../$imageName' alt='Image'  onclick='openFullscreen(this)'> ";
+                                    }
+                                    ?>
+                                </div>
                             </td>
 
                             <td class="button-holder">  
@@ -130,9 +141,9 @@ if (isset($_GET['manage_id'])) {
 
 
      <!-- for fullscreen -->
-     <div id="fullscreen-overlay">
-        <span class="close" onclick="closeFullScreen()">&times;</span>
-        <img id="fullscreen-image" src="" alt="">
+     <div class="fullscreen" onclick="closeFullscreen()">
+        <span class="close-icon">&times;</span>
+        <img id="fullscreen-image">
     </div>
 </body>
 

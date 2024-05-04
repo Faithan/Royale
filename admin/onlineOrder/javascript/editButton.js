@@ -11,13 +11,13 @@ function toggleReadOnly() {
     for (var i = 0; i < inputs.length; i++) {
         if (!exceptions.includes(inputs[i].name)) {
             inputs[i].readOnly = !inputs[i].readOnly;
-            inputs[i].style.borderColor = inputs[i].readOnly ? "" : "black";
+            inputs[i].style.borderColor = inputs[i].readOnly ? "" : "gray";
         }
     }
 
     for (var i = 0; i < textareas.length; i++) {
         textareas[i].readOnly = !textareas[i].readOnly;
-        textareas[i].style.borderColor = textareas[i].readOnly ? "" : "black";
+        textareas[i].style.borderColor = textareas[i].readOnly ? "" : "gray";
     }
 
     var isReadOnly = inputs[0].readOnly && textareas[0].readOnly;

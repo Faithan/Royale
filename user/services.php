@@ -29,6 +29,7 @@ if (isset($_POST['submit'])) {
     $reqtype = $_POST['req-type'];
     $reqdate = $_POST['req-date'];
     $add_info = $_POST['add_info'];
+    $deadline = $_POST['deadline'];
 
     $photo = $_FILES['photo'];
 
@@ -64,7 +65,7 @@ if (isset($_POST['submit'])) {
     // $imageNamesSerialized = json_encode($imageNames);
 
                 $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','','','','','' )";
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','$deadline','','','','' )";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
@@ -151,6 +152,7 @@ if (isset($_POST['submit'])) {
     <script src="javascript/clearSelect.js" defer></script>
     <script src="javascript/fullscreen.js" defer></script>
     <script src="javascript/date.js" defer></script>
+    <script src="javascript/inputColor.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
@@ -195,7 +197,7 @@ if (isset($_POST['submit'])) {
 
 
 
-        <!-- right content -->
+        <!-- right content -->  
         <div class="right-content">
             <div class="right-head">
                 <label class="for-label-text">PRODUCTS AND SERVICES</label>
@@ -319,20 +321,20 @@ if (isset($_POST['submit'])) {
             <hr>
 
             <div class="info-line">
-                <input type="text" name="req-fname" id="req-fname"  class="req-input" placeholder="First Name" required>
+                <input type="text" name="req-fname"  class="req-input" placeholder="First Name" onkeyup="changeColor(this)" required>
             
 
-                <input type="text" name="req-mname" placeholder="Middle Name" required>
+                <input type="text" name="req-mname" placeholder="Middle Name" onkeyup="changeColor(this)" required>
 
-                <input type="text" name="req-lname" placeholder="Last Name" required>
+                <input type="text" name="req-lname" placeholder="Last Name" onkeyup="changeColor(this)" required>
             </div>
 
             <div class="info-line">
-                <input type="number" name="req-contact" class="req-contact" placeholder="Contact Number" required>
+                <input type="number" name="req-contact" class="req-contact" placeholder="Contact Number" onkeyup="changeColor(this)" required>
 
-                <input type="text" name="req-address" placeholder="Address" required>
+                <input type="text" name="req-address" placeholder="Address" onkeyup="changeColor(this)" required>
 
-                <select name="req-gender" id="">
+                <select name="req-gender" id="" onchange="changeColorSelect(this)">
                     <option disabled selected value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -341,7 +343,7 @@ if (isset($_POST['submit'])) {
 
             <div class="info-line">
 
-                <select name="req-type" id="">
+                <select name="req-type" id="" onchange="changeColorSelect(this)">
                     <option disabled selected value="">Type of Request</option>
                     <option value="For Repair">For Clothing Repair </option>
                     <option value="For Making">For Cloth Making </option>
@@ -349,15 +351,15 @@ if (isset($_POST['submit'])) {
                     <option value="For Purchasing">For Cloth Buying</option>
                 </select>
 
-                <input type="date" name="req-date" id="req-date" class="req-input show-placeholder" placeholder="Date of measurements" required>
+                <input type="date" name="req-date" id="req-date" class="req-input show-placeholder" placeholder="Measurements' date (if applicable)" onchange="changeColorSelect(this)">
 
-                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline (optional)" >
+                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline (optional)" onchange="changeColorSelect(this)" >
 
             </div>
 
             <div class="info-line">
 
-                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . ."></textarea>
+                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . ." onkeyup="changeColor(this)"></textarea>
 
             </div>
 
@@ -368,8 +370,7 @@ if (isset($_POST['submit'])) {
             </div>
 
            
-            <div class="image-box" id="preview-box"></div
-            >
+            <div class="image-box" id="preview-box"></div>
             <div class="tip"><p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
                  clicking on the desired images. This allows you to choose multiple images simultaneously.</p></div>           
 

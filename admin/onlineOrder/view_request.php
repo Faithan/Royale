@@ -40,9 +40,13 @@ if (isset($_POST['accept'])) {
     $req_type = $_POST['req_type'];
     $req_date = $_POST['req_date'];
     $add_info = $_POST['add_info'];
+    $deadline = $_POST['deadline'];
 
-    $update_query = "UPDATE royale_orders_tbl SET status='approved', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
+    $update_query = "UPDATE royale_orders_tbl SET status='approved', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname',
+     req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', deadline = '$deadline',
+     add_info='$add_info' WHERE order_id='$order_id'";
+    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '',
+     'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -106,7 +110,7 @@ if (isset($_POST['reject'])) {
 
     <script src="javascript/fullscreen2.js" defer></script>
     <script src="javascript/editButton.js" defer></script>
-
+    <script src="javascript/required.js" defer></script>
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -182,7 +186,7 @@ if (isset($_POST['reject'])) {
 
                 <div class="image-holder">
                     <?php foreach ($imageNames as $imageName) {
-                        echo "<img src='../$imageName' alt='Image' >";
+                        echo "<img src='../$imageName' alt='Image' onclick='openFullscreen(this)'>";
                     } ?>
                 </div>
 
@@ -215,6 +219,7 @@ if (isset($_POST['reject'])) {
                         <div><label for="">Contact:</label><br><br><input name="req_contact" type="number"
                                 value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
                     </div>
+
                     <div class="row-info">
                         <div><label for="">Address:</label><br><br><input name="req_address" type="text"
                                 value="<?php echo $manage_data['req_address']; ?>" readonly></div>
@@ -226,14 +231,25 @@ if (isset($_POST['reject'])) {
                                 id="myInput" value="<?php echo $manage_data['req_date']; ?>" readonly></div>
                     </div>
 
+                    
+                    <div class="row-info">
+
+                        <div><label for="">deadline:</label><br><br><input name="deadline" type="date"
+                                id="myInput" value="<?php echo $manage_data['deadline']; ?>"></div>
+                    </div>
+
                     <div class="additional-info-holder">
                         <div><label for="">Additional Information:</label><br><br><textarea name="add_info" cols="30"
                                 rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
                         </div>
                     </div>
 
+                    <div class="tip"><p>Tips: It is very important to contact your customer for the legitimacy of his/her request.
+                         You can edit the information of your customer if needed by clicking the "edit details" button. 
+                        Deadline is required if not yet added.</p></div>
+
                     <div class="button-container">
-                        <div class="approved-btn"><button name="accept" type="submit"><i class="fa-solid fa-check"></i>
+                        <div class="approved-btn"><button name="accept" type="submit" id="save"><i class="fa-solid fa-check"></i>
                                 Accept</button>
                         </div>
 

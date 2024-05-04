@@ -160,7 +160,8 @@ nav ul li a {
     z-index: 5;
     top: 7vh;
     font-size: 14px;
-    border: 1px solid rgb(217, 217, 217);
+    border-top: white;
+    box-shadow: 0 2px 4px #b0b0b0;
 }
 
 .navbar .bold-text{

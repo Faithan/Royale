@@ -7,7 +7,7 @@
 .container {
     height: 93vh;
     /* background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%); */
-    background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%);
+    background: linear-gradient(360deg,  rgb(183, 188, 199)  0.5%,  rgb(183, 188, 199)  5%, rgb(136, 149, 177) 50%, rgb(183, 188, 199) 70%);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr;
@@ -26,7 +26,7 @@
     padding: 3vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    background: linear-gradient(180deg, rgb(253, 254, 255) 5%, rgb(155, 168, 194) 20%, rgb(249, 251, 255) 50%, rgb(254, 254, 255) 100%);
+    background: linear-gradient(180deg, rgb(155, 168, 194) 10%, rgb(249, 251, 255) 50%, rgb(254, 254, 255) 100%);
 }
 
 .left-container .header-text-container {
@@ -41,6 +41,30 @@
 .header-text-container label {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+
+.left-container input.has-value,
+.left-container select.has-value,
+.left-container textarea.has-value{
+    background-color: #ebf9ff;
+}
+
+
+
+.left-container input:hover,
+.left-container select:hover,
+.left-container textarea:hover{
+    box-shadow: 0 0 5px rgb(76, 76, 180);
+    transition: 0.3s;
+}
+
+
+.left-container input,
+.left-container select,
+.left-container textarea{
+font-size: 13.5px;
+}
+
 
 .left-container input {
     height: 30px;
@@ -66,10 +90,7 @@
 .left-container .info-line input[name="deadline"] {
     text-transform: none;
 }
-input::placeholder {
-    /* Adjust the placeholder styles for all input fields */
-    font-size: 14px;
-  }
+
 .left-container .info-line select {
     width: 31.3%;
     border-radius: 5px;
@@ -94,6 +115,8 @@ input::placeholder {
     font-style: italic;
     font-size: 12px;
 }
+
+
 
 .center-label {
     width: 100%;
@@ -686,7 +709,9 @@ left content */
 }
 
 
-
+.req-input{
+    font-size: 12px;
+}
 
 .invisible {
     z-index: -1;

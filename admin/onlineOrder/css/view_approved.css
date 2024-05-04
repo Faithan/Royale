@@ -125,14 +125,15 @@
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
     overflow: auto;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
+    gap: 10px;
+    padding: 10px;
 }
 
 .image-holder img {
-    height: 200px;
+    height: 150px;
     width: auto;
     cursor: pointer;
 
@@ -208,8 +209,9 @@
     color: #182B4D;
 }
 
+
+
 .info-holder .id-holder {
-    padding-bottom: 15px;
     display: flex;
     align-items: center;
 
@@ -226,7 +228,7 @@
     padding-left: 5px;
     border: 1px solid transparent;
     font-size: 15px;
-    background-color: rgb(239, 248, 253);
+
 }
 
 .info-holder .row-info {
@@ -236,6 +238,7 @@
     padding-bottom: 15px;
     align-items: center;
 }
+
 
 .info-holder .row-info .operation{
     margin-top: 25px;
@@ -254,9 +257,9 @@
     height: 30px;
     padding-left: 5px;
     border: 1px solid transparent;
-    color: rgb(71, 71, 71);
+    color: #474747;
     font-size: 15px;
-    background-color: aliceblue;
+    background-color: #f5fcff;
 }
 
 .info-holder .row-info .open-input {
@@ -280,13 +283,28 @@
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
     font-size: 15px;
-    background-color: aliceblue;
+    background-color: rgb(245, 252, 255);
 }
 
 .info-holder .additional-info-holder .open-input {
     border: 1px solid #d7d7d7;
     color: rgb(71, 71, 71);
 
+}
+
+.info-holder .row-info .no-bg input,
+.info-holder .additional-info-holder .no-bg textarea{
+    background-color: white;
+}
+
+.tip{
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.tip p{
+    text-align: justify ;
+    font-style: italic;
+    font-size: 14px;
 }
 
 
@@ -300,6 +318,7 @@
     justify-content: flex-end;
     padding-top: 20px;
     gap: 10px;
+    padding-bottom: 30px;
 }
 
 .button-container .approved-btn button {

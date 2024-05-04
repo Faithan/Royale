@@ -267,6 +267,21 @@
     background-color: rgb(245, 252, 255);
 }
 
+.tip{
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.tip p{
+    text-align: justify ;
+    font-style: italic;
+    font-size: 14px;
+}
+
+
+
+
+
+
 
 
 
