@@ -94,7 +94,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Photos</th>
                         <th>Action</th>
                     </tr>
-                    <br>
+                  
                     <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='request' ORDER BY order_id DESC";
                     $result = mysqli_query($con, $fetchdata);
                     while ($row = mysqli_fetch_assoc($result)) {

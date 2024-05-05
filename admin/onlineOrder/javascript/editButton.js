@@ -5,7 +5,7 @@ function toggleReadOnly() {
     var button = document.getElementById("toggleButton");
     var icon = document.getElementById("toggleIcon");
 
-    var exceptions = ["order_id"]; // Add the names of the input fields to be exempted
+    var exceptions = ["order_id", "balance"]; // Add the names of the input fields to be exempted
     // var exceptions = ["exceptionInput1", "exceptionInput2"];
 
     for (var i = 0; i < inputs.length; i++) {

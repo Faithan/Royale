@@ -125,19 +125,19 @@
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
     overflow: auto;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
+    gap: 10px;
+    padding: 10px;
 }
 
 .image-holder img {
-    height: 200px;
+    height: 150px;
     width: auto;
     cursor: pointer;
 
 }
-
 
 
 
@@ -200,7 +200,7 @@
     grid-row-start: 2;
     grid-row-end: 5;
     background-color: white;
-    height: 58.5vh;
+    height: 58vh;
     overflow-y: scroll;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
@@ -216,7 +216,7 @@
 }
 
 .info-holder .id-holder label {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -225,8 +225,8 @@
     height: 30px;
     padding-left: 5px;
     border: 1px solid transparent;
-    font-size: 15px;
-    background-color: rgb(239, 248, 253);
+    font-size: 13px;
+    background-color: white;
 }
 
 .info-holder .row-info {
@@ -245,7 +245,7 @@
 
 
 .info-holder .row-info label {
-    font-size: 15px;
+    font-size: 13.5px;
     font-weight: bold;
 }
 
@@ -289,6 +289,52 @@
 
 }
 
+.table-holder{
+    width: 100%;
+    padding-top: 0;
+}
+
+.table-holder table{
+    width: 100%;
+    padding-top: 0;
+    border-collapse: collapse;
+}
+.table-holder table th{
+    border: 1px solid rgb(221, 229, 235);
+    padding: 5px;
+    font-weight: bold;
+    font-size: 13.5px;
+    color: #182B4D;
+    background-color: white;
+}
+
+.table-holder table td{
+    border: 1px solid rgb(221, 229, 235);
+    padding: 5px;
+    font-size: 13.5px;
+    color: #182B4D;
+    text-align: center;
+    background-color:rgb(242, 242, 242) ;
+}
+
+.info-holder .row-info .no-bg input,
+.info-holder .additional-info-holder .no-bg textarea{
+    background-color:rgb(242, 242, 242);
+    font-size: 13.5px;
+}
+
+.tip{
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.tip p{
+    text-align: justify ;
+    font-style: italic;
+    font-size: 13px;
+}
+
+
+
 
 
 
@@ -300,6 +346,7 @@
     justify-content: flex-end;
     padding-top: 20px;
     gap: 10px;
+    padding-bottom: 30px;
 }
 
 .button-container .approved-btn button {

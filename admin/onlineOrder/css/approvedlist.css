@@ -100,11 +100,10 @@
     grid-row-start: 4;
     grid-row-end: 5;
     background-color: rgb(221, 229, 235);
-    height: 67vh;
+    height: 65vh;
     overflow-y: scroll;
     margin: 0;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     
 }
 

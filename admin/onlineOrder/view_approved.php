@@ -40,7 +40,7 @@ if (isset($_POST['save'])) {
     $payment = $_POST['payment'];
     $balance = $_POST['balance'];
 
-    $update_query = "UPDATE royale_orders_tbl SET status='ongoing', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
+    $update_query = "UPDATE royale_orders_tbl SET status='inprogress', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
      req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
      deadline='$deadline', measurements='$measurements', fee='$fee', payment='$payment', balance='$balance' WHERE order_id='$order_id'";
 
@@ -121,6 +121,7 @@ if (isset($_POST['cancel'])) {
     <script src="javascript/fullscreen2.js" defer></script>
     <script src="javascript/editButton.js" defer></script>
     <script src="javascript/required.js" defer></script>
+    <script src="javascript/calculation.js" defer></script>
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -215,7 +216,7 @@ if (isset($_POST['cancel'])) {
                     
                     <div class="row-info">
                         <div><label for="">Deadline:</label><br><br><input name="deadline" type="date"
-                                class="open-input" value="<?php echo $manage_data['deadline']; ?>"  readonly></div>
+                                class="open-input" value="<?php echo $manage_data['deadline']; ?>" ></div>
                     </div>
 
                     <div class="additional-info-holder">
@@ -226,20 +227,27 @@ if (isset($_POST['cancel'])) {
 
                     <hr>
 
+
                     <div class="row-info">
-                        <div><label for="">Fee:</label><br><br><input name="fee" type="number" placeholder="Php" 
-                                class="open-input" ></div>
-                                <div class="operation">-</div>
-                        <div><label for="">Payment:</label><br><br><input name="payment" type="number" placeholder="Php" 
-                                class="open-input" ></div>
-                                <div class="operation">=</div>
-                        <div><label for="">Balance:</label><br><br><input name="balance" type="number" placeholder="Php"
-                                class="open-input" ></div>
+                        <div>
+                            <label for="fee">Fee:</label><br><br>
+                            <input name="fee" type="number" placeholder="₱" class="open-input">
+                        </div>
+                        <div class="operation">-</div>
+                        <div>
+                            <label for="payment">Payment:</label><br><br>
+                            <input name="payment" type="number" placeholder="₱" class="open-input">
+                        </div>
+                        <div class="operation">=</div>
+                        <div>
+                            <label for="balance">Balance:</label><br><br>
+                            <input name="balance" type="text" placeholder="₱" class="open-input" readonly>
+                        </div>
                     </div>
 
                     <hr>
 
-                    <div class="tip"><p>Tips: After Approving the customers' request when the time of their arrival during the day of measurement </p></div>
+                    <div class="tip"><p><b>Instructions:</b> Measurement are added during the date of measurements provided by the customer, as well as the payment for their order. </p></div>
 
                     <div class="button-container">
                         <div class="approved-btn"><button name="save" type="submit" id="save"><i class="fa-solid fa-floppy-disk"></i>
@@ -291,6 +299,9 @@ if (isset($_POST['cancel'])) {
 
                 </div>
             </form>
+
+
+            
         </div>
     </div>
 

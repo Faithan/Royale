@@ -7,7 +7,7 @@ session_start();
 //     exit();
 // }
 
-$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
+$manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'deadline' => '', 'photo' => ''];
 
 
 // if (isset($_GET['manage_id'])) {
@@ -46,7 +46,7 @@ if (isset($_POST['accept'])) {
      req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', deadline = '$deadline',
      add_info='$add_info' WHERE order_id='$order_id'";
     $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '',
-     'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'photo' => ''];
+     'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'deadline' => '', 'photo' => ''];
 
 
     $query = (mysqli_query($con, $update_query));

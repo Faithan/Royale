@@ -6,12 +6,6 @@ session_start();
 //     header('Location:../login.php');
 //     exit();
 // }
-if (isset($_GET['manage_id'])) {
-    $manage_id = $_GET['manage_id'];
-    $manage_query = "SELECT * FROM royale_orders_tbl WHERE order_id = $manage_id";
-    $manage_result = mysqli_query($con, $manage_query);
-    $manage_data = mysqli_fetch_assoc($manage_result);
-}
 
 
 ?>
@@ -89,7 +83,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Photo</th>
                         <th>Action</th>
                     </tr>
-                    <br>
+              
                     <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='approved' ORDER BY order_id DESC";
                     $result = mysqli_query($con, $fetchdata);
                     while ($row = mysqli_fetch_assoc($result)) {

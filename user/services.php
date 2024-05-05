@@ -371,6 +371,7 @@ if (isset($_POST['submit'])) {
 
            
             <div class="image-box" id="preview-box"></div>
+            
             <div class="tip"><p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
                  clicking on the desired images. This allows you to choose multiple images simultaneously.</p></div>           
 

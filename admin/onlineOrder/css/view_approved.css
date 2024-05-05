@@ -201,7 +201,7 @@
     grid-row-start: 2;
     grid-row-end: 5;
     background-color: white;
-    height: 58.5vh;
+    height: 58vh;
     overflow-y: scroll;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;

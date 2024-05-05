@@ -15,6 +15,8 @@ if (isset($_GET['manage_id'])) {
     $manage_query = "SELECT * FROM royale_orders_tbl WHERE order_id = $manage_id";
     $manage_result = mysqli_query($con, $manage_query);
     $manage_data = mysqli_fetch_assoc($manage_result);
+    $imageNamesSerialized = $manage_data['photo'];
+    $imageNames = unserialize($imageNamesSerialized);
 }
 
 
@@ -99,7 +101,11 @@ if (isset($_POST['cancel'])) {
     <link href="../../fontawesome/css/brands.css" rel="stylesheet" />
     <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
 
-    <script src="javascript/fullscreen.js" defer></script>
+    <script src="javascript/fullscreen2.js" defer></script>
+    <script src="javascript/editButton.js" defer></script>
+    <script src="javascript/required.js" defer></script>
+    <script src="javascript/calculation.js" defer></script>
+
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
@@ -137,14 +143,17 @@ if (isset($_POST['cancel'])) {
             <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order
+                        <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
                         <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
                         <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
                         <a href="inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
                         <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
-                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded List</a>
-                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i> Rejected/Cancelled List</a>
+                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
+                            List</a>
+                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
+                            Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
@@ -165,19 +174,21 @@ if (isset($_POST['cancel'])) {
 
 
 
-            <form method="post" action="" class="form-holder">
+            <form method="post" action="" class="form-holder" id="myForm">
 
 
 
                 <div class="image-holder">
-                    <img name="photo" onclick="openFullScreen()" src="../<?php echo $manage_data['photo']; ?>" alt="">
+                    <?php foreach ($imageNames as $imageName) {
+                        echo "<img src='../$imageName' alt='Image' onclick='openFullscreen(this)'>";
+                    } ?>
                 </div>
-
 
 
                 <div class="button-holder">
                     <div class="back-btn">
-                        <div><a href="inprogresslist.php"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> back</a></div>
+                        <div><a href="inprogresslist.php"><i
+                                    class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> back</a></div>
                     </div>
                 </div>
 
@@ -186,106 +197,132 @@ if (isset($_POST['cancel'])) {
                 <div class="info-holder">
 
                     <div class="id-holder">
-                        <div><label for="">Order Id:</label><br><br><input name="order_id" type="number"
+                        <div><label for="">Order Id:</label><input name="order_id" type="number"
                                 value="<?php echo $manage_data['order_id']; ?>" readonly></div>
-
                     </div>
+
+                    <hr>
+
 
                     <div class="row-info">
-                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text"
-                                value="<?php echo $manage_data['req_fname']; ?>" readonly></div>
-                        <div><label for="">Middle Name:</label><br><br><input name="req_mname" type="text"
-                                value="<?php echo $manage_data['req_mname']; ?>" readonly></div>
-                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text"
-                                value="<?php echo $manage_data['req_lname']; ?>" readonly></div>
-                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number"
-                                value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
-                    </div>
-                    <div class="row-info">
-                        <div><label for="">Address:</label><br><br><input name="req_address" type="text"
-                                value="<?php echo $manage_data['req_address']; ?>" readonly></div>
-                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text"
-                                value="<?php echo $manage_data['req_gender']; ?>" readonly></div>
-                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text"
-                                value="<?php echo $manage_data['req_type']; ?>" readonly></div>
-                        <div><label for="">Measurement Date:</label><br><br><input name="req_date" type="date"
-                                value="<?php echo $manage_data['req_date']; ?>" readonly></div>
-                    </div>
-
-                    <div class="additional-info-holder">
-                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" id=""
-                                cols="30" rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
+                        <div>
+                            <label for="fee">Balance:</label><br><br>
+                            <input name="fee" type="number" placeholder="₱" class="open-input">
+                        </div>
+                        <div class="operation">-</div>
+                        <div>
+                            <label for="payment">New Payment (if applicable):</label><br><br>
+                            <input name="payment" type="number" placeholder="₱" class="open-input">
+                        </div>
+                        <div class="operation">=</div>
+                        <div>
+                            <label for="balance">New Balance (if applicable):</label><br><br>
+                            <input name="balance" type="text" placeholder="₱" class="open-input" readonly>
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-                    <hr>
-
                     <div class="row-info">
-                        <div><label for="">Add Deadline:</label><br><br><input name="deadline" type="date"
-                                class="open-input" value="<?php echo $manage_data['deadline']; ?>" required></div>
-                    </div>
+                        <div class="table-holder">
+                            <table>
+                                <tr>
+                                    <th>Fee</th>
+                                    <th>Previous Payment</th>
+                                    <th>Balance</th>
+                                    <th>Date and Time</th>
+                                </tr>
+                                    <tr>
+                                        <td><?php echo $manage_data['fee']; ?></td>
+                                        <td><?php echo $manage_data['payment']; ?></td>
+                                        <td><?php echo $manage_data['balance']; ?></td>
+                                        <td></td>  
+                                    </tr>
 
-                    <div class="additional-info-holder">
-                        <div><label for="">Add Measurement:</label><br><br><textarea name="measurements" id="" cols="30"
-                                class="open-input" rows="10" value=""
-                                required><?php echo $manage_data['measurements']; ?></textarea></div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row-info">
-                        <div><label for="">Fee:</label><br><br><input name="fee" type="number" placeholder="Php"
-                                class="open-input" required></div>
-                        <div class="operation">-</div>
-                        <div><label for="">Payment:</label><br><br><input name="payment" type="number" placeholder="Php"
-                                class="open-input" required></div>
-                        <div class="operation">=</div>
-                        <div><label for="">Balance:</label><br><br><input name="balance" type="number" placeholder="Php"
-                                class="open-input" required></div>
+                            </table>
+                        </div>
                     </div>
 
                     <hr>
 
-
-
-
-
-
-
+                    <div class="tip">
+                        <p><b>Instructions:</b> Measurement are added during the date of measurements provided by the
+                            customer, as well as the payment for their order. </p>
+                    </div>
 
                     <div class="button-container">
-                        <div class="approved-btn"><button name="save" type="submit"><i class="fa-solid fa-check"></i>
-                                Save Changes</button>
+                        <div class="approved-btn"><button name="save" type="submit" id="save"><i class="fa-solid fa-square-check"></i> 
+                                Mark as Done</button>
                         </div>
 
-                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-xmark"></i>
+                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-trash"></i>
                                 Cancel Order</button>
                         </div>
+                    </div>
 
 
-                        <div class="edit-btn"><button><i class="fa-solid fa-pen-to-square"></i>
-                                Edit Details</button>
+                    <div class="row-info">
+                        <div class="no-bg"><label for="">First Name:</label><br><input name="req_fname" type="text"
+                                value="<?php echo $manage_data['req_fname']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Middle Name:</label><br><input name="req_mname" type="text"
+                                value="<?php echo $manage_data['req_mname']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Last Name:</label><br><input name="req_lname" type="text"
+                                value="<?php echo $manage_data['req_lname']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Contact:</label><br><input name="req_contact" type="number"
+                                value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
+                    </div>
+
+                    <div class="row-info">
+                        <div class="no-bg"><label for="">Address:</label><br><input name="req_address" type="text"
+                                value="<?php echo $manage_data['req_address']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Gender:</label><br><input name="req_gender" type="text"
+                                value="<?php echo $manage_data['req_gender']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Request Type:</label><br><input name="req_type" type="text"
+                                value="<?php echo $manage_data['req_type']; ?>" readonly></div>
+                        <div class="no-bg"><label for="">Measurement Date:</label><br><input name="req_date" type="date"
+                                value="<?php echo $manage_data['req_date']; ?>" readonly></div>
+                    </div>
+                    <div class="additional-info-holder">
+                        <div class="no-bg"><label for="">Additional Information:</label><br><br><textarea
+                                name="add_info" id="" cols="30" rows="10" value=""
+                                readonly><?php echo $manage_data['add_info']; ?></textarea>
                         </div>
                     </div>
+
+                    
+                    <div class="row-info">
+                        <div class="no-bg"><label for="">Deadline:</label><br><br><input name="deadline" type="date"
+                                class="open-input" value="<?php echo $manage_data['deadline']; ?>" readonly></div>
+                    </div>
+
+                    <div class="additional-info-holder">
+                        <div class="no-bg"><label for="">Add Measurement:</label><br><br><textarea name="measurements" cols="30"
+                                class="open-input" rows="10"
+                                value="" readonly><?php echo $manage_data['measurements']; ?></textarea></div>
+                    </div>
+
+                    <div class="button-container">
+
+                        <div class="edit-btn"><button type="button" id="toggleButton" onclick="toggleReadOnly()">
+                                <i id="toggleIcon" class="fas fa-lock"></i> Edit Details
+                            </button>
+                        </div>
+
+                    </div>
+
+
                 </div>
             </form>
+
+
         </div>
     </div>
 
 
     <!-- for fullscreen -->
-    <div id="fullscreen-overlay">
-        <span class="close" onclick="closeFullScreen()">&times;</span>
-        <img id="fullscreen-image" src="" alt="">
+    <div class="fullscreen" onclick="closeFullscreen()">
+        <span class="close-icon">&times;</span>
+        <img id="fullscreen-image">
     </div>
+
 </body>
 
 </html>

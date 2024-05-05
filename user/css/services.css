@@ -32,7 +32,7 @@
 .left-container .header-text-container {
     font-weight: bold;
     font-size: 30px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     color: #182B4D;
     text-shadow: 0 1px 1px rgb(99, 99, 99);
 
@@ -62,7 +62,7 @@
 .left-container input,
 .left-container select,
 .left-container textarea{
-font-size: 13.5px;
+font-size: 12px;
 }
 
 
@@ -113,7 +113,7 @@ font-size: 13.5px;
 .tip p{
     text-align: justify ;
     font-style: italic;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 
@@ -133,6 +133,7 @@ font-size: 13.5px;
     font-weight: bold;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-shadow: 0 1px 1px rgb(175, 175, 175);
+    font-size: 13px;
 
 }
 
@@ -161,7 +162,12 @@ font-size: 13.5px;
 }
 
 #preview-box{
-    height: 205px;
+    height: 160px;
+}
+
+#preview-box img{
+    height: 160px;
+    width: auto;
 }
 
 .center-label-a .clear-selection {
