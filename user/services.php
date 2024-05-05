@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
     // $imageNamesSerialized = json_encode($imageNames);
 
                 $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','$deadline','','','','' )";
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','$deadline','','','','','','' )";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
@@ -371,7 +371,7 @@ if (isset($_POST['submit'])) {
 
            
             <div class="image-box" id="preview-box"></div>
-            
+
             <div class="tip"><p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
                  clicking on the desired images. This allows you to choose multiple images simultaneously.</p></div>           
 

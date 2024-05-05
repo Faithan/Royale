@@ -35,18 +35,20 @@ if (isset($_POST['save'])) {
     $req_date = $_POST['req_date'];
     $add_info = $_POST['add_info'];
     $deadline = $_POST['deadline'];
-    $measurements = $_POST['measurements'];
+    $measurements = $_POST['measurements']; 
     $fee = $_POST['fee'];
     $payment = $_POST['payment'];
-    $balance = $_POST['balance'];
+    $hiddenBalance = $_POST['hiddenBalance'];
+    $dateTime1 = date('Y-m-d H:i:s');
 
-    $update_query = "UPDATE royale_orders_tbl SET status='inprogress', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
+    $update_query = " UPDATE royale_orders_tbl SET status='inprogress', req_fname='$req_fname', req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
      req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
-     deadline='$deadline', measurements='$measurements', fee='$fee', payment='$payment', balance='$balance' WHERE order_id='$order_id'";
+     deadline='$deadline', measurements='$measurements', fee='$fee', payment='$payment', balance='$hiddenBalance', dateTime1='$dateTime1' WHERE order_id='$order_id' ";
 
     $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '', 'req_gender' => '', 'req_type' => '',
      'req_date' => '', 'add_info' => '', 'photo' => '', 'deadline' => '', 'measurements' => '', 'fee' => '',
      'payment' => '', 'balance' => ''];
+
 
 
     $query = (mysqli_query($con, $update_query));
@@ -220,7 +222,7 @@ if (isset($_POST['cancel'])) {
                     </div>
 
                     <div class="additional-info-holder">
-                        <div><label for="">Add Measurement:</label><br><br><textarea name="measurements"  cols="30"
+                        <div><label for="">Add Measurement:</label><br><br><textarea name="measurements"  cols="30" id="measurements"
                                 class="open-input" rows="10" value=""
                                 ><?php echo $manage_data['measurements']; ?></textarea></div>
                     </div>
@@ -231,18 +233,22 @@ if (isset($_POST['cancel'])) {
                     <div class="row-info">
                         <div>
                             <label for="fee">Fee:</label><br><br>
-                            <input name="fee" type="number" placeholder="₱" class="open-input">
+                            <input name="fee" type="number" placeholder="₱" class="open-input" id="input1">
                         </div>
                         <div class="operation">-</div>
                         <div>
                             <label for="payment">Payment:</label><br><br>
-                            <input name="payment" type="number" placeholder="₱" class="open-input">
+                            <input name="payment" type="number" placeholder="₱" class="open-input" id="input2"> 
                         </div>
                         <div class="operation">=</div>
                         <div>
                             <label for="balance">Balance:</label><br><br>
-                            <input name="balance" type="text" placeholder="₱" class="open-input" readonly>
+                            <input name="balance" type="text" placeholder="₱" class="open-input"  id="input3" readonly >
                         </div>
+
+                        <input name="hiddenBalance" type="hidden" id="hiddenBalance">
+
+                      
                     </div>
 
                     <hr>
@@ -301,7 +307,7 @@ if (isset($_POST['cancel'])) {
             </form>
 
 
-            
+
         </div>
     </div>
 

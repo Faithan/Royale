@@ -207,17 +207,17 @@ if (isset($_POST['cancel'])) {
                     <div class="row-info">
                         <div>
                             <label for="fee">Balance:</label><br><br>
-                            <input name="fee" type="number" placeholder="₱" class="open-input">
+                            <input name="balance" type="number" placeholder="₱" class="open-input" value="<?php echo $manage_data['balance']; ?>">
                         </div>
                         <div class="operation">-</div>
                         <div>
                             <label for="payment">New Payment (if applicable):</label><br><br>
-                            <input name="payment" type="number" placeholder="₱" class="open-input">
+                            <input name="" type="number" placeholder="₱" class="open-input">
                         </div>
                         <div class="operation">=</div>
                         <div>
                             <label for="balance">New Balance (if applicable):</label><br><br>
-                            <input name="balance" type="text" placeholder="₱" class="open-input" readonly>
+                            <input name="" type="text" placeholder="₱" class="open-input" readonly>
                         </div>
                     </div>
 
@@ -234,7 +234,7 @@ if (isset($_POST['cancel'])) {
                                         <td><?php echo $manage_data['fee']; ?></td>
                                         <td><?php echo $manage_data['payment']; ?></td>
                                         <td><?php echo $manage_data['balance']; ?></td>
-                                        <td></td>  
+                                        <td><?php echo $manage_data['dateTime1']; ?></td>  
                                     </tr>
 
                             </table>

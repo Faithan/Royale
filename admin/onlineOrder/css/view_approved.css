@@ -294,7 +294,8 @@
 
 .info-holder .row-info .no-bg input,
 .info-holder .additional-info-holder .no-bg textarea{
-    background-color: white;
+    background-color:rgb(242, 242, 242);
+    font-size: 13.5px;
 }
 
 .tip{
