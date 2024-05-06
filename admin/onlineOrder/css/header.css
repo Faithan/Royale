@@ -42,7 +42,7 @@ body{
     justify-content: center;
     background-color:white;
     box-shadow: 0 2px 4px #b0b0b0;
-    gap: 200px;
+    gap: 10px;
 }
 
 .navbar ul {
@@ -65,6 +65,7 @@ nav ul li a {
     padding: 10px;
     text-decoration: none;
     color: #000;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
    
 }
 
@@ -110,7 +111,7 @@ nav ul li a {
 }
 
 .navbar .settings-btn {
-    font-size: 14px;
+    font-size: 13px;
     padding: 7px;
     padding-left:15px;
     padding-right: 15px;
@@ -146,10 +147,9 @@ nav ul li a {
  
 }
 
-
-
 .dropdown-content:hover {
     transition: 0.5s;
+    font-size: 13px;
 }
 
 
@@ -157,13 +157,21 @@ nav ul li a {
     display: block;
     z-index: 5;
     top: 7vh;
-    font-size: 14px;
+    font-size: 12px;
     border-top: white;
     box-shadow: 0 2px 4px #b0b0b0;
 }
 
+
+.dropdown:hover .dropdown-content  a:hover {
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+
+
 .navbar .bold-text{
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -171,3 +179,22 @@ nav ul li a {
 color: rgb(164, 0, 0);
 
 }
+
+
+
+/* animation */
+
+
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .settings-btn:hover #rotate-icon {
+    animation: rotate 2s infinite linear;
+  }

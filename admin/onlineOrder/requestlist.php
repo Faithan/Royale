@@ -62,13 +62,13 @@ if (isset($_GET['manage_id'])) {
                         <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
                         <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
                             List</a>
-                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
+                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can" ></i>
                             Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
                 <li><a href="#">Calender</a></li>
-                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"  id="rotate-icon"></i> Settings</a>
             </ul>
 
         </nav>

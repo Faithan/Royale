@@ -45,8 +45,20 @@ if (isset($_POST['accept'])) {
     $update_query = "UPDATE royale_orders_tbl SET status='approved', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname',
      req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', deadline = '$deadline',
      add_info='$add_info' WHERE order_id='$order_id'";
-    $manage_data = ['order_id' => '', 'req_fname' => '', 'req_mname' => '', 'req_lname' => '', 'req_contact' => '', 'req_address' => '',
-     'req_gender' => '', 'req_type' => '', 'req_date' => '', 'add_info' => '', 'deadline' => '', 'photo' => ''];
+    $manage_data = [
+        'order_id' => '',
+        'req_fname' => '',
+        'req_mname' => '',
+        'req_lname' => '',
+        'req_contact' => '',
+        'req_address' => '',
+        'req_gender' => '',
+        'req_type' => '',
+        'req_date' => '',
+        'add_info' => '',
+        'deadline' => '',
+        'photo' => ''
+    ];
 
 
     $query = (mysqli_query($con, $update_query));
@@ -164,7 +176,7 @@ if (isset($_POST['reject'])) {
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
                 <li><a href="#">Calender</a></li>
-                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a class="settings-btn" href="#"><i class="fa-solid fa-gear" id="rotate-icon"></i> Settings</a>
             </ul>
 
 
@@ -203,53 +215,66 @@ if (isset($_POST['reject'])) {
 
                 <div class="info-holder">
 
-                    <div class="id-holder">
-                        <div><label for="">Order Id:</label><br><br><input name="order_id" type="number"
+                <div class="section-header"><label for="">Customer's Information and Order Details</label></div>
+
+                    <br>
+
+                    <div class="row-info">
+                        <div><label for="">Order Id:</label><br><input name="order_id" type="number"
                                 value="<?php echo $manage_data['order_id']; ?>" readonly></div>
 
                     </div>
 
+
+
                     <div class="row-info">
-                        <div><label for="">First Name:</label><br><br><input name="req_fname" type="text"
+                        <div><label for="">First Name:</label><br><input name="req_fname" type="text"
                                 value="<?php echo $manage_data['req_fname']; ?>" readonly></div>
-                        <div><label for="">Middle Name:</label><br><br><input name="req_mname" type="text"
+                        <div><label for="">Middle Name:</label><br><input name="req_mname" type="text"
                                 value="<?php echo $manage_data['req_mname']; ?>" readonly></div>
-                        <div><label for="">Last Name:</label><br><br><input name="req_lname" type="text"
+                        <div><label for="">Last Name:</label><br><input name="req_lname" type="text"
                                 value="<?php echo $manage_data['req_lname']; ?>" readonly></div>
-                        <div><label for="">Contact:</label><br><br><input name="req_contact" type="number"
+                        <div><label for="">Contact:</label><br><input name="req_contact" type="number"
                                 value="<?php echo $manage_data['req_contact']; ?>" readonly></div>
                     </div>
 
                     <div class="row-info">
-                        <div><label for="">Address:</label><br><br><input name="req_address" type="text"
+                        <div><label for="">Address:</label><br><input name="req_address" type="text"
                                 value="<?php echo $manage_data['req_address']; ?>" readonly></div>
-                        <div><label for="">Gender:</label><br><br><input name="req_gender" type="text"
+                        <div><label for="">Gender:</label><br><input name="req_gender" type="text"
                                 value="<?php echo $manage_data['req_gender']; ?>" readonly></div>
-                        <div><label for="">Request Type:</label><br><br><input name="req_type" type="text"
+                        <div><label for="">Request Type:</label><br><input name="req_type" type="text"
                                 value="<?php echo $manage_data['req_type']; ?>" readonly></div>
-                        <div><label for="">Measurement Date:</label><br><br><input name="req_date" type="date"
-                                id="myInput" value="<?php echo $manage_data['req_date']; ?>" readonly></div>
+                        <div><label for="">Measurement Date:</label><br><input name="req_date" type="date" id="myInput"
+                                value="<?php echo $manage_data['req_date']; ?>" readonly></div>
                     </div>
 
-                    
+
                     <div class="row-info">
 
-                        <div><label for="">deadline:</label><br><br><input name="deadline" type="date"
-                                id="myInput" value="<?php echo $manage_data['deadline']; ?>"></div>
+                        <div><label for="">deadline:</label><br><input name="deadline" type="date" id="myInput"
+                                value="<?php echo $manage_data['deadline']; ?>" readonly></div>
                     </div>
 
                     <div class="additional-info-holder">
-                        <div><label for="">Additional Information:</label><br><br><textarea name="add_info" cols="30"
+                        <div><label for="">Additional Information:</label><br><textarea name="add_info" cols="30"
                                 rows="10" value="" readonly><?php echo $manage_data['add_info']; ?></textarea>
                         </div>
                     </div>
 
-                    <div class="tip"><p>Tips: It is very important to contact your customer for the legitimacy of his/her request.
-                         You can edit the information of your customer if needed by clicking the "edit details" button. 
-                        Deadline is required if not yet added.</p></div>
+                    <div class="tip">
+                        <p><b>Instructions:</b> Ensuring the legitimacy of your customer's request is of utmost
+                            importance. Please make sure to contact the customer to verify the details provided. If
+                            necessary, you can edit the customer's information by simply clicking the 'edit details'
+                            button for accuracy and completeness. Kindly note that a deadline is required for all
+                            orders. If the deadline has not yet been added, please ensure to include it promptly. This
+                            will help for efficient management and the order process, ensuring timely delivery
+                            or completion.</p>
+                    </div>
 
                     <div class="button-container">
-                        <div class="approved-btn"><button name="accept" type="submit" id="save"><i class="fa-solid fa-check"></i>
+                        <div class="approved-btn"><button name="accept" type="submit" id="save"><i
+                                    class="fa-solid fa-check"></i>
                                 Accept</button>
                         </div>
 

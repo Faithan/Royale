@@ -63,7 +63,7 @@ if (isset($_GET['manage_id'])) {
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
                 <li><a href="#">Calender</a></li>
-                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"  id="rotate-icon"></i> Settings</a>
             </ul>
 
         </nav>
@@ -85,7 +85,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Contact Number</th>
                         <th>Gender</th>
                         <th>Type of Request</th>
-                        <th>Date for Measurement</th>
+                        <th>Deadline</th>
                         <th>Photo</th>
                         <th>Action</th>
                     </tr>
@@ -100,7 +100,7 @@ if (isset($_GET['manage_id'])) {
                         $reqcontact = $row['req_contact'];
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
-                        $reqdate = $row['req_date'];
+                        $reqdate = $row['deadline'];
                         $imageNamesSerialized = $row['photo'];
 
 

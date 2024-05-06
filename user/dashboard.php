@@ -45,7 +45,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <li><a href="services.php">Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact </i></a></li>
-                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i>Settings</a>
+                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear rotate-icon"></i>Settings</a>
             </ul>
 
         </nav>

@@ -6,6 +6,12 @@ session_start();
 //     header('Location:../login.php');
 //     exit();
 // }
+if (isset($_GET['manage_id'])) {
+    $manage_id = $_GET['manage_id'];
+    $manage_query = "SELECT * FROM royale_orders_tbl WHERE order_id = $manage_id";
+    $manage_result = mysqli_query($con, $manage_query);
+    $manage_data = mysqli_fetch_assoc($manage_result);
+}
 
 
 ?>
@@ -29,11 +35,11 @@ session_start();
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/approvedlist.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/inprogresslist.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>Approved List</title>
+    <title>In-Progress List</title>
 </head>
 
 <body>
@@ -42,7 +48,7 @@ session_start();
         <nav class="navbar">
             <a class="logoLabel">R O Y A L E</a>
 
-             <ul>
+           <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
                     <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
@@ -64,13 +70,13 @@ session_start();
     </div>
 
     <div class="container">
-        <div class="header-text"><label for="">APPROVED LIST</label></div>
+        <div class="header-text"><label for="">FINISHED LIST</label></div>
         <div class="middle-content">
             <div class="search-holder">
                 <div class="search"><input type="text" id="search" name="search" placeholder="Search..."></div>
             </div>
             <div class="table-holder">
-                <table>
+            <table>
                     <tr>
                         <th>Order id</th>
                         <th>First Name</th>
@@ -79,12 +85,12 @@ session_start();
                         <th>Contact Number</th>
                         <th>Gender</th>
                         <th>Type of Request</th>
-                        <th>Date for Measurement</th>
+                        <th>Deadline</th>
                         <th>Photo</th>
                         <th>Action</th>
                     </tr>
-              
-                    <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='approved' ORDER BY order_id DESC";
+ 
+                    <?php $fetchdata = "SELECT * FROM royale_orders_tbl WHERE status='done' ORDER BY order_id DESC";
                     $result = mysqli_query($con, $fetchdata);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $id = $row['order_id'];
@@ -94,7 +100,7 @@ session_start();
                         $reqcontact = $row['req_contact'];
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
-                        $reqdate = $row['req_date'];
+                        $reqdate = $row['deadline'];
                         $imageNamesSerialized = $row['photo'];
 
 
@@ -123,7 +129,7 @@ session_start();
                             </td>
 
                             <td class="button-holder">  
-                                <a class="open-btn" href="view_approved.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
+                                <a class="open-btn" href="view_inprogress.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
                             </td>
                         </tr>
 

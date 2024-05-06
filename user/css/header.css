@@ -43,6 +43,7 @@ body{
     background-color:white;
     box-shadow: 0 2px 4px #b0b0b0;
     gap: 200px;
+   
 }
 
 .navbar ul {
@@ -65,6 +66,7 @@ nav ul li a {
     padding: 10px;
     text-decoration: none;
     color: #000;
+     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
    
 }
 
@@ -126,6 +128,7 @@ nav ul li a {
     justify-content: center;
     align-items: center;
     gap: 5px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .navbar .settings-btn:hover {
@@ -155,10 +158,31 @@ nav ul li a {
     display: block;
     z-index: 5;
     margin-top: 9%;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .navbar .bold-text{
-    font-size: 17px;
+    font-size: 20px;
     font-weight: bold;
 }
+
+
+
+
+
+/* animation */
+
+
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .settings-btn:hover #rotate-icon {
+    animation: rotate 2s infinite linear;
+  }

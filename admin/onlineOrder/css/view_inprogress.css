@@ -7,6 +7,10 @@
     grid-template-rows: 0.15fr 0.15fr 0.25fr 4fr 0.5fr;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
 
 
 
@@ -218,6 +222,7 @@
 .info-holder .id-holder label {
     font-size: 14px;
     font-weight: bold;
+    padding-left: 5px;
 }
 
 .info-holder .id-holder input {
@@ -231,25 +236,30 @@
 
 .info-holder .row-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
+    padding-bottom: 15px;
+    align-items: center;
+}
+
+.info-holder .row-info-payment{
+    display: flex;
+    justify-content: space-between; 
     padding-top: 15px;
     padding-bottom: 15px;
     align-items: center;
 }
 
-.info-holder .row-info .operation{
-    margin-top: 25px;
-    font-size: 30px;
+
+.info-holder .row-info-payment .operation{
+    margin-top: 10px;
+    font-size: 25px;
     font-weight: bold;
 }
-
-
-.info-holder .row-info label {
+.info-holder .row-info-payment label {
     font-size: 13.5px;
     font-weight: bold;
 }
-
-.info-holder .row-info input {
+.info-holder .row-info-payment input {
     width: 200px;
     height: 30px;
     padding-left: 5px;
@@ -259,13 +269,30 @@
     background-color: aliceblue;
 }
 
+
+.info-holder .row-info label {
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.info-holder .row-info input {
+    width: 200px;
+    height: 30px;
+    padding-left: 5px;
+    border: 1px solid transparent;
+    color: #7b7b7b;
+    font-size: 13.5px;
+    background-color: aliceblue;
+}
+
 .info-holder .row-info .open-input {
     border: 1px solid #d7d7d7;
     color: rgb(71, 71, 71);
 
 }
 .info-holder .additional-info-holder label {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -279,7 +306,7 @@
     padding-left: 5px;
     border: 1px solid transparent;
     color: rgb(71, 71, 71);
-    font-size: 15px;
+    font-size: 13.5px;
     background-color: aliceblue;
 }
 
@@ -312,7 +339,7 @@
     border: 1px solid rgb(221, 229, 235);
     padding: 5px;
     font-size: 13.5px;
-    color: #182B4D;
+    color: #7b7b7b;
     text-align: center;
     background-color:rgb(242, 242, 242) ;
 }
@@ -334,6 +361,24 @@
 }
 
 
+
+
+
+
+/* section header */
+
+.section-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    background-color:aliceblue;
+    text-align: center;
+}
+.section-header label{
+    font-weight: bold;
+    color: #182B4D;
+    text-shadow: 0 1px 1px rgb(225, 225, 225);
+}
 
 
 

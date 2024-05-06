@@ -64,12 +64,14 @@ if (isset($_POST['submit'])) {
     $imageNamesSerialized = serialize($imageNames);
     // $imageNamesSerialized = json_encode($imageNames);
 
-                $savedata = "INSERT INTO royale_orders_tbl (order_id, status, req_fname, req_mname, req_lname, req_contact, req_address, req_gender,req_type, req_date, add_info, photo, deadline, assigned_emp, price, measurements, refund )
-                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype', '$reqdate','$add_info' ,'$imageNamesSerialized','$deadline','','','','','','' )";
+                $savedata = "INSERT INTO royale_orders_tbl
+                 VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype',
+                  '$reqdate','$add_info','$imageNamesSerialized','$deadline',
+                  '','','','','','','','','','','')";
 
                 $query = (mysqli_query($con, $savedata));
                 if ($query) {
-                    $message = "Reservation Sent Successfully!, wait for confirmation";
+                    $message = "Request Sent Successfully! please wait for confirmation";
                     $isSuccess = true;
                 } else {
                     $message = "Form Submission Failed!";
@@ -153,6 +155,7 @@ if (isset($_POST['submit'])) {
     <script src="javascript/fullscreen.js" defer></script>
     <script src="javascript/date.js" defer></script>
     <script src="javascript/inputColor.js" defer></script>
+    <script src="javascript/contact.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
@@ -176,7 +179,7 @@ if (isset($_POST['submit'])) {
                 <li><a class="bold-text" href="services.php"><i class="fa-solid fa-address-book"></i> Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
-                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"></i>Settings</a>
+                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear" id="rotate-icon"></i>Settings</a>
             </ul>
 
         </nav>
@@ -330,7 +333,7 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="info-line">
-                <input type="number" name="req-contact" class="req-contact" placeholder="Contact Number" onkeyup="changeColor(this)" required>
+                <input type="number" maxlength="11" id="contact" name="req-contact" class="req-contact" placeholder="Contact Number"  pattern="[0-9]{11}" title="Please enter a valid 11-digit contact number" onkeyup="changeColor(this)" required>
 
                 <input type="text" name="req-address" placeholder="Address" onkeyup="changeColor(this)" required>
 
@@ -359,7 +362,7 @@ if (isset($_POST['submit'])) {
 
             <div class="info-line">
 
-                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . ." onkeyup="changeColor(this)"></textarea>
+                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . . you can leave it blank if there's no additional information" onkeyup="changeColor(this)"></textarea>
 
             </div>
 
