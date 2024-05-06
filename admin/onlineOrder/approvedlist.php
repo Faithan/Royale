@@ -45,7 +45,7 @@ session_start();
              <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fas fa-globe flipping-icon"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
                         <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
                         <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>

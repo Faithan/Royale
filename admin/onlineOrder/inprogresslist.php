@@ -51,7 +51,7 @@ if (isset($_GET['manage_id'])) {
            <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fas fa-globe flipping-icon"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
                         <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
                         <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
@@ -86,6 +86,8 @@ if (isset($_GET['manage_id'])) {
                         <th>Gender</th>
                         <th>Type of Request</th>
                         <th>Deadline</th>
+                        <th>Fee</th>
+                        <th>Balance</th>
                         <th>Photo</th>
                         <th>Action</th>
                     </tr>
@@ -101,6 +103,8 @@ if (isset($_GET['manage_id'])) {
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
                         $reqdate = $row['deadline'];
+                        $fee = $row['fee'];
+                        $balance = $row['balance'];
                         $imageNamesSerialized = $row['photo'];
 
 
@@ -118,6 +122,8 @@ if (isset($_GET['manage_id'])) {
                             <td><?php echo $reqgender ?></td>
                             <td><?php echo $reqtype ?></td>
                             <td><?php echo $reqdate ?></td>
+                            <td>₱ <?php echo $fee ?></td>
+                            <td>₱ <?php echo $balance ?></td>
 
                             <td>
                                 <div class="table-photo">

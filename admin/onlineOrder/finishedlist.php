@@ -39,7 +39,7 @@ if (isset($_GET['manage_id'])) {
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>In-Progress List</title>
+    <title>Finished List</title>
 </head>
 
 <body>
@@ -51,7 +51,7 @@ if (isset($_GET['manage_id'])) {
            <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="requestlist.php" class="bold-text"><i class="fas fa-globe flipping-icon"></i> Online Order <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
                         <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
                         <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
@@ -70,7 +70,7 @@ if (isset($_GET['manage_id'])) {
     </div>
 
     <div class="container">
-        <div class="header-text"><label for="">FINISHED LIST</label></div>
+        <div class="header-text"><label for="">FINISHED / RECIEVED LIST</label></div>
         <div class="middle-content">
             <div class="search-holder">
                 <div class="search"><input type="text" id="search" name="search" placeholder="Search..."></div>
@@ -85,7 +85,7 @@ if (isset($_GET['manage_id'])) {
                         <th>Contact Number</th>
                         <th>Gender</th>
                         <th>Type of Request</th>
-                        <th>Deadline</th>
+                        <th>Date and Time of Completion</th>
                         <th>Photo</th>
                         <th>Action</th>
                     </tr>
@@ -100,7 +100,7 @@ if (isset($_GET['manage_id'])) {
                         $reqcontact = $row['req_contact'];
                         $reqgender = $row['req_gender'];
                         $reqtype = $row['req_type'];
-                        $reqdate = $row['deadline'];
+                        $reqdate = $row['dateTime2'];
                         $imageNamesSerialized = $row['photo'];
 
 
@@ -129,7 +129,7 @@ if (isset($_GET['manage_id'])) {
                             </td>
 
                             <td class="button-holder">  
-                                <a class="open-btn" href="view_inprogress.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
+                                <a class="open-btn" href="view_finished.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-square-up-right"></i> Open</a></button>
                             </td>
                         </tr>
 

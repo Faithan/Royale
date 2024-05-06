@@ -203,7 +203,7 @@ if (isset($_POST['cancel'])) {
             <ul>
                 <li><a href="#">Walk-Ins</a></li>
                 <li class="dropdown">
-                    <a href="requestlist.php" class="bold-text"><i class="fa-solid fa-earth-americas"></i> Online Order
+                    <a href="requestlist.php" class="bold-text"><i class="fas fa-globe flipping-icon"></i> Online Order
                         <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
                         <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
@@ -291,9 +291,9 @@ if (isset($_POST['cancel'])) {
                                     <th>Date and Time</th>
                                 </tr>
                                 <tr>
-                                    <td><?php echo $manage_data['fee']; ?></td>
-                                    <td><?php echo $manage_data['payment']; ?></td>
-                                    <td><?php echo $manage_data['balance']; ?></td>
+                                    <td>₱ <?php echo $manage_data['fee']; ?></td>
+                                    <td>₱ <?php echo $manage_data['payment']; ?></td>
+                                    <td>₱ <?php echo $manage_data['balance']; ?></td>
                                     <td><?php echo $manage_data['dateTime1']; ?></td>
                                 </tr>
 
@@ -362,12 +362,12 @@ if (isset($_POST['cancel'])) {
 
 
                     <div class="row-info">
-                        <div class="no-bg"><label for="">Deadline:</label><br><br><input name="deadline" type="date"
+                        <div class="no-bg"><label for="">Deadline:</label><br><input name="deadline" type="date"
                                 class="open-input" value="<?php echo $manage_data['deadline']; ?>" readonly></div>
                     </div>
 
                     <div class="additional-info-holder">
-                        <div class="no-bg"><label for="">Add Measurement:</label><br><br><textarea name="measurements"
+                        <div class="no-bg"><label for="">Measurements:</label><br><br><textarea name="measurements"
                                 cols="30" class="open-input" rows="10" value=""
                                 readonly><?php echo $manage_data['measurements']; ?></textarea></div>
                     </div>

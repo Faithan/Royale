@@ -22,8 +22,11 @@ $manage_data = [
     'deadline' => '',
     'measurements' => '',
     'fee' => '',
+    'balance' => '',
     'payment' => '',
-    'balance' => ''
+    'dateTime1' => '',
+    'new_payment' => '',
+    'new_balance' => '',
 ];
 
 
@@ -51,14 +54,13 @@ if (isset($_POST['save'])) {
     $add_info = $_POST['add_info'];
     $deadline = $_POST['deadline'];
     $measurements = $_POST['measurements'];
-    $fee = $_POST['fee'];
-    $payment = $_POST['payment'];
-    $hiddenBalance = $_POST['hiddenBalance'];
-    $dateTime1 = date('Y-m-d H:i:s');
+    $new_payment = $_POST['new_payment'];
+    $new_balance = $_POST['new_balance'];
+    $dateTime2 = date('Y-m-d H:i:s');
 
-    $update_query = " UPDATE royale_orders_tbl SET status='inprogress', req_fname='$req_fname', req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
+    $update_query = "UPDATE royale_orders_tbl SET status='done', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
      req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
-     deadline='$deadline', measurements='$measurements', fee='$fee', payment='$payment', balance='$hiddenBalance', dateTime1='$dateTime1' WHERE order_id='$order_id' ";
+     deadline='$deadline', measurements='$measurements', new_payment='$new_payment', new_balance='$new_balance', dateTime2='$dateTime2' WHERE order_id='$order_id'";
 
     $manage_data = [
         'order_id' => '',
@@ -75,16 +77,18 @@ if (isset($_POST['save'])) {
         'deadline' => '',
         'measurements' => '',
         'fee' => '',
+        'balance' => '',
         'payment' => '',
-        'balance' => ''
+        'dateTime1' => '',
+        'new_payment' => '',
+        'new_balance' => '',
     ];
-
 
 
     $query = (mysqli_query($con, $update_query));
 
     if ($query) {
-        $message = "Accepted Successfully!";
+        $message = "Marked as Done Successfully!";
         $isSuccess = true;
 
     } else {
@@ -105,17 +109,9 @@ if (isset($_POST['cancel'])) {
     $req_type = $_POST['req_type'];
     $req_date = $_POST['req_date'];
     $add_info = $_POST['add_info'];
-    $deadline = $_POST['deadline'];
-    $measurements = $_POST['measurements'];
 
-    $fee = $_POST['fee'];
-    $payment = $_POST['payment'];
-    $balance = $_POST['balance'];
-
-    $update_query = "UPDATE royale_orders_tbl SET status='cancelled', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact',
-    req_address='$req_address', req_gender='$req_gender', req_type='$req_type', req_date='$req_date', add_info='$add_info', 
-    deadline='cancelled', measurements='cancelled', fee='cancelled', payment='cancelled', balance='cancelled' WHERE order_id='$order_id'";
-
+    $update_query = "UPDATE royale_orders_tbl SET status='cancelled', req_fname='$req_fname',  req_mname='$req_mname', req_lname='$req_lname', req_contact='$req_contact', req_address='$req_address', req_gender='$req_gender', req_type='$req_type',
+     req_date='$req_date', add_info='$add_info' WHERE order_id='$order_id'";
     $manage_data = [
         'order_id' => '',
         'req_fname' => '',
@@ -130,15 +126,15 @@ if (isset($_POST['cancel'])) {
         'photo' => '',
         'deadline' => '',
         'measurements' => '',
-        'fee' => '',
-        'payment' => '',
-        'balance' => ''
+        'new_payment' => '',
+        'new_balance' => '',
     ];
+
 
     $query = (mysqli_query($con, $update_query));
 
     if ($query) {
-        $message = "Cancelled Successfully!";
+        $message = "Rejected Successfully!";
         $isSuccess = true;
 
     } else {
@@ -170,13 +166,14 @@ if (isset($_POST['cancel'])) {
     <script src="javascript/required.js" defer></script>
     <script src="javascript/calculation.js" defer></script>
 
+
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/view_approved.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/view_inprogress.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>View Request</title>
+    <title>View In-Progress</title>
 </head>
 
 <body>
@@ -229,7 +226,7 @@ if (isset($_POST['cancel'])) {
     </div>
 
     <div class="container">
-        <div class="header-text"><label for="">VIEW APPROVED</label></div>
+        <div class="header-text"><label for="">VIEW FINISHED / RECIEVED</label></div>
         <div class="middle-content">
             <div class="search-holder">
                 <div class="search"><input type="text" id="search" name="search" placeholder="Search..."></div>
@@ -250,7 +247,7 @@ if (isset($_POST['cancel'])) {
 
                 <div class="button-holder">
                     <div class="back-btn">
-                        <div><a href="approvedlist.php"><i
+                        <div><a href="finishedlist.php"><i
                                     class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> back</a></div>
                     </div>
                 </div>
@@ -259,88 +256,60 @@ if (isset($_POST['cancel'])) {
 
                 <div class="info-holder">
 
-                    <div class="section-header"><label for="">Payment Section</label></div>
+                    <div class="section-header"><label for="">Payment Record</label></div>
 
 
-                    <div class="row-info">
-                        <div><label for="">Deadline:</label><br><br><input name="deadline" type="date"
-                                class="open-input" value="<?php echo $manage_data['deadline']; ?>"></div>
-                    </div>
 
-                    <div class="additional-info-holder">
-                        <div><label for="">Add Measurement:</label><br><br><textarea name="measurements" cols="30"
-                                id="measurements" class="open-input" rows="10"
-                                value=""><?php echo $manage_data['measurements']; ?></textarea></div>
+                    <div class="row-info-payment">
+                        <div class="table-holder">
+                            <table>
+                                <tr>
+                                    <th>Fee</th>
+                                    <th>Previous Payment</th>
+                                    <th>Balance</th>
+                                    <th>Date and Time</th>
+                                </tr>
+                                <tr>
+                                    <td>₱ <?php echo $manage_data['fee']; ?></td>
+                                    <td>₱ <?php echo $manage_data['payment']; ?></td>
+                                    <td>₱ <?php echo $manage_data['balance']; ?></td>
+                                    <td><?php echo $manage_data['dateTime1']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Latest Payment</th>
+                                    <th>Latest Balance</th>
+                                    <th>Completion Date and Time</th>
+                                </tr>
+                                <tr>
+                                    <td>₱ <?php echo $manage_data['balance']; ?></td>
+                                    <td>₱ <?php echo $manage_data['new_payment']; ?></td>
+                                    <td>₱ <?php echo $manage_data['new_balance']; ?></td>
+                                    <td><?php echo $manage_data['dateTime2']; ?></td>
+                                </tr>
+
+                            </table>
+                        </div>
                     </div>
 
                     <hr>
+                    <br>
 
-
-
-
-                    <div class="row-info">
-                        <div>
-                            <label for="fee">Fee:</label><br><br>
-                            <input name="fee" type="number" placeholder="₱" class="open-input" id="input1">
-                        </div>
-                        <div class="operation">-</div>
-                        <div>
-                            <label for="payment">Payment:</label><br><br>
-                            <input name="payment" type="number" placeholder="₱" class="open-input" id="input2">
-                        </div>
-                        <div class="operation">=</div>
-                        <div>
-                            <label for="balance">Balance:</label><br><br>
-                            <input name="balance" type="text" placeholder="₱" class="open-input" id="input3" readonly>
-                        </div>
-
-                        <input name="hiddenBalance" type="hidden" id="hiddenBalance">
-
-                    </div>
-
-
-
-
-                    <hr>
-
-
-
+                    <div class="section-header"><label for="">For Renting Only</label></div>
 
                     <div class="tip">
-                        <p><b>Instructions:</b> Please note that measurements will be added to the order on the date
-                            provided by the customer. Additionally, kindly ensure that the payment for the order is made
-                            at the same time. This will help us streamline the process and ensure accurate fulfillment
-                            of the customer's requirements.</p>
+                        <p><b>Instructions:</b> When the customer has a zero (0) balance, there is no need to add a new
+                            payment. Proceed with the order as usual without requesting any further payment information.
+                            Once the order is completed or fulfilled, mark it as done in the system or relevant
+                            documentation. Ensure that all necessary steps, such as packaging and quality checks, have
+                            been completed before proceeding.
+                            The status will be automatically updated and the necessary parties will be notified. </p>
                     </div>
 
-
-
-
-
-
-
-                    <div class="button-container">
-                        <div class="approved-btn"><button name="save" type="submit" id="save"><i
-                                    class="fa-solid fa-floppy-disk"></i>
-                                Save Changes</button>
-                        </div>
-
-                        <div class="reject-btn"><button name="cancel" type="submit"><i class="fa-solid fa-trash"></i>
-                                Cancel Order</button>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
+        
                     <div class="section-header"><label for="">Customer's Information and Order Details</label></div>
+
+                    <br>
 
                     <div class="row-info">
                         <div class="no-bg"><label for="">Order Id:</label><br><input name="order_id" type="number"
@@ -375,25 +344,22 @@ if (isset($_POST['cancel'])) {
                         </div>
                     </div>
 
-                    <div class="tip">
-                        <p><b>Tips:</b> By clicking the 'edit details' button, you gain the ability to make necessary
-                            edits to both the customer's information and the order details, if required. This feature
-                            empowers you to ensure accuracy and completeness in the information provided.</p>
+
+                    <div class="row-info">
+                        <div class="no-bg"><label for="">Deadline:</label><br><input name="deadline" type="date"
+                                class="open-input" value="<?php echo $manage_data['deadline']; ?>" readonly></div>
                     </div>
 
-
-
-                    <div class="button-container">
-                        <div class="edit-btn"><button type="button" id="toggleButton" onclick="toggleReadOnly()">
-                                <i id="toggleIcon" class="fas fa-lock"></i> Edit Details
-                            </button>
-                        </div>
+                    <div class="additional-info-holder">
+                        <div class="no-bg"><label for="">Measurements:</label><br><br><textarea name="measurements"
+                                cols="30" class="open-input" rows="10" value=""
+                                readonly><?php echo $manage_data['measurements']; ?></textarea></div>
                     </div>
 
+                    
 
                 </div>
             </form>
-
 
 
         </div>
@@ -405,7 +371,6 @@ if (isset($_POST['cancel'])) {
         <span class="close-icon">&times;</span>
         <img id="fullscreen-image">
     </div>
-
 
 </body>
 
