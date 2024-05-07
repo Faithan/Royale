@@ -259,7 +259,7 @@ if (isset($_POST['cancel'])) {
 
                 <div class="info-holder">
 
-                    <div class="section-header"><label for="">Payment Section</label></div>
+                 
 
 
                     <div class="row-info">
@@ -273,9 +273,7 @@ if (isset($_POST['cancel'])) {
                                 value=""><?php echo $manage_data['measurements']; ?></textarea></div>
                     </div>
 
-                    <hr>
-
-
+                    <div class="section-header"><label for="">Payment Section</label></div>
 
 
                     <div class="row-info">

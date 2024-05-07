@@ -115,32 +115,48 @@ table {
     background-color: white;
 }
 
+
+
+
 table th {
     border: 1px solid rgb(221, 229, 235);
-    padding: 5px;
+    padding:10px;
     font-weight: bold;
-    font-size: 15px;
-    color: #182B4D;
+    font-size: 14px;
+    color: white;
     top: 0;
     position: -webkit-sticky;   
     position: sticky;
     z-index: 1;
-    background-color: white;
+    background-color: #182B4D;
+
+
 }
 
 table td {
-    border: 1px solid rgb(221, 229, 235);
-    padding: 5px;
-    font-size: 14px;
+    border: 1px solid #ddd;
+    padding: 4px;
+    font-size: 13px;    
     color: #182B4D;
     text-align: center;
 }
+
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+
+
+
+
 
 
 .table-photo{
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 5px;
 }
 
 .table-photo img {
@@ -161,7 +177,7 @@ td .open-btn {
     align-items: center;
     color: white;
     background-color: #2b4c85;
-    border-radius: 10px;
+    border-radius: 5px;
     gap: 5px;
     font-size: 14px;
 }
