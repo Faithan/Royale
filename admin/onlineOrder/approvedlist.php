@@ -57,7 +57,7 @@ session_start();
                 <li><a href="#">Employee</a></li>
                 <li><a href="#">History</a></li>
                 <li><a href="#">Calender</a></li>
-                <a class="settings-btn" href="#"><i class="fa-solid fa-gear"  id="rotate-icon"></i> Settings</a>
+                <a class="settings-btn" href="../settings/settings.php"><i class="fa-solid fa-gear"  id="rotate-icon"></i> Settings</a>
             </ul>
 
         </nav>

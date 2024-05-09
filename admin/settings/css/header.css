@@ -1,0 +1,216 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body{
+    height: 100vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #61737b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #002334;
+}
+
+
+.navbar-container{
+    top: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 2;
+}
+
+.navbar {
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    background-color:white;
+    box-shadow: 0 2px 4px #b0b0b0;
+    gap: 10px;
+}
+
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    gap: 5px;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+   
+}
+
+
+nav ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #000;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+   
+}
+
+.navbar .logoLabel{
+    font-weight: bold;
+    color: #182B4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-right: 200px;
+    text-shadow: 0 2px 2px #bebebe;
+    
+}
+
+
+.navbar li a {
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    color: #182B4D;
+    
+}
+
+.navbar li a:hover {
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: black;
+}
+
+.navbar img {
+    height: 50px;
+    width: 50px;
+    filter: invert();
+}
+
+.navbar .settings-btn {
+    font-size: 13px;
+    padding: 7px;
+    padding-left:15px;
+    padding-right: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-left: 30px;
+    background-color: #1f3864;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    
+}
+
+.navbar .settings-btn:hover {
+    background-color: #182B4D;
+    transition: 0.3s;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 14%;
+    transition: 0.5s;
+    z-index: 5;
+ 
+}
+
+.dropdown-content:hover {
+    transition: 0.5s;
+    font-size: 13px;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    z-index: 5;
+    top: 7vh;
+    font-size: 12px;
+    border-top: white;
+    box-shadow: 0 2px 4px #b0b0b0;
+}
+
+
+.dropdown:hover .dropdown-content  a:hover {
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+
+
+.navbar .bold-text{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dropdown-content .red-text{
+color: rgb(164, 0, 0);
+
+}
+
+
+
+/* animation */
+
+
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .settings-btn:hover #rotate-icon {
+    animation: rotate 2s infinite linear;
+  }
+
+  
+  @keyframes flip {
+    0% { transform: perspective(400px) rotateY(0); }
+    50% { transform: perspective(400px) rotateY(180deg); }
+    100% { transform: perspective(400px) rotateY(0); }
+  }
+  .flipping-icon {
+    transform: perspective(400px) rotateY(0);
+    transition: transform 0.5s;
+  }
+  .bold-text:hover .flipping-icon {
+    animation: flip 2s infinite linear;
+  }

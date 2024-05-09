@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
             <a class="logoLabel">R O Y A L E</a>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a class="bold-text" href="services.php"><i class="fa-solid fa-crown"></i> Services</a></li>
+                <li><a class="bold-text" href="services.php"><i class="fa-brands fa-web-awesome"></i> Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear" id="rotate-icon"></i>Settings</a>
