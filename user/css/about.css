@@ -17,6 +17,7 @@
     box-shadow: 0 0 3px rgb(185, 185, 185);
     border-radius: 5px;
     padding: 30px;
+    height: 69vh;
 }
 
 .header-text {
@@ -36,6 +37,7 @@
 .middle-paragraph p{
     text-align: justify;
     color: rgb(92, 92, 92);
+    font-size: 14px;
 }
 
 
@@ -48,7 +50,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 40px;
+    padding-top: 50px;
+    font-size: 14px;
 }
 
 .bottom-content .text-bold{

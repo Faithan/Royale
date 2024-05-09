@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
     <script src="javascript/uploadphoto.js" defer></script>
     <script src="javascript/clearSelect.js" defer></script>
     <script src="javascript/fullscreen.js" defer></script>
-    <script src="javascript/date.js" defer></script>
+    <script src="javascript/date.js" defer></script>    
     <script src="javascript/inputColor.js" defer></script>
     <script src="javascript/contact.js" defer></script>
 
@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
             <a class="logoLabel">R O Y A L E</a>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a class="bold-text" href="services.php"><i class="fa-solid fa-address-book"></i> Services</a></li>
+                <li><a class="bold-text" href="services.php"><i class="fa-solid fa-crown"></i> Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear" id="rotate-icon"></i>Settings</a>
@@ -203,7 +203,7 @@ if (isset($_POST['submit'])) {
         <!-- right content -->  
         <div class="right-content">
             <div class="right-head">
-                <label class="for-label-text">PRODUCTS AND SERVICES</label>
+                <!-- <label class="for-label-text">PRODUCTS AND SERVICES</label> -->
             </div>
             <!-- ready made products content -->
             <div class="products-head">

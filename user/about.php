@@ -43,7 +43,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="services.php">Services</a></li>
-                <li><a class="bold-text" href="about.php"><i class="fa-solid fa-crown"></i> About</a></li>
+                <li><a class="bold-text" href="about.php"><i class="fa-solid fa-address-book"></i> About</a></li>
                 <li><a href="contact.php">Contact </i></a></li>
                 <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear" id="rotate-icon"></i>Settings</a>
             </ul>

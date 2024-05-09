@@ -1,7 +1,8 @@
 .container {
     height: 93vh;
     background: linear-gradient(360deg, rgb(25, 75, 117) 0.5%, rgb(72, 109, 141) 5%, rgb(169, 185, 220) 40%, rgb(229, 236, 250) 70%);
-    /* background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%); */
+    background: linear-gradient(360deg, rgb(17, 51, 79) 0.5%, rgb(51, 77, 99) 5%, rgb(136, 149, 177) 40%, rgb(183, 188, 199) 70%);
+    /* background: linear-gradient(360deg,  rgb(178, 183, 194)  0.5%,  rgb(183, 188, 199)  5%, rgb(136, 149, 177) 50%, rgb(183, 188, 199) 70%); */
     display: grid;
     grid-template-columns:  1fr  1fr;
     grid-template-rows: 2fr;
@@ -47,16 +48,17 @@
 }
 
 .left-content .learn-btn a{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: #182B4D;
     text-decoration: none;
     color: white;
     border: 1px solid;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px #3d3d3d;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px #5c5c5c;
+    font-size: 15px;
 }
 
 .left-content .learn-btn a:hover{
