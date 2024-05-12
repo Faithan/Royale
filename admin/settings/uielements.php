@@ -28,7 +28,7 @@ session_start();
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/settings.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/uielements.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
@@ -71,9 +71,9 @@ session_start();
         <div class="side-nav-holder">
             <div class="side-nav">
                 <div class="side-item-holder">
-                    <div class="highlighted" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
                     <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
+                                class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
+                    <div class="highlighted" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-brands fa-elementor"></i> UI Elements</label></div>
                     <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-solid fa-table-columns"></i> Form Elements</label></div>

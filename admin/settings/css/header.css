@@ -188,6 +188,7 @@ color: rgb(164, 0, 0);
 
 
 
+
 @keyframes rotate {
     0% {
       transform: rotate(0deg);
@@ -211,6 +212,6 @@ color: rgb(164, 0, 0);
     transform: perspective(400px) rotateY(0);
     transition: transform 0.5s;
   }
-  .bold-text:hover .flipping-icon {
+  .dropdown:hover .flipping-icon {
     animation: flip 2s infinite linear;
   }
