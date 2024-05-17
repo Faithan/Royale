@@ -28,11 +28,11 @@ session_start();
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/settings.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/formelement.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
-    <title>Settings Dashboard</title>
+    <title>Settings Form Element</title>
 
 
 </head>
@@ -71,11 +71,11 @@ session_start();
         <div class="side-nav-holder">
             <div class="side-nav">
                 <div class="side-item-holder">
-                    <div class="highlighted" onclick="window.location.href='settings.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
                     <div class="side-nav-item" onclick="window.location.href='uielements.php'"><label for=""><i
                                 class="fa-brands fa-elementor"></i> UI Elements</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='formelement.php'"><label for=""><i
+                    <div class="highlighted" onclick="window.location.href='formelement.php'"><label for=""><i
                                 class="fa-solid fa-table-columns"></i> Form Elements</label></div>
                     <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-solid fa-chart-column"></i> Charts</label></div>
@@ -92,19 +92,10 @@ session_start();
         </div>
         <div class="middle-content">
             <div class="header-text">
-                <h2>Royale's Dashboard</h2>
+                <h2>Royale's Form Elements</h2>
             </div>
             <div class="dashboard-content">
-                <div class="top-boxes">
-                    <div class="box1"></div>
-                    <div class="box2"></div>
-                    <div class="box3"></div>
-                    <div class="box4"></div>
-                </div>
-                <div class="middle-boxes">
-                    <div class="largebox1"></div>
-                    <div class="largebox2"></div>
-                </div>
+
             </div>
 
 

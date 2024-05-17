@@ -341,7 +341,7 @@ if (isset($_POST['submit'])) {
                     <option disabled selected value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                </select>
+                </select>   
             </div>
 
             <div class="info-line">
