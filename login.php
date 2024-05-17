@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
     if (mysqli_num_rows($result) == 1) {
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $adminusername;
-        header('Location:admin/settings.php');
+        header('Location:admin/settings/settings.php');
         exit();
     } else {
         $error_message = "Invalid username or password;";

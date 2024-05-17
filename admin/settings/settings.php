@@ -49,13 +49,13 @@ session_start();
                     <a href="../onlineOrder/requestlist.php"><i class="fas fa-globe flipping-icon"></i> Online Order
                         <i class="fa-solid fa-angle-down"></i></a>
                     <div class="dropdown-content">
-                        <a href="requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
-                        <a href="approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
-                        <a href="inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
-                        <a href="finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
-                        <a class="red-text" href="returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
+                        <a href="../onlineOrder/requestlist.php"><i class="fa-solid fa-list"></i> Request List</a>
+                        <a href="../onlineOrder/approvedlist.php"><i class="fa-solid fa-list-check"></i> Approved List</a>
+                        <a href="../onlineOrder/inprogresslist.php"><i class="fa-solid fa-list-check"></i> In-progress List</a>
+                        <a href="../onlineOrder/finishedlist.php"><i class="fa-solid fa-check-double"></i> Finished/Recieved List</a>
+                        <a class="red-text" href="../onlineOrder/returnedlist.php"><i class="fa-solid fa-ban"></i> Returned/Refunded
                             List</a>
-                        <a class="red-text" href="rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
+                        <a class="red-text" href="../onlineOrder/rejectedlist.php"><i class="fa-solid fa-trash-can"></i>
                             Rejected/Cancelled List</a>
                     </div>
                 <li><a href="#">Employee</a></li>
@@ -73,20 +73,8 @@ session_start();
                 <div class="side-item-holder">
                     <div class="highlighted" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='uielements.php'"><label for=""><i
-                                class="fa-brands fa-elementor"></i> UI Elements</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='formelement.php'"><label for=""><i
-                                class="fa-solid fa-table-columns"></i> Form Elements</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-solid fa-chart-column"></i> Charts</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-solid fa-table"></i> Tables</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-solid fa-icons"></i> Icons</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-solid fa-user-gear"></i> User Page</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-solid fa-book"></i> Documentation</label></div>
+                    <div class="side-nav-item" onclick="window.location.href='readyProducts.php'"><label for=""><i
+                                class="fa-solid fa-user-gear"></i> Ready Made Products</label></div>
                 </div>
             </div>
         </div>
