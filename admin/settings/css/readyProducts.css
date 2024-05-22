@@ -310,6 +310,7 @@
 
 
 
+
 #sizeInput {
     text-transform: capitalize;
 }
@@ -335,6 +336,11 @@
     color: white;
 }
 
+
+
+#sizesInput{
+    text-transform: uppercase;
+}
 
 
 
