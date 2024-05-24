@@ -27,54 +27,8 @@
 }
 
 
-.side-nav-holder {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    width: 30vh;
-    padding: 20px;
-    height: 83vh;
-    overflow-y: scroll;
-}
-
-.side-nav {
-    display: flex;
-    justify-content: center;
-}
-
-.side-item-holder {
-    width: 100%;
-}
-
-.side-nav .side-nav-item,
-.side-nav .highlighted {
-    padding: 10px;
-    cursor: pointer;
-
-}
-
-.side-nav .side-nav-item label,
-.side-nav .highlighted label {
-    cursor: pointer;
-    color: #182B4D;
-}
-
-.side-nav .side-nav-item:hover,
-.side-nav .highlighted:hover {
-    cursor: pointer;
-    padding-left: 30px;
-    background-color: #ffffff;
-    transition: 0.3s;
-}
 
 
-
-.side-nav .highlighted {
-    padding-left: 30px;
-    background-color: #ffffff;
-
-}
 
 
 

@@ -135,7 +135,7 @@ if (isset($_GET['manage_id'])) {
 
                             <td class="button-holder">
                                 <a class="open-btn" href="view_request.php?manage_id=<?php echo $id; ?>"><i
-                                        class="fa-solid fa-square-up-right"></i> Open</a></button>
+                                        class="fa-solid fa-square-up-right"></i> Open</a>
                             </td>
                         </tr>
 

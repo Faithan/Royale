@@ -3,8 +3,6 @@ include ('dbconnect.php');
 session_start();
 
 if (isset($_POST['save'])) {
-
-
     $productName = $_POST["product_name"];
     $productType = $_POST["product_type"];
     $gender = $_POST["gender"];
@@ -113,6 +111,7 @@ function validateColor($color)
     <script src="javascript/addImage.js" defer></script>
     <script src="javascript/showhide.js" defer></script>
 
+
     <script src="../../sweetalert/sweetalert.js"></script>
 
     <link rel="stylesheet" href="css/readyProducts.css?v=<?php echo time(); ?>">
@@ -219,13 +218,6 @@ function validateColor($color)
                 <div class="products-container">
 
 
-
-
-
-
-
-
-
                     <div class="product-show" id="products">
                         <div class="search-container">
                             <div class="search-type">
@@ -248,13 +240,121 @@ function validateColor($color)
                             </div>
                         </div>
 
+
+
+
+
+
+
+
+
+
+
+
                         <div class="product-holder">
 
+                            <div class="product-items">
+                                <?php $fetchdata = "SELECT * FROM products ORDER BY id DESC";
+                                $result = mysqli_query($con, $fetchdata);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $id = $row['id'];
+                                    $productName = $row["product_name"];
+                                    $productType = $row["product_type"];
+                                    $gender = $row["gender"];
+                                    $colors = unserialize($row['color']);// Retrieve colors directly
+                                    $sizes = $row["sizes"]; // Retrieve sizes directly
+                                    $quantity = $row["quantity"];
+                                    $price = $row["price"];
+                                    $photo = $row['photo'];
+                                    ?>
+
+
+                                    <div class="items" id="product-<?php echo $id; ?>">
+
+                                        <div class="product-image"><img src="<?php echo $photo ?>" alt=""></div>
+
+                                        <hr>
+
+                                        <div class="container-of-labels">
+                                            <div class="label-container">
+                                                <label class="product-title">
+                                                    <b>Product Name:</b>
+
+                                                </label>
+                                                <label for="" class="product-data">
+                                                    <?php echo $productName ?>
+                                                </label>
+                                            </div>
+
+                                            <div class="label-container">
+                                                <label class="product-title">
+                                                    <b>For (Gender):</b>
+
+                                                </label>
+                                                <label for="" class="product-data">
+                                                    <?php echo $gender ?>
+                                                </label>
+                                            </div>
+
+                                            <div class="label-container">
+                                                <label class="product-title">
+                                                    <b>Colors:</b>
+                                                </label>
+
+                                                <label for="" class="product-colors">
+                                                    <?php foreach ($colors as $color) {
+                                                        echo '<div style="background-color:' . $color . '; width: 20px; height: 20px; border-radius: 50%;"></div>';
+                                                    } ?>
+                                                </label>
+                                            </div>
+
+                                            <div class="label-container">
+                                                <label class="product-title">
+                                                    <b>Available Sizes:</b>
+
+                                                </label>
+                                                <label for="" class="product-sizes">
+                                                    <?php
+                                                    $sizesArray = explode(' ', $sizes);
+                                                    foreach ($sizesArray as $size) {
+                                                        echo "<div class='box'>" . $size . "</div>";
+                                                    }
+                                                    ?>
+                                                </label>
+
+                                            </div>
+
+                                            <div class="label-container">
+                                                <label class="product-title">
+                                                    <b>Price:</b>
+                                                </label>
+                                                <label for="" class="product-data">
+                                                    <?php echo '₱' . $price; ?>
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="button-container">
+
+                                
+                                            <a href="openProducts.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-pen-to-square"></i> Open</a>
+                                        </div>
+                                    </div>
+
+                                <?php } ?>
+                            </div>
+
                         </div>
-                        <div class="add-btn"><button id="show-button"><i class="fa-solid fa-plus"></i> Add
-                                Product</button></div>
+
+                        <div class="add-btn">
+                            <button id="show-button">
+                                <i class="fa-solid fa-plus"></i> Add
+                                Product</button>
+                        </div>
                     </div> <!-- product-show -->
 
+             
 
 
 
@@ -288,8 +388,8 @@ function validateColor($color)
                                     </div>
 
                                     <div class="input-fields"><label for="">Product Name:</label><br>
-                                        <input type="text" name="product_name" placeholder="Enter Product Name" id="product-name"
-                                            required>
+                                        <input type="text" name="product_name" placeholder="Enter Product Name"
+                                            id="product-name" required>
                                     </div>
 
                                     <div class="input-fields">
@@ -319,7 +419,7 @@ function validateColor($color)
                                             <div><button type="button" id="addButton">Add</button></div>
                                         </div>
                                         <ul id="colorList"></ul>
-                                        <input type="text" name="colors" id="colorsInput" value="">
+                                        <input type="hidden" name="colors" id="colorsInput" value="">
                                     </div>
 
 
@@ -329,7 +429,7 @@ function validateColor($color)
                                         <label for="size">Sizes:</label><br>
                                         <input type="text" id="sizeInput" placeholder="Enter size and press Enter">
                                         <ul id="sizeList"></ul>
-                                        <input type="text" name="sizes" id="sizesInput" value="">
+                                        <input type="hidden" name="sizes" id="sizesInput" value="">
                                     </div>
 
 
@@ -355,9 +455,19 @@ function validateColor($color)
                                     </div>
 
                                     <div class="input-fields">
-                                        <div><label for="">Description:</label></div>
+                                        <div><label for="">Description and Additional Informatiom:</label></div>
                                         <div><textarea name="description" id="" required></textarea req></div>
+                                        <div class="tips">
+                                        <div class="tips">
+                                            <p><b>Note:</b><em> Feel free to enhance the product descriptions by
+                                                    providing any missing input fields or additional information you'd
+                                                    like to include. This way, you can ensure a comprehensive and
+                                                    captivating presentation of the product.</em></p>
+                                        </div>
+
                                     </div>
+                                    </div>
+                                  
 
                                 </div>
 

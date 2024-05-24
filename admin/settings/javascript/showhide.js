@@ -1,18 +1,3 @@
-// const show_button = document.getElementById('show-button');
-// const products = document.getElementById('products');
-
-// const hide_button = document.getElementById('cancel');
-// const add_products = document.getElementById('add-products');
-
-// show_button.addEventListener('click', () => {
-//  products.style.display = 'none';
-// add_products.style.display = 'contents';
-// });
-
-// hide_button.addEventListener('click', () => {
-//     products.style.display = 'contents';
-//     add_products.style.display = 'none';
-// });
 
 const showButton = document.getElementById('show-button');
 const products = document.getElementById('products');
