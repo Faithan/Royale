@@ -472,14 +472,15 @@ height: auto;
     border-radius: 3px;
     font-size: 13.5px;
     border: 1px solid ;
+    text-align: justify;
 }
 
 .description textarea {
     width: 96%;
-    height: 100px;
+    height: 300px;
     padding: 5px;
     color: #172a4c;
-
+ 
     text-transform: capitalize;
     border-radius: 5px;
     border: none;

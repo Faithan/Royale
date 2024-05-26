@@ -1,56 +1,38 @@
-<!DOCTYPE html>
-<html>
+<?php
+include ('dbconnect.php'); // Tsekaha kung ang pag-import sa dbconnect.php file sakto
 
-<head>
-    <title>Form Example</title>
-    <style>
-    #colorList li {
-        display: inline-block;
-        padding: 5px;
-        margin: 5px;
-        border-radius: 5px;
-        color: white;
+// Initialize ang array nga maghulagway sa mga options sa select field
+$options = array();
+
+// Query sa database aron makuha ang tanan nga balor sa `service_name` column
+$sql = "SELECT DISTINCT service_name FROM services";
+$result = $con->query($sql);
+
+// Check kung adunay resulta sa query
+if ($result->num_rows > 0) {
+    // Loop sa mga resulta ug ipuno ang array sa mga options
+    while ($row = $result->fetch_assoc()) {
+        $options[] = $row["service_name"];
     }
-</style>
-</head>
+}
 
-<body>
-    <form action="" method="post" enctype="multipart/form-data">
+// I-display ang select field nga may mga options
+echo "<select name='req-type' id='' onchange='changeColorSelect(this)'>";
+echo "<option disabled selected value=''>Type of Request</option>"; // Default nga option
 
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name">
-        </div>
+// I-check kung adunay mga options gikan sa database
+if (!empty($options)) {
+    // Loop sa mga options gikan sa database aron i-display sa select field
+    foreach ($options as $option) {
+        echo "<option value='" . $option . "'>" . $option . "</option>";
+    }
+} else {
+    // Kung walay resulta gikan sa database, i-maintain ang existing nga options
+    echo "<option value='For Repair'>For Clothing Repair</option>";
+    echo "<option value='For Making'>For Cloth Making</option>";
+    echo "<option value='For Renting'>For Cloth Renting</option>";
+    echo "<option value='For Purchasing'>For Cloth Buying</option>";
+}
 
-        <div class="input-fields">
-
-            <label for="color">Colors:</label><br>
-
-            <div class="select-colors">
-                <div><input type="text" id="colorInput" placeholder="Enter color"></div>
-                <div><input type="color" id="colorPicker"></div>
-                <div><button type="button" id="addButton">Add</button></div>
-            </div>
-
-            <ul id="colorList"></ul>
-            
-            <input type="text" name="colors[]" id="colorsInput" value="">
-        </div>
-
-        <div class="input-fields">
-
-            <label for="size">Sizes:</label><br>
-            <input type="text" name="size" id="sizeInput" placeholder="Enter size and press Enter">
-            <ul id="sizeList"></ul>
-
-            <input type="hidden" name="sizes[]" id="sizesInput" value="">
-
-        </div>
-
-        <input type="file" name="photo">
-
-        <div><button type="submit" name="submit">Submit</button></div>
-    </form>
-</body>
-
-</html>
+echo "</select>";
+?>

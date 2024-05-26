@@ -26,6 +26,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link href="../fontawesome/css/solid.css" rel="stylesheet" />
 
     <script src="javascript/imgUpload.js" defer></script>
+    <script src="javascript/logout.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
@@ -62,7 +63,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 
             </div>
-            <div class="logout-btn"><a href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i>Log out</a></div>
+            <div class="logout-btn" ><button id="logout"><i class="fa-solid fa-right-from-bracket"></i>Log out</button></div>
         </div>
         <div class="middle-content">
 

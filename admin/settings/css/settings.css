@@ -72,8 +72,7 @@
     height: 20vh;
     width: 35vh;
     background-color: white;
-    box-shadow: 0 2px 4px rgb(122, 122, 122);
-
+    box-shadow: 0 0 2px rgb(169, 169, 169);
 }
 
 .middle-boxes{
@@ -88,6 +87,5 @@
     height: 60vh;
     width: 74vh;
     background-color: white;
-    box-shadow: 0 2px 4px rgb(122, 122, 122);
-
+    box-shadow: 0 0 2px rgb(169, 169, 169);
 }

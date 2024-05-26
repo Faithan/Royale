@@ -307,7 +307,9 @@
     background-color: #DDE5EB;
     margin-top: 5px;
     text-transform: capitalize;
+    
 }
+
 
 .input-fields-container select {
     font-size: 14px;
@@ -319,20 +321,17 @@
     margin-top: 5px;
 }
 
-.input-fields-container textarea {
-    font-size: 14px;
-    height: 30px;
+.input-fields-container  textarea {
+    font-weight: none;
+    font-size: 13.5px;
     border-radius: 3px;
     width: 98%;
     padding: 5px;
-    text-transform: capitalize;
-    height: 50px;
+    height: 300px;
     border: 1px solid #ccc;
     background-color: #DDE5EB;
     margin-top: 5px;
 }
-
-
 
 
 .product-name {

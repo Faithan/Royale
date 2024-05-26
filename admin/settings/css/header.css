@@ -287,3 +287,11 @@ color: rgb(164, 0, 0);
     background-color: #ffffff;
 
 }
+
+#logout:hover{
+    border: 1px solid  rgb(255, 93, 93) ;
+    background-color:  rgb(255, 93, 93);
+    border-radius: 2px;
+ 
+}
+

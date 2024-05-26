@@ -33,51 +33,51 @@ if (isset($_POST['submit'])) {
 
     $photo = $_FILES['photo'];
 
-  // Set the target directory
-  $target_dir = "../all_transaction_img/"; // Update this path to your desired folder
+    // Set the target directory
+    $target_dir = "../all_transaction_img/"; // Update this path to your desired folder
 
-  // Array to store the image file names
-  $imageNames = array();
+    // Array to store the image file names
+    $imageNames = array();
 
-  // Loop through each uploaded image
-  foreach ($photo['tmp_name'] as $key => $tmp_name) {
-      $image_name = $photo['name'][$key];
-      $image_tmp = $tmp_name; // Use the temporary file path
-      $image_type = $photo['type'][$key];
+    // Loop through each uploaded image
+    foreach ($photo['tmp_name'] as $key => $tmp_name) {
+        $image_name = $photo['name'][$key];
+        $image_tmp = $tmp_name; // Use the temporary file path
+        $image_type = $photo['type'][$key];
 
-      // Check if the uploaded file is an image
-      if (strpos($image_type, 'image') !== false) {
-          // Move the uploaded image to the target directory
-          $target_file = $target_dir . basename($image_name);
-          if (move_uploaded_file($image_tmp, $target_file)) {
-              // Add the image file name to the array
-              $imageNames[] = $target_file;
-          } else {
-              echo "Error uploading file: " . $image_name;
-          }
-      } else {
-          echo "Invalid file type: " . $image_name;
-      }
-  }
+        // Check if the uploaded file is an image
+        if (strpos($image_type, 'image') !== false) {
+            // Move the uploaded image to the target directory
+            $target_file = $target_dir . basename($image_name);
+            if (move_uploaded_file($image_tmp, $target_file)) {
+                // Add the image file name to the array
+                $imageNames[] = $target_file;
+            } else {
+                echo "Error uploading file: " . $image_name;
+            }
+        } else {
+            echo "Invalid file type: " . $image_name;
+        }
+    }
 
     // Serialize the image names array or convert it to JSON
     $imageNamesSerialized = serialize($imageNames);
     // $imageNamesSerialized = json_encode($imageNames);
 
-                $savedata = "INSERT INTO royale_orders_tbl
+    $savedata = "INSERT INTO royale_orders_tbl
                  VALUES ('','request','$reqfname','$reqmname','$reqlname','$reqcontact','$reqaddress', '$reqgender','$reqtype',
                   '$reqdate','$add_info','$imageNamesSerialized','$deadline',
                   '','','','','','','','','','','')";
 
-                $query = (mysqli_query($con, $savedata));
-                if ($query) {
-                    $message = "Request Sent Successfully! please wait for confirmation";
-                    $isSuccess = true;
-                } else {
-                    $message = "Form Submission Failed!";
-                    $isSuccess = false;
-                }
-            }
+    $query = (mysqli_query($con, $savedata));
+    if ($query) {
+        $message = "Request Sent Successfully! please wait for confirmation";
+        $isSuccess = true;
+    } else {
+        $message = "Form Submission Failed!";
+        $isSuccess = false;
+    }
+}
 
 
 
@@ -153,9 +153,10 @@ if (isset($_POST['submit'])) {
     <script src="javascript/uploadphoto.js" defer></script>
     <script src="javascript/clearSelect.js" defer></script>
     <script src="javascript/fullscreen.js" defer></script>
-    <script src="javascript/date.js" defer></script>    
+    <script src="javascript/date.js" defer></script>
     <script src="javascript/inputColor.js" defer></script>
     <script src="javascript/contact.js" defer></script>
+    <script src="javascript/logout.js" defer></script>
 
     <script src="../sweetalert/sweetalert.js"></script>
 
@@ -165,7 +166,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/date.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
     <title>Services</title>
-   
+
 
 </head>
 
@@ -179,7 +180,8 @@ if (isset($_POST['submit'])) {
                 <li><a class="bold-text" href="services.php"><i class="fa-brands fa-web-awesome"></i> Services</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
-                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear" id="rotate-icon"></i>Settings</a>
+                <a class="settings-btn" href="dashboard.php"><i class="fa-solid fa-gear"
+                        id="rotate-icon"></i>Settings</a>
             </ul>
 
         </nav>
@@ -200,7 +202,7 @@ if (isset($_POST['submit'])) {
 
 
 
-        <!-- right content -->  
+        <!-- right content -->
         <div class="right-content">
             <div class="right-head">
                 <!-- <label class="for-label-text">PRODUCTS AND SERVICES</label> -->
@@ -212,12 +214,12 @@ if (isset($_POST['submit'])) {
             <div class="right-products">
                 <div class="products-content">
                     <?php
-                    $query = "SELECT * FROM add_products_photo_tbl";
+                    $query = "SELECT * FROM products WHERE product_status='active'";
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                         <div class="products-image-container">
-                            <img src="<?php echo $row['img'] ?>">
+                            <img src="../admin/settings/<?php echo $row['photo'] ?>">
                             <div class="products-name-container">
                                 <button>
                                     Quick View
@@ -239,12 +241,12 @@ if (isset($_POST['submit'])) {
             <div class="right-services">
                 <div class="services-content">
                     <?php
-                    $query = "SELECT * FROM add_services_photo_tbl";
+                    $query = "SELECT * FROM services WHERE service_status='active'";
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                         <div class="service-image-container">
-                            <img src="<?php echo $row['services_img'] ?>"><br>
+                            <img src="../admin/settings/<?php echo $row['service_photo'] ?>">
                             <div class="service-name-container">
                                 <button>
                                     <?php echo $row['service_name'] ?>
@@ -316,7 +318,7 @@ if (isset($_POST['submit'])) {
 
 
         <!-- left-content -->
-       
+
 
         <form method="post" action="" class="left-container" enctype="multipart/form-data">
             <div class="header-text-container"><label>QUICK REQUEST FORM</label></div>
@@ -324,8 +326,9 @@ if (isset($_POST['submit'])) {
             <hr>
 
             <div class="info-line">
-                <input type="text" name="req-fname"  class="req-input" placeholder="First Name" onkeyup="changeColor(this)" required>
-            
+                <input type="text" name="req-fname" class="req-input" placeholder="First Name"
+                    onkeyup="changeColor(this)" required>
+
 
                 <input type="text" name="req-mname" placeholder="Middle Name" onkeyup="changeColor(this)" required>
 
@@ -333,7 +336,9 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="info-line">
-                <input type="number" maxlength="11" id="contact" name="req-contact" class="req-contact" placeholder="Contact Number"  pattern="[0-9]{11}" title="Please enter a valid 11-digit contact number" onkeyup="changeColor(this)" required>
+                <input type="number" maxlength="11" id="contact" name="req-contact" class="req-contact"
+                    placeholder="Contact Number" pattern="[0-9]{11}"
+                    title="Please enter a valid 11-digit contact number" onkeyup="changeColor(this)" required>
 
                 <input type="text" name="req-address" placeholder="Address" onkeyup="changeColor(this)" required>
 
@@ -341,51 +346,88 @@ if (isset($_POST['submit'])) {
                     <option disabled selected value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                </select>   
+                </select>
             </div>
+
+
 
             <div class="info-line">
 
-                <select name="req-type" id="" onchange="changeColorSelect(this)">
+                <?php
+                include ('dbconnect.php');
+
+                $sql = "SELECT DISTINCT service_name FROM services WHERE service_status = 'active'";
+                $result = $con->query($sql);
+
+                if ($result->num_rows > 0) {
+                    echo "<select name='req-type' id='' onchange='changeColorSelect(this)'>";
+                    echo "<option disabled selected value=''>Type of Request</option>";
+                    while ($row = $result->fetch_assoc()) {
+                        $option = ucwords(strtolower($row["service_name"])); // Capitalize ang option
+                        echo "<option value='" . $option . "'>" . $option . "</option>";
+                    }
+                    echo "</select>";
+                } else {
+                    echo "<select name='req-type' id='' onchange='changeColorSelect(this)'>";
+                    echo "<option disabled selected value=''>Type of Request</option>";
+                    echo "<option value=''>No results found.</option>";
+                    echo "</select>";
+                }
+                ?>
+
+
+                <!-- <select name="req-type" id="" onchange="changeColorSelect(this)">
                     <option disabled selected value="">Type of Request</option>
                     <option value="For Repair">For Clothing Repair </option>
                     <option value="For Making">For Cloth Making </option>
                     <option value="For Renting">For Cloth Renting</option>
                     <option value="For Purchasing">For Cloth Buying</option>
-                </select>
+                </select> -->
 
-                <input type="date" name="req-date" id="req-date" class="req-input show-placeholder" placeholder="Measurements' date (if applicable)" onchange="changeColorSelect(this)">
 
-                <input type="date" name="deadline" id="deadline"  class="req-input show-placeholder" placeholder="Deadline (optional)" onchange="changeColorSelect(this)" >
+
+                <input type="date" name="req-date" id="req-date" class="req-input show-placeholder"
+                    placeholder="Measurements' date (if applicable)" onchange="changeColorSelect(this)">
+
+                <input type="date" name="deadline" id="deadline" class="req-input show-placeholder"
+                    placeholder="Deadline (optional)" onchange="changeColorSelect(this)">
 
             </div>
+
+
+
 
             <div class="info-line">
 
-                <textarea name="add_info" id="" cols="10" rows="10" placeholder="Additional info . . . you can leave it blank if there's no additional information" onkeyup="changeColor(this)"></textarea>
+                <textarea name="add_info" id="" cols="10" rows="10"
+                    placeholder="Additional info . . . you can leave it blank if there's no additional information"
+                    onkeyup="changeColor(this)"></textarea>
 
             </div>
 
-            <hr>    
+            <hr>
 
             <div class="center-label">
                 <label for="">Upload Photo:</label>
             </div>
 
-           
+
             <div class="image-box" id="preview-box"></div>
 
-            <div class="tip"><p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
-                 clicking on the desired images. This allows you to choose multiple images simultaneously.</p></div>           
+            <div class="tip">
+                <p>Tips: To select multiple images at once, simply hold down the Ctrl key on your keyboard while
+                    clicking on the desired images. This allows you to choose multiple images simultaneously.</p>
+            </div>
 
             <div class="center-label-a">
 
-                <input type="file" name="photo[]" id="images" class="input-file" multiple required onchange="previewImages()">
+                <input type="file" name="photo[]" id="images" class="input-file" multiple required
+                    onchange="previewImages()">
 
                 <label for="images" class="file-label"><i class="fa-regular fa-image"></i> Select Images</label>
 
                 <button type="button" class="clear-selection" onclick="clearSelection()"><i
-                        class="fa-solid fa-eraser"></i> Clear Selection</button>         
+                        class="fa-solid fa-eraser"></i> Clear Selection</button>
             </div>
 
 
@@ -397,7 +439,7 @@ if (isset($_POST['submit'])) {
 
 
     </div> <!-- container-end -->
-                       
+
 
 
     <!-- sweetalert -->
@@ -412,7 +454,7 @@ if (isset($_POST['submit'])) {
     <?php endif; ?>
 
 
- 
+
 </body>
 
 </html>

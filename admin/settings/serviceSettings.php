@@ -5,43 +5,29 @@ session_start();
 
 
 
+
 $message = "";
 $isSuccess = false;
 
 
 
 if (isset($_POST['save'])) {
-    $productName = $_POST["product_name"];
-    $productType = $_POST["product_type"];
-    $gender = $_POST["gender"];
-    $colors = $_POST["colors"]; // Retrieve colors directly
-    $sizes = $_POST["sizes"]; // Retrieve sizes directly
-    $quantity = $_POST["quantity"];
-    $price = $_POST["price"];
-    $description = $_POST["description"];
+    $serviceName = $_POST["service_name"];
+    $serviceDescription = $_POST["service_description"];
 
-    $photo = $_FILES['photo'];
+    $service_photo = $_FILES['service_photo'];
 
-    $filename = $_FILES['photo']['name'];
-    $filetempname = $_FILES['photo']['tmp_name'];
-    $filsize = $_FILES['photo']['size'];
-    $fileerror = $_FILES['photo']['error'];
-    $filetype = $_FILES['photo']['type'];
+    $filename = $_FILES['service_photo']['name'];
+    $filetempname = $_FILES['service_photo']['tmp_name'];
+    $filsize = $_FILES['service_photo']['size'];
+    $fileerror = $_FILES['service_photo']['error'];
+    $filetype = $_FILES['service_photo']['type'];
 
     $fileext = explode('.', $filename);
     $filetrueext = strtolower(end($fileext));
     $array = ['jpg', 'png', 'jpeg'];
 
-    // Convert colors string to an array
-    $colorsArray = explode(' ', $colors);
 
-    // Validate each color in the array
-    $validColors = array_map('validateColor', $colorsArray);
-
-    // Serialize the valid colors array
-    $serializedColors = serialize($validColors);
-
-    // Insert the form data into the database
 
 
 
@@ -49,15 +35,19 @@ if (isset($_POST['save'])) {
         if ($fileerror === 0) {
             if ($filsize < 10000000) {
                 $filenewname = $filename;
-                $filedestination = 'products/' . $filenewname;
+                $filedestination = 'services/' . $filenewname;
                 if ($filename) {
                     move_uploaded_file($filetempname, $filedestination);
                 }
 
+          // Modify the SQL query to use prepared statements for security
+          $savedata = $con->prepare("INSERT INTO services (service_status, `service_name` ,service_description, service_photo) VALUES (?, ?, ?, ?)");
+          $status = 'active';
+          $photo = 'services/'.$filenewname;
+          $savedata->bind_param("ssss", $status, $serviceName, $serviceDescription, $photo);
+          $query = $savedata->execute();
 
-                $savedata = "INSERT INTO products  VALUES ('','active','$productName',' $productType',' $gender','$serializedColors','$sizes', '$quantity' , '$price','$description','products/$filenewname')";
-
-                $query = (mysqli_query($con, $savedata));
+               
 
                 if ($query) {
                     $message = "Saved Successfully!";
@@ -79,20 +69,6 @@ if (isset($_POST['save'])) {
     }
 
 }
-
-// Function to validate color format
-function validateColor($color)
-{
-    // Check if the color is a valid hex color code
-    if (preg_match('/^#[a-f0-9]{6}$/i', $color)) {
-        return $color;
-    } else {
-        // Default to white if not a valid hex color
-        return '#FFFFFF';
-    }
-}
-
-
 
 ?>
 
@@ -124,7 +100,7 @@ function validateColor($color)
     <script src="../../sweetalert/sweetalert.js"></script>
 
     <link rel="stylesheet" href="css/openfile.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/readyProducts.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/serviceSettings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
@@ -197,9 +173,9 @@ function validateColor($color)
                 <div class="side-item-holder">
                     <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
                                 class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
-                    <div class="highlighted" onclick="window.location.href='readyProducts.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='readyProducts.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='serviceSettings.php'"><label for=""><i
+                    <div class="highlighted" onclick="window.location.href='serviceSettings.php'"><label for=""><i
                                 class="fa-solid fa-briefcase"></i> Services Settings</label></div>
                     <div class="side-nav-item" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
                                 class="fa-solid fa-suitcase"></i> Product Type Settings</label></div>
@@ -239,27 +215,10 @@ function validateColor($color)
 
                         <div class="search-container">
                             <div class="search-type">
-                                <label for=""><i class="fa-solid fa-gear"></i> Ready Made Products</label>
+                                <label for=""><i class="fa-solid fa-gear"></i> Services Settings</label>
                             </div>
 
-                            <div class="search-type">
-                                <label for="">Select Gender:</label>
-                                <select name="" id="">
-                                    <option value="" disabled selected>Select Option</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
 
-                                </select>
-                                <label for="">Select Type:</label>
-                                <select name="" id="">
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                </select>
-                            </div>
-                            <div class="search-bar"><input type="text" id="search" name="search"
-                                    placeholder="Search...">
-                            </div>
                         </div>
 
 
@@ -277,18 +236,13 @@ function validateColor($color)
 
                             <div class="product-items">
 
-                                <?php $fetchdata = "SELECT * FROM products WHERE product_status='active' ORDER BY id DESC";
+                                <?php $fetchdata = "SELECT * FROM services WHERE service_status='active' ";
                                 $result = mysqli_query($con, $fetchdata);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $id = $row['id'];
-                                    $productName = $row["product_name"];
-                                    $productType = $row["product_type"];
-                                    $gender = $row["gender"];
-                                    $colors = unserialize($row['color']);// Retrieve colors directly
-                                    $sizes = $row["sizes"]; // Retrieve sizes directly
-                                    $quantity = $row["quantity"];
-                                    $price = $row["price"];
-                                    $photo = $row['photo'];
+                                    $id = $row['service_id'];
+                                    $serviceName = $row["service_name"];
+                                    $serviceDescription = $row["service_description"];
+                                    $photo = $row['service_photo'];
                                     ?>
 
 
@@ -305,56 +259,12 @@ function validateColor($color)
 
                                                 </label>
                                                 <label for="" class="product-data">
-                                                    <?php echo $productName ?>
+                                                    <?php echo $serviceName ?>
                                                 </label>
                                             </div>
 
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>For (Gender):</b>
+                                          
 
-                                                </label>
-                                                <label for="" class="product-data">
-                                                    <?php echo $gender ?>
-                                                </label>
-                                            </div>
-
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>Available Colors:</b>
-                                                </label>
-
-                                                <label for="" class="product-colors">
-                                                    <?php foreach ($colors as $color) {
-                                                        echo '<div style="background-color:' . $color . '; width: 20px; height: 20px; border-radius: 50%;"></div>';
-                                                    } ?>
-                                                </label>
-                                            </div>
-
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>Available Sizes:</b>
-
-                                                </label>
-                                                <label for="" class="product-sizes">
-                                                    <?php
-                                                    $sizesArray = explode(' ', $sizes);
-                                                    foreach ($sizesArray as $size) {
-                                                        echo "<div class='box'>" . $size . "</div>";
-                                                    }
-                                                    ?>
-                                                </label>
-
-                                            </div>
-
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>Price:</b>
-                                                </label>
-                                                <label for="" class="product-data">
-                                                    <?php echo '₱' . $price; ?>
-                                                </label>
-                                            </div>
 
                                         </div>
 
@@ -362,7 +272,7 @@ function validateColor($color)
 
 
 
-                                            <a class="open-file" href="openProducts.php?manage_id=<?php echo $id; ?>">
+                                            <a class="open-file" href="openService.php?manage_id=<?php echo $id; ?>">
                                                 <span class="file-wrapper">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
                                                         <path stroke-width="5" stroke="black"
@@ -371,7 +281,7 @@ function validateColor($color)
                                                     </svg>
                                                     <span class="file-front"></span>
                                                 </span>
-                                                Open Product
+                                                Open Service
                                             </a>
 
                                         </div>
@@ -387,7 +297,7 @@ function validateColor($color)
                         <div class="add-btn">
                             <button id="show-button">
                                 <i class="fa-solid fa-plus"></i> Add
-                                Product</button>
+                                Service</button>
                         </div>
                     </div> <!-- product-show -->
 
@@ -411,94 +321,29 @@ function validateColor($color)
 
                         <div class="add-product-container">
 
-                            <div class="search-container">
-                                <div class="search-type">
-                                    <label for=""><i class="fa-solid fa-gear"></i> Add Products</label>
-                                </div>
+
+                            <div class="header-text-add">
+                                <h3><i class="fa-solid fa-gear"></i> Add Service</h3>
                             </div>
-
-
 
 
                             <div class="product-info-container">
 
                                 <div class="input-fields-container">
                                     <div class="product-info-header">
-                                        <h3>Product Information</h3>
+                                        <h3>Service Information</h3>
                                     </div>
 
-                                    <div class="input-fields"><label for="">Product Name:</label><br>
-                                        <input type="text" name="product_name" placeholder="Enter Product Name"
-                                            id="product-name" required>
+                                    <div class="input-fields"><label for="">Service Name:</label><br>
+                                        <input type="text" name="service_name" placeholder="Enter Service Name"
+                                            id="service-name" required>
                                     </div>
 
-                                    <div class="input-fields">
-                                        <label for="">Product Type:</label><br>
-                                        <select name="product_type">
-                                            <option value="Type 1">option 1</option>
-                                            <option value="Type 2">option 2</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="input-fields">
-                                        <label for="">Gender:</label><br>
-                                        <select name="gender" id="">
-                                            <option value="" disabled selected>Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Unisex">Unisex</option>
-                                        </select>
-                                    </div>
-
-
-
-                                    <div class="input-fields">
-                                        <label for="color">Colors:</label><br>
-                                        <div class="select-colors">
-                                            <div><input type="text" id="colorInput" placeholder="Enter color"></div>
-                                            <div><input type="color" id="colorPicker"></div>
-                                            <div><button type="button" id="addButton">Add</button></div>
-                                        </div>
-                                        <ul id="colorList"></ul>
-                                        <input type="hidden" name="colors" id="colorsInput" value="">
-                                    </div>
-
-
-
-
-                                    <div class="input-fields">
-                                        <label for="size">Sizes:</label><br>
-                                        <input type="text" id="sizeInput" placeholder="Enter size and press Enter">
-                                        <ul id="sizeList"></ul>
-                                        <input type="hidden" name="sizes" id="sizesInput" value="">
-                                    </div>
-
-
-                                    <div class="input-fields">
-                                        <label for="quantity">Quantity:</label>
-                                        <div class="quantity-control">
-                                            <button class="minus-button">-</button>
-                                            <input type="number" name="quantity" id="quantityInput" value="1" min="1"
-                                                required>
-                                            <button class="plus-button">+</button>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="input-fields">
-                                        <label for="price">Price:</label>
-                                        <div class="input-wrapper">
-                                            <span class="currency-symbol">&#8369;</span>
-                                            <input type="number" name="price" id="priceInput" placeholder="Enter Price"
-                                                required>
-                                        </div>
-
-                                    </div>
 
                                     <div class="input-fields">
                                         <div><label for="">Description and Additional Informatiom:</label></div>
-                                        <div><textarea name="description" id="" required></textarea req></div>
-                                        <div class="tips">
+                                        <div><textarea name="service_description" id="textarea1" required></textarea ></div>
+                                     
                                         <div class="tips">
                                             <p><b>Note:</b><em> Feel free to enhance the product descriptions by
                                                     providing any missing input fields or additional information you'd
@@ -506,7 +351,7 @@ function validateColor($color)
                                                     captivating presentation of the product.</em></p>
                                         </div>
 
-                                    </div>
+                                   
                                     </div>
                                   
 
@@ -522,7 +367,7 @@ function validateColor($color)
                                 <div class="add-image-container">
 
                                     <div class="product-info-header">
-                                        <h3>Product Image</h3>
+                                        <h3>Service Image</h3>
                                     </div>
 
                                     <div class="image-container">
@@ -532,7 +377,7 @@ function validateColor($color)
                                                 <img id="previewImage" src="#" alt="Preview">
                                             </div>
                                         </div>
-                                        <div class="select-img"><input type="file" name="photo" id="imageInput"></div>
+                                        <div class="select-img"><input type="file" name="service_photo" id="imageInput"></div>
                                     </div>
                                     <div class="tips">
                                         <p><b>Instructions:</b><em> When adding products, it is crucial to input all the

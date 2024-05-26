@@ -9,6 +9,7 @@ function toggleElements() {
   var nameInput = document.getElementById("name-input");
   var productTypeInput = document.getElementById("product-type-input");
   var priceInput = document.getElementById("price-input");
+  var imageContainer = document.querySelector('.image-container');
 
   if (minusButton.style.display === "none") {
     // Unhide the minus button
@@ -25,12 +26,10 @@ function toggleElements() {
     inputFields.style.display = 'block';
     sizes.style.display = 'block';
     description.style.display = 'block';
-    productTypeInput.removeAttribute("disabled");
-    priceInput.removeAttribute("disabled");
     productTypeInput.removeAttribute("readonly");
     priceInput.removeAttribute("readonly");
     nameInput.removeAttribute("readonly");
-    nameInput.removeAttribute("disabled");
+    imageContainer.style.display = 'block';
   } else {
     // Hide the minus button
     minusButton.style.display = "none";
@@ -46,18 +45,23 @@ function toggleElements() {
     inputFields.style.display = 'none';
     sizes.style.display = 'none';
     description.style.display = 'none';
-    productTypeInput.setAttribute("disabled", true);
-    priceInput.setAttribute("disabled", true);
     productTypeInput.setAttribute("readonly", true);
     priceInput.setAttribute("readonly", true);
     nameInput.setAttribute("readonly", true);
-    nameInput.setAttribute("disabled", true);
+    imageContainer.style.display = 'none';
   }
 }
 
 // Hide the elements initially
 toggleElements();
 
-document.getElementById("edit-button").addEventListener("click", function() {
+document.getElementById("edit-button").addEventListener("click", function () {
   toggleElements();
+});
+
+
+document.getElementById("edit-button").addEventListener("click", function (event) {
+  event.preventDefault();
+
+  // Add your code here to handle the button click
 });
