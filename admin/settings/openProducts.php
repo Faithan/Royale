@@ -58,7 +58,14 @@ if (isset($_POST['save'])) {
                 }
 
 
-                $savedata = "INSERT INTO products  VALUES ('','$productName',' $productType',' $gender','$serializedColors','$sizes', '$quantity' , '$price','$description','products/$filenewname')";
+                $savedata = "UPDATE products SET product_name='$productName', product_type='$productType',  gender='$gender', colors='$serializedColors',
+                sizes='$sizes', quantity='$quantity' , price='$price', description='$description'";
+                
+                $manage_data = ['id' => '', 'product_name' => '', 'product_type' => '', 'gender' => '', 'color' => '', 'size' => '', 'quantity' => '', 'price' => '', 'description' => '', 'photo' => ''];
+
+
+
+
 
                 $query = (mysqli_query($con, $savedata));
 
@@ -131,6 +138,9 @@ if (isset($_GET['manage_id'])) {
     <script src="javascript/readyProducts.js" defer></script>
     <script src="javascript/addImage.js" defer></script>
     <script src="javascript/showhide.js" defer></script>
+    <script src="javascript/productInputs.js" defer></script>
+    <script src="javascript/hide.js" defer></script>
+
 
 
     <script src="../../sweetalert/sweetalert.js"></script>
@@ -225,9 +235,6 @@ if (isset($_GET['manage_id'])) {
 
 
 
-            <div class="header-text">
-                <h2>Royale's Ready Products</h2>
-            </div>
 
 
 
@@ -252,7 +259,7 @@ if (isset($_GET['manage_id'])) {
                         <div class="product-holder">
 
                             <div class="product-image-container">
-                                <div><img src="" alt=""></div>
+                                <div><img src="<?php echo $manage_data['photo']; ?>" alt=""></div>
                             </div>
 
                             <div class="product-info-container">
@@ -260,33 +267,98 @@ if (isset($_GET['manage_id'])) {
                                 <div>
 
                                     <div class="second-info-container">
-                                        <input type="hidden" name="id" value="<?php echo $manage_data['id']; ?>">
-                                        <div class="name-input"><input type="text"
-                                                value="<?php echo $manage_data['product_name']; ?>"></div>
+                                        <input type="hidden" name="id" value="<?php echo $manage_data['id']; ?>"
+                                            readonly>
+                                        <div class="name-input">
+                                            <input type="text" name="product_name"
+                                                value="<?php echo $manage_data['product_name']; ?>" readonly
+                                                id="name-input">
+                                        </div>
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the name above, simply type in the new name you
+                                                    desire.</em></p>
+                                        </div>
 
                                         <div class="flex-display">
-                                            <div class="product-type"><input type="text"
-                                                    value="<?php echo $manage_data['product_type']; ?>"></div>
-                                            <div class="price"><input type="number"
-                                                    value="<?php echo $manage_data['price']; ?>"></div>
+                                            <div class="product-type">
+                                                <input type="text" name="product_type"
+                                                    value="<?php echo $manage_data['product_type']; ?>" readonly
+                                                    id="product-type-input">
+                                            </div>
+                                            <div class="price">
+                                                <span class="currency">&#8369;</span>
+                                                <input type="number" name="price"
+                                                    value="<?php echo $manage_data['price']; ?>" readonly disabled
+                                                    id="price-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the product type and price above, simply type in the new
+                                                    information you desire.</em></p>
                                         </div>
 
                                         <div class="label-text"><label>For:</label></div>
-                                        <div class="gender"><input type="text"
-                                                value="<?php echo $manage_data['gender']; ?>"></div>
 
-                                        <div class="label-text"><label>Color:</label></div>
+                                        <div class="gender">
+                                            <input type="text" value="<?php echo $manage_data['gender']; ?>" readonly
+                                                disabled id="gender-input">
+
+
+
+                                        </div>
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the gender above, simply select the new gender you
+                                                    desire.</em></p>
+                                        </div>
+
+                                        <div>
+                                            <select name="gender" id="">
+                                                <option value="" disabled selected>Update Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Unisex">Unisex</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="label-text"><label>Available Color:</label></div>
+
                                         <div class="color-holder">
                                             <?php foreach ($colors as $color) {
-                                                echo '<div style="background-color:' . $color . '; width: 20px; height: 20px; border-radius: 50%;"></div>';
+                                                echo '<div style="background-color:' . $color . '; width: 25px; height: 25px; border-radius: 50%;"></div>';
                                             } ?>
                                         </div>
-                                        <div class="color"><input type="text" value=" <?php foreach ($colors as $color) {
-                                            echo $color;
-                                        } ?>">
+
+                                        <!-- <div class="color">
+                                            <input type="text" name="colors"
+                                                value="<?php echo implode('  ', $colors); ?>">
+                                        </div> -->
+
+
+
+                                        <div class="input-fields">
+                                            <div class="select-colors">
+                                                <div><input type="text" id="colorInput" placeholder="Enter New color">
+                                                </div>
+                                                <div><input type="color" id="colorPicker"></div>
+                                                <div><button type="button" id="addButton">Add</button></div>
+                                            </div>
+                                            <ul id="colorList"></ul>
+                                            <input type="hidden" name="colors" id="colorsInput" value="">
+                                        </div>
+
+
+
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the available color above, simply select the new colors you
+                                                    desire.</em></p>
                                         </div>
 
                                         <div class="label-text"><label>Sizes:</label></div>
+
                                         <div class="size-holder">
                                             <?php
                                             if (!empty($sizes)) {
@@ -299,31 +371,63 @@ if (isset($_GET['manage_id'])) {
                                             }
                                             ?>
                                         </div>
-                                        <div class="sizes"><input type="text"></div>
+
+                                        <div class="sizes">
+                                            <div class="input-fields">
+                                                <input type="text" name="sizes" id="sizesInput"
+                                                    value="<?php echo $manage_data['sizes']; ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the available size above, simply type the new size you
+                                                    desire and delete the existing size you want to replace. Dont forget
+                                                    to separate them with spaces.</em></p>
+                                        </div>
+
 
                                         <div class="label-text"><label>Quantity:</label></div>
                                         <div class="quantity-control">
-                                            <button class="minus-button">-</button>
+                                            <button class="minus-button" id="minus-button">-</button>
                                             <input type="number" name="quantity" id="quantityInput"
-                                                value="<?php echo $manage_data['quantity']; ?>" min="1" required>
-                                            <button class="plus-button">+</button>
+                                                value="<?php echo $manage_data['quantity']; ?>" min="1" required
+                                                readonly>
+                                            <button class="plus-button" id="plus-button">+</button>
                                         </div>
 
-
+                                        <div class="hidden-note">
+                                            <p><em>To update the quantity above, simply click the plus and minus buttons
+                                                    until you get value you desire.</em></p>
+                                        </div>
 
                                         <div class="label-text"><label for="">Description and Additional
-                                                Informatiom:</label></div>
-                                        <div class="description">
-                                            <textarea name="description" id=""
-                                                value="<?php echo $manage_data['description']; ?>" required></textarea>
+                                                Information:</label></div>
+
+
+                                        <div class="description-container">
+                                            <p><?php echo $manage_data['description']; ?></p>
                                         </div>
+
+
+                                        <div class="hidden-note">
+                                            <p><em>To update the description and additional information above, simply
+                                                    type below the new description and additional information
+                                                    until you get value you desire.</em></p>
+                                        </div>
+
+                                        <div class="description">
+                                            <textarea name="description"
+                                                id=""><?php echo $manage_data['description']; ?></textarea>
+                                        </div>
+
+
 
 
                                         <div class="tips">
-                                            <p><b>Note:</b><em> Feel free to enhance the product descriptions by
-                                                    providing any missing input fields or additional information you'd
-                                                    like to include. This way, you can ensure a comprehensive and
-                                                    captivating presentation of the product.</em></p>
+                                            <p><b>Note:</b><em> You have the ability to edit the information of your
+                                                    product by simply clicking the edit button. Once you have made the
+                                                    desired changes, remember to click the save button to ensure that
+                                                    your edits are saved.</em></p>
                                         </div>
 
                                     </div>
@@ -331,9 +435,9 @@ if (isset($_GET['manage_id'])) {
 
 
                                     <div class="product-info-buttons">
-                                        <button>Save</button>
-                                        <button>Edit details</button>
-                                        <button>Delete Product</button>
+                                        <button><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                        <button id="edit-button"><i class="fa-solid fa-lock"></i> Edit details</button>
+                                        <button class="delete"><i class="fa-solid fa-trash"></i> Delete Product</button>
                                     </div>
 
 
@@ -368,146 +472,6 @@ if (isset($_GET['manage_id'])) {
 
 
 
-
-                <!-- <form method="POST" action="" enctype="multipart/form-data" class="show-add-product" id="add-products">
-
-
-
-                    <div class="add-product-container">
-
-
-                        <div class="header-text-add">
-                            <h3>Add Products</h3>
-                        </div>
-
-
-                        <div class="product-info-container">
-
-                            <div class="input-fields-container">
-                                <div class="product-info-header">
-                                    <h3>Product Information</h3>
-                                </div>
-
-                                <div class="input-fields"><label for="">Product Name:</label><br>
-                                    <input type="text" name="product_name" placeholder="Enter Product Name"
-                                        id="product-name" required>
-                                </div>
-
-                                <div class="input-fields">
-                                    <label for="">Product Type:</label><br>
-                                    <select name="product_type">
-                                        <option value="">option 1</option>
-                                        <option value="">option 2</option>
-                                    </select>
-                                </div>
-
-                                <div class="input-fields">
-                                    <label for="">Gender:</label><br>
-                                    <select name="gender" id="">
-                                        <option value="" disabled selected>Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
-                                </div>
-
-
-
-                                <div class="input-fields">
-                                    <label for="color">Colors:</label><br>
-                                    <div class="select-colors">
-                                        <div><input type="text" id="colorInput" placeholder="Enter color"></div>
-                                        <div><input type="color" id="colorPicker"></div>
-                                        <div><button type="button" id="addButton">Add</button></div>
-                                    </div>
-                                    <ul id="colorList"></ul>
-                                    <input type="hidden" name="colors" id="colorsInput" value="">
-                                </div>
-
-
-
-
-                                <div class="input-fields">
-                                    <label for="size">Sizes:</label><br>
-                                    <input type="text" id="sizeInput" placeholder="Enter size and press Enter">
-                                    <ul id="sizeList"></ul>
-                                    <input type="hidden" name="sizes" id="sizesInput" value="">
-                                </div>
-
-
-                                <div class="input-fields">
-                                    <label for="quantity">Quantity:</label>
-                                    <div class="quantity-control">
-                                        <button class="minus-button">-</button>
-                                        <input type="number" name="quantity" id="quantityInput" value="1" min="1"
-                                            required>
-                                        <button class="plus-button">+</button>
-                                    </div>
-
-                                </div>
-
-                                <div class="input-fields">
-                                    <label for="price">Price:</label>
-                                    <div class="input-wrapper">
-                                        <span class="currency-symbol">&#8369;</span>
-                                        <input type="number" name="price" id="priceInput" placeholder="Enter Price"
-                                            required>
-                                    </div>
-
-                                </div>
-
-                                <div class="input-fields">
-                                    <div><label for="">Description and Additional Informatiom:</label></div>
-                                    <div><textarea name="description" id="" required></textarea></div>
-                                    <div class="tips">
-                                        <p><b>Note:</b><em> If there's missing input field or if you want to add more
-                                                additional informatiom to the product, you can input here in the product
-                                                descriptions.</em></p>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-
-
-
-
-
-
-
-                            <div class="add-image-container">
-
-                                <div class="product-info-header">
-                                    <h3>Product Image</h3>
-                                </div>
-
-                                <div class="image-container">
-                                    <div><label for="imageInput">Select an image:</label></div>
-                                    <div class="preview-holder">
-                                        <div class="preview">
-                                            <img id="previewImage" src="#" alt="Preview">
-                                        </div>
-                                    </div>
-                                    <div class="select-img"><input type="file" name="photo" id="imageInput"></div>
-                                </div>
-                                <div class="tips">
-                                    <p><b>Instructions:</b><em> When adding products, it is crucial to input all the
-                                            necessary information, with special attention given to including a
-                                            captivating photo of the product. This ensures a comprehensive and
-                                            visually appealing presentation.</em></p>
-                                </div>
-
-                                <div class="button-holder">
-                                    <div><button id="add-product" name="save"><i class="fa-solid fa-download"></i> Save
-                                            Product</button></div>
-                                    <div><button id="cancel"><i class="fa-solid fa-reply"></i> Cancel</button></div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </form> -->
 
 
 

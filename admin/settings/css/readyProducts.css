@@ -85,23 +85,40 @@
     background-color: #1F3864;
 }
 
+.search-container .products-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-size: 13px;
+
+}
+
+
+.search-container .products-details label {
+    font-size: 13px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+
 .search-type {
     display: flex;
     align-items: center;
     gap: 10px;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 13px;
     height: 23px;
 }
 
-.search-type label{
+.search-type label {
     font-size: 13px;
     padding: 5px;
     font-weight: bold;
-    }
-    
-    
-    
+}
+
+
+
 
 .search-type select {
     font-size: 13px;
@@ -226,8 +243,9 @@
     color: white;
     text-decoration: none;
 }
+
 .button-container a:hover {
-   
+
     background-color: #142440;
     transition: 0.3s;
 }
@@ -257,7 +275,7 @@
 
 .header-text-add {
     width: 99%;
-    background-color: #172a4c;
+    background-color: #1F3864;
     padding: 5px;
     color: white;
 }
@@ -299,6 +317,7 @@
     border: 1px solid #ccc;
     background-color: #DDE5EB;
     margin-top: 5px;
+    text-transform: capitalize;
 }
 
 .input-fields-container select {
@@ -453,13 +472,13 @@
 .quantity-control input {
     width: 30px;
     height: 30px;
-    padding-left:10px;
+    padding-left: 10px;
     font-size: 14px;
     border: none;
     text-align: center;
     color: #172a4c;
     background: none;
-    
+
 }
 
 #quantityList {

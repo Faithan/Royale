@@ -204,9 +204,6 @@ function validateColor($color)
 
 
 
-            <div class="header-text">
-                <h2>Royale's Ready Products</h2>
-            </div>
 
 
 
@@ -218,8 +215,16 @@ function validateColor($color)
                 <div class="products-container">
 
 
+
+
+
                     <div class="product-show" id="products">
+
                         <div class="search-container">
+                            <div class="search-type">
+                                <label for="">Ready Made Products</label>
+                            </div>
+
                             <div class="search-type">
                                 <label for="">Select Gender:</label>
                                 <select name="" id="">
@@ -298,7 +303,7 @@ function validateColor($color)
 
                                             <div class="label-container">
                                                 <label class="product-title">
-                                                    <b>Colors:</b>
+                                                    <b>Available Colors:</b>
                                                 </label>
 
                                                 <label for="" class="product-colors">
@@ -337,8 +342,9 @@ function validateColor($color)
 
                                         <div class="button-container">
 
-                                
-                                            <a href="openProducts.php?manage_id=<?php echo $id; ?>"><i class="fa-solid fa-pen-to-square"></i> Open</a>
+
+                                            <a href="openProducts.php?manage_id=<?php echo $id; ?>"><i
+                                                    class="fa-solid fa-pen-to-square"></i> Open</a>
                                         </div>
                                     </div>
 
@@ -354,7 +360,7 @@ function validateColor($color)
                         </div>
                     </div> <!-- product-show -->
 
-             
+
 
 
 
@@ -395,8 +401,8 @@ function validateColor($color)
                                     <div class="input-fields">
                                         <label for="">Product Type:</label><br>
                                         <select name="product_type">
-                                            <option value="">option 1</option>
-                                            <option value="">option 2</option>
+                                            <option value="Type 1">option 1</option>
+                                            <option value="Type 2">option 2</option>
                                         </select>
                                     </div>
 
@@ -404,8 +410,9 @@ function validateColor($color)
                                         <label for="">Gender:</label><br>
                                         <select name="gender" id="">
                                             <option value="" disabled selected>Select Gender</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Unisex">Unisex</option>
                                         </select>
                                     </div>
 

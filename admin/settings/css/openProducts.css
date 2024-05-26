@@ -132,13 +132,56 @@
 }
 
 
+
+
+
+
+
 .product-image-container {
     height: 65vh;
     background-color: #DDE5EB;
     width: 73vh;
     border-radius: 5px;
     padding: 10px;
+    overflow-y: scroll ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.product-image-container img {
+    height: auto;
+    width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .product-info-container {
     height: 68vh;
@@ -171,30 +214,32 @@
 .product-info-buttons button {
     padding: 5px;
 }
-.second-info-container .label-text label{
-   
+
+.second-info-container .label-text label {
+
     color: #172a4c;
 
 }
 
 
-.second-info-container .name-input input{
+.second-info-container .name-input input {
     font-size: 40px;
     border: none;
     background: white;
     font-weight: bold;
     color: #172a4c;
-    border: 1px solid #767676;
+    border: none;
+   text-transform: capitalize;
 }
 
-.flex-display{
+.flex-display {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
 
-.flex-display .product-type input{ 
+.flex-display .product-type input {
     font-size: 20px;
     border: none;
     width: 150px;
@@ -209,13 +254,13 @@
 
 }
 
-.flex-display .price input{ 
+.flex-display .price input {
     font-size: 20px;
     border: none;
     width: 150px;
     color: #182B4D;
-    background: none;
-    border: 1px solid #767676;
+    background-color: #EFEFEF;
+    border: none;
     border-radius: 3px;
     text-transform: capitalize;
     text-align: center;
@@ -223,7 +268,36 @@
     font-weight: bold;
 }
 
-.gender input{ 
+
+
+/* peso sign */
+
+.price {
+    position: relative;
+    display: flex;
+    align-items: center ;
+    justify-content: center;
+  }
+  
+  .currency {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+
+
+
+
+
+
+.gender input {
     font-size: 13px;
     border: none;
     width: 100px;
@@ -237,7 +311,23 @@
     font-weight: bold;
 }
 
-.color input{ 
+
+.gender select {
+    margin-top: 5px;
+    font-size: 13px;
+    border: none;
+    width: 200px;
+    color: #182B4D;
+    background-color: #DDE5EB;
+    border: 1px solid #767676;
+    border-radius: 3px;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.color input {
     font-size: 13px;
     border: none;
     width: 300px;
@@ -250,28 +340,29 @@
 
 }
 
-.sizes input{ 
+.sizes input {
     font-size: 13px;
     border: none;
     width: 300px;
     color: #182B4D;
-    background-color: #e5edf3;
-    border: 1px solid #767676;
+    
+    border: 1px solid #bfbfbf;
     border-radius: 3px;
     text-align: center;
     padding: 5px;
-   
+
 }
 
 
 .quantity-control {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .quantity-control button {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height:25px;
     font-weight: bold;
     font-size: 15px;
     border-radius: 50%;
@@ -279,7 +370,7 @@
     border: 1px solid #767676;
     background-color: #DDE5EB;
     color: #333;
-    transition: background-color 0.3s ease;
+    transition:  0.3s ease;
 }
 
 .quantity-control button:hover {
@@ -287,13 +378,16 @@
 }
 
 .quantity-control input {
-    width: 30px;
-    height: 30px;
-    padding-left:10px;
-    font-size: 14px;
+    width: 10%;
+    padding: 3px;
+    padding-left: 12px;
+    font-size: 15px;
     border: none;
     text-align: center;
     color: #172a4c;
+    background-color: #EFEFEF;
+    border-radius: 3px;
+    border: 1px solid #767676;
 }
 
 #quantityList {
@@ -307,19 +401,9 @@
 
 
 
-.description textarea{
-    width: 90%;
-    height: 50px;
-    padding: 5px;
-    color: #172a4c;
- 
-    text-transform: capitalize;
-    border-radius:5px;
-    border: none;
-}
 
 
-.label-text{
+.label-text {
     margin-top: 10px;
     margin-bottom: 5px;
 }
@@ -332,15 +416,76 @@
     margin-right: 10px;
 }
 
-.size-holder .box {
-    border: 1px solid #DDE5EB;
-    padding: 3px;
-    margin-left: 2px;
-    color: #626262;
-    background-color: #DDE5EB;
-    border-radius: 3px;
+.color-holder {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 5px;
 }
 
+.size-holder {
+    display: flex;
+    gap: 5px;
+
+}
+
+.size-holder .box {
+    border: 1px solid #DDE5EB;
+    padding: 5px;
+    margin-left: 2px;
+    color: #182B4D;
+    background-color: #DDE5EB;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid #767676;
+}
+
+.sizes {
+    margin-top: 5px;
+}
+
+.sizes input {
+    text-transform: uppercase;
+}
+
+.delete{
+    color: #c20000;
+    border: 1px solid #c20000;
+}
+
+
+.description-container{
+    width: 96%;
+height: auto;
+    padding: 5px;
+    color: #172a4c;
+    background-color: #EFEFEF;
+    text-transform: capitalize;
+    border-radius: 3px;
+    font-size: 13.5px;
+    border: 1px solid ;
+}
+
+.description textarea {
+    width: 96%;
+    height: 100px;
+    padding: 5px;
+    color: #172a4c;
+
+    text-transform: capitalize;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid #afafaf;
+}
+
+
+.hidden-note{
+    font-size: 12px;
+    padding: 5px;
+    color: #767676;
+   
+}
 
 
 
@@ -412,11 +557,10 @@
 
 
 .input-fields-container input {
-    font-size: 14px;
+    font-size:16px;
     height: 30px;
     border-radius: 5px;
     width: 98%;
-    border: 1px solid white;
     padding-left: 5px;
     border: 1px solid #ccc;
 }
@@ -426,7 +570,7 @@
     height: 30px;
     border-radius: 5px;
     width: 99%;
-    border: 1px solid white;
+
     border: 1px solid #ccc;
 }
 
@@ -435,11 +579,11 @@
     height: 30px;
     border-radius: 5px;
     width: 98%;
-    border: 1px solid white;
     padding: 5px;
     text-transform: capitalize;
     height: 50px;
     border: 1px solid #ccc;
+    background-color: #DDE5EB;
 }
 
 
@@ -488,12 +632,15 @@
 
 .select-colors {
     display: flex;
+align-items: center;
+justify-content: center;
     gap: 10px;
 }
 
 
 #colorInput {
     width: 430px;
+    height: 21px;
 }
 
 #colorPicker {
