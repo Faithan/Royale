@@ -143,7 +143,7 @@
     width: 73vh;
     border-radius: 5px;
     padding: 10px;
-    overflow-y: scroll ;
+    overflow-y: scroll;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -217,8 +217,8 @@
     border: 1px solid #767676;
 }
 
-.product-info-buttons button:hover{
-   background-color: #cfcfcf;
+.product-info-buttons button:hover {
+    background-color: #cfcfcf;
 }
 
 
@@ -236,7 +236,7 @@
     font-weight: bold;
     color: #172a4c;
     border: none;
-   text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .flex-display {
@@ -282,11 +282,11 @@
 .price {
     position: relative;
     display: flex;
-    align-items: center ;
+    align-items: center;
     justify-content: center;
-  }
-  
-  .currency {
+}
+
+.currency {
     position: absolute;
     top: 50%;
     left: 10px;
@@ -296,7 +296,7 @@
     display: flex;
     justify-content: center;
     text-align: center;
-  }
+}
 
 
 
@@ -352,7 +352,7 @@
     border: none;
     width: 300px;
     color: #182B4D;
-    
+
     border: 1px solid #bfbfbf;
     border-radius: 3px;
     text-align: center;
@@ -369,7 +369,7 @@
 
 .quantity-control button {
     width: 25px;
-    height:25px;
+    height: 25px;
     font-weight: bold;
     font-size: 15px;
     border-radius: 50%;
@@ -377,7 +377,7 @@
     border: 1px solid #767676;
     background-color: #DDE5EB;
     color: #333;
-    transition:  0.3s ease;
+    transition: 0.3s ease;
 }
 
 .quantity-control button:hover {
@@ -456,23 +456,28 @@
     text-transform: uppercase;
 }
 
-.delete{
+.delete {
     color: #c20000;
     border: 1px solid #c20000;
 }
 
 
-.description-container{
+.description-container {
     width: 96%;
-height: auto;
-    padding: 5px;
-    color: #172a4c;
+    height: auto;
+    padding: 10px;
     background-color: #EFEFEF;
     text-transform: capitalize;
     border-radius: 3px;
-    font-size: 13.5px;
-    border: 1px solid ;
+    border: 1px solid transparent;
+}
+
+.description-container p {
     text-align: justify;
+    font-weight: normal;
+    font-size: 13px;
+    text-indent: 10px;
+    color: #172a4c;
 }
 
 .description textarea {
@@ -480,7 +485,7 @@ height: auto;
     height: 300px;
     padding: 5px;
     color: #172a4c;
- 
+
     text-transform: capitalize;
     border-radius: 5px;
     border: none;
@@ -488,11 +493,11 @@ height: auto;
 }
 
 
-.hidden-note{
+.hidden-note {
     font-size: 12px;
     padding: 5px;
     color: #767676;
-   
+
 }
 
 
@@ -565,7 +570,7 @@ height: auto;
 
 
 .input-fields-container input {
-    font-size:16px;
+    font-size: 16px;
     height: 30px;
     border-radius: 5px;
     width: 98%;
@@ -640,8 +645,8 @@ height: auto;
 
 .select-colors {
     display: flex;
-align-items: center;
-justify-content: center;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -800,6 +805,3 @@ justify-content: center;
     background-color: #dbdbdb;
     transition: 0.3s;
 }
-
-
-

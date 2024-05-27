@@ -12,16 +12,16 @@ $isSuccess = false;
 
 
 if (isset($_POST['save'])) {
-    $serviceName = $_POST["service_name"];
-    $serviceDescription = $_POST["service_description"];
+    $productTypeName = $_POST["productType_name"];
+    $productTypeDescription = $_POST["productType_description"];
 
-    $service_photo = $_FILES['service_photo'];
+    $productType_photo = $_FILES['productType_photo'];
 
-    $filename = $_FILES['service_photo']['name'];
-    $filetempname = $_FILES['service_photo']['tmp_name'];
-    $filsize = $_FILES['service_photo']['size'];
-    $fileerror = $_FILES['service_photo']['error'];
-    $filetype = $_FILES['service_photo']['type'];
+    $filename = $_FILES['productType_photo']['name'];
+    $filetempname = $_FILES['productType_photo']['tmp_name'];
+    $filsize = $_FILES['productType_photo']['size'];
+    $fileerror = $_FILES['productType_photo']['error'];
+    $filetype = $_FILES['productType_photo']['type'];
 
     $fileext = explode('.', $filename);
     $filetrueext = strtolower(end($fileext));
@@ -35,16 +35,16 @@ if (isset($_POST['save'])) {
         if ($fileerror === 0) {
             if ($filsize < 10000000) {
                 $filenewname = $filename;
-                $filedestination = 'services/' . $filenewname;
+                $filedestination = 'producttype/' . $filenewname;
                 if ($filename) {
                     move_uploaded_file($filetempname, $filedestination);
                 }
 
                 // Modify the SQL query to use prepared statements for security
-                $savedata = $con->prepare("INSERT INTO services (service_status, `service_name` ,service_description, service_photo) VALUES (?, ?, ?, ?)");
+                $savedata = $con->prepare("INSERT INTO productType (productType_status, productType_name ,productType_description, productType_photo) VALUES (?, ?, ?, ?)");
                 $status = 'active';
-                $photo = 'services/' . $filenewname;
-                $savedata->bind_param("ssss", $status, $serviceName, $serviceDescription, $photo);
+                $productType_photo = 'producttype/' . $filenewname;
+                $savedata->bind_param("ssss", $status, $productTypeName, $productTypeDescription, $productType_photo);
                 $query = $savedata->execute();
 
 
@@ -100,7 +100,7 @@ if (isset($_POST['save'])) {
     <script src="../../sweetalert/sweetalert.js"></script>
 
     <link rel="stylesheet" href="css/openfile.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/serviceSettings.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/productTypeSettings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
@@ -175,9 +175,9 @@ if (isset($_POST['save'])) {
                                 class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
                     <div class="side-nav-item" onclick="window.location.href='readyProducts.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
-                    <div class="highlighted" onclick="window.location.href='serviceSettings.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='serviceSettings.php'"><label for=""><i
                                 class="fa-solid fa-briefcase"></i> Services Settings</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
+                    <div class="highlighted" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
                                 class="fa-solid fa-suitcase"></i> Product Type Settings</label></div>
                     <div class="side-nav-item" id="logout"><label for="" class="logout"><i
                                 class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
@@ -215,7 +215,7 @@ if (isset($_POST['save'])) {
 
                         <div class="search-container">
                             <div class="search-type">
-                                <label for=""><i class="fa-solid fa-gear"></i> Services Settings</label>
+                                <label for=""><i class="fa-solid fa-gear"></i> Product Type Settings</label>
                             </div>
 
 
@@ -236,15 +236,14 @@ if (isset($_POST['save'])) {
 
                             <div class="product-items">
 
-                                <?php $fetchdata = "SELECT * FROM services WHERE service_status='active' ";
+                                <?php $fetchdata = "SELECT * FROM productType WHERE productType_status='active' ";
                                 $result = mysqli_query($con, $fetchdata);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $id = $row['service_id'];
-                                    $serviceName = $row["service_name"];
-                                    $serviceDescription = $row["service_description"];
-                                    $photo = $row['service_photo'];
+                                    $id = $row['productType_id'];
+                                    $productTypeName = $row["productType_name"];
+                                    $productTypeDescription = $row["productType_description"];
+                                    $photo = $row['productType_photo'];
                                     ?>
-
 
                                     <div class="items" id="product-<?php echo $id; ?>">
 
@@ -259,7 +258,7 @@ if (isset($_POST['save'])) {
 
                                                 </label>
                                                 <label for="" class="product-data">
-                                                    <?php echo $serviceName ?>
+                                                    <?php echo   $productTypeName  ?>
                                                 </label>
                                             </div>
 
@@ -272,7 +271,7 @@ if (isset($_POST['save'])) {
 
 
 
-                                            <a class="open-file" href="openService.php?manage_id=<?php echo $id; ?>">
+                                            <a class="open-file" href="openProductType.php?manage_id=<?php echo $id; ?>">
                                                 <span class="file-wrapper">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
                                                         <path stroke-width="5" stroke="black"
@@ -281,7 +280,7 @@ if (isset($_POST['save'])) {
                                                     </svg>
                                                     <span class="file-front"></span>
                                                 </span>
-                                                Open Service
+                                                Open Product Type
                                             </a>
 
                                         </div>
@@ -297,7 +296,7 @@ if (isset($_POST['save'])) {
                         <div class="add-btn">
                             <button id="show-button">
                                 <i class="fa-solid fa-plus"></i> Add
-                                Service</button>
+                                Product Type</button>
                         </div>
                     </div> <!-- product-show -->
 
@@ -324,26 +323,28 @@ if (isset($_POST['save'])) {
 
                             <div class="search-container">
                                 <div class="search-type">
-                                    <label for=""><i class="fa-solid fa-gear"></i> Add Service</label>
+                                    <label for=""><i class="fa-solid fa-gear"></i> Add Product Type</label>
                                 </div>
                             </div>
+
+
 
                             <div class="product-info-container">
 
                                 <div class="input-fields-container">
                                     <div class="product-info-header">
-                                        <h3>Service Information</h3>
+                                        <h3>Product Type Information</h3>
                                     </div>
 
-                                    <div class="input-fields"><label for="">Service Name:</label><br>
-                                        <input type="text" name="service_name" placeholder="Enter Service Name"
+                                    <div class="input-fields"><label for="">Product Type Name:</label><br>
+                                        <input type="text" name="productType_name" placeholder="Enter Produt Type Name"
                                             id="service-name" required>
                                     </div>
 
 
                                     <div class="input-fields">
                                         <div><label for="">Description and Additional Informatiom:</label></div>
-                                        <div><textarea name="service_description" id="textarea1" required></textarea>
+                                        <div><textarea name="productType_description" id="textarea1" required></textarea>
                                         </div>
 
                                         <div class="tips">
@@ -369,7 +370,7 @@ if (isset($_POST['save'])) {
                                 <div class="add-image-container">
 
                                     <div class="product-info-header">
-                                        <h3>Service Image</h3>
+                                        <h3>Product Type Image</h3>
                                     </div>
 
                                     <div class="image-container">
@@ -379,7 +380,7 @@ if (isset($_POST['save'])) {
                                                 <img id="previewImage" src="#" alt="Preview">
                                             </div>
                                         </div>
-                                        <div class="select-img"><input type="file" name="service_photo" id="imageInput">
+                                        <div class="select-img"><input type="file" name="productType_photo" id="imageInput">
                                         </div>
                                     </div>
                                     <div class="tips">

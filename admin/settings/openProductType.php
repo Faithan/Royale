@@ -4,7 +4,10 @@ session_start();
 
 
 
-$manage_data = ['service_id' => '', 'service_name' => '', 'service_description' => '', 'service_photo' => ''];
+
+
+
+$manage_data = ['id' => '', 'product_name' => '', 'product_type' => '', 'gender' => '', 'colors' => '', 'sizes' => '', 'quantity' => '', 'price' => '', 'description' => '', 'photo' => ''];
 
 
 $message = "";
@@ -13,62 +16,61 @@ $isSuccess = false;
 
 
 if (isset($_POST['save'])) {
-    $id = $_POST['service_id'];
-    $serviceName = $_POST["service_name"];
-    $serviceDescription = $_POST["service_description"];
+    $id = $_POST['productType_id'];
 
-    $service_photo = $_FILES['service_photo'];
+    $productTypeName = $_POST["productType_name"];
+    $productTypeDescription = $_POST["productType_description"];
 
-    $filename = $_FILES['service_photo']['name'];
-    $filetempname = $_FILES['service_photo']['tmp_name'];
-    $filsize = $_FILES['service_photo']['size'];
-    $fileerror = $_FILES['service_photo']['error'];
-    $filetype = $_FILES['service_photo']['type'];
+    $productType_photo = $_FILES['productType_photo'];
+
+    $filename = $_FILES['productType_photo']['name'];
+    $filetempname = $_FILES['productType_photo']['tmp_name'];
+    $filsize = $_FILES['productType_photo']['size'];
+    $fileerror = $_FILES['productType_photo']['error'];
+    $filetype = $_FILES['productType_photo']['type'];
 
     $fileext = explode('.', $filename);
     $filetrueext = strtolower(end($fileext));
     $array = ['jpg', 'png', 'jpeg'];
 
     // Retrieve the current values from the database
-    $query = mysqli_query($con, "SELECT * FROM services WHERE service_id='$id'");
+    $query = mysqli_query($con, "SELECT * FROM productType WHERE productType_id='$id'");
     $row = mysqli_fetch_assoc($query);
-    $currentServiceName = $row['service_name'];
-    $currentServiceDescription = $row['service_description'];
-    $currentFilenewname = $row['service_photo'];
+    $currentProductTypeName = $row['productType_name'];
+    $currentProductTypeDescription = $row['productType_description'];
+    $currentFilenewname = $row['productType_photo'];
     // Add more variables for other fields as needed
 
     // Build the SQL query dynamically based on the changed values
     $updateFields = "";
-    if ($serviceName !== $currentServiceName) {
-        $updateFields .= "service_name='$serviceName', ";
+    if ($productTypeName !== $currentProductTypeName) {
+        $updateFields .= "productType_name='$productTypeName', ";
     }
 
-
-
-    if ($serviceDescription !== $currentServiceDescription) {
-        $updateFields .= "service_description='$serviceDescription', ";
-    }   
+    if ($productTypeDescription !==  $currentProductTypeDescription) {
+        $updateFields .= "productType_description='$productTypeDescription', ";
+    }
 
 
     // Check if a new photo is selected
     if (!empty($filename)) {
         // Remove the existing photo if a new photo is selected
-        if (!empty($currentFilenewname) && file_exists('services/' . $currentFilenewname)) {
-            unlink('services/' . $currentFilenewname);
+        if (!empty($currentFilenewname) && file_exists('producttype/' . $currentFilenewname)) {
+            unlink('producttype/' . $currentFilenewname);
         }
 
         $filenewname = $filename;
-        $filedestination = 'services/' . $filenewname;
+        $filedestination = 'producttype/' . $filenewname;
         move_uploaded_file($filetempname, $filedestination);
-        $updateFields .= "service_photo='services/$filenewname', ";
+        $updateFields .= "productType_photo='producttype/$filenewname', ";
     }
     // Remove the trailing comma from the updateFields string
-    $updateFields = rtrim($updateFields, ', '); 
+    $updateFields = rtrim($updateFields, ', ');
 
 
     // Execute the update query if at least one field has changed
     if (!empty($updateFields)) {
-        $savedata = "UPDATE services SET $updateFields WHERE service_id='$id'";
+        $savedata = "UPDATE productType SET $updateFields WHERE productType_id='$id'";
         $query = mysqli_query($con, $savedata);
 
         if ($query) {
@@ -97,7 +99,7 @@ if (isset($_POST['save'])) {
 <?php
 if (isset($_GET['manage_id'])) {
     $manage_id = $_GET['manage_id'];
-    $manage_query = "SELECT * FROM services WHERE service_id = $manage_id";
+    $manage_query = "SELECT * FROM productType WHERE productType_id = $manage_id";
     $manage_result = mysqli_query($con, $manage_query);
     $manage_data = mysqli_fetch_assoc($manage_result);
 }
@@ -139,7 +141,6 @@ if (isset($_GET['manage_id'])) {
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
     <title>Services Settings</title>
-
 
 </head>
 
@@ -183,9 +184,9 @@ if (isset($_GET['manage_id'])) {
         }
 
         function deleteItem() {
-            var id = document.querySelector('input[name="service_id"]').value;
+            var id = document.querySelector('input[name="productType_id"]').value;
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'delete_service.php', true);
+            xhr.open('POST', 'delete_productType.php', true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -195,7 +196,7 @@ if (isset($_GET['manage_id'])) {
                             text: 'The item has been deleted.',
                             icon: 'success'
                         }).then(() => {
-                            window.location.href = 'serviceSettings.php'; // Replace with your desired page after deletion
+                            window.location.href = 'productTypeSettings.php'; // Replace with your desired page after deletion
                         });
                     } else {
                         Swal.fire({
@@ -206,7 +207,7 @@ if (isset($_GET['manage_id'])) {
                     }
                 }
             };
-            xhr.send('service_id=' + id);
+            xhr.send('productType_id=' + id);
         }
     </script>
 
@@ -256,9 +257,9 @@ if (isset($_GET['manage_id'])) {
                                 class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
                     <div class="side-nav-item" onclick="window.location.href='readyProducts.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
-                    <div  class="highlighted" onclick="window.location.href='serviceSettings.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='serviceSettings.php'"><label for=""><i
                                 class="fa-solid fa-briefcase"></i> Services Settings</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
+                    <div class="highlighted" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
                                 class="fa-solid fa-suitcase"></i> Product Type Settings</label></div>
                     <div class="side-nav-item" id="logout"><label for="" class="logout"><i
                                 class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
@@ -301,7 +302,7 @@ if (isset($_GET['manage_id'])) {
                         <form method="post" action="" class="product-holder" enctype="multipart/form-data">
 
                             <div class="product-image-container">
-                                <div><img src="<?php echo $manage_data['service_photo']; ?>" alt=""></div>
+                                <div><img src="<?php echo $manage_data['productType_photo']; ?>" alt=""></div>
                             </div>
 
                             <div class="product-info-container">
@@ -309,12 +310,12 @@ if (isset($_GET['manage_id'])) {
                                 <div>
 
                                     <div class="second-info-container">
-                                        <input type="hidden" name="service_id" value="<?php echo $manage_data['service_id']; ?>">
+                                        <input type="hidden" name="productType_id"
+                                            value="<?php echo $manage_data['productType_id']; ?>">
 
 
                                         <div class="name-input">
-                                            <input type="text" 
-                                            value="<?php echo $manage_data['service_name']; ?>" name="service_name" id="name-input">
+                                            <input type="text" name="productType_name" value="<?php echo $manage_data['productType_name']; ?>" id="name-input">
                                         </div>
 
                                         <div class="hidden-note">
@@ -327,7 +328,7 @@ if (isset($_GET['manage_id'])) {
 
 
                                         <div class="description-container">
-                                            <p><?php echo $manage_data['service_description']; ?></p>
+                                            <p><?php echo $manage_data['productType_description']; ?></p>
                                         </div>
 
 
@@ -339,8 +340,8 @@ if (isset($_GET['manage_id'])) {
                                         </div>
 
                                         <div class="description">
-                                            <textarea name="service_description"
-                                                id=""><?php echo $manage_data['service_description']; ?></textarea>
+                                            <textarea name="productType_description"
+                                                id=""><?php echo $manage_data['productType_description']; ?></textarea>
                                         </div>
 
                                         <div class="tips">
@@ -358,7 +359,8 @@ if (isset($_GET['manage_id'])) {
                                                     <img id="previewImage" src="#" alt="Preview">
                                                 </div>
                                             </div>
-                                            <div class="select-img"><input type="file" name="service_photo" id="imageInput">
+                                            <div class="select-img"><input type="file" name="productType_photo"
+                                                    id="imageInput">
                                             </div>
                                         </div>
 
@@ -378,11 +380,7 @@ if (isset($_GET['manage_id'])) {
                                             details</button>
                                         <button type="button" name="delete" class="delete" onclick="confirmDelete()"><i
                                                 class="fa-solid fa-trash"></i>
-                                            Delete
-                                            Product</button>
-
-                                       
-
+                                            Delete Product</button>
                                     </div>
 
 
@@ -398,7 +396,7 @@ if (isset($_GET['manage_id'])) {
 
 
                         <div class="add-btn">
-                            <button onclick="window.location.href = 'serviceSettings.php'"><i
+                            <button onclick="window.location.href = 'productTypeSettings.php'"><i
                                     class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
                                 Return</button>
                         </div>

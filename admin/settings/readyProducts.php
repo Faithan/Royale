@@ -433,25 +433,54 @@ function validateColor($color)
                                     </div>
 
                                     <div class="input-fields">
-                                        <label for="">Product Type:</label><br>
-                                        <select name="product_type">
+                                    <label for="">Product Type:</label><br>
+
+
+                                    <?php
+                                    include ('dbconnect.php');
+                                    $sql = "SELECT DISTINCT productType_name FROM productType WHERE productType_status = 'active'";
+                                    $result = $con->query($sql);
+
+                                   
+
+                                    if ($result->num_rows > 0) {
+                                        echo "<select name='product_type' id='' ";
+                                        echo "<option value=''> Type of Request </option>";
+                                     
+                                        while ($row = $result->fetch_assoc()) {
+                                            $option = ucwords(strtolower($row["productType_name"])); // Capitalize ang option
+                                            echo "<option value='" . $option . "'>" . $option . "</option>";
+                                        }
+                                        echo "</select>";
+                                    } else {
+                                        echo "<select name='req-type' id='' onchange='changeColorSelect(this)'>";
+                                        echo "<option disabled selected value=''>Type of Request</option>";
+                                        echo "<option value=''>No results found.</option>";
+                                        echo "</select>";
+                                    }
+                                    ?>
+                                  
+                                       
+                                        <!-- <select name="product_type">
                                             <option value="Type 1">option 1</option>
                                             <option value="Type 2">option 2</option>
-                                        </select>
+                                        </select> -->
                                     </div>
 
                                     <div class="input-fields">
-                                        <label for="">Gender:</label><br>
-                                        <select name="gender" id="">
+                                    <label for="">Gender:</label><br>
+
+                                   <select name="gender" id="">
                                             <option value="" disabled selected>Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                             <option value="Unisex">Unisex</option>
                                         </select>
+
+                                    
                                     </div>
 
-
-
+   
                                     <div class="input-fields">
                                         <label for="color">Colors:</label><br>
                                         <div class="select-colors">

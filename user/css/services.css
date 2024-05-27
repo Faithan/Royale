@@ -318,6 +318,7 @@ left content */
     color: white;
     text-shadow: 0 1px 1px rgb(255, 255, 255);
     border-radius: 4px;
+    transition: 0.3s;
 }
 
 
@@ -465,6 +466,7 @@ left content */
     border: 1px solid transparent;
     cursor: pointer;
     font-size: 12px;
+    text-transform: capitalize;
 }
 
 .service-name-container button:hover {
@@ -504,6 +506,7 @@ left content */
     color: white;
     text-shadow: 0 1px 1px rgb(255, 255, 255);
     border-radius: 4px;
+    transition: 0.3s;
 }
 
 
@@ -597,6 +600,7 @@ left content */
     border: 1px solid transparent;
     cursor: pointer;
     font-size: 12px;
+    text-transform: capitalize;
 }
 
 .custom-name-container button:hover {
@@ -626,6 +630,7 @@ left content */
     color: white;
     text-shadow: 0 1px 1px rgb(255, 255, 255);
     border-radius: 4px;
+    transition: 0.3s;
 }
 
 

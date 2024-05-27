@@ -238,7 +238,9 @@ if (isset($_POST['submit'])) {
                 <label class="for-label-text2">AVAILABLE TYPES OF SERVICES</label>
             </div>
 
+
             <div class="right-services">
+
                 <div class="services-content">
                     <?php
                     $query = "SELECT * FROM services WHERE service_status='active'";
@@ -256,10 +258,13 @@ if (isset($_POST['submit'])) {
                     <?php } ?>
 
                 </div>
+
                 <div class="services-browse">
                     <label class="browse-text">CONTACT US</label><br>
                 </div>
             </div>
+
+                        
             <!-- available services content -->
             <div class="custom-head">
                 <label class="for-label-text2"> TYPE OF PRODUCTS WE MAKE AND OFFER</label>
@@ -268,15 +273,15 @@ if (isset($_POST['submit'])) {
             <div class="right-custom">
                 <div class="custom-content">
                     <?php
-                    $query = "SELECT * FROM add_custom_photo_tbl";
+                    $query =  "SELECT * FROM productType WHERE productType_status='active'";
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                         <div class="service-image-container">
-                            <img class="custom-image" src="<?php echo $row['custom_img'] ?>"><br>
+                            <img class="custom-image" src="../admin/settings/<?php echo $row['productType_photo'] ?>"><br>
                             <div class="custom-name-container">
                                 <button>
-                                    <?php echo $row['custom_name'] ?>
+                                    <?php echo $row['productType_name'] ?>
                                 </button>
                             </div>
                         </div>
