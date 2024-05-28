@@ -42,7 +42,7 @@ if (isset($_POST['save'])) {
     $validColors = array_map('validateColor', $colorsArray);
     $serializedColors = serialize($validColors);
 
-
+    
     // Retrieve the current values from the database
     $query = mysqli_query($con, "SELECT * FROM products WHERE id='$id'");
     $row = mysqli_fetch_assoc($query);
@@ -55,7 +55,7 @@ if (isset($_POST['save'])) {
     $currentPrice = $row['price'];
     $currentDescription = $row['description'];
     $currentFilenewname = $row['photo'];
-    // Add more variables for other fields as needed
+    // Add more variables for other fields as neededq   
 
     // Build the SQL query dynamically based on the changed values
     $updateFields = "";

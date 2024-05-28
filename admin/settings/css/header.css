@@ -237,7 +237,7 @@ color: rgb(164, 0, 0);
 
 
   
-.side-nav-holder {
+  .side-nav-holder {
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 1;
@@ -246,7 +246,7 @@ color: rgb(164, 0, 0);
     padding: 20px;
     height: 87.5vh;
     overflow-y: scroll;
-    background: linear-gradient(180deg, #B7BCC7 10%, #cbd0db 50%, rgb(255, 255, 255) 100%);
+    background: linear-gradient(180deg, rgb(155, 168, 194) 10%, rgb(249, 251, 255) 50%, rgb(254, 254, 255) 100%);
     /* background: #61737b; */
 }
 

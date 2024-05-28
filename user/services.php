@@ -228,8 +228,8 @@ if (isset($_POST['submit'])) {
                         </div>
                     <?php } ?>
                 </div>
-                <div class="products-browse">
-                    <label class="browse-text">BROWSE</label><br>
+                <div class="products-browse" onclick="window.location.href='productBrowse.php'">
+                    <label class="browse-text" >BROWSE</label><br>
                 </div>
             </div>
 
@@ -270,6 +270,8 @@ if (isset($_POST['submit'])) {
                 <label class="for-label-text2"> TYPE OF PRODUCTS WE MAKE AND OFFER</label>
             </div>
 
+
+
             <div class="right-custom">
                 <div class="custom-content">
                     <?php
@@ -293,6 +295,7 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
 
+            
         </div>
         <!-- end -->
 
