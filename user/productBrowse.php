@@ -85,12 +85,12 @@ session_start();
 
 
 
-        <div class="side-nav-holder">
+    <div class="side-nav-holder">
             <div class="side-nav">
                 <div class="side-item-holder">
                     <div class="side-nav-item" onclick="window.location.href='services.php'"><label for=""><i
                                 class="fa-brands fa-web-awesome"></i> Quick Request Form</label></div>
-                    <div class="highlighted" onclick="window.location.href='productBrowse.php'"><label for=""><i
+                    <div  class="highlighted"  onclick="window.location.href='productBrowse.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
                     <div class="side-nav-item" onclick="window.location.href='serviceBrowse.php'"><label for=""><i
                                 class="fa-solid fa-briefcase"></i> Services</label></div>
@@ -130,7 +130,7 @@ session_start();
 
                         <div class="search-container">
                             <div class="search-type">
-                                <label for=""><i class="fa-solid fa-gear"></i> Ready Made Products</label>
+                                <label for=""><i class="fa-brands fa-web-awesome"></i> Ready Made Products</label>
                             </div>
 
                             <div class="search-type">
@@ -175,8 +175,8 @@ session_start();
                                     $productName = $row["product_name"];
                                     $productType = $row["product_type"];
                                     $gender = $row["gender"];
-                                    $colors = unserialize($row['color']);// Retrieve colors directly
-                                    $sizes = $row["sizes"]; // Retrieve sizes directly
+                                    // $colors = unserialize($row['color']);// Retrieve colors directly
+                                    // $sizes = $row["sizes"]; // Retrieve sizes directly
                                     $quantity = $row["quantity"];
                                     $price = $row["price"];
                                     $photo = $row['photo'];
@@ -211,33 +211,6 @@ session_start();
                                                 </label>
                                             </div>
 
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>Available Colors:</b>
-                                                </label>
-
-                                                <label for="" class="product-colors">
-                                                    <?php foreach ($colors as $color) {
-                                                        echo '<div style="background-color:' . $color . '; width: 20px; height: 20px; border-radius: 50%;"></div>';
-                                                    } ?>
-                                                </label>
-                                            </div>
-
-                                            <div class="label-container">
-                                                <label class="product-title">
-                                                    <b>Available Sizes:</b>
-
-                                                </label>
-                                                <label for="" class="product-sizes">
-                                                    <?php
-                                                    $sizesArray = explode(' ', $sizes);
-                                                    foreach ($sizesArray as $size) {
-                                                        echo "<div class='box'>" . $size . "</div>";
-                                                    }
-                                                    ?>
-                                                </label>
-
-                                            </div>
 
                                             <div class="label-container">
                                                 <label class="product-title">
@@ -252,7 +225,7 @@ session_start();
 
                                         <div class="button-container">
 
-                                            <a>
+                                            <a href="openProductBrowse.php?manage_id=<?php echo $id; ?>">
                                                 <div class="default-btn">
                                                     <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round"
                                                         fill="none" stroke-width="2" stroke="#FFF" height="20" width="20"
@@ -275,17 +248,7 @@ session_start();
                                                     <span>Shop Now</span>
                                                 </div>
                                             </a>
-                                            <!-- <a class="open-file" href="openProducts.php?manage_id=<?php echo $id; ?>">
-                                                <span class="file-wrapper">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 71 67">
-                                                        <path stroke-width="5" stroke="black"
-                                                            d="M41.7322 11.7678L42.4645 12.5H43.5H68.5V64.5H2.5V2.5H32.4645L41.7322 11.7678Z">
-                                                        </path>
-                                                    </svg>
-                                                    <span class="file-front"></span>
-                                                </span>
-                                                Open Product
-                                            </a> -->
+                                        
 
                                         </div>
 

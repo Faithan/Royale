@@ -4,15 +4,11 @@ session_start();
 
 
 
-
-
-
 $manage_data = ['id' => '', 'product_name' => '', 'product_type' => '', 'gender' => '', 'colors' => '', 'sizes' => '', 'quantity' => '', 'price' => '', 'description' => '', 'photo' => ''];
 
 
 $message = "";
 $isSuccess = false;
-
 
 
 if (isset($_POST['save'])) {
@@ -42,7 +38,7 @@ if (isset($_POST['save'])) {
     $validColors = array_map('validateColor', $colorsArray);
     $serializedColors = serialize($validColors);
 
-    
+
     // Retrieve the current values from the database
     $query = mysqli_query($con, "SELECT * FROM products WHERE id='$id'");
     $row = mysqli_fetch_assoc($query);
@@ -171,15 +167,16 @@ if (isset($_GET['manage_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="../../fontawesome/css/fontawesome.css" rel="stylesheet" />
-    <link href="../../fontawesome/css/brands.css" rel="stylesheet" />
-    <link href="../../fontawesome/css/solid.css" rel="stylesheet" />
+
+    <link href="../fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="../fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="../fontawesome/css/solid.css" rel="stylesheet" />
 
     <script src="javascript/logout.js" defer></script>
     <script src="javascript/addColorAndSize.js" defer></script>
     <script src="javascript/fullscreen2.js" defer></script>
     <script src="javascript/quantitybtn.js" defer></script>
-
+   
     <script src="javascript/addImage.js" defer></script>
     <script src="javascript/showhide.js" defer></script>
     <script src="javascript/productInputs.js" defer></script>
@@ -189,10 +186,14 @@ if (isset($_GET['manage_id'])) {
 
     <script src="../../sweetalert/sweetalert.js"></script>
 
-    <link rel="stylesheet" href="css/openProducts.css?v=<?php echo time(); ?>">
+
+    <link rel="stylesheet" href="css/openProductBrowse.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/sideNav.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/special.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/header.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/fullscreen.css?v=<?php echo time(); ?>">
-    <link rel="shortcut icon" href="../../img/Logo.png" type="image/png">
+    <link rel="shortcut icon" href="../img/Logo.png" type="image/png">
+    <link rel="stylesheet" href="css/openfile.css?v=<?php echo time(); ?>">
     <title>Services Settings</title>
 
 
@@ -304,23 +305,23 @@ if (isset($_GET['manage_id'])) {
 
 
 
-        <div class="side-nav-holder">
+      
+    <div class="side-nav-holder">
             <div class="side-nav">
                 <div class="side-item-holder">
-                    <div class="side-nav-item" onclick="window.location.href='settings.php'"><label for=""><i
-                                class="fa-brands fa-web-awesome"></i> Dashboard</label></div>
-                    <div class="highlighted" onclick="window.location.href='readyProducts.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='services.php'"><label for=""><i
+                                class="fa-brands fa-web-awesome"></i> Quick Request Form</label></div>
+                    <div  class="highlighted"  onclick="window.location.href='productBrowse.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='serviceSettings.php'"><label for=""><i
-                                class="fa-solid fa-briefcase"></i> Services Settings</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='productTypeSettings.php'"><label for=""><i
-                                class="fa-solid fa-suitcase"></i> Product Type Settings</label></div>
-                    <div class="side-nav-item" id="logout"><label for="" class="logout"><i
-                                class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
-                            Log out</label></div>
+                    <div class="side-nav-item" onclick="window.location.href='serviceBrowse.php'"><label for=""><i
+                                class="fa-solid fa-briefcase"></i> Services</label></div>
+                    <div class="side-nav-item" onclick="window.location.href='productTypeBrowse.php'"><label for=""><i
+                                class="fa-solid fa-suitcase"></i> Product Types</label></div>
+
                 </div>
             </div>
         </div>
+
 
 
 
@@ -356,7 +357,7 @@ if (isset($_GET['manage_id'])) {
                         <form method="post" action="" class="product-holder" enctype="multipart/form-data">
 
                             <div class="product-image-container">
-                                <div><img src="<?php echo $manage_data['photo']; ?>" alt=""></div>
+                                <div><img src="../admin/settings/<?php echo $manage_data['photo']; ?>" alt=""></div>
                             </div>
 
                             <div class="product-info-container">
@@ -372,10 +373,7 @@ if (isset($_GET['manage_id'])) {
                                                 value="<?php echo $manage_data['product_name']; ?>" id="name-input">
                                         </div>
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the name above, simply type in the new name you
-                                                    desire.</em></p>
-                                        </div>
+                                        
 
                                         <div class="flex-display">
                                             <div class="product-type">
@@ -394,10 +392,7 @@ if (isset($_GET['manage_id'])) {
 
                                         </div>
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the product type and price above, simply type in the new
-                                                    information you desire.</em></p>
-                                        </div>
+                                      
 
                                         <div class="label-text"><label>For:</label></div>
 
@@ -407,12 +402,8 @@ if (isset($_GET['manage_id'])) {
 
                                         </div>
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the gender above, simply select the new gender you
-                                                    desire.</em></p>
-                                        </div>
-
-                                        <div>
+                                       
+                                        <div id="gender">
                                             <select name="gender" id="">
                                                 <option value="" disabled selected>Update Gender</option>
 
@@ -440,24 +431,14 @@ if (isset($_GET['manage_id'])) {
 
 
                                         <div class="input-fields">
-                                            <div class="select-colors">
-                                                <div><input type="text" id="colorInput" placeholder="Enter New color">
-                                                </div>
-                                                <div><input type="color" id="colorPicker"></div>
-                                                <div><button type="button" id="addButton">Add</button></div>
-                                            </div>
-                                            <ul id="colorList"></ul>
+                                     
                                             <input type="hidden" name="color" id="colorsInput" value="">
                                         </div>
 
 
 
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the available color above, simply select the new colors
-                                                    you
-                                                    desire.</em></p>
-                                        </div>
+                                     
 
                                         <div class="label-text"><label>Sizes:</label></div>
 
@@ -474,28 +455,22 @@ if (isset($_GET['manage_id'])) {
                                             ?>
                                         </div>
 
-                                        <div class="sizes">
+                                        <div class="sizes" id="sizes">
                                             <div class="input-fields">
                                                 <input type="text" name="sizes" id="sizesInput"
                                                     value="<?php echo $manage_data['sizes']; ?>">
                                             </div>
                                         </div>
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the available size above, simply type the new size you
-                                                    desire and delete the existing size you want to replace. Dont
-                                                    forget
-                                                    to separate them with spaces.</em></p>
-                                        </div>
-
+                                        
 
                                         <div class="label-text"><label>Quantity:</label></div>
 
                                         <div class="quantity-control">
-                                            <button class="minus-button" id="minus-button">-</button>
+                                        
                                             <input type="number" id="quantityInput"
                                                 value="<?php echo $manage_data['quantity']; ?>" min="1">
-                                            <button class="plus-button" id="plus-button">+</button>
+                                        
                                         </div>
 
                                         <div class="quantity-control2">
@@ -504,11 +479,7 @@ if (isset($_GET['manage_id'])) {
 
                                         </div>
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the quantity above, simply click the plus and minus
-                                                    buttons
-                                                    until you get value you desire.</em></p>
-                                        </div>
+                                        
 
                                         <div class="label-text"><label for="">Description and Additional
                                                 Information:</label></div>
@@ -519,62 +490,25 @@ if (isset($_GET['manage_id'])) {
                                         </div>
 
 
-                                        <div class="hidden-note">
-                                            <p><em>To update the description and additional information above,
-                                                    simply
-                                                    type below the new description and additional information
-                                                    until you get value you desire.</em></p>
-                                        </div>
-
-                                        <div class="description">
-                                            <textarea name="description"
-                                                id=""><?php echo $manage_data['description']; ?></textarea>
-                                        </div>
+                                      
 
 
 
-
-                                        <div class="tips">
-                                            <p><b>Note:</b> You have the ability to edit the information of your
-                                                product by simply clicking the edit button. Once you have made the
-                                                desired changes, remember to click the save button to ensure that
-                                                your edits are saved.</p>
-                                        </div>
+                                        
 
 
-                                        <div class="image-container">
-                                            <div class="label-text"><label>Update Image:</label></div>
-                                            <div class="preview-holder">
-                                                <div class="preview">
-                                                    <img id="previewImage" src="#" alt="Preview">
-                                                </div>
-                                            </div>
-                                            <div class="select-img"><input type="file" name="photo" id="imageInput">
-                                            </div>
-                                        </div>
-
-                                        <div class="hidden-note">
-                                            <p><em>To update the Product Image, simply
-                                                    upload the new photo you desire by choose file button.</em></p>
-                                        </div>
+                                       
+                                      
 
                                     </div>
 
 
 
                                     <div class="product-info-buttons">
-                                        <button type="submit" name="save"><i class="fa-solid fa-floppy-disk"></i>
-                                            Save</button>
-                                        <button id="edit-button"><i class="fa-solid fa-lock"></i> Edit
-                                            details</button>
-                                       
-                                       
-                                            <button type="button" name="delete" class="delete" onclick="confirmDelete()"><i
-                                                class="fa-solid fa-trash"></i>
-                                            Delete
-                                            Product</button>
+                                        <button type="submit"><i class="fa-solid fa-bell-concierge"></i> Request an Order
+                                            </button>
+                                      
 
-                                       
 
                                     </div>
 
@@ -591,12 +525,12 @@ if (isset($_GET['manage_id'])) {
 
 
                         <div class="add-btn">
-                            <button onclick="window.location.href = 'readyProducts.php'"><i
+                            <button onclick="window.location.href = 'productBrowse.php'"><i
                                     class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
                                 Return</button>
                         </div>
 
-                    </div> <!-- product-show -->
+                    </div> <!-- product-show -->    
 
 
 

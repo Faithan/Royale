@@ -267,7 +267,7 @@ if (isset($_POST['cancel'])) {
                         <div class="operation">-</div>
                         <div>
                             <label for="payment">New Payment (if applicable):</label><br>
-                            <input name="new_payment" type="number" placeholder="₱" class="open-input" id="input2">
+                            <input name="new_payment" type="number" placeholder="₱" class="open-input" id="input2" >
                         </div>
                         <div class="operation">=</div>
                         <div>

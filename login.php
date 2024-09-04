@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     $login_query = "SELECT * FROM royale_reg_tbl WHERE username='$username' AND password='$password' ";
-    $result = mysqli_query($con, $login_query);
+    $result = mysqli_query($conn, $login_query);
 
     if (mysqli_num_rows($result) == 1) {
         $_SESSION['loggedin'] = true;
@@ -34,7 +34,7 @@ if (isset($_POST['login'])) {
     $adminpassword = $_POST['password'];
 
     $login_query = "SELECT * FROM admin_tbl WHERE adminusername='$adminusername' AND adminpassword='$adminpassword' ";
-    $result = mysqli_query($con, $login_query);
+    $result = mysqli_query($conn, $login_query);
 
     if (mysqli_num_rows($result) == 1) {
         $_SESSION['loggedin'] = true;

@@ -1,5 +1,5 @@
 <?php
-include ('../dbconnect.php');
+include ('dbconnect.php');
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -290,7 +290,7 @@ if (isset($_POST['submit'])) {
                     <?php } ?>
 
                 </div>
-                <div class="custom-browse">
+                <div class="custom-browse" onclick="window.location.href='productBrowse.php'" >
                     <label class="browse-text">BROWSE</label><br>
                 </div>
             </div>
@@ -329,7 +329,7 @@ if (isset($_POST['submit'])) {
 
 
         <form method="post" action="" class="left-container" enctype="multipart/form-data">
-            <div class="header-text-container"><label>QUICK REQUEST FORM</label></div>
+            <div class="header-text-container"><label><i class="fa-brands fa-web-awesome"></i> QUICK REQUEST FORM</label></div>
 
             <hr>
 

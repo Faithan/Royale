@@ -1,5 +1,5 @@
 <?php
-include('dbconnect.php');
+include ('dbconnect.php');
 session_start();
 
 
@@ -155,9 +155,9 @@ if (isset($_POST['save'])) {
                                 class="fa-brands fa-web-awesome"></i> Quick Request Form</label></div>
                     <div class="side-nav-item" onclick="window.location.href='productBrowse.php'"><label for=""><i
                                 class="fa-solid fa-shirt"></i> Ready Made Products</label></div>
-                    <div class="highlighted" onclick="window.location.href='serviceBrowse.php'"><label for=""><i
+                    <div class="side-nav-item" onclick="window.location.href='serviceBrowse.php'"><label for=""><i
                                 class="fa-solid fa-briefcase"></i> Services</label></div>
-                    <div class="side-nav-item" onclick="window.location.href='productTypeBrowse.php'"><label for=""><i
+                    <div class="highlighted" onclick="window.location.href='productTypeBrowse.php'"><label for=""><i
                                 class="fa-solid fa-suitcase"></i> Product Types</label></div>
 
                 </div>
@@ -184,14 +184,11 @@ if (isset($_POST['save'])) {
                 <div class="products-container">
 
 
-
-
-
                     <div class="product-show" id="products">
 
                         <div class="search-container">
                             <div class="search-type">
-                                <label for=""><i class="fa-brands fa-web-awesome"></i> Services We Offer</label>
+                                <label for=""><i class="fa-brands fa-web-awesome"></i> Types of Product We Offer</label>
                             </div>
 
 
@@ -203,13 +200,13 @@ if (isset($_POST['save'])) {
 
                             <div class="product-items">
 
-                                <?php $fetchdata = "SELECT * FROM services WHERE service_status='active' ";
+                                <?php $fetchdata = "SELECT * FROM productType WHERE productType_status='active' ";
                                 $result = mysqli_query($con, $fetchdata);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $id = $row['service_id'];
-                                    $serviceName = $row["service_name"];
-                                    $serviceDescription = $row["service_description"];
-                                    $photo = $row['service_photo'];
+                                    $id = $row['productType_id'];
+                                    $productTypeName = $row["productType_name"];
+                                    $productTypeDescription = $row["productType_description"];
+                                    $photo = $row['productType_photo'];
                                     ?>
 
 
@@ -227,7 +224,7 @@ if (isset($_POST['save'])) {
 
                                                 </label>
                                                 <label for="" class="product-data">
-                                                    <?php echo $serviceName ?>
+                                                    <?php echo $productTypeName ?>
                                                 </label>
                                             </div>
 
