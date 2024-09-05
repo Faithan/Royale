@@ -20,6 +20,7 @@
 /* width */
 ::-webkit-scrollbar {
     width: 6px;
+    height: 10px;
 }
 
 /* Track */
@@ -58,10 +59,10 @@ html {
 
 
     --text-color: #001C31;
-    --text-shadow: rgb(190, 190, 190);
+    --text-shadow: rgb(200, 200, 200);
     --border-color: #001C31;
     --hover-color: #2326452f;
-    --box-shadow: rgba(107, 107, 107, 0.201);
+    --box-shadow: #A4ADB4;
     --box-shadow-hover: rgb(221, 221, 221);
 
     /* home */
@@ -70,6 +71,7 @@ html {
     --search-hover:#474866;
 
     --shopnow-bg: #001C31;
+    --button-bg: #001C31;
 }
 
 
@@ -80,13 +82,13 @@ html {
     --text-color: white;
     --first-bgcolor:  #242526;
     --second-bgcolor: #18191A;
-    --text-shadow: rgb(155, 155, 155);
+    --text-shadow: rgb(105, 105, 105);
     --border-color: #25274D;
     --hover-color: #6f6f6f;
     --padding-color: #18191A;
 
 
-    --box-shadow: rgba(190, 190, 190, 0.201);
+    --box-shadow: #606161;
     --box-shadow-hover: rgb(57, 57, 57);
 
     --shopnow-bg: #131415;
@@ -98,6 +100,20 @@ button {
     cursor: pointer;
 }
 
+
+button{
+    padding: 10px;
+    color: var(--pure-white);
+    font-weight: bold;
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    background-color: var(--button-bg);
+}
+
+button:hover{
+    box-shadow: 0 0 0 4px var(--box-shadow-hover);
+}
+
 a {
     cursor: pointer;
     text-decoration: none;
@@ -105,7 +121,17 @@ a {
 
 }
 
+p{
+    font-family: 'Anton', Arial, sans-serif;
+}
 
+h1{
+    font-size: 6rem;
+    color: var(--text-color);
+    text-align: start;
+    margin-bottom: 40px;
+    align-items: center;
+}
 
 
 

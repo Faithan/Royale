@@ -1,4 +1,18 @@
-<h1><i class="fa-solid fa-scissors"></i> SERVICES WE OFFER <i class="fa-solid fa-scissors fa-flip-horizontal"></i></h1>
+<div class="title-head">
+    <div class="shadows">
+        <span>s</span>
+        <span>e</span>
+        <span>r</span>
+        <span>v</span>
+        <span>i</span>
+        <span>c</span>
+        <span>e</span>
+        <span>s</span>
+
+    </div>
+</div>
+
+
 <div class="services-box-wrapper">
     <button class="scroll-left" onclick="scrollServices(-1)">&#8249;</button>
     <div class="services-box-container">
