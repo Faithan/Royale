@@ -46,7 +46,6 @@ html {
 
 
 :root {
-
     --thumb-hover: #c5c5c5;
 
     font-size: 62.5%;
@@ -101,19 +100,6 @@ button {
 }
 
 
-button{
-    padding: 10px;
-    color: var(--pure-white);
-    font-weight: bold;
-    border: 1px solid var(--box-shadow);
-    border-radius: 5px;
-    background-color: var(--button-bg);
-}
-
-button:hover{
-    box-shadow: 0 0 0 4px var(--box-shadow-hover);
-}
-
 a {
     cursor: pointer;
     text-decoration: none;
@@ -134,6 +120,22 @@ h1{
 }
 
 
+/* uniform for uniform elements */
+
+
+/* 
+button{
+    padding: 10px;
+    color: var(--pure-white);
+    font-weight: bold;
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    background-color: var(--button-bg);
+}
+
+button:hover{
+    box-shadow: 0 0 0 4px var(--box-shadow-hover);
+} */
 
 
 

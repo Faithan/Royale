@@ -5,6 +5,7 @@
         <span>a</span>
         <span>r</span>
         <span>i</span>
+        <span>e</span>
         <span>t</span>
         <span>y</span>
     </div>
