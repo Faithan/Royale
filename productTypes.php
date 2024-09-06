@@ -1,6 +1,5 @@
 <div class="title-head">
-    <div class="shadows">
-       
+    <div class="shadows hidden">
         <span>v</span>
         <span>a</span>
         <span>r</span>
@@ -13,7 +12,7 @@
 
 <div class="productType-box-wrapper">
     <button class="scroll-left" onclick="scrollProductType(-1)">&#8249;</button>
-    <div class="productType-box-container">
+    <div class="productType-box-container hidden">
         <?php
         // Query to select product type 
         $sql = "SELECT productType_id, productType_status, productType_name, productType_description, productType_photo FROM producttype WHERE productType_status = 'active'";

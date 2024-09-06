@@ -1,6 +1,6 @@
-<h1><i class="fa-solid fa-scissors"></i> ABOUT <i class="fa-solid fa-scissors fa-flip-horizontal"></i></h1>
-<hr>
-<p>Are you ready to experience the ultimate in customized fashion? At Royale Tailoring, we
+<h1 class="hidden"><i class="fa-solid fa-scissors"></i> ABOUT <i class="fa-solid fa-scissors fa-flip-horizontal"></i></h1>
+<hr class="hidden">
+<p class="hidden">Are you ready to experience the ultimate in customized fashion? At Royale Tailoring, we
     understand that every individual is unique, and your clothing should reflect that uniqueness.
     Our expert team of tailors is here to bring your fashion dreams to life, one stitch at a time.
     Gone are the days of settling for off-the-rack clothing that doesn't quite fit your style or body
@@ -24,4 +24,4 @@
     Discover the art of personalized tailoring – book your appointment now and experience
     fashion like never before with Royale Tailoring!
 </p>
-<img src="system_images/logo.png" alt="">
+<img src="system_images/logo.png" alt="" class="hidden">

@@ -67,7 +67,7 @@ html {
     /* home */
     --padding-color: #F4F4F4;
 
-    --search-hover:#474866;
+    --search-hover: #474866;
 
     --shopnow-bg: #001C31;
     --button-bg: #001C31;
@@ -79,7 +79,7 @@ html {
     --thumb-hover: #6f6f6f;
 
     --text-color: white;
-    --first-bgcolor:  #242526;
+    --first-bgcolor: #242526;
     --second-bgcolor: #18191A;
     --text-shadow: rgb(105, 105, 105);
     --border-color: #25274D;
@@ -107,11 +107,11 @@ a {
 
 }
 
-p{
+p {
     font-family: 'Anton', Arial, sans-serif;
 }
 
-h1{
+h1 {
     font-size: 6rem;
     color: var(--text-color);
     text-align: start;
@@ -142,6 +142,19 @@ button:hover{
 
 
 
+
+/* page animation */
+
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 
 
@@ -193,10 +206,17 @@ button:hover{
     z-index: 999;
 }
 
+.burger-menu-container{
+    display: none;
+}
+
 .navigation-container .logo-container {
     display: flex;
     align-items: center;
     padding-left: 20px;
+}
+.logo-container-mobile{
+    display: none;
 }
 
 .navigation-container .logo-container img {
@@ -244,8 +264,10 @@ button:hover{
 
 /* Styling for the active link */
 .navbar a.active {
-    background-color: var(--second-bgcolor); /* Change this to your preferred active background color */
-    color: var(--text-color); /* Change this to your preferred active text color */
+    background-color: var(--second-bgcolor);
+    /* Change this to your preferred active background color */
+    color: var(--text-color);
+    /* Change this to your preferred active text color */
 }
 
 
@@ -260,16 +282,19 @@ button:hover{
     align-items: center;
     color: var(--text-color);
 }
-.icon-container i{
+
+.icon-container i {
     cursor: pointer;
     transition: color 0.3s ease;
 
 }
 
 
-.icon-container i:hover{
-    color: var(--first-color); /* Change to your preferred hover color */
-    opacity: 0.5;  /* Fade effect on hover */
+.icon-container i:hover {
+    color: var(--first-color);
+    /* Change to your preferred hover color */
+    opacity: 0.5;
+    /* Fade effect on hover */
 }
 
 
@@ -296,13 +321,18 @@ button:hover{
     position: absolute;
     background-color: var(--first-bgcolor);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    min-width: max-content; /* Adjust width to fit content */
-    left: 50%; /* Center horizontally relative to user icon */
-    top: 100%; /* Place dropdown directly below the user icon */
-    transform: translateX(-50%); /* Adjust for centering */
-    white-space: nowrap; /* Prevent text wrapping */
+    min-width: max-content;
+    /* Adjust width to fit content */
+    left: 50%;
+    /* Center horizontally relative to user icon */
+    top: 100%;
+    /* Place dropdown directly below the user icon */
+    transform: translateX(-50%);
+    /* Adjust for centering */
+    white-space: nowrap;
+    /* Prevent text wrapping */
 }
 
 .dropdown-content a {
@@ -346,20 +376,23 @@ button:hover{
     padding: 5px;
     position: absolute;
     z-index: 1;
-    top: 125%; /* Position the tooltip below the icon */
+    top: 125%;
+    /* Position the tooltip below the icon */
     left: 50%;
-    margin-left: -60px; /* Center the tooltip horizontally */
+    margin-left: -60px;
+    /* Center the tooltip horizontally */
     opacity: 0;
     transition: opacity 0.3s;
     font-size: 1.7rem;
-   
+
 }
 
 /* Tooltip arrow */
 .tooltip-text::after {
     content: "";
     position: absolute;
-    top: -5px; /* Position the arrow above the tooltip */
+    top: -5px;
+    /* Position the arrow above the tooltip */
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
@@ -374,6 +407,253 @@ button:hover{
 }
 
 
-.main-container{
+.main-container {
     z-index: 1;
+}
+
+
+
+
+
+
+
+
+
+/* footer */
+
+footer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 50px 100px 200px 100px;
+    gap: 20px;
+    justify-content: space-between;
+    background-color: var(--first-bgcolor);
+}
+
+
+.footer-column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-column-container h1 {
+    font-size: 3rem;
+    color: var(--text-color);
+    margin: 0 0 10px 0;
+}
+
+.footer-column-container a {
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+.footer-column-container a:hover {
+    text-decoration: underline;
+}
+
+.footer-column-container p {
+    color: var(--text-color);
+    width: 200px;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+}
+
+.footer-column-container .follow-icons {
+    display: flex;
+    gap: 20px;
+
+}
+
+.follow-icons i {
+    font-size: 2rem;
+}
+
+.follow-icons i:hover {
+    font-size: 2.5rem;
+    transition: ease-in-out 0.3s;
+}
+
+
+/* end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 575.98px) {
+
+    .navigation-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background-color: var(--first-bgcolor);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        z-index: 999;
+    }
+
+    #logoImg {
+        filter: invert(100%);
+    }
+
+    .navbar{
+        display: none;
+    }
+
+    .icon-container {
+     display: none;
+    }
+
+    .burger-menu-container{
+        display: contents;
+        position: relative;
+    }
+
+    .burger-menu-container i{
+        margin-right: 20px;
+        color: var(--text-color);
+        font-size: 3rem;
+    }
+
+    .burger-menu-container .burger-menu-dropdown i{
+        font-size: 1.3rem;
+    }
+
+    #burgerMenuIcon {
+        font-size: 3rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .burger-menu-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--first-bgcolor);
+        box-shadow: 0 4px 8px var(--box-shadow);
+        border-radius: 4px;
+        overflow: hidden;
+        z-index: 1000;
+        width: 200px; /* Adjust the width as needed */
+    }
+
+
+    .burger-menu-dropdown a {
+        font-size: 1.3rem;
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--second-bgcolor);
+    }
+    
+    .burger-menu-dropdown a:last-child {
+        border-bottom: none;
+    }
+    
+    .burger-menu-dropdown a:hover {
+        background-color: var(--hover-color);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* footer */
+
+    footer {
+
+        padding: 60px 20px 100px 20px;
+        gap: 10px;
+
+    }
+
+
+    .footer-column-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-column-container h1 {
+        font-size: 3rem;
+        color: var(--text-color);
+        margin: 10px 0 10px 0;
+    }
+
+    .footer-column-container a {
+        color: var(--text-color);
+        font-size: 1.8rem;
+    }
+
+    .footer-column-container a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-column-container p {
+        color: var(--text-color);
+        width: 200px;
+        flex-wrap: wrap;
+        font-size: 1.5rem;
+    }
+
+    .footer-column-container .follow-icons {
+        display: flex;
+        gap: 20px;
+
+    }
+
+    .follow-icons i {
+        font-size: 2rem;
+    }
+
+    .follow-icons i:hover {
+        font-size: 2.5rem;
+        transition: ease-in-out 0.3s;
+    }
+
+
+    /* end */
 }

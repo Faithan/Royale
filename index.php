@@ -16,7 +16,6 @@ require 'dbconnect.php' // Ensure this file correctly initializes $conn
     include 'important.php'
         ?>
 
-
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/index.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="system_images/whitelogo.png" type="image/png">
@@ -24,81 +23,107 @@ require 'dbconnect.php' // Ensure this file correctly initializes $conn
 </head>
 
 <body>
-    <div class="overall-container">
 
+
+    <?php
+    include 'navigation.php';
+    ?>
+
+    <main class="main-container">
+        <!-- later for animation, do not delete -->
+
+
+        <!-- scroll animation -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const elements = document.querySelectorAll('.hidden');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target); // Stop observing once visible
+                        }
+                    });
+                });
+
+                elements.forEach(element => observer.observe(element));
+            });
+        </script>
+
+
+        <section class="home-container" id="home">
+            <div class="text-container">
+                <h1 class="hidden">WELCOME TO ROYALE</h1>
+                <h2 class="hidden">Your Effortless Online Appointment Solution!</h2>
+
+
+                <p class="hidden">
+                    Royale simplifies appointment scheduling with its user-friendly platform. Enjoy 24/7 access,
+                    instant confirmations, and automated reminders. Say hello to a smarter way to book
+                    appointments with Royale!
+                </p>
+
+
+                <a href="#readymade_products" class="hidden">
+                    <button class="cta">
+                        <span class="hover-underline-animation">Shop now</span>
+                        <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10"
+                            viewBox="0 0 46 16">
+                            <path id="Path_10" data-name="Path 10"
+                                d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+                                transform="translate(30)"></path>
+                        </svg>
+                    </button>
+                </a>
+
+
+
+            </div>
+
+        </section>
+
+
+
+        <section class="services-container" id="services">
+
+            <!-- services part -->
+            <?php include 'services.php' ?>
+            <!-- end of services part -->
+
+            <!-- ready made part -->
+            <?php include 'readymade.php' ?>
+            <!-- end of readymade products -->
+
+            <!-- product type part -->
+            <?php include 'productTypes.php' ?>
+            <!-- end of product type -->
+
+        </section>
+
+
+        <section class="about-container" id="about">
+            <?php include 'about.php' ?>
+        </section>
+
+
+
+
+        <section class="contact-container" id="contact">
+            <?php include 'contact.php' ?>
+        </section>
+    </main>
+
+
+
+    <footer>
         <?php
-        include 'navigation.php';
-        ?>
-
-        <main class="main-container">
-            <!-- later for animation, do not delete -->
-
-
-            <section class="home-container" id="home">
-                <div class="text-container">
-                    <h1>WELCOME TO ROYALE</h1>
-                    <h2>Your Effortless Online Appointment Solution!</h2>
-
-
-                    <p>
-                        Royale simplifies appointment scheduling with its user-friendly platform. Enjoy 24/7 access,
-                        instant confirmations, and automated reminders. Say hello to a smarter way to book
-                        appointments with Royale!
-                    </p>
-
-
-                    <a href="#readymade_products">
-                        <button class="cta">
-                            <span class="hover-underline-animation">Shop now</span>
-                            <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10"
-                                viewBox="0 0 46 16">
-                                <path id="Path_10" data-name="Path 10"
-                                    d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-                                    transform="translate(30)"></path>
-                            </svg>
-                        </button>
-                    </a>
+        include 'footer.php'
+            ?>
+    </footer>
 
 
 
-                </div>
-
-            </section>
-
-
-
-            <section class="services-container" id="services">
-
-                <!-- services part -->
-                <?php include 'services.php' ?>
-                <!-- end of services part -->
-
-                <!-- ready made part -->
-                <?php include 'readymade.php' ?>
-                <!-- end of readymade products -->
-
-                <!-- product type part -->
-                <?php include 'productTypes.php' ?>
-                <!-- end of product type -->
-
-            </section>
-
-
-            <section class="about-container" id="about">
-                <?php include 'about.php' ?>
-            </section>
-
-
-
-
-            <section class="contact-container" id="contact">
-                    <?php include 'contact.php' ?>
-            </section>
-
-
-
-        </main>
-    </div>
 
 </body>
 

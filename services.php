@@ -1,5 +1,5 @@
 <div class="title-head">
-    <div class="shadows">
+    <div class="shadows hidden">
         <span>s</span>
         <span>e</span>
         <span>r</span>
@@ -25,11 +25,11 @@
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 ?>
-                <div class="service-box">
+                <div class="service-box hidden">
                     <img src="admin/settings/<?php echo $row['service_photo']; ?>" alt="<?php echo $row['service_name']; ?>">
                     <h2><?php echo $row['service_name']; ?></h2>
                     <p><?php echo $row['service_description']; ?></p>
-                    <a class="animated-button">
+                    <a class="animated-button hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
                             <path
                                 d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">

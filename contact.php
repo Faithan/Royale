@@ -1,8 +1,8 @@
-<h1>Get In Touch With Us</h1>
+<h1 class="hidden">Get In Touch With Us</h1>
 
 <div class="second-contact-container">
 
-    <div class="left">
+    <div class="left hidden">
         <p>Have a question? We’re here to help! Our friendly and knowledgable customer experience team
             Royale and want to ensure you will too! Feel free to reach us via phone, email or
             the form below. </p>
@@ -14,7 +14,7 @@
     </div>
 
 
-    <div class="right">
+    <div class="right hidden">
             <h2>Please note: all fields are required.</h2>
 
             <div class="contact-input-container">
