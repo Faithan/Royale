@@ -1,17 +1,15 @@
 <div class="navigation-container">
-
     <div class="logo-container">
         <label for=""><i class="fa-brands fa-web-awesome"></i> R O Y A L E</label>
     </div>
 
-
     <div class="navbar">
         <ul>
             <li>
-                <a href="#home" id="home-link">HOME</a>
-                <a href="#services" id="services-link">SERVICES</a>
-                <a href="#about" id="about-link">ABOUT</a>
-                <a href="#contact" id="contact-link">CONTACT</a>
+                <a href="index.php#home" id="home-link">HOME</a>
+                <a href="index.php#services" id="services-link">SERVICES</a>
+                <a href="index.php#about" id="about-link">ABOUT</a>
+                <a href="index.php#contact" id="contact-link">CONTACT</a>
             </li>
         </ul>
     </div>
@@ -30,26 +28,61 @@
             <span class="tooltip-text" id="tooltipText">Lights Off</span>
         </div>
 
-        <i class="fa-solid fa-right-to-bracket"></i>
+        <a href="login.php" class="tooltip-container">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span class="tooltip-text">Login</span>
+        </a>
     </div>
 
 
 
+    <!-- mobile nav -->
     <div class="burger-menu-container">
         <i class="fa-solid fa-bars" id="burgerMenuIcon"></i>
         <div class="burger-menu-dropdown" id="burgerMenuDropdown">
-            <a href="#home">HOME</a>
-            <a href="#services">SERVICES</a>
-            <a href="#about">ABOUT</a>
-            <a href="#contact">CONTACT</a>
-            <a href="">MY PROFILE</a>
-            <a href="">MY RESERVATION</a>
+            <a href="index.php#home">HOME</a>
+            <a href="index.php#services">SERVICES</a>
+            <a href="index.php#about">ABOUT</a>
+            <a href="index.php#contact">CONTACT</a>
+            <a href="#">MY PROFILE</a>
+            <a href="#">MY RESERVATION</a>
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
-            <a href=""><i class="fa-solid fa-right-to-bracket"></i> LOGIN</a>
+            <a href="login.php"><i class="fa-solid fa-right-to-bracket"></i> LOGIN</a>
         </div>
     </div>
+</div>
 
-    <script>
+<script>
+    // Function to apply the dark mode based on stored preference
+    function applyDarkMode() {
+        const isDarkModeEnabled = localStorage.getItem('darkMode') === 'enabled';
+        document.body.classList.toggle('dark-mode', isDarkModeEnabled);
+        document.getElementById('burgerMenuDropdown').classList.toggle('dark-mode', isDarkModeEnabled);
+        document.getElementById('tooltipText').textContent = isDarkModeEnabled ? 'Lights On' : 'Lights Off';
+    }
+
+    // Toggle dark mode and save state
+    function toggleDarkMode() {
+        const isDarkModeEnabled = document.body.classList.toggle('dark-mode');
+        document.getElementById('burgerMenuDropdown').classList.toggle('dark-mode', isDarkModeEnabled);
+        localStorage.setItem('darkMode', isDarkModeEnabled ? 'enabled' : 'disabled');
+        document.getElementById('tooltipText').textContent = isDarkModeEnabled ? 'Lights On' : 'Lights Off';
+    }
+
+    // Apply the saved dark mode on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        applyDarkMode();
+
+        // Add event listener for dark mode toggle in the main nav
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Add event listener for dark mode toggle in the burger menu
+        document.getElementById('darkModeToggle2').addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleDarkMode();
+        });
+
+        // Add event listener for the burger menu toggle
         document.getElementById('burgerMenuIcon').addEventListener('click', function () {
             var menu = document.getElementById('burgerMenuDropdown');
             var icon = document.getElementById('burgerMenuIcon');
@@ -64,25 +97,8 @@
                 icon.classList.add('fa-times');
             }
         });
-
-
-
-        document.getElementById('darkModeToggle2').addEventListener('click', function (e) {
-            e.preventDefault();
-            var body = document.body;
-            var menu = document.getElementById('burgerMenuDropdown');
-
-            body.classList.toggle('dark-mode');
-            menu.classList.toggle('dark-mode');
-        });
-    </script>
-
-</div>
-
-
-
-
-
+    });
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -116,39 +132,6 @@
     });
 </script>
 
-
-<!-- darkmode script -->
-<script>
-    // Function to apply the dark mode based on stored preference
-    function applyDarkMode() {
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('tooltipText').textContent = 'Lights On'; // Update tooltip text
-        } else {
-            document.body.classList.remove('dark-mode');
-            document.getElementById('tooltipText').textContent = 'Lights Off'; // Update tooltip text
-        }
-    }
-
-    // Initial check to apply dark mode based on the stored preference
-    applyDarkMode();
-
-    // Event listener for the dark mode toggle button
-    document.getElementById('darkModeToggle').addEventListener('click', function () {
-        document.body.classList.toggle('dark-mode');
-
-        // Save the user's preference to localStorage
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('dark-mode', 'enabled');
-            document.getElementById('tooltipText').textContent = 'Lights On'; // Update tooltip text
-        } else {
-            localStorage.setItem('dark-mode', 'disabled');
-            document.getElementById('tooltipText').textContent = 'Lights Off'; // Update tooltip text
-        }
-    });
-</script>
-
-<!-- user menu script -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const userIcon = document.getElementById('userIcon');

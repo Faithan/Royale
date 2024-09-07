@@ -33,23 +33,7 @@ require 'dbconnect.php' // Ensure this file correctly initializes $conn
         <!-- later for animation, do not delete -->
 
 
-        <!-- scroll animation -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const elements = document.querySelectorAll('.hidden');
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target); // Stop observing once visible
-                        }
-                    });
-                });
-
-                elements.forEach(element => observer.observe(element));
-            });
-        </script>
+      
 
 
         <section class="home-container" id="home">

@@ -189,6 +189,14 @@ button:hover{
 
 
 
+
+
+
+
+
+
+
+
 /* navigation css */
 
 .navigation-container {
@@ -286,15 +294,13 @@ button:hover{
 .icon-container i {
     cursor: pointer;
     transition: color 0.3s ease;
-
+    color: var(--text-color);
 }
 
 
 .icon-container i:hover {
     color: var(--first-color);
-    /* Change to your preferred hover color */
     opacity: 0.5;
-    /* Fade effect on hover */
 }
 
 
@@ -561,7 +567,7 @@ footer {
         top: 100%;
         right: 0;
         background-color: var(--first-bgcolor);
-        box-shadow: 0 4px 8px var(--box-shadow);
+        box-shadow: 0 0 4px var(--box-shadow);
         border-radius: 4px;
         overflow: hidden;
         z-index: 1000;
