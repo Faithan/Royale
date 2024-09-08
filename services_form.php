@@ -8,7 +8,7 @@ $response = ['success' => false, 'message' => ''];
 // Validate view_id
 if (isset($_GET['view_id'])) {
     $view_id = intval($_GET['view_id']);
-    $view_query = "SELECT * FROM products WHERE id = ?";
+    $view_query = "SELECT * FROM services WHERE service_id = ?";
     if ($stmt = $conn->prepare($view_query)) {
         $stmt->bind_param('i', $view_id);
         $stmt->execute();
@@ -30,7 +30,7 @@ if (isset($_GET['view_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royale Product</title>
+    <title> Service Form</title>
 
     <!-- important file -->
     <?php
@@ -51,45 +51,18 @@ if (isset($_GET['view_id'])) {
 
 
     <main>
-        <h1>View Product</h1>
+        <h1>Service Form</h1>
 
         <div class="details-main-contianer">
-
-            <img src="admin/settings/<?php echo $view_data['photo']; ?>">
-
             <div class="details-container">
-                <h1>Product Details</h1>
+                <h1>Customer's Information</h1>
 
                 <div class="product-info-container">
-                    <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
 
-                    <div style="display: flex; gap: 5px; align-items:center; justify-content:center;">
-                        <label for="product-type"> <?php echo $view_data['product_type']; ?></label>
-                        <label for="price">₱ <?php echo $view_data['price']; ?></label>
-                    </div>
-
-                    <label for="gender">
-                        <?php
-                        if ($view_data['gender'] == 'male') {
-                            echo '<i class="fas fa-mars"></i>'; // Male icon
-                        } elseif ($view_data['gender'] == 'female') {
-                            echo '<i class="fas fa-venus"></i>'; // Female icon
-                        }
-                        echo $view_data['gender'];
-                        ?>
-                    </label>
-
-                    <label for="">Available Color:</label>
-
-                    <label for="">Available Sizes:</label>
-
-                    <label for="">Stocks: <?php echo $view_data['quantity'] ?></label>
-
-                    <p><?php echo $view_data['description']; ?></p>
 
 
                     <div class="customer-info-container">
-                        <h1>Customer's Information</h1>
+
 
                         <div class="customer-input-container">
                             <input type="text" placeholder="Enter your name">
@@ -108,7 +81,7 @@ if (isset($_GET['view_id'])) {
 
                         </div>
 
-                        <h1>Date and Time of Pick Up</h1>
+                        <h1>Date and Time</h1>
 
                         <div class="customer-input-container">
                             <input type="date" placeholder="Enter date of pickup" title="Select the date for pickup">
@@ -121,7 +94,7 @@ if (isset($_GET['view_id'])) {
                 </div>
 
                 <div class="product-buttons-container">
-                    <a id="return" href="index.php?#readymade_products"><i class="fa-solid fa-arrow-left"></i>
+                    <a id="return" href="index.php?#services"><i class="fa-solid fa-arrow-left"></i>
                         RETURN</a>
                     <div id="order-container">
                         <!-- The button or text will be dynamically inserted here -->
@@ -138,10 +111,10 @@ if (isset($_GET['view_id'])) {
 
                                     if (data.loggedIn) {
                                         // If logged in, display the "Order Now" button
-                                        orderContainer.innerHTML = '<button id="order-now"><i class="fa-solid fa-bell-concierge"></i> ORDER NOW</button>';
+                                        orderContainer.innerHTML = '<button id="order-now"><i class="fa-solid fa-calendar-day"></i> BOOK NOW</button>';
                                     } else {
                                         // If not logged in, display the "Log in to order" text
-                                        orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to order</span>';
+                                        orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to book</span>';
                                     }
                                 })
                                 .catch(error => console.error('Error checking login status:', error));

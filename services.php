@@ -32,7 +32,7 @@
 
 
 
-                    <a id="reserveButton" class="animated-button hidden">
+                    <a class="reserveButton animated-button hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
                             <path
                                 d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
@@ -50,35 +50,38 @@
 
                     <!-- reserve-button script -->
                     <script>
+                        // reserve-button script
                         document.addEventListener('DOMContentLoaded', (event) => {
-                            const reserveButton = document.getElementById('reserveButton');
+                            const reserveButtons = document.getElementsByClassName('reserveButton');
 
-                            reserveButton.addEventListener('click', function (event) {
-                                event.preventDefault(); // Prevent the default link behavior
+                            // Loop through all elements with the class 'reserveButton'
+                            Array.from(reserveButtons).forEach(button => {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault(); // Prevent the default link behavior
 
-                                // Make an AJAX request to check if the user is logged in
-                                fetch('check_login_status.php')
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.loggedIn) {
-                                            // User is logged in, redirect to services_form.php
-                                            window.location.href = 'services_form.php';
-                                        } else {
-                                            // User is not logged in, show SweetAlert with "Login here" link
-                                            Swal.fire({
-                                                title: 'Login Required',
-                                                text: 'You need to log in first!',
-                                                icon: 'warning',
-                                                confirmButtonColor: '#001C31',
-                                                confirmButtonText: 'OK',
-                                                footer: '<a href="login.php">Login here</a>'
-                                            });
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
+                                    // Make an AJAX request to check if the user is logged in
+                                    fetch('check_login_status.php')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.loggedIn) {
+                                                // User is logged in, redirect to services_form.php
+                                                window.location.href = 'services_form.php';
+                                            } else {
+                                                // User is not logged in, show SweetAlert with "Login here" link
+                                                Swal.fire({
+                                                    title: 'Login Required',
+                                                    text: 'You need to log in first!',
+                                                    icon: 'warning',
+                                                    confirmButtonColor: '#001C31',
+                                                    confirmButtonText: 'OK',
+                                                    footer: '<a href="login.php">Login here</a>'
+                                                });
+                                            }
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                });
                             });
                         });
-
 
                     </script>
 
