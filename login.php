@@ -53,21 +53,6 @@ if (isset($_SESSION['user_email'])) {
                 <input type="password" name="user_password" placeholder="Password" required>
                 <button type="submit" name="signup">Sign Up</button>
             </form>
-
-            <script>
-                $(document).ready(function () {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const status = urlParams.get('status');
-
-                    if (status === 'success') {
-                        toastr.success('Sign up successful!', 'Success');
-                    } else if (status === 'error') {
-                        toastr.error('An error occurred. Please try again.', 'Error');
-                    } else if (status === 'exists') {
-                        toastr.error('An account with this email already exists.', 'Error');
-                    }
-                });
-            </script>
         </div>
 
 

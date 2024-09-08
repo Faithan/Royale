@@ -302,8 +302,6 @@ body.dark-mode .home-container::before {
     align-items: center;
     gap: 4px;
     padding: 16px 36px;
-    border: 1px solid;
-    border-color: transparent;
     font-size: 12px;
     border-radius: 100px;
     font-weight: 600;
@@ -354,7 +352,6 @@ body.dark-mode .home-container::before {
 .animated-button:hover {
     box-shadow: 0 0 0 12px transparent;
     color: var(--text-color);
-    border-radius: 12px;
 }
 
 .animated-button:hover .arr-1 {

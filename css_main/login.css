@@ -411,6 +411,7 @@ body.dark-mode {
 
     .container.active .toggle-right {
         transform: translateX(200%);
+        
     }
 
 

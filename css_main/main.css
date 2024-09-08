@@ -70,9 +70,10 @@ html {
     --search-hover: #474866;
 
     --shopnow-bg: #001C31;
+    --return-bg: #414141;
     --button-bg: #001C31;
 
-
+    --text-bg: #001C31;
 
 
     --cancel-color: #dc3545;
@@ -619,7 +620,7 @@ footer {
         top: 100%;
         right: 0;
         background-color: var(--first-bgcolor);
-        box-shadow: 0 0 4px var(--box-shadow);
+        box-shadow: 0 2px 4px var(--box-shadow);
         border-radius: 4px;
         overflow: hidden;
         z-index: 1000;

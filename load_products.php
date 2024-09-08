@@ -1,5 +1,6 @@
 <?php
 require 'dbconnect.php'; // Ensure this file correctly initializes $conn
+session_start();
 
 $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
 $search = isset($_POST['search']) ? $_POST['search'] : '';
@@ -62,7 +63,7 @@ if ($result->num_rows > 0) {
             </div>
             <p class="description"><?php echo $row['description']; ?></p>
 
-            <a>
+            <a href="productView.php?view_id=<?php echo $row['id']; ?>">
                 <div class="default-btn">
                     <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none"
                         stroke-width="2" stroke="#FFF" height="20" width="20" viewBox="0 0 24 24">
@@ -82,6 +83,7 @@ if ($result->num_rows > 0) {
                     <span>Open Product</span>
                 </div>
             </a>
+
         </div>
         <?php
     }
