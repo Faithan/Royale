@@ -190,10 +190,10 @@ body.dark-mode {
 .toggle-panel h1 {
     color: var(--pure-white);
     text-align: center;
-    
+
 }
 
-.toggle-panel button{
+.toggle-panel button {
     border: 1px solid var(--pure-white);
     color: var(--pure-white);
 
@@ -239,7 +239,13 @@ body.dark-mode {
 
 
 
-@media only screen and (max-width: 575.98px){
+
+
+
+
+
+
+@media only screen and (max-width: 575.98px) {
 
 
     .container {
@@ -247,22 +253,22 @@ body.dark-mode {
         height: 100vh;
         border-radius: 0;
     }
-    
+
     .container p {
         font-size: 1.2rem;
-       
+
     }
-    
+
     .container span {
         font-size: 1.3rem;
         color: var(--text-color);
     }
-    
+
     .container button {
         font-size: 1.2rem;
         padding: 10px 30px;
     }
-    
+
     .container form {
         background-color: var(--first-bgcolor);
         display: flex;
@@ -273,59 +279,59 @@ body.dark-mode {
         height: 100%;
     }
 
-    .container form h1{
+    .container form h1 {
         font-size: 2rem;
         font-weight: bold;
     }
-    
+
     .form-container {
         position: absolute;
         top: 0;
         height: 100%;
         transition: all 0.6s ease-in-out;
     }
-    
+
     .sign-in {
         left: 0;
         width: 50%;
         z-index: 2;
     }
-    
+
     .container.active .sign-in {
         transform: translateX(100%);
     }
-    
+
     .sign-up {
         left: 0;
         width: 50%;
         opacity: 0;
         z-index: 1;
     }
-    
+
     .container.active .sign-up {
         transform: translateX(100%);
         opacity: 1;
         z-index: 5;
         animation: move 0.6s;
     }
-    
+
     @keyframes move {
-    
+
         0%,
         49.99% {
             opacity: 0;
             z-index: 1;
         }
-    
+
         50%,
         100% {
             opacity: 1;
             z-index: 5;
         }
     }
-    
-    
-    
+
+
+
     .toggle-container {
         position: absolute;
         top: 0;
@@ -336,14 +342,14 @@ body.dark-mode {
         transition: all 0.6s ease-in-out;
         border-radius: 0;
         z-index: 1000;
-    
+
     }
-    
+
     .container.active .toggle-container {
         transform: translateX(-100%);
         border-radius: 0;
     }
-    
+
     .toggle {
         height: 100%;
         background: var(--button-bg);
@@ -355,11 +361,11 @@ body.dark-mode {
         transform: translateX(0);
         transition: all 0.6s ease-in-out;
     }
-    
+
     .container.active .toggle {
         transform: translateX(50%);
     }
-    
+
     .toggle-panel {
         position: absolute;
         width: 50%;
@@ -373,42 +379,42 @@ body.dark-mode {
         top: 0;
         transform: translateX(0);
         transition: all 0.6s ease-in-out;
-    
+
     }
-    
-    
+
+
     .toggle-panel h1 {
         color: var(--pure-white);
         text-align: center;
         font-size: 2rem;
     }
-    
-    .toggle-panel button{
+
+    .toggle-panel button {
         border: 1px solid var(--pure-white);
         color: var(--pure-white);
-        
+
     }
-    
+
     .toggle-left {
         transform: translateX(-200%);
-    
+
     }
-    
+
     .container.active .toggle-left {
         transform: translateX(0);
     }
-    
+
     .toggle-right {
         right: 0;
         transform: translateX(0);
     }
-    
+
     .container.active .toggle-right {
         transform: translateX(200%);
     }
-    
-    
-    
-    
+
+
+
+
 
 }

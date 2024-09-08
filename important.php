@@ -6,8 +6,10 @@
 <!-- sweetalert -->
 <script src="sweetalert/sweetalert.js"></script>
 
-
-
+<!-- toastr -->
+<link rel="stylesheet" href="toastr/toastr.min.css">
+<script src="toastr/jquery.min.js"></script>
+<script src="toastr/toastr.min.js"></script>
 
 <!-- scroll animation -->
 <script>

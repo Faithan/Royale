@@ -1,3 +1,20 @@
+<?php
+require 'dbconnect.php'; // Ensure this file correctly initializes $conn
+session_start(); // Start the session
+
+
+// Redirect to dashboard if user is already logged in
+if (isset($_SESSION['user_email'])) {
+    header('Location: index.php'); // Redirect to a page where logged-in users are taken
+    exit;
+}
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +32,8 @@
     <link rel="stylesheet" href="css_main/login.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="system_images/whitelogo.png" type="image/png">
 
+
+
 </head>
 
 <body>
@@ -24,29 +43,48 @@
     ?>
 
     <div class="container hidden" id="container">
+
         <div class="form-container sign-up">
-            <form>
+            <form id="signup-form" method="POST" action="signup.php">
                 <h1>Create Account</h1>
-    
                 <span>enter your credentials</span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button>Sign Up</button>
+                <input type="text" name="user_name" placeholder="Name" required>
+                <input type="email" name="user_email" placeholder="Email" required>
+                <input type="password" name="user_password" placeholder="Password" required>
+                <button type="submit" name="signup">Sign Up</button>
             </form>
+
+            <script>
+                $(document).ready(function () {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const status = urlParams.get('status');
+
+                    if (status === 'success') {
+                        toastr.success('Sign up successful!', 'Success');
+                    } else if (status === 'error') {
+                        toastr.error('An error occurred. Please try again.', 'Error');
+                    } else if (status === 'exists') {
+                        toastr.error('An account with this email already exists.', 'Error');
+                    }
+                });
+            </script>
         </div>
+
+
         <div class="form-container sign-in">
-            <form>
+            <form id="signin-form" method="POST" action="signin.php">
                 <h1>Sign In</h1>
-              
                 <span>use your email and password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input type="email" name="user_email" placeholder="Email" required>
+                <input type="password" name="user_password" placeholder="Password" required>
                 <a href="#">Forget Your Password?</a>
-                <button>Sign In</button>
+                <button type="submit" name="signin">Sign In</button>
             </form>
         </div>
-        
+
+
+
+
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
@@ -68,6 +106,49 @@
 </html>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- script -->
 <script>const container = document.getElementById('container');
     const registerBtn = document.getElementById('register');
     const loginBtn = document.getElementById('login');
@@ -79,3 +160,25 @@
     loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
     });</script>
+
+
+
+
+<!-- logout message -->
+<script>
+   
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'loggedout') {
+            toastr.success('You have been logged out successfully!', 'Logged Out');
+        } else if (status === 'success') {
+            toastr.success('Sign up successful!', 'Success');
+        } else if (status === 'error') {
+            toastr.error('An error occurred. Please try again.', 'Error');
+        } else if (status === 'exists') {
+            toastr.error('An account with this email already exists.', 'Error');
+        }
+    });
+</script>

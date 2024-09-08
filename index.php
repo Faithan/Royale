@@ -1,6 +1,11 @@
 <?php
-require 'dbconnect.php' // Ensure this file correctly initializes $conn
-    ?>
+require 'dbconnect.php'; // Ensure this file correctly initializes $conn
+session_start(); // Start the session
+
+
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -33,7 +38,7 @@ require 'dbconnect.php' // Ensure this file correctly initializes $conn
         <!-- later for animation, do not delete -->
 
 
-      
+
 
 
         <section class="home-container" id="home">
@@ -112,3 +117,21 @@ require 'dbconnect.php' // Ensure this file correctly initializes $conn
 </body>
 
 </html>
+
+
+
+
+
+<!-- user login success -->
+<script>
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            toastr.success('Sign in successful!', 'Success');
+        } else if (status === 'error') {
+            toastr.error('Invalid email or password.', 'Error');
+        }
+    });
+</script>

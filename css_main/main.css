@@ -71,6 +71,11 @@ html {
 
     --shopnow-bg: #001C31;
     --button-bg: #001C31;
+
+
+
+
+    --cancel-color: #dc3545;
 }
 
 
@@ -91,6 +96,9 @@ html {
     --box-shadow-hover: rgb(57, 57, 57);
 
     --shopnow-bg: #131415;
+
+
+
 }
 
 
@@ -159,7 +167,50 @@ button:hover{
 
 
 
+.navigation-container {
+    transition: box-shadow 0.3s ease;
+}
 
+.navigation-container.shadow {
+    box-shadow: 0 4px 2px -3px var(--box-shadow);
+}
+
+
+
+
+
+
+/* toastr */
+/* Customize the Toastr container */
+.toast-container {
+    z-index: 9999 !important;
+    /* Ensure it appears above other content */
+}
+
+/* Customize success toast */
+.toast-success {
+    background-color: var(--button-bg) !important;
+    /* Green color for success */
+    color: #fff;
+}
+
+/* Customize error toast */
+.toast-error {
+    background-color: var(--cancel-color) !important;
+    /* Red color for error */
+    color: #fff;
+}
+
+/* Customize the toast title */
+.toast-title {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Customize the toast message */
+.toast-message {
+    font-size: 1.4rem !important;
+}
 
 
 
@@ -214,7 +265,7 @@ button:hover{
     z-index: 999;
 }
 
-.burger-menu-container{
+.burger-menu-container {
     display: none;
 }
 
@@ -223,7 +274,8 @@ button:hover{
     align-items: center;
     padding-left: 20px;
 }
-.logo-container-mobile{
+
+.logo-container-mobile {
     display: none;
 }
 
@@ -532,26 +584,26 @@ footer {
         filter: invert(100%);
     }
 
-    .navbar{
+    .navbar {
         display: none;
     }
 
     .icon-container {
-     display: none;
+        display: none;
     }
 
-    .burger-menu-container{
+    .burger-menu-container {
         display: contents;
         position: relative;
     }
 
-    .burger-menu-container i{
+    .burger-menu-container i {
         margin-right: 20px;
         color: var(--text-color);
         font-size: 3rem;
     }
 
-    .burger-menu-container .burger-menu-dropdown i{
+    .burger-menu-container .burger-menu-dropdown i {
         font-size: 1.3rem;
     }
 
@@ -571,7 +623,8 @@ footer {
         border-radius: 4px;
         overflow: hidden;
         z-index: 1000;
-        width: 200px; /* Adjust the width as needed */
+        width: 200px;
+        /* Adjust the width as needed */
     }
 
 
@@ -583,11 +636,11 @@ footer {
         color: var(--text-color);
         border-bottom: 1px solid var(--second-bgcolor);
     }
-    
+
     .burger-menu-dropdown a:last-child {
         border-bottom: none;
     }
-    
+
     .burger-menu-dropdown a:hover {
         background-color: var(--hover-color);
     }

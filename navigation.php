@@ -1,4 +1,10 @@
-<div class="navigation-container">
+<?php
+$isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
+?>
+
+
+
+<div class="navigation-container" id="navbar">
     <div class="logo-container">
         <label for=""><i class="fa-brands fa-web-awesome"></i> R O Y A L E</label>
     </div>
@@ -28,11 +34,72 @@
             <span class="tooltip-text" id="tooltipText">Lights Off</span>
         </div>
 
-        <a href="login.php" class="tooltip-container">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span class="tooltip-text">Login</span>
+
+
+
+
+
+        <a href="#" id="logout-link" class="tooltip-container">
+            <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>
+            <span class="tooltip-text"><?php echo $isLoggedIn ? 'Logout' : 'Login'; ?></span>
         </a>
+
+        <!-- Include SweetAlert and Custom Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var isLoggedIn = <?php echo json_encode($isLoggedIn); ?>; // Ensure PHP value is correctly passed to JS
+
+                document.getElementById('logout-link').addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent the default action
+
+                    if (isLoggedIn) {
+                        // If the user is logged in, show the SweetAlert confirmation dialog
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You will be logged out of your account.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#001C31',
+                            cancelButtonColor: '#dc3545',
+                            confirmButtonText: 'Yes, log out!',
+                            cancelButtonText: 'No, cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Redirect to logout.php if confirmed
+                                window.location.href = 'logout.php';
+                            }
+                        });
+                    } else {
+                        // If the user is not logged in, redirect to login.php
+                        window.location.href = 'login.php';
+                    }
+                });
+            });
+        </script>
+
+
+
     </div>
+
+    <script>
+        let isScrolling;
+
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+
+            // Add the shadow when scrolling
+            navbar.classList.add('shadow');
+
+            // Clear the previous timeout
+            clearTimeout(isScrolling);
+
+            // Set a timeout to remove the shadow after scrolling stops
+            isScrolling = setTimeout(function () {
+                navbar.classList.remove('shadow');
+            }, 150); // Adjust the delay as needed
+        });
+
+    </script>
 
 
 
@@ -47,9 +114,16 @@
             <a href="#">MY PROFILE</a>
             <a href="#">MY RESERVATION</a>
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
-            <a href="login.php"><i class="fa-solid fa-right-to-bracket"></i> LOGIN</a>
+            <a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>" id="mobile-login-link">
+                <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>
+                <?php echo $isLoggedIn ? 'LOGOUT' : 'LOGIN'; ?>
+            </a>
         </div>
     </div>
+
+
+
+
 </div>
 
 <script>
@@ -70,14 +144,14 @@
     }
 
     // Apply the saved dark mode on page load
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         applyDarkMode();
 
         // Add event listener for dark mode toggle in the main nav
         document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
 
         // Add event listener for dark mode toggle in the burger menu
-        document.getElementById('darkModeToggle2').addEventListener('click', function(e) {
+        document.getElementById('darkModeToggle2').addEventListener('click', function (e) {
             e.preventDefault();
             toggleDarkMode();
         });
