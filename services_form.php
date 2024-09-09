@@ -38,7 +38,7 @@ if (isset($_GET['view_id'])) {
         ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css_main/productView.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css_main/services_form.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="system_images/whitelogo.png" type="image/png">
 
 </head>
@@ -55,14 +55,124 @@ if (isset($_GET['view_id'])) {
 
         <div class="details-main-contianer">
             <div class="details-container">
-                <h1>Customer's Information</h1>
+                <h1>Select Type of Service</h1>
 
                 <div class="product-info-container">
 
 
-
                     <div class="customer-info-container">
 
+
+
+
+
+                        <!-- select service -->
+                        <div class="services-box-wrapper">
+                            <button class="scroll-left" onclick="scrollServices(-1)">&#8249;</button>
+                            
+                            
+                            <div class="services-box-container">
+                                <?php
+                                // Query to select services
+                                $sql = "SELECT service_id, service_status, service_name, service_description, service_photo FROM services WHERE service_status = 'active'";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // Output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <label class="service-box">
+                                            <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>">
+                                            <img src="admin/settings/<?php echo $row['service_photo']; ?>"
+                                                alt="<?php echo $row['service_name']; ?>">
+                                            <h2><?php echo $row['service_name']; ?></h2>
+                                            <p><?php echo $row['service_description']; ?></p>
+                                        </label>
+                                        <?php
+                                    }
+                                } else {
+                                    echo "No services found.";
+                                }
+                                ?>
+                            </div>
+
+                            <style>
+.service-box {
+    border: 2px solid var(--box-shadow);
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    text-align: center;
+    width: 200px;
+    box-sizing: border-box;
+}
+
+.service-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.service-box h2 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.service-box p {
+    font-size: 14px;
+    color: #666;
+}
+
+.service-box input[type="radio"] {
+    display: none;
+}
+
+/* Change the border color of the label when the input is checked */
+.service-box input[type="radio"]:checked + .service-box,
+.service-box input[type="radio"]:checked ~ img,
+.service-box input[type="radio"]:checked ~ h2,
+.service-box input[type="radio"]:checked ~ p {  
+    color: red ;
+    border: 1px solid var(--cancel-bg)  
+}
+
+.service-box input[type="radio"]:checked + label {
+    border-color: red;
+}
+
+.service-box input[type="radio"]:checked + .service-box {
+    border: 1px solid var(--cancel-bg)  
+};
+</style>
+
+                            <button class="scroll-right" onclick="scrollServices(1)">&#8250;</button>
+                        </div>
+
+                        <!-- javascipt for scrolling -->
+                        <script>
+                            function scrollServices(direction) {
+                                const container = document.querySelector('.services-box-container');
+                                const scrollAmount = container.clientWidth * 0.5; // Adjust this value to control the scroll distance
+                                container.scrollBy({
+                                    left: scrollAmount * direction,
+                                    behavior: 'smooth'
+                                });
+                            }
+
+                        </script>
+
+                        <!-- end of select service -->
+
+
+
+
+
+
+
+
+                        <h1>Customer's Information</h1>
 
                         <div class="customer-input-container">
                             <input type="text" placeholder="Enter your name">
@@ -81,7 +191,7 @@ if (isset($_GET['view_id'])) {
 
                         </div>
 
-                        <h1>Date and Time</h1>
+                        <h1> Fitting or Measurement Time and Date</h1>
 
                         <div class="customer-input-container">
                             <input type="date" placeholder="Enter date of pickup" title="Select the date for pickup">

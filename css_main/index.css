@@ -427,6 +427,7 @@ body.dark-mode .home-container::before {
 
 .readymade-products-container h1 {
     margin: 0;
+    padding: 25px 0 10px 0;
 }
 
 /* Dark mode styles */

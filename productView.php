@@ -50,17 +50,17 @@ if (isset($_GET['view_id'])) {
     ?>
 
 
-    <main>
+    <main class="hidden">
         <h1>View Product</h1>
 
-        <div class="details-main-contianer">
+        <div class="details-main-contianer hidden">
 
-            <img src="admin/settings/<?php echo $view_data['photo']; ?>">
+            <img src="admin/settings/<?php echo $view_data['photo']; ?>" class="hidden">
 
-            <div class="details-container">
+            <div class="details-container hidden">
                 <h1>Product Details</h1>
 
-                <div class="product-info-container">
+                <div class="product-info-container hidden">
                     <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
 
                     <div style="display: flex; gap: 5px; align-items:center; justify-content:center;">
@@ -88,10 +88,10 @@ if (isset($_GET['view_id'])) {
                     <p><?php echo $view_data['description']; ?></p>
 
 
-                    <div class="customer-info-container">
+                    <div class="customer-info-container hidden">
                         <h1>Customer's Information</h1>
 
-                        <div class="customer-input-container">
+                        <div class="customer-input-container hidden">
                             <input type="text" placeholder="Enter your name">
                             <input type="number" placeholder="Enter your contact number">
 
@@ -110,7 +110,7 @@ if (isset($_GET['view_id'])) {
 
                         <h1>Date and Time of Pick Up</h1>
 
-                        <div class="customer-input-container">
+                        <div class="customer-input-container hidden">
                             <input type="date" placeholder="Enter date of pickup" title="Select the date for pickup">
                             <input type="time" placeholder="Enter time of pickup" title="Select the time for pickup">
                         </div>
@@ -120,7 +120,7 @@ if (isset($_GET['view_id'])) {
 
                 </div>
 
-                <div class="product-buttons-container">
+                <div class="product-buttons-container hidden">
                     <a id="return" href="index.php?#readymade_products"><i class="fa-solid fa-arrow-left"></i>
                         RETURN</a>
                     <div id="order-container">
