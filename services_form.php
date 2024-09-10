@@ -21,6 +21,13 @@ if (isset($_GET['view_id'])) {
         exit;
     }
 }
+
+
+
+
+
+
+
 ?>
 
 
@@ -51,11 +58,43 @@ if (isset($_GET['view_id'])) {
 
 
     <main>
-        <h1>Service Form</h1>
+        <h1 class="hidden">Service Form</h1>
 
-        <div class="details-main-contianer">
-            <div class="details-container">
-                <h1>Select Type of Service</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <form method="post" action="process_request.php" class="details-main-contianer" enctype="multipart/form-data">
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" style="display: none;">
+                <div class="modal-overlay"></div>
+                <div class="lds-facebook">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <style>
+                   
+                </style>
+            </div>
+
+
+
+            <div class="details-container hidden">
+                <h1 for="static-header hidden" >Select Type of Service</h1>
 
                 <div class="product-info-container">
 
@@ -68,10 +107,8 @@ if (isset($_GET['view_id'])) {
 
                         <!-- select service -->
                         <div class="services-box-wrapper">
-                            <button class="scroll-left" onclick="scrollServices(-1)">&#8249;</button>
-                            
-                            
-                            <div class="services-box-container">
+
+                            <div class="services-box-container hidden">
                                 <?php
                                 // Query to select services
                                 $sql = "SELECT service_id, service_status, service_name, service_description, service_photo FROM services WHERE service_status = 'active'";
@@ -96,72 +133,10 @@ if (isset($_GET['view_id'])) {
                                 ?>
                             </div>
 
-                            <style>
-.service-box {
-    border: 2px solid var(--box-shadow);
-    padding: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-    text-align: center;
-    width: 200px;
-    box-sizing: border-box;
-}
 
-.service-box img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
 
-.service-box h2 {
-    font-size: 18px;
-    margin: 10px 0;
-    color: #333;
-}
-
-.service-box p {
-    font-size: 14px;
-    color: #666;
-}
-
-.service-box input[type="radio"] {
-    display: none;
-}
-
-/* Change the border color of the label when the input is checked */
-.service-box input[type="radio"]:checked + .service-box,
-.service-box input[type="radio"]:checked ~ img,
-.service-box input[type="radio"]:checked ~ h2,
-.service-box input[type="radio"]:checked ~ p {  
-    color: red ;
-    border: 1px solid var(--cancel-bg)  
-}
-
-.service-box input[type="radio"]:checked + label {
-    border-color: red;
-}
-
-.service-box input[type="radio"]:checked + .service-box {
-    border: 1px solid var(--cancel-bg)  
-};
-</style>
-
-                            <button class="scroll-right" onclick="scrollServices(1)">&#8250;</button>
                         </div>
 
-                        <!-- javascipt for scrolling -->
-                        <script>
-                            function scrollServices(direction) {
-                                const container = document.querySelector('.services-box-container');
-                                const scrollAmount = container.clientWidth * 0.5; // Adjust this value to control the scroll distance
-                                container.scrollBy({
-                                    left: scrollAmount * direction,
-                                    behavior: 'smooth'
-                                });
-                            }
-
-                        </script>
 
                         <!-- end of select service -->
 
@@ -174,79 +149,291 @@ if (isset($_GET['view_id'])) {
 
                         <h1>Customer's Information</h1>
 
-                        <div class="customer-input-container">
-                            <input type="text" placeholder="Enter your name">
-                            <input type="number" placeholder="Enter your contact number">
+                        <div class="customer-input-container hidden">
+                            <input type="text" name="name" placeholder="Enter your name">
+                            <input type="number" name="contact-number" placeholder="Enter your contact number">
 
-                            <select name="" id="">
+                            <select name="gender" id="" required>
                                 <option value="" selected disabled>Select Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="others">Others</option>
                             </select>
 
-                            <input type="email" placeholder="Enter your email (optional)">
-                            <input type="text" placeholder="Enter your address">
+                            <input type="email" name="email" placeholder="Enter your email (optional)">
+                            <input type="text" name="address" placeholder="Enter your address">
 
 
                         </div>
 
-                        <h1> Fitting or Measurement Time and Date</h1>
+                        <h1 class="hidden"> Fitting or Measurement Time and Date</h1>
 
-                        <div class="customer-input-container">
-                            <input type="date" placeholder="Enter date of pickup" title="Select the date for pickup">
-                            <input type="time" placeholder="Enter time of pickup" title="Select the time for pickup">
+                        <div class="customer-input-container hidden">
+                            <input type="date" name="date" placeholder="Enter date of pickup"
+                                title="Select the date for pickup">
+                            <input type="time" name="time" placeholder="Enter time of pickup"
+                                title="Select the time for pickup">
                         </div>
+
+                        <h1 class="hidden">Upload Photo/s <em>(if applicable)</em></h1>
+
+                        <div class="upload-container hidden">
+                            <!-- Custom styled file input -->
+                            <label for="photo_uploaded" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> Choose Files
+                            </label>
+                            <input type="file" name="photo_uploaded[]" id="photo_uploaded" multiple accept="image/*"
+                                onchange="previewImages()">
+
+                            <!-- Container for image previews -->
+                            <div id="preview-container" class="preview-container"></div>
+
+                            <!-- Clear Selection button (Initially hidden) -->
+                            <button type="button" id="clear-selection" style="display: none;"
+                                onclick="clearSelection(event)">Clear Selection</button>
+                        </div>
+
+
+                        <p class="instruction hidden"><b>Instruction:</b> To select multiple images at once, simply hold down
+                            the Ctrl key on your keyboard while clicking on the desired images. This allows you to
+                            choose multiple images simultaneously.</p>
+
+
+
+
+                        <h1 class="hidden">Message</h1>
+
+                        <div class="customer-input-container hidden">
+                            <textarea name="message" id=""></textarea>
+                        </div>
+
+                        <p class="instruction hidden" ><b>Tip:</b> To better assist you, please use the textbox above to
+                            provide the details of your request. This will help us understand your needs more clearly
+                            and ensure we address your specifications accurately.</p>
 
 
                     </div>
 
                 </div>
 
-                <div class="product-buttons-container">
+
+
+
+
+
+
+
+
+                <div class="product-buttons-container hidden">
                     <a id="return" href="index.php?#services"><i class="fa-solid fa-arrow-left"></i>
                         RETURN</a>
                     <div id="order-container">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Make an AJAX request to check the login status
+                                fetch('check_login_status.php')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const orderContainer = document.getElementById('order-container');
+
+                                        if (data.loggedIn) {
+                                            // If logged in, display the "Order Now" button
+                                            orderContainer.innerHTML = '<button id="order-now" type="submit" name="request"><i class="fa-solid fa-bell-concierge"></i> SUBMIT</button>';
+                                        } else {
+                                            // If not logged in, display the "Log in to order" text
+                                            orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to book</span>';
+                                        }
+                                    })
+                                    .catch(error => console.error('Error checking login status:', error));
+                            });
+                        </script>
                         <!-- The button or text will be dynamically inserted here -->
                     </div>
-
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            // Make an AJAX request to check the login status
-                            fetch('check_login_status.php')
-                                .then(response => response.json())
-                                .then(data => {
-                                    const orderContainer = document.getElementById('order-container');
-
-                                    if (data.loggedIn) {
-                                        // If logged in, display the "Order Now" button
-                                        orderContainer.innerHTML = '<button id="order-now"><i class="fa-solid fa-calendar-day"></i> BOOK NOW</button>';
-                                    } else {
-                                        // If not logged in, display the "Log in to order" text
-                                        orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to book</span>';
-                                    }
-                                })
-                                .catch(error => console.error('Error checking login status:', error));
-                        });
-                    </script>
 
                 </div>
 
 
             </div>
+        </form>
 
-        </div>
+
+
+
+
+
+
+
 
 
     </main>
 
 
-
-
-
-
-
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form.details-main-contianer');
+    const loadingIndicator = document.getElementById('loading-indicator');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(form);
+
+        // Show loading indicator
+        loadingIndicator.style.display = 'flex'; // Center the spinner
+
+        // Create a promise that resolves after 2 seconds
+        const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Perform the fetch request
+        const request = fetch('process_request.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                toastr.success(data.message); // Show success message
+                return new Promise(resolve => setTimeout(() => {
+                    location.reload(); // Refresh the page after 2 seconds
+                    resolve();
+                }, 2000));
+            } else {
+                toastr.error(data.message); // Show error message
+                return Promise.resolve(); // Resolve immediately
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            toastr.error('An unexpected error occurred. Please try again.');
+            return Promise.resolve(); // Resolve immediately
+        });
+
+        // Use Promise.race to wait for the longer of the two promises
+        Promise.race([minLoadingTime, request]).finally(() => {
+            loadingIndicator.style.display = 'none'; // Hide loading indicator
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- radio script -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const serviceBoxes = document.querySelectorAll('.service-box');
+
+        serviceBoxes.forEach(function (box) {
+            box.addEventListener('click', function () {
+                // Remove the 'selected' class from all service boxes
+                serviceBoxes.forEach(function (b) {
+                    b.classList.remove('selected');
+                });
+
+                // Add the 'selected' class to the clicked service box
+                this.classList.add('selected');
+
+                // Select the radio input inside the clicked service box
+                const radioInput = this.querySelector('input[type="radio"]');
+                radioInput.checked = true;
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- button script -->
+
+
+
+
+
+
+
+
+<!-- JavaScript for image preview and clearing selection -->
+<script>
+    function previewImages() {
+        const previewContainer = document.getElementById('preview-container');
+        const clearButton = document.getElementById('clear-selection');
+        previewContainer.innerHTML = ''; // Clear any existing previews
+
+        const files = document.getElementById('photo_uploaded').files;
+
+        if (files.length > 0) {
+            // Show the "Clear Selection" button when files are selected
+            clearButton.style.display = 'inline-block';
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                // Ensure the file is an image and check its size
+                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) { // Limit size to 5MB
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const imgWrapper = document.createElement('div');
+                        imgWrapper.className = 'img-wrapper';
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = file.name;
+
+                        imgWrapper.appendChild(img);
+                        previewContainer.appendChild(imgWrapper);
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('One of the files is not an image or exceeds the 5MB size limit.');
+                }
+            }
+        } else {
+            // Hide the "Clear Selection" button if no files are selected
+            clearButton.style.display = 'none';
+        }
+    }
+
+    function clearSelection(event) {
+        event.preventDefault(); // Prevent the page from refreshing
+
+        const fileInput = document.getElementById('photo_uploaded');
+        fileInput.value = ''; // Clear the file input
+        document.getElementById('preview-container').innerHTML = ''; // Clear the preview container
+
+        // Hide the "Clear Selection" button
+        document.getElementById('clear-selection').style.display = 'none';
+    }
+</script>

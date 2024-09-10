@@ -156,7 +156,6 @@ body.dark-mode .home-container::before {
     align-items: center;
     justify-content: center;
     margin: 0;
-    margin-bottom: 20px;
 
 
 }
@@ -211,7 +210,7 @@ body.dark-mode .home-container::before {
 .services-container h1 {
     color: var(--text-color);
     font-size: 3rem;
-    padding: 40px 0;
+    padding: 10px;
 }
 
 .services-box-wrapper {
@@ -256,7 +255,7 @@ body.dark-mode .home-container::before {
     font-size: 1.6rem;
     color: var(--text-color);
     text-align: justify;
-    height: 200px;
+    height: 150px;
     overflow-y: scroll;
 }
 
@@ -979,20 +978,6 @@ body.dark-mode .about-container img {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Extra small devices (portrait phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
     /* Your styles here */
@@ -1084,11 +1069,16 @@ body.dark-mode .about-container img {
         padding: 40px 0;
     }
 
-
+    .service-box img {
+        width: 100px;
+        height: auto;
+        border-radius: 10px 10px 0 0;
+    }
+    
 
     .services-box-container {
         display: flex;
-        gap: 40px;
+        gap: 20px;
         padding: 10px 0 40px 0;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -1097,6 +1087,7 @@ body.dark-mode .about-container img {
 
     .service-box {
         min-width: 320px;
+        padding: 20px;
     }
 
 
@@ -1137,8 +1128,8 @@ body.dark-mode .about-container img {
     }
 
     .readymade-box img {
-        width: 100%;
-        height: 250px;
+        width: 150px;
+        height: 150px;
         align-self: center;
         border-radius: 2px;
     }
@@ -1155,7 +1146,7 @@ body.dark-mode .about-container img {
 
     .productType-box-container {
         display: flex;
-        gap: 40px;
+        gap: 20px;
         padding: 10px 0 40px 0;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -1163,7 +1154,15 @@ body.dark-mode .about-container img {
 
     .productType-box {
         min-width: 320px;
+        padding: 20px;
     }
+
+    .productType-box img {
+        width: 150px;
+        height: auto;
+        border-radius: 10px 10px 0 0;
+    }
+    
 
 
 

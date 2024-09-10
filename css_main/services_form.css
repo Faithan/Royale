@@ -139,6 +139,7 @@ main h1 {
 
 .product-info-container label[for="gender"] i {
     margin-right: 5px;
+
 }
 
 
@@ -156,6 +157,14 @@ main h1 {
     width: 100%;
 }
 
+
+
+.customer-info-container p{
+    margin-top: 10px;
+    font-size: 1.6rem;
+    width: 100%;
+    
+}
 .customer-input-container {
     display: flex;
     flex-wrap: wrap;
@@ -183,6 +192,17 @@ main h1 {
     width: 49%;
 }
 
+.customer-input-container textarea {
+    color: var(--text-color);
+    background-color: var(--second-bgcolor);
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 2rem;
+    width: 100%;
+}
+
+
 
 
 
@@ -199,10 +219,19 @@ main h1 {
     border-bottom: 1px solid var(--box-shadow);
     color: var(--text-color);
     background-color: var(--first-bgcolor);
-    position: sticky;
-    top: 0;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+
+h1 em{  
+    font-size: 1.5rem;
+    color:var(--cancel-color)
+}
+.details-container h1[for="static-header"] {
     margin: 0;
 }
+
 
 
 .details-container .product-buttons-container {
@@ -239,7 +268,7 @@ main h1 {
 .product-buttons-container #return {
     background-color: var(--second-bgcolor);
     color: var(--text-color);
-    padding: 8px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
     border: 1px solid var(--box-shadow);
@@ -253,7 +282,11 @@ main h1 {
 .product-buttons-container #order-now {
     background-color: var(--second-bgcolor);
     color: var(--text-color);
+    padding: 10px 20px;
 }
+
+
+
 
 
 
@@ -301,21 +334,21 @@ main h1 {
 
 .services-container h1 {
     color: var(--text-color);
-    font-size: 3rem;
+    font-size: 2rem;
     padding: 40px 0;
 }
 
 .services-box-wrapper {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow:hidden;
 }
 
 .services-box-container {
     display: flex;
     gap: 20px;
     padding: 10px 0 40px 0;
-    overflow-x: hidden;
+    overflow-x: scroll; /* Allow horizontal scrolling */
     scroll-behavior: smooth;
 
 }
@@ -333,7 +366,7 @@ main h1 {
 .service-box img {
     width: 100px;
     height: auto;
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px;
 }
 
 .service-box h2 {
@@ -349,6 +382,7 @@ main h1 {
     text-align: justify;
     height: 100px;
     overflow-y: scroll;
+    font-weight: normal;
 }
 
 .service-box:hover {
@@ -356,15 +390,61 @@ main h1 {
     box-shadow: 0 6px 12px var(--box-shadow-hover);
 }
 
+
+
+
+.service-box {
+    border: 1px solid var(--box-shadow);
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    text-align: center;
+    width: 200px;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+
+
+.service-box input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.service-box.selected {
+    border: 2px solid var(--cancel-color);
+}
+
+.service-box.selected h2 {
+    color: var(--cancel-color);
+    /* Paragraph text color when selected */
+}
+
+.service-box.selected p {
+    color: var(--cancel-color);
+    /* Paragraph text color when selected */
+}
+
+
+
+
+
+
+
+
+
 .scroll-left,
 .scroll-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.251);
+    background-color: rgba(0, 0, 0, 0.132);
     color: var(--pure-white);
     border: none;
-    padding: 20px;
+    padding: 10px;
     cursor: pointer;
     z-index: 10;
 }
@@ -475,9 +555,107 @@ main h1 {
 
 
 
-
-
 /* end of services */
+
+
+
+
+
+
+
+/* upload photo */
+
+
+
+
+
+
+
+
+.upload-container {
+    padding: 10px;
+    border: 2px dashed #cccccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--second-bgcolor);
+}
+
+/* Hide the original file input */
+input[type="file"] {
+    display: none;
+}
+
+/* Style for the custom file upload button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: var(--first-bgcolor);
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color: var(--pure-white);
+}
+
+
+
+.custom-file-upload:hover {
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+
+
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.img-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--box-shadow);
+    background-color: var(--first-bgcolor);
+    transition: transform 0.3s ease;
+}
+
+.img-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+
+}
+
+#clear-selection {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--cancel-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#clear-selection:hover {
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+
+
+
+
 
 
 
@@ -582,7 +760,7 @@ main h1 {
 
         display: flex;
         flex-direction: column;
-
+        border-radius: 0;
         margin-top: 60px;
     }
 
@@ -595,6 +773,7 @@ main h1 {
         width: 100%;
         gap: 10px;
         height: auto;
+
     }
 
 
@@ -602,13 +781,13 @@ main h1 {
     .details-main-contianer img {
         height: 100%;
         width: 100%;
-       
+
     }
 
     .details-main-contianer .details-container {
-   
+
         height: auto;
-      
+
     }
 
 
@@ -639,6 +818,57 @@ main h1 {
         width: 100%;
     }
 
+
+
+
+    /* services-container */
+    .services-container {
+        width: 100%;
+        padding: 50px 20px;
+        /* background-image: url(../system_images/services-light.svg); */
+        background-color: var(--second-bgcolor);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .services-container h1 {
+        color: var(--text-color);
+        font-size: 3rem;
+        padding: 40px 0;
+    }
+
+    .service-box img {
+        width: 100px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .services-box-container {
+        display: flex;
+        gap: 40px;
+        padding: 10px 0 40px 0;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+    }
+
+    .service-box {
+        min-width: 250px;
+    }
+
+
+    .service-box h2 {
+        font-size: 2rem;
+    }
+
+    .service-box p {
+        font-size: 1.6rem;
+    }
+
+
+    /* end of services */
 
 
 
