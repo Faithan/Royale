@@ -87,14 +87,14 @@ if (isset($_GET['view_id'])) {
                     <div></div>
                 </div>
                 <style>
-                   
+
                 </style>
             </div>
 
 
 
             <div class="details-container hidden">
-                <h1 for="static-header hidden" >Select Type of Service</h1>
+                <h1 class="static-header hidden">Select Type of Service</h1>
 
                 <div class="product-info-container">
 
@@ -119,7 +119,7 @@ if (isset($_GET['view_id'])) {
                                     while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <label class="service-box">
-                                            <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>">
+                                            <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>" required>
                                             <img src="admin/settings/<?php echo $row['service_photo']; ?>"
                                                 alt="<?php echo $row['service_name']; ?>">
                                             <h2><?php echo $row['service_name']; ?></h2>
@@ -150,8 +150,8 @@ if (isset($_GET['view_id'])) {
                         <h1>Customer's Information</h1>
 
                         <div class="customer-input-container hidden">
-                            <input type="text" name="name" placeholder="Enter your name">
-                            <input type="number" name="contact-number" placeholder="Enter your contact number">
+                            <input type="text" name="name" placeholder="Enter your name" required>
+                            <input type="number" name="contact-number" placeholder="Enter your contact number" required>
 
                             <select name="gender" id="" required>
                                 <option value="" selected disabled>Select Gender</option>
@@ -161,7 +161,7 @@ if (isset($_GET['view_id'])) {
                             </select>
 
                             <input type="email" name="email" placeholder="Enter your email (optional)">
-                            <input type="text" name="address" placeholder="Enter your address">
+                            <input type="text" name="address" placeholder="Enter your address" required>
 
 
                         </div>
@@ -170,9 +170,9 @@ if (isset($_GET['view_id'])) {
 
                         <div class="customer-input-container hidden">
                             <input type="date" name="date" placeholder="Enter date of pickup"
-                                title="Select the date for pickup">
+                                title="Select the date for pickup" required>
                             <input type="time" name="time" placeholder="Enter time of pickup"
-                                title="Select the time for pickup">
+                                title="Select the time for pickup" required>
                         </div>
 
                         <h1 class="hidden">Upload Photo/s <em>(if applicable)</em></h1>
@@ -194,7 +194,8 @@ if (isset($_GET['view_id'])) {
                         </div>
 
 
-                        <p class="instruction hidden"><b>Instruction:</b> To select multiple images at once, simply hold down
+                        <p class="instruction hidden"><b>Instruction:</b> To select multiple images at once, simply hold
+                            down
                             the Ctrl key on your keyboard while clicking on the desired images. This allows you to
                             choose multiple images simultaneously.</p>
 
@@ -207,7 +208,7 @@ if (isset($_GET['view_id'])) {
                             <textarea name="message" id=""></textarea>
                         </div>
 
-                        <p class="instruction hidden" ><b>Tip:</b> To better assist you, please use the textbox above to
+                        <p class="instruction hidden"><b>Tip:</b> To better assist you, please use the textbox above to
                             provide the details of your request. This will help us understand your needs more clearly
                             and ensure we address your specifications accurately.</p>
 
@@ -287,51 +288,51 @@ if (isset($_GET['view_id'])) {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form.details-main-contianer');
-    const loadingIndicator = document.getElementById('loading-indicator');
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form.details-main-contianer');
+        const loadingIndicator = document.getElementById('loading-indicator');
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
 
-        const formData = new FormData(form);
+            const formData = new FormData(form);
 
-        // Show loading indicator
-        loadingIndicator.style.display = 'flex'; // Center the spinner
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex'; // Center the spinner
 
-        // Create a promise that resolves after 2 seconds
-        const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+            // Create a promise that resolves after 2 seconds
+            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Perform the fetch request
-        const request = fetch('process_request.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                toastr.success(data.message); // Show success message
-                return new Promise(resolve => setTimeout(() => {
-                    location.reload(); // Refresh the page after 2 seconds
-                    resolve();
-                }, 2000));
-            } else {
-                toastr.error(data.message); // Show error message
-                return Promise.resolve(); // Resolve immediately
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            toastr.error('An unexpected error occurred. Please try again.');
-            return Promise.resolve(); // Resolve immediately
-        });
+            // Perform the fetch request
+            const request = fetch('process_request.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        toastr.success(data.message); // Show success message
+                        return new Promise(resolve => setTimeout(() => {
+                            location.reload(); // Refresh the page after 2 seconds
+                            resolve();
+                        }, 2000));
+                    } else {
+                        toastr.error(data.message); // Show error message
+                        return Promise.resolve(); // Resolve immediately
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastr.error('An unexpected error occurred. Please try again.');
+                    return Promise.resolve(); // Resolve immediately
+                });
 
-        // Use Promise.race to wait for the longer of the two promises
-        Promise.race([minLoadingTime, request]).finally(() => {
-            loadingIndicator.style.display = 'none'; // Hide loading indicator
+            // Use Promise.race to wait for the longer of the two promises
+            Promise.race([minLoadingTime, request]).finally(() => {
+                loadingIndicator.style.display = 'none'; // Hide loading indicator
+            });
         });
     });
-});
 </script>
 
 

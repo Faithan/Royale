@@ -62,6 +62,7 @@ main h1 {
     border: 1px solid var(--box-shadow);
     align-self: flex-start;
     height: 100%;
+    max-width: 500px;
     margin: 0;
     background-color: var(--first-bgcolor);
     padding: 5px;
@@ -365,7 +366,7 @@ main h1 {
 
 
     .details-main-contianer img {
-        height: 100%;
+        max-height: 100%;
         width: 100%;
        
     }

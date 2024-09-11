@@ -24,7 +24,8 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
         <div class="user-menu">
             <i class="fa-solid fa-circle-user" id="userIcon"></i>
             <div class="dropdown-content" id="dropdownMenu">
-                <a href="#">MY PROFILE</a>
+                <a href="my_profile.php">MY PROFILE</a>
+                <a href="my_request.php">MY REQUEST</a>
                 <!-- Add more menu items here in the future -->
             </div>
         </div>
@@ -81,25 +82,12 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
 
     </div>
 
-    <script>
-        let isScrolling;
 
-        window.addEventListener('scroll', function () {
-            const navbar = document.getElementById('navbar');
 
-            // Add the shadow when scrolling
-            navbar.classList.add('shadow');
 
-            // Clear the previous timeout
-            clearTimeout(isScrolling);
 
-            // Set a timeout to remove the shadow after scrolling stops
-            isScrolling = setTimeout(function () {
-                navbar.classList.remove('shadow');
-            }, 150); // Adjust the delay as needed
-        });
 
-    </script>
+
 
 
 
@@ -112,7 +100,7 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
             <a href="index.php#about">ABOUT</a>
             <a href="index.php#contact">CONTACT</a>
             <a href="#">MY PROFILE</a>
-            <a href="#">MY RESERVATION</a>
+            <a href="my_request.php">MY REQUEST</a>
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
             <a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>" id="mobile-login-link">
                 <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>
@@ -125,6 +113,32 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- switch mode light and dark mode -->
 
 <script>
     // Function to apply the dark mode based on stored preference
@@ -174,6 +188,12 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
     });
 </script>
 
+
+
+
+
+
+<!-- smooth scrolling -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Get all the section elements and navbar links
@@ -206,6 +226,12 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
     });
 </script>
 
+
+
+
+
+<!-- user icond dropdown -->
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const userIcon = document.getElementById('userIcon');
@@ -225,4 +251,30 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
             }
         });
     });
+</script>
+
+
+
+
+
+
+<!-- scrolling shadow -->
+<script>
+    let isScrolling;
+
+    window.addEventListener('scroll', function () {
+        const navbar = document.getElementById('navbar');
+
+        // Add the shadow when scrolling
+        navbar.classList.add('shadow');
+
+        // Clear the previous timeout
+        clearTimeout(isScrolling);
+
+        // Set a timeout to remove the shadow after scrolling stops
+        isScrolling = setTimeout(function () {
+            navbar.classList.remove('shadow');
+        }, 150); // Adjust the delay as needed
+    });
+
 </script>

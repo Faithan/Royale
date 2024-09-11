@@ -1,5 +1,6 @@
 <?php
 include 'dbconnect.php';
+session_start(); // Ensure the session is started to access session variables
 
 $response = array();
 
@@ -33,10 +34,16 @@ try {
 
         $photo_paths = implode(',', $photo_paths);
 
+        // Get the logged-in user's ID from the session
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+        } else {
+            throw new Exception('User not logged in.');
+        }
+
         // Prepare SQL statement
-        $stmt = $conn->prepare("INSERT INTO royale_request_tbl (request_status, user_id, service_name, name, contact_number, gender, email, address, fitting_date, fitting_time, photo, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO royale_request_tbl (request_status, user_id, service_name, name, contact_number, gender, email, address, fitting_date, fitting_time, photo, message, datetime_request) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         $request_status = 'pending';
-        $user_id = 1; // Replace with actual user ID if available
         $stmt->bind_param('sissssssssss', $request_status, $user_id, $service_name, $name, $contact_number, $gender, $email, $address, $fitting_date, $fitting_time, $photo_paths, $message);
 
         if ($stmt->execute()) {

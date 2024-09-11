@@ -491,10 +491,11 @@ button:hover{
     text-decoration: none;
     display: block;
     font-size: 1.6rem;
+    font-weight: bold;
 }
 
 .dropdown-content a:hover {
-    background-color: var(--first-bgcolor);
+    background-color: var(--second-bgcolor);
 }
 
 #userIcon {

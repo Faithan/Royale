@@ -228,7 +228,7 @@ h1 em{
     font-size: 1.5rem;
     color:var(--cancel-color)
 }
-.details-container h1[for="static-header"] {
+.details-container .static-header {
     margin: 0;
 }
 
@@ -462,95 +462,6 @@ h1 em{
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-
-
-
-
-.animated-button {
-    margin-top: 20px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 16px 36px;
-    font-size: 12px;
-    border-radius: 100px;
-    font-weight: 600;
-    color: var(--text-color);
-    box-shadow: 0 0 0 1px var(--box-shadow);
-    background-color: var(--second-bgcolor);
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.animated-button svg {
-    position: absolute;
-    width: 24px;
-    fill: var(--text-color);
-    z-index: 9;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.animated-button .arr-1 {
-    right: 16px;
-}
-
-.animated-button .arr-2 {
-    left: -25%;
-}
-
-.animated-button .circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background-color: #46486615;
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.animated-button .text {
-    position: relative;
-    z-index: 1;
-    transform: translateX(-12px);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.animated-button:hover {
-    box-shadow: 0 0 0 12px transparent;
-    color: var(--text-color);
-}
-
-.animated-button:hover .arr-1 {
-    right: -25%;
-}
-
-.animated-button:hover .arr-2 {
-    left: 16px;
-}
-
-.animated-button:hover .text {
-    transform: translateX(12px);
-}
-
-.animated-button:hover svg {
-    fill: #1f387e;
-}
-
-.animated-button:active {
-    scale: 0.95;
-    box-shadow: 0 0 0 4px rgb(188, 215, 255);
-}
-
-.animated-button:hover .circle {
-    width: 220px;
-    height: 220px;
-    opacity: 1;
-}
 
 
 

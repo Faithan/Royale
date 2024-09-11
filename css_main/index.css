@@ -515,9 +515,12 @@ body.dark-mode .readymade-products-container {
 }
 
 
+
+
+
 .readymade-box img {
-    width: 100%;
-    height: 300px;
+    max-width: 150px;
+    max-height: 150px;
     align-self: center;
     border-radius: 2px;
 }
@@ -1128,8 +1131,8 @@ body.dark-mode .about-container img {
     }
 
     .readymade-box img {
-        width: 150px;
-        height: 150px;
+        max-width: 100px;
+        max-height: 100px;
         align-self: center;
         border-radius: 2px;
     }
