@@ -96,7 +96,7 @@ if (isset($_GET['request_id'])) {
                 </div>
 
                 <div class="button-container">
-                    <button onclick="window.history.back();">Return</button>
+                    <button onclick="window.history.back();"><i class="fa-solid fa-arrow-left"></i> Return</button>
                     
 
                         <button id="cancel-request" class="<?php echo ($row['request_status'] === 'cancelled') ? 'temp-hidden' : ''; ?>">

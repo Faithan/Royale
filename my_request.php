@@ -63,8 +63,7 @@ $result = $stmt->get_result();
                             <th>Fitting Date</th>
                             <th>Fitting Time</th>
                             <th>Photos</th>
-                            <th>Message</th>
-
+                        
                         </tr>
                     </thead>
                     <tbody>
@@ -96,7 +95,7 @@ $result = $stmt->get_result();
                                         }
                                         ?>
                                     </td>
-                                    <td><?php echo htmlspecialchars($row['message']); ?></td>
+                                
 
                                 </tr>
                                 <?php
