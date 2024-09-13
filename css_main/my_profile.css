@@ -33,29 +33,276 @@ body.dark-mode main {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    gap: 10px;
 
 }
 
 .profile-main-container h1 {
-    color: var(--text-color);
-    background-color: var(--first-bgcolor);
+    background-color: var(--button-bg);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--pure-white);
     border: 1px solid var(--box-shadow);
     text-align: center;
     border-radius: 5px;
     font-size: 2.5rem;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+}
+
+
+.profile-main-container .profile-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.profile-container .image-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-container img {
+    height: 200px;
+    background-color: var(--first-bgcolor);
+    padding: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--box-shadow);
+}
+
+.image-container h2 {
+    width: 100%;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--first-bgcolor);
+    border: 1px solid var(--box-shadow);
+    text-align: center;
+}
+
+.profile-container .user-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: var(--first-bgcolor);
+    height: 100%;
+    padding: 10px;
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    color: var(--text-color);
+    gap: 10px;
+}
+
+
+.user-info-container a {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--second-bgcolor);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--box-shadow);
+}
+
+.user-info-container a span i {
+    margin-left: 10px;
+}
+
+.profile-container form {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.profile-container form textarea {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--second-bgcolor);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--box-shadow);
+    height: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.profile-container form button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--box-shadow);
+    color: var(--pure-white);
+    background-color: var(--button-bg);
+    font-size: 1.5rem;
+    font-weight: bold
+}
+
+.profile-container form button:hover {
+    box-shadow: 0 0 0 2px var(--hover-color);
 }
 
 
 
-@media only screen and (max-width: 575.98px){
+
+/* user dashboard-container */
+
+.user-dashboard-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--first-bgcolor);
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* edit name contianer */
+
+
+
+.edit-main-container {
+    border: 1px solid var(--box-shadow);
+    width: 40%;
+    height: 80%;
+    background-color: var(--second-bgcolor);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+
+}
+
+
+
+.edit-main-container h1 {
+    background-color: var(--button-bg);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--pure-white);
+    border: 1px solid var(--box-shadow);
+    text-align: center;
+    border-radius: 5px;
+    font-size: 2.5rem;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+
+.edit-main-container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+
+
+.edit-main-container form label {
+    font-size: 2rem;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.edit-main-container form input {
+    font-size: 2rem;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--box-shadow);
+    background-color: var(--first-bgcolor);
+    color: var(--text-color);
+    text-align: center;
+}
+
+
+.buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.buttons-container a {
+    padding: 10px;
+    color: var(--text-color);
+    background-color: var(--first-bgcolor);
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    font-size: 1.7rem;
+}
+
+.buttons-container button {
+    padding: 10px;
+    color: var(--text-color);
+    background-color: var(--first-bgcolor);
+    border: 1px solid var(--box-shadow);
+    border-radius: 5px;
+    font-size: 1.7rem;
+}
+
+.buttons-container a:hover {
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+
+.buttons-container button:hover {
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 575.98px) {
     main {
         position: relative;
         width: 100%;
-        height: 100%;
-        background-image: url(../system_images/home-light.svg);
-        /* Only the second image as background */
+        height: 100vh;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -63,19 +310,140 @@ body.dark-mode main {
         align-items: center;
         justify-content: center;
         padding: 0;
+        padding-top: 60px;
         border: none;
         border-bottom: 1px solid var(--box-shadow);
     }
-    
-    
-    /* Dark mode styles */
-    body.dark-mode main {
-        background-image: url(../system_images/home-dark.svg);
-        /* Dark mode background image */
+
+
+
+
+
+    .profile-main-container {
+        border: 1px solid var(--box-shadow);
+        width: 100%;
+        height: 100%;
+        background-color: var(--second-bgcolor);
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+
     }
-    
-    
+
+
+
+    .profile-main-container .profile-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        background-color: var(--first-bgcolor);
+        padding: 30px;
+        border-radius: 5px;
+        border: 1px solid var(--box-shadow);
+    }
+
    
-    
+    .profile-container .user-info-container {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        background-color: var(--first-bgcolor);
+        height: 100%;
+        padding: 10px;
+        border: 1px solid var(--box-shadow);
+        border-radius: 5px;
+        color: var(--text-color);
+        gap: 10px;
+    }
+
+
+  
+    .profile-container form button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid var(--box-shadow);
+        color: var(--pure-white);
+        background-color: var(--button-bg);
+        font-size: 1.5rem;
+        font-weight: bold
+    }
+
+    .profile-container form button:hover {
+        box-shadow: 0 0 0 2px var(--hover-color);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* edit name contianer */
+
+
+
+    .edit-main-container {
+        border: 1px solid var(--box-shadow);
+        width: 100%;
+        height: 100%;
+        background-color: var(--second-bgcolor);
+        border-radius: 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+
+    }
+
+
+
+    .edit-main-container h1 {
+        background-color: var(--button-bg);
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--pure-white);
+        border: 1px solid var(--box-shadow);
+        text-align: center;
+        border-radius: 5px;
+        font-size: 2.5rem;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+
+    .edit-main-container form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+
+    }
+
+
+   
+
+
+
 
 }

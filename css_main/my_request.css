@@ -33,18 +33,19 @@ body.dark-mode main {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    gap: 10px;
 
 }
 
 .request-main-container h1 {
-    color: var(--text-color);
-    background-color: var(--first-bgcolor);
+    color: var(--pure-white);
+    background-color: var(--button-bg);
     border: 1px solid var(--box-shadow);
     text-align: center;
     border-radius: 5px;
     font-size: 2.5rem;
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 
@@ -179,6 +180,8 @@ body.dark-mode main {
     justify-content: space-between;
     height: 100%;
 }
+
+
 
 
 .info-container .image-container{

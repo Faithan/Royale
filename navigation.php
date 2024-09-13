@@ -24,10 +24,11 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
         <div class="user-menu">
             <i class="fa-solid fa-circle-user" id="userIcon"></i>
             <div class="dropdown-content" id="dropdownMenu">
-                <a href="my_profile.php">MY PROFILE</a>
-                <a href="my_request.php">MY REQUEST</a>
+                <a href="my_profile.php" id="myProfileLink">MY PROFILE</a>
+                <a href="my_request.php" id="myRequestLink">MY REQUEST</a>
                 <!-- Add more menu items here in the future -->
             </div>
+
         </div>
 
         <div class="tooltip-container">
@@ -48,13 +49,13 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
         <!-- Include SweetAlert and Custom Script -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                var isLoggedIn = <?php echo json_encode($isLoggedIn); ?>; // Ensure PHP value is correctly passed to JS
+                var isLoggedIn = <?php echo json_encode($isLoggedIn); ?>; // Pass PHP variable to JS
 
+                // Handle logout
                 document.getElementById('logout-link').addEventListener('click', function (event) {
                     event.preventDefault(); // Prevent the default action
 
                     if (isLoggedIn) {
-                        // If the user is logged in, show the SweetAlert confirmation dialog
                         Swal.fire({
                             title: 'Are you sure?',
                             text: "You will be logged out of your account.",
@@ -66,14 +67,35 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
                             cancelButtonText: 'No, cancel'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Redirect to logout.php if confirmed
-                                window.location.href = 'logout.php';
+                                window.location.href = 'logout.php'; // Redirect to logout.php
                             }
                         });
                     } else {
-                        // If the user is not logged in, redirect to login.php
-                        window.location.href = 'login.php';
+                        window.location.href = 'login.php'; // Redirect to login.php if not logged in
                     }
+                });
+
+                // Handle profile and request link clicks
+                function checkLoginAndRedirect(link, url) {
+                    if (isLoggedIn) {
+                        window.location.href = url; // Redirect to the URL if logged in
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'You need to log in first!',
+                            text: 'Please log in to access this page.',
+                        });
+                    }
+                }
+
+                document.getElementById('myProfileLink').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    checkLoginAndRedirect(this, 'my_profile.php');
+                });
+
+                document.getElementById('myRequestLink').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    checkLoginAndRedirect(this, 'my_request.php');
                 });
             });
         </script>
