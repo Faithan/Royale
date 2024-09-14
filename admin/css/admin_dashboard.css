@@ -2,20 +2,74 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url(../../system_images/readymade-dark.svg);
-    /* Only the second image as background */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
 }
 
 
 /* Dark mode styles */
 body.dark-mode {
+    background-image: url(../../system_images/readymade-dark.svg);
+    /* Dark mode background image */
+}
+
+.overall-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+/* main */
+.overall-container main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main .header-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    height: 60px;
+    padding: 20px;
+    border: 1px solid var(--box-shadow);
+    border-left: 0;
+    
+    background-color: var(--second-bgcolor);
+}
+
+.header-container i{
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.header-container i:hover{
+    opacity: .5;
+    transition: .3s;
+}
+
+
+
+
+
+/* Default (light mode) styles */
+body main .content-container {
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-image: url(../../system_images/readymade-light.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Dark mode styles */
+body.admin-dark-mode main .content-container {
     background-image: url(../../system_images/readymade-dark.svg);
     /* Dark mode background image */
 }

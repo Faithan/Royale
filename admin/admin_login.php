@@ -9,7 +9,7 @@ if (isset($_SESSION['admin_id'])) {
 }
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" name="password" required>
                     <label for="password">Password</label>
                 </div>
-                
+
                 <button type="submit" class="login-btn">Log in</button>
 
                 <div class="remember-me">
@@ -89,16 +89,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <!-- user login success -->
+
+
+
+    <!-- Toastr Notification Script -->
     <script>
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
 
             if (status === 'success') {
-                toastr.success('Login successful. Redirecting to dashboard...', 'Success');
+                toastr.success('Login successful! Welcome to the dashboard.', 'Success');
             } else if (status === 'error') {
                 toastr.error('Invalid username or password.', 'Error');
+
+            } else if (status === 'logout') {
+                toastr.success('Admin Logged out successfully.', 'Success');
             }
         });
     </script>

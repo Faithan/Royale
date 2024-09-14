@@ -8,13 +8,6 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-// Handle logout
-if (isset($_GET['logout'])) {
-    session_unset();
-    session_destroy();
-    header("Location: admin_login.php");
-    exit();
-}
 
 ?>
 <!DOCTYPE html>
@@ -33,8 +26,28 @@ if (isset($_GET['logout'])) {
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
 </head>
 
-<body>
-    
+<body class="<?php echo isset($_SESSION['admin_id']) ? 'admin-mode' : ''; ?>">
+
+    <div class="overall-container">
+        
+        <?php 
+        include 'sidenav.php'
+        ?>
+
+        <main>
+            <div class="header-container">
+                <i id="theme-toggle" class="fa-solid fa-lightbulb"></i>
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div class="content-container">
+
+            </div>
+
+
+        </main>
+
+    </div>
+
 </body>
 
 </html>
@@ -48,6 +61,59 @@ if (isset($_GET['logout'])) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- same height logo container and header container -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function matchHeights() {
+            const logoContainer = document.querySelector('.logo-container');
+            const headerContainer = document.querySelector('.header-container');
+
+            if (logoContainer && headerContainer) {
+                // Get the height of the logo-container
+                const logoHeight = logoContainer.offsetHeight;
+
+                // Set the height of the header-container to match the logo-container
+                headerContainer.style.height = logoHeight + 'px';
+            }
+        }
+
+        // Call the function initially to set the heights
+        matchHeights();
+
+        // Optionally, you can call the function again on window resize to handle responsive design
+        window.addEventListener('resize', matchHeights);
+    });
+</script>
 
 
 

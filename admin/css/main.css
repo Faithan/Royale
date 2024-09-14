@@ -80,7 +80,7 @@ html {
 }
 
 
-.dark-mode {
+.admin-dark-mode {
 
     --thumb-hover: #6f6f6f;
 
@@ -303,6 +303,185 @@ button:hover{
         height: 32px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* side nav container */
+
+.sidenav-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--first-bgcolor);
+    width: 250px;
+    height: 100vh;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    height: 60px;
+    background-color: var(--first-bgcolor);
+    border: 1px solid var(--box-shadow);
+}
+
+.logo-container label {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: var(--text-color);
+    text-shadow: 0 2px 2px var(--text-shadow);
+}
+
+.logo-container i {
+    font-size: 2rem;
+    margin-right: 5px;
+}
+
+
+
+
+.nav-container {
+    flex-grow: 1;
+    width: 100%;
+    overflow-y: scroll;
+    border-right: 1px solid var(--box-shadow);
+}
+
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+
+}
+
+.menu > li {
+    position: relative;
+    
+}
+
+.menu > li > a.menu-toggle:hover{
+    background-color: var(--hover-color);
+}
+
+.menu > li > a.menu-toggle {
+    font-weight: bold;    text-decoration: none;
+    padding: 20px;
+    display: block;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.8rem;
+    background-color: var(--first-bgcolor);
+}
+
+.submenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0; /* Hide the submenu initially */
+    overflow: hidden; /* Hide content that overflows */
+    background-color: #f9f9f9;
+    transition: max-height 0.3s ease; /* Smooth transition */
+}
+
+.submenu li a {
+    padding: 15px;
+    display: block;
+    color: var(--text-color);
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.5rem;
+    background-color: var(--second-bgcolor);
+}
+
+.submenu li a:hover{
+    background-color: var(--hover-color);
+}
+
+.submenu.show {
+    max-height: 300px; /* Adjust this value based on the expected height of your submenu */
+}
+
+
+hr{
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logout-container {
+    padding: 10;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid var(--box-shadow);
+    background-color: var(--first-bgcolor);
+}
+
+.logout-container button {
+    border: 1px solid var(--box-shadow);
+    padding: 5px 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: var(--second-bgcolor);
+}
+
+.logout-container button:hover{
+    box-shadow:  0 0 0 2px var(--hover-color);
+}
+
+.logout-container button i {
+    font-size: 1.8rem;
+}
+
+
+
+
 
 
 
