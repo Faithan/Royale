@@ -472,7 +472,8 @@ hr{
 }
 
 .logout-container button:hover{
-    box-shadow:  0 0 0 2px var(--hover-color);
+    background-color: var(--hover-color);
+    transition: 0.3s;
 }
 
 .logout-container button i {
