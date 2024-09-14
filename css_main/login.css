@@ -24,7 +24,7 @@ body.dark-mode {
 .container {
     background-color: var(--first-bgcolor);
     border-radius: 30px;
-    box-shadow: 0 0 4px var(--box-shadow);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     width: 768px;

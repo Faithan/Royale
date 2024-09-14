@@ -1,0 +1,21 @@
+body {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../../system_images/readymade-dark.svg);
+    /* Only the second image as background */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+
+/* Dark mode styles */
+body.dark-mode {
+    background-image: url(../../system_images/readymade-dark.svg);
+    /* Dark mode background image */
+}

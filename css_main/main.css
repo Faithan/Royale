@@ -612,6 +612,10 @@ footer {
     font-size: 1.5rem;
 }
 
+.footer-column-container i{
+    font-size: 1.5rem;
+}
+
 .footer-column-container .follow-icons {
     display: flex;
     gap: 20px;

@@ -406,8 +406,9 @@ body.dark-mode main {
     .styled-table thead th:nth-child(5),
     .styled-table thead th:nth-child(6),
     .styled-table thead th:nth-child(7),
+    .styled-table thead th:nth-child(8),
     .styled-table thead th:nth-child(9),
-    .styled-table thead th:nth-child(10){
+    .styled-table thead th:nth-child(11){
         display: none;
     }
 

@@ -121,7 +121,7 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
             <a href="index.php#services">SERVICES</a>
             <a href="index.php#about">ABOUT</a>
             <a href="index.php#contact">CONTACT</a>
-            <a href="#">MY PROFILE</a>
+            <a href="my_profile.php">MY PROFILE</a>
             <a href="my_request.php">MY REQUEST</a>
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
             <a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>" id="mobile-login-link">
