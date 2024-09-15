@@ -119,7 +119,6 @@ body.dark-mode main {
 
 .styled-table tbody tr:nth-of-type(even) {
     background-color: var(--second-bgcolor);
-    
 }
 
 .styled-table tbody tr:nth-of-type(odd) {

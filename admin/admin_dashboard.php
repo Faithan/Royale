@@ -22,22 +22,30 @@ if (!isset($_SESSION['admin_id'])) {
     <?php include 'important.php'; ?>
 
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/admin_dashboard.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/all_dashboard.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
 </head>
 
 <body class="<?php echo isset($_SESSION['admin_id']) ? 'admin-mode' : ''; ?>">
 
     <div class="overall-container">
-        
-        <?php 
+
+        <?php
         include 'sidenav.php'
-        ?>
+            ?>
 
         <main>
             <div class="header-container">
-                <i id="theme-toggle" class="fa-solid fa-lightbulb"></i>
-                <i class="fa-solid fa-user-shield"></i>
+
+                <div class="header-label-container">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <label for="">Dashboard</label>
+                </div>
+
+                <?php
+                include 'header_icons_container.php';
+                ?>
+
             </div>
             <div class="content-container">
 
@@ -91,29 +99,8 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 
-<!-- same height logo container and header container -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function matchHeights() {
-            const logoContainer = document.querySelector('.logo-container');
-            const headerContainer = document.querySelector('.header-container');
 
-            if (logoContainer && headerContainer) {
-                // Get the height of the logo-container
-                const logoHeight = logoContainer.offsetHeight;
 
-                // Set the height of the header-container to match the logo-container
-                headerContainer.style.height = logoHeight + 'px';
-            }
-        }
-
-        // Call the function initially to set the heights
-        matchHeights();
-
-        // Optionally, you can call the function again on window resize to handle responsive design
-        window.addEventListener('resize', matchHeights);
-    });
-</script>
 
 
 

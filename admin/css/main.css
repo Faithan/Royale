@@ -242,7 +242,7 @@ button:hover{
     justify-content: center;
     z-index: 9999;
     /* Ensure it's on top of all content */
- 
+
 
 }
 
@@ -259,7 +259,7 @@ button:hover{
 }
 
 .lds-facebook {
-    color:var(--text-color);
+    color: var(--text-color);
     /* Change color here */
     display: inline-block;
     position: relative;
@@ -343,6 +343,8 @@ button:hover{
     background-color: var(--first-bgcolor);
     width: 250px;
     height: 100vh;
+
+
 }
 
 .logo-container {
@@ -353,13 +355,15 @@ button:hover{
     align-items: center;
     height: 60px;
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    box-shadow: 0 2px 2px var(--box-shadow);
+    z-index: 10;
 }
 
 .logo-container label {
     font-weight: bold;
     font-size: 2.5rem;
     color: var(--text-color);
+
     text-shadow: 0 2px 2px var(--text-shadow);
 }
 
@@ -372,10 +376,10 @@ button:hover{
 
 
 .nav-container {
+    padding-top: 20px;
     flex-grow: 1;
     width: 100%;
     overflow-y: scroll;
-    border-right: 1px solid var(--box-shadow);
 }
 
 
@@ -385,17 +389,18 @@ button:hover{
 
 }
 
-.menu > li {
+.menu>li {
     position: relative;
-    
+
 }
 
-.menu > li > a.menu-toggle:hover{
+.menu>li>a.menu-toggle:hover {
     background-color: var(--hover-color);
 }
 
-.menu > li > a.menu-toggle {
-    font-weight: bold;    text-decoration: none;
+.menu>li>a.menu-toggle {
+    font-weight: bold;
+    text-decoration: none;
     padding: 20px;
     display: block;
     color: var(--text-color);
@@ -408,10 +413,13 @@ button:hover{
     list-style-type: none;
     padding: 0;
     margin: 0;
-    max-height: 0; /* Hide the submenu initially */
-    overflow: hidden; /* Hide content that overflows */
-    background-color: #f9f9f9;
-    transition: max-height 0.3s ease; /* Smooth transition */
+    max-height: 0;
+    /* Hide the submenu initially */
+    overflow: hidden;
+    /* Hide content that overflows */
+    background-color: var(--second-bgcolor);
+    transition: max-height 0.3s ease;
+    /* Smooth transition */
 }
 
 .submenu li a {
@@ -424,17 +432,19 @@ button:hover{
     background-color: var(--second-bgcolor);
 }
 
-.submenu li a:hover{
+.submenu li a:hover {
     background-color: var(--hover-color);
 }
 
 .submenu.show {
-    max-height: 300px; /* Adjust this value based on the expected height of your submenu */
+    max-height: 300px;
+    /* Adjust this value based on the expected height of your submenu */
 }
 
 
-hr{
+.menu hr {
     margin: 10px;
+
 }
 
 
@@ -458,8 +468,8 @@ hr{
     width: 100%;
     text-align: center;
     padding: 10px;
-    border: 1px solid var(--box-shadow);
     background-color: var(--first-bgcolor);
+ 
 }
 
 .logout-container button {
@@ -468,10 +478,11 @@ hr{
     font-size: 2rem;
     font-weight: bold;
     color: var(--text-color);
+    border-radius: 5px;
     background-color: var(--second-bgcolor);
 }
 
-.logout-container button:hover{
+.logout-container button:hover {
     background-color: var(--hover-color);
     transition: 0.3s;
 }
@@ -521,7 +532,4 @@ hr{
 
 
 
-@media only screen and (max-width: 575.98px) {
-
-   
-}
+@media only screen and (max-width: 575.98px) {}
