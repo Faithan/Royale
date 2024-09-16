@@ -67,15 +67,21 @@ if (!$result) {
                         <input type="search" name="search_query" placeholder="Search...">
                         <select name="request_status" id="request_status">
                             <option value="all" selected disabled>Select Status type</option>
-                            <!-- Default option "All" -->
-                            <option value="all">All</option> <!-- Default option "All" -->
+                            <option value="all">All</option>
                             <?php
                             while ($row = $result->fetch_assoc()) {
                                 echo "<option value='" . $row['request_status'] . "'>" . ucfirst($row['request_status']) . "</option>";
                             }
                             ?>
                         </select>
+                        <select name="gender" id="gender">
+                            <option value="all" selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
+
 
                     <div class="table-container">
                         <table>
@@ -83,7 +89,7 @@ if (!$result) {
                                 <tr>
                                     <th>Request ID</th>
                                     <th>Request Status</th>
-                                    <th>User ID</th>
+                                    <th>Name</th>
                                     <th>Service Name</th>
                                     <th>Gender</th>
                                     <th>Address</th>
@@ -114,9 +120,10 @@ if (!$result) {
     function fetchFilteredData() {
         const searchQuery = document.querySelector("input[name='search_query']").value;
         const requestStatus = document.querySelector("select[name='request_status']").value;
+        const gender = document.querySelector("select[name='gender']").value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `fetch_requests.php?search_query=${searchQuery}&request_status=${requestStatus}`, true);
+        xhr.open('GET', `fetch_requests.php?search_query=${searchQuery}&request_status=${requestStatus}&gender=${gender}`, true);
         xhr.onload = function () {
             if (this.status === 200) {
                 document.querySelector('.table-container tbody').innerHTML = this.responseText;
@@ -128,11 +135,29 @@ if (!$result) {
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("input[name='search_query']").addEventListener('input', fetchFilteredData);
         document.querySelector("select[name='request_status']").addEventListener('change', fetchFilteredData);
+        document.querySelector("select[name='gender']").addEventListener('change', fetchFilteredData);
 
         // Trigger fetching data on page load to display all data
         fetchFilteredData();
     });
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -142,5 +167,11 @@ if (!$result) {
 // Inside online_request.php
 if (isset($_GET['status']) && $_GET['status'] == 'accepted') {
     echo "<script>toastr.success('Request accepted and details updated successfully');</script>";
+} elseif (isset($_GET['status']) && $_GET['status'] == 'ongoing') {
+    echo "<script>toastr.success('Request ongoing and details updated successfully');</script>";
+} elseif (isset($_GET['status']) && $_GET['status'] == 'completed') {
+    echo "<script>toastr.success('Request Completed! and details updated successfully');</script>";
+}  elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
+    echo "<script>toastr.success('Request Cancelled Successfully!');</script>";
 }
 ?>

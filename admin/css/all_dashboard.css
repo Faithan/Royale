@@ -283,10 +283,11 @@ td img {
     font-weight: bold;
     color: var(--pure-white);
     background-color: var(--button-bg);
-    padding: 10px 20px;
+    padding: 10px 15px;
     width: fit-content;
     border-radius: 5px;
     align-self: center;
+    border: 1px solid var(--box-shadow);
 }
 
 .request-details-container button:hover{
@@ -294,7 +295,10 @@ td img {
 }
 
 
-
+#cancel_button{
+    color: var(--pure-white);
+    background-color: var(--cancel-color);
+}
 
 
 
@@ -344,6 +348,7 @@ td img {
     padding: 0 20px;
 }
 
+
 .request-details-container2 {
     display: flex;
     flex-direction: row;
@@ -361,6 +366,10 @@ td img {
 .request-details label {
     font-size: 1.8rem;
     font-weight: bold;
+}
+
+.request-details label em{
+    font-size: 1.3rem;
 }
 
 .request-details input {
@@ -453,6 +462,7 @@ td img {
 
 .additional-info-container textarea{
     height: 150px; 
+    text-transform: uppercase;
 }
 
 

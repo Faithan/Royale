@@ -27,14 +27,25 @@ if ($result->num_rows > 0) {
     die("No data found for the given request ID.");
 }
 
+
+
+
 ?>
 
 
+<!-- for readonly -->
+<?php
+// Fetch the current request status from the database
+$request_status = $row['request_status'];
+$is_readonly_class = ($request_status === 'cancelled' || $request_status === 'accepted' || $request_status === 'ongoing' || $request_status === 'completed') ? 'readonly' : '';
+?>
 
-
-
-
-
+<style>
+    .readonly {
+        pointer-events: none;
+        /* Disable interaction */
+    }
+</style>
 
 
 
@@ -80,7 +91,7 @@ if ($result->num_rows > 0) {
 
 
             <div class="content-container">
-                <div class="content">
+                <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
                     <h1>View Request</h1>
                     <form method="POST" action="request_action.php" method="POST" class="request-details-container">
                         <div class="information-container">
@@ -104,109 +115,120 @@ if ($result->num_rows > 0) {
                                 <div class="request-details">
                                     <label>User ID:</label>
                                     <input type="text" name="user_id" id="" value="<?php echo $row['user_id']; ?>"
-                                        readonly>
+                                        class="<?php echo $is_readonly_class; ?>" readonly>
                                 </div>
-
 
                                 <div class="request-details">
                                     <label>Customer's Name:</label>
-                                    <input type="text" name="name" id="" value="<?php echo ucfirst($row['name']); ?>">
+                                    <input type="text" name="name" id="" value="<?php echo ucfirst($row['name']); ?>"
+                                        class="<?php echo $is_readonly_class; ?>">
                                 </div>
 
                                 <div class="request-details">
                                     <label>Contact Number:</label>
                                     <input type="number" name="contact_number" id=""
-                                        value=" <?php echo $row['contact_number']; ?>">
+                                        value="<?php echo $row['contact_number']; ?>"
+                                        class="<?php echo $is_readonly_class; ?>">
                                 </div>
 
                                 <div class="request-details">
                                     <label>Gender:</label>
                                     <input type="text" name="gender" id=""
-                                        value="<?php echo ucfirst($row['gender']); ?>">
+                                        value="<?php echo ucfirst($row['gender']); ?>"
+                                        class="<?php echo $is_readonly_class; ?>">
                                 </div>
 
                                 <div class="request-details">
                                     <label>Address:</label>
-                                    <input type="text" name="address" id="" value="<?php echo $row['address']; ?>">
+                                    <input type="text" name="address" id="" value="<?php echo $row['address']; ?>"
+                                        class="<?php echo $is_readonly_class; ?>">
                                 </div>
 
                                 <div class="request-details">
                                     <label>Email:</label>
-                                    <input type="text" name="email" id="" value="<?php echo $row['email']; ?>">
+                                    <input type="text" name="email" id="" value="<?php echo $row['email']; ?>"
+                                        class="<?php echo $is_readonly_class; ?>">
                                 </div>
 
                                 <div class="request-details">
                                     <label>Message:</label>
-                                    <textarea name="message" id=""><?php echo $row['message'] ?></textarea>
+                                    <textarea name="message" id=""
+                                        class="<?php echo $is_readonly_class; ?>"><?php echo $row['message']; ?></textarea>
                                 </div>
+
+                                <p class="note"><b>Note:</b> This section contains the customer's information. Please
+                                    note that some
+                                    input fields are left open to allow for customization of the customer's details if
+                                    necessary.</p>
+
+                                <h2>Request Information</h2>
+
+                                <div class="request-details-container2">
+
+                                    <div class="request-details">
+                                        <label>Request Status:</label>
+                                        <input type="text" name="request_status" id=""
+                                            value="<?php echo ucfirst($row['request_status']); ?>" readonly>
+                                    </div>
+
+                                    <div class="request-details">
+                                        <label>Request Id:</label>
+                                        <input type="number" name="request_id" id=""
+                                            value="<?php echo ucfirst($row['request_id']); ?>" readonly>
+                                    </div>
+
+                                    <?php
+                                    // Fetch available services from the 'services' table
+                                    $services_query = "SELECT service_name FROM services WHERE service_status = 'active'";
+                                    $services_result = $conn->query($services_query);
+
+                                    if (!$services_result) {
+                                        die("Error fetching services: " . $conn->error);
+                                    }
+                                    ?>
+
+                                    <div class="request-details">
+                                        <label>Service Name:</label>
+                                        <select name="service_name" id="service_name"
+                                            class="<?php echo $is_readonly_class; ?>" <?php echo $is_readonly_class ? 'disabled' : ''; ?>>
+                                            <?php
+                                            // Loop through the services and create <option> elements
+                                            while ($service_row = $services_result->fetch_assoc()) {
+                                                $service_name = ucfirst($service_row['service_name']);
+                                                $selected = ($service_name === ucfirst($row['service_name'])) ? 'selected' : ''; // Set the current service as selected
+                                                echo "<option value='{$service_name}' {$selected}>{$service_name}</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="request-details">
+                                        <label>Fitting Date:</label>
+                                        <input type="date" name="fitting_date" id=""
+                                            value="<?php echo $row['fitting_date']; ?>"
+                                            class="<?php echo $is_readonly_class; ?>">
+                                    </div>
+
+                                    <div class="request-details">
+                                        <label>Fitting Time:</label>
+                                        <input type="time" name="fitting_time" id=""
+                                            value="<?php echo $row['fitting_time']; ?>"
+                                            class="<?php echo $is_readonly_class; ?>">
+                                    </div>
+
+                                    <div class="request-details">
+                                        <label>Fee(₱):</label>
+                                        <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
+                                            oninput="calculateBalance()" required
+                                            class="<?php echo $is_readonly_class; ?>" <?php echo $is_readonly_class ? 'disabled' : ''; ?>>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <p class="note"><b>Note:</b> This section contains the customer's information. Please note
-                                that some
-                                input fields are left open to allow for customization of the customer's details if
-                                necessary.</p>
-
-
-                            <h2>Request Information</h2>
-
-                            <div class="request-details-container2">
-
-                                <div class="request-details">
-                                    <label>Request Status:</label>
-                                    <input type="text" name="request_status" id=""
-                                        value="<?php echo ucfirst($row['request_status']); ?>" readonly>
-                                </div>
-
-                                <div class="request-details">
-                                    <label>Request Id:</label>
-                                    <input type="number" name="request_id" id=""
-                                        value="<?php echo ucfirst($row['request_id']); ?>" readonly>
-                                </div>
-
-
-
-                                <?php
-                                // Fetch available services from the 'services' table
-                                $services_query = "SELECT service_name FROM services WHERE service_status = 'active'";
-                                $services_result = $conn->query($services_query);
-
-                                if (!$services_result) {
-                                    die("Error fetching services: " . $conn->error);
-                                }
-                                ?>
-
-                                <div class="request-details">
-                                    <label>Service Name:</label>
-                                    <select name="service_name" id="service_name">
-                                        <?php
-                                        // Loop through the services and create <option> elements
-                                        while ($service_row = $services_result->fetch_assoc()) {
-                                            $service_name = ucfirst($service_row['service_name']);
-                                            $selected = ($service_name === ucfirst($row['service_name'])) ? 'selected' : ''; // Set the current service as selected
-                                            echo "<option value='{$service_name}' {$selected}>{$service_name}</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-
-
-                                <div class="request-details">
-                                    <label>Fitting Date:</label>
-                                    <input type="date" name="fitting_date" id=""
-                                        value="<?php echo $row['fitting_date']; ?>">
-                                </div>
-
-                                <div class="request-details">
-                                    <label>Fitting Time:</label>
-                                    <input type="time" name="fitting_time" id=""
-                                        value="<?php echo $row['fitting_time']; ?>">
-                                </div>
-
-                               
-
+                            <div style="align-self: center;" >
+                            <button type="submit" name="cancel_request" id="cancel_button">Cancelled</button>
+                            <button type="submit" name="accept_request" id="accept_button">Accept</button>
                             </div>
-                            <button type="submit" name="accept_request">Accept</button>
-
                     </form>
 
                     <p class="note"><b>Instruction:</b> This section contains the request information. The input
@@ -216,27 +238,176 @@ if ($result->num_rows > 0) {
                         necessary fees before accepting the request.</p>
 
 
-                    <!-- after being accepted -->
-                    <form action="request_action.php" class="additional-info-container">
+
+
+
+
+
+                    <form action="request_action.php" method="POST" class="additional-info-container">
                         <h2>Additional Information</h2>
 
                         <div class="request-details-container2">
-
 
                             <div class="request-details">
                                 <label>Measurements:</label>
                                 <textarea name="measurement" id=""><?php echo $row['measurement'] ?></textarea>
                             </div>
 
+                            <?php
+                            // Fetch available services from the 'services' table
+                            $employee_query = "SELECT employee_name FROM employee_tbl WHERE employee_status = 'active'";
+                            $employee_result = $conn->query($employee_query);
+
+                            if (!$employee_result) {
+                                die("Error fetching employee: " . $conn->error);
+                            }
+                            ?>
+
                             <div class="request-details">
-                                    <label>Assigned Employee:</label>
-                                    <input type="text" name="assigned_employee" id="" value="<?php echo $row['assigned_employee']; ?>">
-                                </div>
+                                <label>Assigned Employee:</label>
+
+                                <input type="hidden" name="request_id" id="" value="<?php echo $row['request_id']; ?>">
+
+                                <select name="assigned_employee" id="assigned_employee">
+                                    <!-- Default option prompting the user to select an employee -->
+                                    <option value="" selected disabled>Select Employee</option>
+
+                                    <?php
+                                    // Loop through the employees and create <option> elements
+                                    while ($employee_row = $employee_result->fetch_assoc()) {
+                                        $employee_name = ucfirst($employee_row['employee_name']);
+                                        $selected = ($employee_name === ucfirst($row['assigned_employee'])) ? 'selected' : ''; // Set the current employee as selected
+                                        echo "<option value='{$employee_name}' {$selected}>{$employee_name}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="request-details">
+                                <label>Deadline:</label>
+                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>">
+                            </div>
+
+
+
+                            <div class="request-details">
+                                <label>Down Payment(₱):</label>
+                                <input type="number" name="down_payment" id="down_payment"
+                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()">
+                            </div>
+
+                            <div class="request-details">
+                                <label>Down Payment Date:</label>
+                                <input type="date" name="down_payment_date" id=""
+                                    value="<?php echo $row['down_payment_date']; ?>">
+                            </div>
+
+
 
                         </div>
 
-                        <button type="submit" name="update">Update</button>
+                        <button type="submit" name="update_request" id="update_button">Update</button>
+
+
+                        <p class="note"><b>Instruction:</b> This section contains additional information about the
+                            request.
+                            These fields should be filled out as soon as the client is ready to provide measurements for
+                            their request. Ensure that all necessary fields are completed before clicking the update
+                            button.
+                        </p>
+
+
+                        <h2>Final Request Information</h2>
+
+                        <div class="request-details-container2">
+                            <?php
+                            // Fetch work statuses from the worker_status_tbl
+                            $status_query = "SELECT work_status_name FROM work_status_tbl";
+                            $status_result = $conn->query($status_query);
+
+                            if (!$status_result) {
+                                die("Error fetching work statuses: " . $conn->error);
+                            }
+
+                            // Fetch the current work status from the database
+                            $current_work_status = ''; // You should set this to the current work status from your database
+                            ?>
+
+                            <div class="request-details">
+                                <label>Work Status <em>*from employee</em> :</label>
+                                <select name="work_status" id="work_status">
+                                    <option value="" disabled>Select Work Status</option>
+                                    <?php
+                                    // Loop through the statuses and create <option> elements
+                                    while ($status_row = $status_result->fetch_assoc()) {
+                                        $work_status_name = htmlspecialchars($status_row['work_status_name']);
+                                        // Set the current work status as selected
+                                        $selected = ($work_status_name === $current_work_status) ? 'selected' : '';
+                                        echo "<option value='{$work_status_name}' {$selected}>{$work_status_name}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+
+
+                            <div class="request-details">
+                                <label>Final Payment(₱):</label>
+                                <input type="number" name="final_payment" id="final_payment"
+                                    value="<?php echo $row['final_payment']; ?>" oninput="calculateBalance()">
+                            </div>
+
+                            <div class="request-details">
+                                <label>Final Payment Date:</label>
+                                <input type="date" name="final_payment_date" id=""
+                                    value="<?php echo $row['final_payment_date']; ?>">
+                            </div>
+
+                            <div class="request-details">
+                                <label>Balance(₱):</label>
+                                <input type="number" name="balance" id="balance" readonly
+                                    value="<?php echo $row['balance']; ?>">
+                            </div>
+
+                            <div class="request-details">
+                                <label><em>(situational)</em> Refund(₱):</label>
+                                <input type="number" name="refund" id="refund" value="<?php echo $row['refund']; ?>">
+                            </div>
+
+                        </div>
+
+                        <button type="submit" name="complete_request" id="complete_button">Complete</button>
                     </form>
+
+
+
+                    <!-- Balance Calculator -->
+                    <script>
+                        function calculateBalance() {
+                            var fee = parseFloat(document.getElementById('fee').value) || 0;
+                            var downPayment = parseFloat(document.getElementById('down_payment').value) || 0;
+                            var finalPayment = parseFloat(document.getElementById('final_payment').value) || 0;
+
+                            var balance = fee - (downPayment + finalPayment);
+
+                            document.getElementById('balance').value = balance.toFixed(2);
+                        }
+                    </script>
+
+
+
+                    <p class="note"><b>Instruction:</b> This section contains the final step where the payment is
+                        entered. If a refund is necessary, it will be recorded here. Ensure that all fields are
+                        completed and double-check the data entered to avoid errors. Once everything is set up, click
+                        the complete button to finish the transaction.</p>
+
+
+
+
+
+
+
+
 
                 </div> <!-- information-container -->
 
@@ -244,7 +415,8 @@ if ($result->num_rows > 0) {
 
                 <!-- request-details-container -->
                 <div class="view-button-container">
-                    <a id="return-request" onclick="window.location.href='online_request.php'">Return</a>
+                    <a id="return-request" onclick="window.location.href='online_request.php'"><i
+                            class="fa-solid fa-arrow-left"></i> Return</a>
                 </div>
 
 
@@ -294,4 +466,55 @@ if ($result->num_rows > 0) {
     function closeModal() {
         document.getElementById('imageModal').style.display = 'none';
     }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- JavaScript for showing/hiding buttons -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var status = document.querySelector('.content').getAttribute('data-status');
+        var acceptButton = document.getElementById('accept_button');
+        var updateButton = document.getElementById('update_button');
+        var completeButton = document.getElementById('complete_button');
+        var cancelButton = document.getElementById('cancel_button');
+
+        if (status === 'Pending') {
+            acceptButton.style.display = 'inline-block';
+            updateButton.style.display = 'none';
+            completeButton.style.display = 'none';
+            cancelButton.style.display = 'inline-block';
+        } else if (status === 'Accepted') {
+            acceptButton.style.display = 'none';
+            updateButton.style.display = 'inline-block';
+            completeButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+        } else if (status === 'Ongoing') {
+            acceptButton.style.display = 'none';
+            updateButton.style.display = 'none';
+            completeButton.style.display = 'inline-block';
+            cancelButton.style.display = 'none';
+        } else if (status === 'Completed') {
+            acceptButton.style.display = 'none';
+            updateButton.style.display = 'none';
+            completeButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+        } else if (status === 'Cancelled') {
+            acceptButton.style.display = 'none';
+            updateButton.style.display = 'none';
+            completeButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+        }
+    });
 </script>
