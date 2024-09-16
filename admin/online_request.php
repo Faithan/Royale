@@ -66,7 +66,8 @@ if (!$result) {
                         <!-- Search and Filter Form -->
                         <input type="search" name="search_query" placeholder="Search...">
                         <select name="request_status" id="request_status">
-                        <option value="all" selected disabled>Select Status type</option> <!-- Default option "All" -->
+                            <option value="all" selected disabled>Select Status type</option>
+                            <!-- Default option "All" -->
                             <option value="all">All</option> <!-- Default option "All" -->
                             <?php
                             while ($row = $result->fetch_assoc()) {
@@ -132,3 +133,14 @@ if (!$result) {
         fetchFilteredData();
     });
 </script>
+
+
+
+
+
+<?php
+// Inside online_request.php
+if (isset($_GET['status']) && $_GET['status'] == 'accepted') {
+    echo "<script>toastr.success('Request accepted and details updated successfully');</script>";
+}
+?>

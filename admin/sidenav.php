@@ -52,11 +52,7 @@
 
     </div>
 
-    <div class="logout-container">
-        <button>
-            <i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i> Log out
-        </button>
-    </div>
+   
 </section>
 
 
@@ -154,35 +150,3 @@
 
 
 
-
-<!-- logout -->
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const logoutButton = document.querySelector('.logout-container button');
-
-        if (logoutButton) {
-            logoutButton.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent default form submission
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to log back in until you sign in again.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#001C31',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, log out!',
-                    cancelButtonText: 'No, cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to logout URL
-                        window.location.href = 'logout.php';
-                    }
-                });
-            });
-        }
-    });
-
-</script>

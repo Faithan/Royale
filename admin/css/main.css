@@ -72,6 +72,7 @@ html {
     --shopnow-bg: #001C31;
     --return-bg: #414141;
     --button-bg: #001C31;
+    --button-bg2: rgba(0, 43, 76, 0.637);
 
     --text-bg: #001C31;
 
@@ -340,7 +341,7 @@ button:hover{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: var(--first-bgcolor);
+    background-color: var(--button-bg);
     width: 250px;
     height: 100vh;
 
@@ -355,7 +356,6 @@ button:hover{
     align-items: center;
     height: 60px;
     background-color: var(--first-bgcolor);
-    box-shadow: 0 2px 2px var(--box-shadow);
     z-index: 10;
 }
 
@@ -363,7 +363,6 @@ button:hover{
     font-weight: bold;
     font-size: 2.5rem;
     color: var(--text-color);
-
     text-shadow: 0 2px 2px var(--text-shadow);
 }
 
@@ -403,10 +402,10 @@ button:hover{
     text-decoration: none;
     padding: 20px;
     display: block;
-    color: var(--text-color);
+    color: var(--pure-white);
     cursor: pointer;
     font-size: 1.8rem;
-    background-color: var(--first-bgcolor);
+    background-color: var(--button-bg);
 }
 
 .submenu {
@@ -417,7 +416,7 @@ button:hover{
     /* Hide the submenu initially */
     overflow: hidden;
     /* Hide content that overflows */
-    background-color: var(--second-bgcolor);
+    background-color: var(--button-bg2);
     transition: max-height 0.3s ease;
     /* Smooth transition */
 }
@@ -425,11 +424,11 @@ button:hover{
 .submenu li a {
     padding: 15px;
     display: block;
-    color: var(--text-color);
+    color: var(--pure-white);
     text-decoration: none;
     text-align: center;
     font-size: 1.5rem;
-    background-color: var(--second-bgcolor);
+    background-color: var(--button-bg2);
 }
 
 .submenu li a:hover {

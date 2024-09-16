@@ -180,14 +180,14 @@ body.admin-dark-mode main .content-container {
     height: 100%;
     margin-top: 10px;
     border-radius: 5px;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     overflow-y: scroll;
 }
 
 
 .table-container table {
     width: 100%;
-
+    border-collapse: collapse;
 
 }
 
@@ -208,12 +208,13 @@ th {
 td {
     padding: 5px;
     border-bottom: 1px solid #ddd;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
     font-size: 1.4rem;
     color: var(--text-color);
     border: 1px solid var(--box-shadow);
     cursor: pointer;
+
 }
 
 /* Style the alternate rows */
@@ -237,6 +238,20 @@ td img {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* view_request */
 
 .content h1 {
@@ -244,7 +259,8 @@ td img {
     font-size: 2.5rem;
     padding: 10px;
     border: 1px solid var(--box-shadow);
-    background-color: var(--second-bgcolor);
+    background-color: var(--button-bg);
+    color: var(--pure-white);
     border-radius: 5px;
     margin-bottom: 0;
 }
@@ -255,24 +271,198 @@ td img {
     display: flex;
     flex-direction: column;
     color: var(--text-color);
-
+    justify-content: space-between;
+    height: 100%;
+    overflow: scroll;
+    border-bottom: 1px solid var(--box-shadow);
 }
+
+.request-details-container button{
+    margin-top: 10px;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: var(--pure-white);
+    background-color: var(--button-bg);
+    padding: 10px 20px;
+    width: fit-content;
+    border-radius: 5px;
+    align-self: center;
+}
+
+.request-details-container button:hover{
+    box-shadow: 0 0 0 4px var(--hover-color);
+}
+
+
+
+
+
 
 .request-details-img {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    background-color: var(--second-bgcolor);
+    border: 1px dashed var(--box-shadow);
+    padding: 20px;
+    overflow-x: scroll;
+    border-radius: 5px;
 }
 
 .request-details-img img {
     height: 200px;
     width: auto;
-    background-color: var(--second-bgcolor);
+    background-color: var(--first-bgcolor);
     padding: 10px;
     border: 1px solid var(--box-shadow);
     border-radius: 5px;
 }
+
+.information-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    background-color: var(--first-bgcolor);
+}
+
+
+
+.information-container h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    text-transform: capitalize;
+    background-color: var(--first-bgcolor);
+    padding: 10px;
+    border-bottom: 1px solid var(--text-shadow);
+  
+}
+
+.information-container .note{
+    font-size: 1.5rem;
+    text-align: justify;
+    padding: 0 20px;
+}
+
+.request-details-container2 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px 50px;
+    justify-content: center;
+}
+
+.request-details-container2 .request-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.request-details label {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.request-details input {
+    font-size: 1.7rem;
+    width: 200px;
+    padding: 7px;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 1px solid var(--text-shadow);
+    color: var(--text-color);
+    background-color: var(--second-bgcolor);
+    text-align: center;
+
+}
+
+.request-details select {
+    font-size: 1.7rem;
+    width: 200px;
+    padding: 7px;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 1px solid var(--text-shadow);
+    color: var(--text-color);
+    background-color: var(--second-bgcolor);
+    text-align: center;
+
+}
+
+
+
+.request-details textarea{
+    font-size: 1.7rem;
+    width: 1000px;
+    padding: 7px;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 1px solid var(--text-shadow);
+    color: var(--text-color);
+    background-color: var(--second-bgcolor);
+}
+
+.view-button-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+
+
+.view-button-container #return-request{
+    background-color: var(--second-bgcolor);
+    color: var(--text-color);
+    padding: 5px 20px ;
+    font-size: 1.7rem;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid var(--box-shadow);
+}
+
+#return-request:hover{
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+.view-button-container button:hover{
+    box-shadow: 0 0 0 2px var(--hover-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* addtional info container */
+
+.additional-info-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.additional-info-container textarea{
+    height: 150px; 
+}
+
+
+
+
+
+
+
+
+
 
 
 
