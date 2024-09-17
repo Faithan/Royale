@@ -88,6 +88,7 @@ if (isset($_GET['request_id'])) {
                         <?php echo htmlspecialchars($row['request_status']); ?>
                     </h1>
                     <div class="request-info">
+                        <p><strong>Request Id:</strong> <?php echo htmlspecialchars($row['request_id']); ?></p>
                         <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
                         <p><strong>Name:</strong> <?php echo htmlspecialchars($row['name']); ?></p>
                         <p><strong>Contact Number:</strong> <?php echo htmlspecialchars($row['contact_number']); ?></p>
@@ -97,19 +98,31 @@ if (isset($_GET['request_id'])) {
                         <p><strong>Fitting Date:</strong> <?php echo htmlspecialchars($row['fitting_date']); ?></p>
                         <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
                         <p><strong>Message:</strong> <?php echo htmlspecialchars($row['message']); ?></p>
+                        <p><strong>Date and Time Requested:</strong> <?php echo htmlspecialchars($row['datetime_request']); ?></p>
+                        <p><strong>Fee:</strong> <?php echo htmlspecialchars($row['fee']); ?></p>
+                        <p><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
+                        <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
+                        <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
+                        <p><strong>Balance:</strong> <?php echo htmlspecialchars($row['balance']); ?></p>
+                        <p><strong>Down Payment:</strong> <?php echo htmlspecialchars($row['down_payment']); ?></p>
+                        <p><strong>Down Payment Date:</strong> <?php echo htmlspecialchars($row['down_payment_date']); ?></p>
+                        <p><strong>Final Payment:</strong> <?php echo htmlspecialchars($row['final_payment']); ?></p>
+                        <p><strong>Final Payment Date:</strong> <?php echo htmlspecialchars($row['final_payment_date']); ?></p>
+                        <p><strong>Refund:</strong> <?php echo htmlspecialchars($row['refund']); ?></p>
+                        <p><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
+
                     </div>
                 </div>
 
                 <div class="button-container">
                     <button onclick="window.history.back();"><i class="fa-solid fa-arrow-left"></i> Return</button>
-                    
 
-                        <button id="cancel-request" class="<?php echo ($row['request_status'] === 'cancelled') ? 'temp-hidden' : ''; ?>">
+
+                    <button id="cancel-request"
+                        class="<?php echo (in_array($row['request_status'], ['cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
                         <i class="fa-solid fa-triangle-exclamation"></i> Cancel Request?
                     </button>
                 </div>
-
-
 
 
             </div>
@@ -118,12 +131,6 @@ if (isset($_GET['request_id'])) {
 
 
     </main>
-
-
-
-
-
-
 
 </body>
 

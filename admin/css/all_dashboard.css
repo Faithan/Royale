@@ -230,7 +230,7 @@ tr:hover {
 /* Style the images in the table */
 td img {
     max-width: 30px;
-    max-height: 40px;
+    max-height: 30px;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -277,7 +277,7 @@ td img {
     border-bottom: 1px solid var(--box-shadow);
 }
 
-.request-details-container button{
+.request-details-container button {
     margin-top: 10px;
     font-size: 1.7rem;
     font-weight: bold;
@@ -290,27 +290,43 @@ td img {
     border: 1px solid var(--box-shadow);
 }
 
-.request-details-container button:hover{
+.request-details-container button:hover {
     box-shadow: 0 0 0 4px var(--hover-color);
 }
 
 
-#cancel_button{
+#cancel_button {
     color: var(--pure-white);
     background-color: var(--cancel-color);
 }
 
 
 
+
+.services-box-container {
+    display: flex;
+    gap: 20px;
+    margin: 0 20px;
+    padding: 10px 0 20px 0;
+    overflow-x: scroll;
+    /* Allow horizontal scrolling */
+    scroll-behavior: smooth;
+
+}
+
+
+
 .request-details-img {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     background-color: var(--second-bgcolor);
     border: 1px dashed var(--box-shadow);
     padding: 20px;
-    overflow-x: scroll;
+    gap: 10px;
     border-radius: 5px;
+
 }
 
 .request-details-img img {
@@ -339,13 +355,14 @@ td img {
     background-color: var(--first-bgcolor);
     padding: 10px;
     border-bottom: 1px solid var(--text-shadow);
-  
+
 }
 
-.information-container .note{
+.information-container .note {
     font-size: 1.5rem;
     text-align: justify;
     padding: 0 20px;
+    margin-top: 10px;
 }
 
 
@@ -353,7 +370,7 @@ td img {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 20px 50px;
+    gap: 20px 40px;
     justify-content: center;
 }
 
@@ -368,7 +385,7 @@ td img {
     font-weight: bold;
 }
 
-.request-details label em{
+.request-details label em {
     font-size: 1.3rem;
 }
 
@@ -400,9 +417,10 @@ td img {
 
 
 
-.request-details textarea{
+.request-details textarea {
     font-size: 1.7rem;
     width: 1000px;
+    height: 50px;
     padding: 7px;
     border-radius: 5px;
     border: 0;
@@ -411,7 +429,17 @@ td img {
     background-color: var(--second-bgcolor);
 }
 
-.view-button-container{
+.request-details #measurement {
+    width: 200px;
+    height: 300px;
+}
+
+.request-details #refund-reason {
+    width: 1000px;
+    height: 50px;
+}
+
+.view-button-container {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -422,20 +450,21 @@ td img {
 
 
 
-.view-button-container #return-request{
+.view-button-container #return-request {
     background-color: var(--second-bgcolor);
     color: var(--text-color);
-    padding: 5px 20px ;
+    padding: 5px 20px;
     font-size: 1.7rem;
     border-radius: 5px;
     font-weight: bold;
     border: 1px solid var(--box-shadow);
 }
 
-#return-request:hover{
+#return-request:hover {
     box-shadow: 0 0 0 2px var(--hover-color);
 }
-.view-button-container button:hover{
+
+.view-button-container button:hover {
     box-shadow: 0 0 0 2px var(--hover-color);
 }
 
@@ -452,7 +481,7 @@ td img {
 
 /* addtional info container */
 
-.additional-info-container{
+.additional-info-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -460,8 +489,8 @@ td img {
 }
 
 
-.additional-info-container textarea{
-    height: 150px; 
+.additional-info-container textarea {
+    height: 150px;
     text-transform: uppercase;
 }
 

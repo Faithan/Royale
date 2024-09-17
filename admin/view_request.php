@@ -16,7 +16,7 @@ if (!filter_var($request_id, FILTER_VALIDATE_INT)) {
 }
 
 
-$stmt = $conn->prepare("SELECT request_id, request_status, user_id, service_name, name, contact_number, gender, address, email, fitting_date, fitting_time, message, fee, measurement, deadline, assigned_employee, balance, down_payment, down_payment_date, final_payment, final_payment_date, refund, photo, datetime_request FROM royale_request_tbl WHERE request_id = ?");
+$stmt = $conn->prepare("SELECT request_id, request_status, user_id, service_name, name, contact_number, gender, address, email, fitting_date, fitting_time, message, fee, measurement, deadline, special_group, assigned_employee, balance, down_payment, down_payment_date, final_payment, final_payment_date, refund, refund_reason, photo, datetime_request FROM royale_request_tbl WHERE request_id = ?");
 $stmt->bind_param("i", $request_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -33,19 +33,7 @@ if ($result->num_rows > 0) {
 ?>
 
 
-<!-- for readonly -->
-<?php
-// Fetch the current request status from the database
-$request_status = $row['request_status'];
-$is_readonly_class = ($request_status === 'cancelled' || $request_status === 'accepted' || $request_status === 'ongoing' || $request_status === 'completed') ? 'readonly' : '';
-?>
 
-<style>
-    .readonly {
-        pointer-events: none;
-        /* Disable interaction */
-    }
-</style>
 
 
 
@@ -91,151 +79,149 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
 
             <div class="content-container">
+
+
+
                 <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
                     <h1>View Request</h1>
+
+                    <!-- accept or cancel -->
                     <form method="POST" action="request_action.php" method="POST" class="request-details-container">
                         <div class="information-container">
-                            <div class="request-details-img">
-                                <?php
-                                $photos = explode(',', $row['photo']);
-                                foreach ($photos as $photo) {
-                                    echo "<img src='../uploads/$photo' alt='Photo' onclick='openModal(this.src)' style='margin-right: 10px;'>";
-                                }
-                                ?>
-                            </div>
+
+                       
+                                <div class="request-details-img">
+                                    <?php
+                                    $photos = explode(',', $row['photo']);
+                                    foreach ($photos as $photo) {
+                                        echo "<img src='../uploads/$photo' alt='Photo' onclick='openModal(this.src)' style='margin-right: 10px;'>";
+                                    }
+                                    ?>
+                                </div>
+                         
 
                             <p class="note"><b>Tips:</b> This section contains the image related to the customer's
                                 request. Click on the image to view it in full screen.</p>
 
 
-                            <h2>Customer's Information</h2>
+                            <h2
+                                style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                                Customer's Information</h2>
+                            <h2
+                                style="display:<?php echo ($row['request_status'] === 'completed') ? 'block' : 'none'; ?>">
+                                Customer and Request Recorded Information</h2>
 
                             <div class="request-details-container2">
 
                                 <div class="request-details">
                                     <label>User ID:</label>
                                     <input type="text" name="user_id" id="" value="<?php echo $row['user_id']; ?>"
-                                        class="<?php echo $is_readonly_class; ?>" readonly>
+                                        readonly>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Customer's Name:</label>
                                     <input type="text" name="name" id="" value="<?php echo ucfirst($row['name']); ?>"
-                                        class="<?php echo $is_readonly_class; ?>">
+                                        <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Contact Number:</label>
                                     <input type="number" name="contact_number" id=""
-                                        value="<?php echo $row['contact_number']; ?>"
-                                        class="<?php echo $is_readonly_class; ?>">
+                                        value="<?php echo $row['contact_number']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Gender:</label>
                                     <input type="text" name="gender" id=""
-                                        value="<?php echo ucfirst($row['gender']); ?>"
-                                        class="<?php echo $is_readonly_class; ?>">
+                                        value="<?php echo ucfirst($row['gender']); ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Address:</label>
-                                    <input type="text" name="address" id="" value="<?php echo $row['address']; ?>"
-                                        class="<?php echo $is_readonly_class; ?>">
+                                    <input type="text" name="address" id="" value="<?php echo $row['address']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Email:</label>
-                                    <input type="text" name="email" id="" value="<?php echo $row['email']; ?>"
-                                        class="<?php echo $is_readonly_class; ?>">
+                                    <input type="text" name="email" id="" value="<?php echo $row['email']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Message:</label>
-                                    <textarea name="message" id=""
-                                        class="<?php echo $is_readonly_class; ?>"><?php echo $row['message']; ?></textarea>
+                                    <textarea name="message" id="" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['message']; ?></textarea>
                                 </div>
 
-                                <p class="note"><b>Note:</b> This section contains the customer's information. Please
-                                    note that some
-                                    input fields are left open to allow for customization of the customer's details if
-                                    necessary.</p>
 
-                                <h2>Request Information</h2>
-
-                                <div class="request-details-container2">
-
-                                    <div class="request-details">
-                                        <label>Request Status:</label>
-                                        <input type="text" name="request_status" id=""
-                                            value="<?php echo ucfirst($row['request_status']); ?>" readonly>
-                                    </div>
-
-                                    <div class="request-details">
-                                        <label>Request Id:</label>
-                                        <input type="number" name="request_id" id=""
-                                            value="<?php echo ucfirst($row['request_id']); ?>" readonly>
-                                    </div>
-
-                                    <?php
-                                    // Fetch available services from the 'services' table
-                                    $services_query = "SELECT service_name FROM services WHERE service_status = 'active'";
-                                    $services_result = $conn->query($services_query);
-
-                                    if (!$services_result) {
-                                        die("Error fetching services: " . $conn->error);
-                                    }
-                                    ?>
-
-                                    <div class="request-details">
-                                        <label>Service Name:</label>
-                                        <select name="service_name" id="service_name"
-                                            class="<?php echo $is_readonly_class; ?>" <?php echo $is_readonly_class ? 'disabled' : ''; ?>>
-                                            <?php
-                                            // Loop through the services and create <option> elements
-                                            while ($service_row = $services_result->fetch_assoc()) {
-                                                $service_name = ucfirst($service_row['service_name']);
-                                                $selected = ($service_name === ucfirst($row['service_name'])) ? 'selected' : ''; // Set the current service as selected
-                                                echo "<option value='{$service_name}' {$selected}>{$service_name}</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <div class="request-details">
-                                        <label>Fitting Date:</label>
-                                        <input type="date" name="fitting_date" id=""
-                                            value="<?php echo $row['fitting_date']; ?>"
-                                            class="<?php echo $is_readonly_class; ?>">
-                                    </div>
-
-                                    <div class="request-details">
-                                        <label>Fitting Time:</label>
-                                        <input type="time" name="fitting_time" id=""
-                                            value="<?php echo $row['fitting_time']; ?>"
-                                            class="<?php echo $is_readonly_class; ?>">
-                                    </div>
-
-                                    <div class="request-details">
-                                        <label>Fee(₱):</label>
-                                        <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
-                                            oninput="calculateBalance()" required
-                                            class="<?php echo $is_readonly_class; ?>" <?php echo $is_readonly_class ? 'disabled' : ''; ?>>
-                                    </div>
+                                <div class="request-details">
+                                    <label>Request Status:</label>
+                                    <input type="text" name="request_status" id=""
+                                        value="<?php echo ucfirst($row['request_status']); ?>" readonly>
                                 </div>
+                                <div class="request-details">
+                                    <label>Request Id:</label>
+                                    <input type="number" name="request_id" id=""
+                                        value="<?php echo ucfirst($row['request_id']); ?>" readonly>
+                                </div>
+                                <?php
+                                // Fetch available services from the 'services' table
+                                $services_query = "SELECT service_name FROM services WHERE service_status = 'active'";
+                                $services_result = $conn->query($services_query);
 
+                                if (!$services_result) {
+                                    die("Error fetching services: " . $conn->error);
+                                }
+                                ?>
+                                <div class="request-details">
+                                    <label>Service Name:</label>
+                                    <select name="service_name" id="service_name" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                        <?php
+                                        // Loop through the services and create <option> elements
+                                        while ($service_row = $services_result->fetch_assoc()) {
+                                            $service_name = ucfirst($service_row['service_name']);
+                                            $selected = ($service_name === ucfirst($row['service_name'])) ? 'selected' : ''; // Set the current service as selected
+                                            echo "<option value='{$service_name}' {$selected}>{$service_name}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="request-details">
+                                    <label>Fitting Date:</label>
+                                    <input type="date" name="fitting_date" id=""
+                                        value="<?php echo $row['fitting_date']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                </div>
+                                <div class="request-details">
+                                    <label>Fitting Time:</label>
+                                    <input type="time" name="fitting_time" id=""
+                                        value="<?php echo $row['fitting_time']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                </div>
+                                <div class="request-details">
+                                    <label>Fee(₱):</label>
+                                    <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
+                                        oninput="calculateBalance()" required <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                </div>
                             </div>
-                            <div style="align-self: center;" >
-                            <button type="submit" name="cancel_request" id="cancel_button">Cancelled</button>
-                            <button type="submit" name="accept_request" id="accept_button">Accept</button>
+
+
+                            <div style="align-self: center;">
+                                <button type="submit" name="accept_request" id="accept_button">Accept</button>
+                                <button type="submit" name="cancel_request" id="cancel_button">Reject</button>
                             </div>
+
+
                     </form>
 
-                    <p class="note"><b>Instruction:</b> This section contains the request information. The input
-                        fields
-                        are open for customization in case any changes need to be made. To avoid scheduling
+                    <p class="note"
+                        style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                        <b>Instruction:</b> This section contains the customer's information. Please note that some
+                        input fields are left open to allow for customization of the customer's details if necessary.
+                        The input
+                        fields are open for customization in case any changes need to be made. To avoid scheduling
                         conflicts and workload issues, please ensure you contact the client and add any
-                        necessary fees before accepting the request.</p>
+                        necessary fees before accepting the request.
+                    </p>
+
+                    <!-- accept or cancel -->
 
 
 
@@ -243,15 +229,32 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
 
 
+                    <!-- update and ongoing  -->
                     <form action="request_action.php" method="POST" class="additional-info-container">
-                        <h2>Additional Information</h2>
+                        <h2 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                            Additional Information</h2>
+
+                        <div class="request-details-container2">
+
+
+                            <div class="request-details">
+                                <label>Measurements:</label>
+                                <textarea name="measurement" id="measurement" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['measurement'] ?></textarea>
+                            </div>
+
+                        </div>
+
+
+
 
                         <div class="request-details-container2">
 
                             <div class="request-details">
-                                <label>Measurements:</label>
-                                <textarea name="measurement" id=""><?php echo $row['measurement'] ?></textarea>
+                                <label>Special Group <em>*if applicable*</em>:</label>
+                                <input type="text" name="special_group" id="" placeholder="Enter group name"
+                                    value="<?php echo $row['special_group']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
+
 
                             <?php
                             // Fetch available services from the 'services' table
@@ -268,15 +271,14 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
                                 <input type="hidden" name="request_id" id="" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_employee" id="assigned_employee">
-                                    <!-- Default option prompting the user to select an employee -->
+                                <select name="assigned_employee" id="assigned_employee" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
 
                                     <?php
                                     // Loop through the employees and create <option> elements
                                     while ($employee_row = $employee_result->fetch_assoc()) {
                                         $employee_name = ucfirst($employee_row['employee_name']);
-                                        $selected = ($employee_name === ucfirst($row['assigned_employee'])) ? 'selected' : ''; // Set the current employee as selected
+                                        $selected = ($employee_name === ucfirst($row['assigned_employee'])) ? 'selected' : '';
                                         echo "<option value='{$employee_name}' {$selected}>{$employee_name}</option>";
                                     }
                                     ?>
@@ -285,7 +287,7 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
                             <div class="request-details">
                                 <label>Deadline:</label>
-                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>">
+                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
 
@@ -293,7 +295,7 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
                             <div class="request-details">
                                 <label>Down Payment(₱):</label>
                                 <input type="number" name="down_payment" id="down_payment"
-                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()">
+                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
                             <div class="request-details">
@@ -309,15 +311,30 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
                         <button type="submit" name="update_request" id="update_button">Update</button>
 
 
-                        <p class="note"><b>Instruction:</b> This section contains additional information about the
-                            request.
-                            These fields should be filled out as soon as the client is ready to provide measurements for
-                            their request. Ensure that all necessary fields are completed before clicking the update
+                        <p class="note"
+                            style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                            <b>Instruction:</b> This section contains additional information about the
+                            request. These fields should be filled out as soon as the client is ready to provide
+                            measurements for
+                            their request. The Special Field is only used if the request is done with a group of people,
+                            use that field for better organization of the data. Ensure that all necessary fields are
+                            completed before clicking the update
                             button.
                         </p>
 
 
-                        <h2>Final Request Information</h2>
+
+
+
+
+
+
+
+
+
+
+                        <h2 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                            Final Request Information</h2>
 
                         <div class="request-details-container2">
                             <?php
@@ -335,7 +352,7 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
                             <div class="request-details">
                                 <label>Work Status <em>*from employee</em> :</label>
-                                <select name="work_status" id="work_status">
+                                <select name="work_status" id="work_status" <?php echo ($row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" disabled>Select Work Status</option>
                                     <?php
                                     // Loop through the statuses and create <option> elements
@@ -354,13 +371,13 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
                             <div class="request-details">
                                 <label>Final Payment(₱):</label>
                                 <input type="number" name="final_payment" id="final_payment"
-                                    value="<?php echo $row['final_payment']; ?>" oninput="calculateBalance()">
+                                    value="<?php echo $row['final_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
                             <div class="request-details">
                                 <label>Final Payment Date:</label>
                                 <input type="date" name="final_payment_date" id=""
-                                    value="<?php echo $row['final_payment_date']; ?>">
+                                    value="<?php echo $row['final_payment_date']; ?>" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
                             <div class="request-details">
@@ -371,45 +388,47 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 
                             <div class="request-details">
                                 <label><em>(situational)</em> Refund(₱):</label>
-                                <input type="number" name="refund" id="refund" value="<?php echo $row['refund']; ?>">
+                                <input type="number" name="refund" id="refund" value="<?php echo $row['refund']; ?>"
+                                    <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+                            <div class="request-details">
+                                <label>Refund_reason: <em>*if applicable*</em></label>
+                                <textarea name="refund_reason" id="refund-reason" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['refund_reason']; ?></textarea>
                             </div>
 
                         </div>
 
                         <button type="submit" name="complete_request" id="complete_button">Complete</button>
-                    </form>
+
+                        <p class="note"
+                            style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                            <b>Instruction:</b> This section contains the final step where the payment is
+                            entered. If a refund is necessary, it will be recorded here. Ensure that all fields are
+                            completed and double-check the data entered to avoid errors. Once everything is set up,
+                            click
+                            the complete button to finish the transaction.
+                        </p>
 
 
+                        <p class="note"
+                            style="display:<?php echo ($row['request_status'] === 'completed') ? 'block' : 'none'; ?>">
+                            <strong>Request Completed:</strong>
+                            This request has been finalized. The information above is now read-only.
+                        </p>
 
-                    <!-- Balance Calculator -->
-                    <script>
-                        function calculateBalance() {
-                            var fee = parseFloat(document.getElementById('fee').value) || 0;
-                            var downPayment = parseFloat(document.getElementById('down_payment').value) || 0;
-                            var finalPayment = parseFloat(document.getElementById('final_payment').value) || 0;
-
-                            var balance = fee - (downPayment + finalPayment);
-
-                            document.getElementById('balance').value = balance.toFixed(2);
-                        }
-                    </script>
-
-
-
-                    <p class="note"><b>Instruction:</b> This section contains the final step where the payment is
-                        entered. If a refund is necessary, it will be recorded here. Ensure that all fields are
-                        completed and double-check the data entered to avoid errors. Once everything is set up, click
-                        the complete button to finish the transaction.</p>
-
-
-
-
-
-
-
-
+                        <!-- update and ongoing  -->
 
                 </div> <!-- information-container -->
+
+
+
+
+
+
+
+
+
 
 
 
@@ -485,36 +504,33 @@ $is_readonly_class = ($request_status === 'cancelled' || $request_status === 'ac
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var status = document.querySelector('.content').getAttribute('data-status');
-        var acceptButton = document.getElementById('accept_button');
-        var updateButton = document.getElementById('update_button');
-        var completeButton = document.getElementById('complete_button');
-        var cancelButton = document.getElementById('cancel_button');
+        var buttons = {
+            accept_button: ['Pending'],
+            update_button: ['Accepted'],
+            complete_button: ['Ongoing'],
+            cancel_button: ['Pending']
+        };
 
-        if (status === 'Pending') {
-            acceptButton.style.display = 'inline-block';
-            updateButton.style.display = 'none';
-            completeButton.style.display = 'none';
-            cancelButton.style.display = 'inline-block';
-        } else if (status === 'Accepted') {
-            acceptButton.style.display = 'none';
-            updateButton.style.display = 'inline-block';
-            completeButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-        } else if (status === 'Ongoing') {
-            acceptButton.style.display = 'none';
-            updateButton.style.display = 'none';
-            completeButton.style.display = 'inline-block';
-            cancelButton.style.display = 'none';
-        } else if (status === 'Completed') {
-            acceptButton.style.display = 'none';
-            updateButton.style.display = 'none';
-            completeButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-        } else if (status === 'Cancelled') {
-            acceptButton.style.display = 'none';
-            updateButton.style.display = 'none';
-            completeButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-        }
+        Object.keys(buttons).forEach(function (buttonId) {
+            document.getElementById(buttonId).style.display =
+                buttons[buttonId].includes(status) ? 'inline-block' : 'none';
+        });
     });
+</script>
+
+
+
+
+
+<!-- Balance Calculator -->
+<script>
+    function calculateBalance() {
+        var fee = parseFloat(document.getElementById('fee').value) || 0;
+        var downPayment = parseFloat(document.getElementById('down_payment').value) || 0;
+        var finalPayment = parseFloat(document.getElementById('final_payment').value) || 0;
+
+        var balance = fee - (downPayment + finalPayment);
+
+        document.getElementById('balance').value = balance.toFixed(2);
+    }
 </script>

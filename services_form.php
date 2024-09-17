@@ -65,218 +65,168 @@ if (isset($_GET['view_id'])) {
 
 
     <main>
-        <h1 class="hidden">Service Form</h1>
 
+     <!-- Loading Indicator -->
+     <div id="loading-indicator" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        
+    </div>
 
+        <form method="post" action="process_request.php" enctype="multipart/form-data" class="form-container">
+            <h1 class="hidden">Service Form</h1>
 
+            <!-- select service -->
+            <div class="services-box-wrapper">
+                <div class="services-box-container hidden">
+                    <?php
+                    // Query to select services
+                    $sql = "SELECT service_id, service_status, service_name, service_description, service_photo FROM services WHERE service_status = 'active'";
+                    $result = $conn->query($sql);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <form method="post" action="process_request.php" class="details-main-contianer" enctype="multipart/form-data">
-
-            <!-- Loading Indicator -->
-            <div id="loading-indicator" style="display: none;">
-                <div class="modal-overlay"></div>
-                <div class="lds-facebook">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <style>
-
-                </style>
-            </div>
-
-
-
-            <div class="details-container hidden">
-                <h1 class="static-header hidden">Select Type of Service</h1>
-
-                <div class="product-info-container">
-
-
-                    <div class="customer-info-container">
-
-
-
-
-
-                        <!-- select service -->
-                        <div class="services-box-wrapper">
-
-                            <div class="services-box-container hidden">
-                                <?php
-                                // Query to select services
-                                $sql = "SELECT service_id, service_status, service_name, service_description, service_photo FROM services WHERE service_status = 'active'";
-                                $result = $conn->query($sql);
-
-                                if ($result->num_rows > 0) {
-                                    // Output data of each row
-                                    while ($row = $result->fetch_assoc()) {
-                                        ?>
-                                        <label class="service-box">
-                                            <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>" required>
-                                            <img src="admin/settings/<?php echo $row['service_photo']; ?>"
-                                                alt="<?php echo $row['service_name']; ?>">
-                                            <h2><?php echo $row['service_name']; ?></h2>
-                                            <p><?php echo $row['service_description']; ?></p>
-                                        </label>
-                                        <?php
-                                    }
-                                } else {
-                                    echo "No services found.";
-                                }
-                                ?>
-                            </div>
-
-
-
-                        </div>
-
-
-                        <!-- end of select service -->
-
-
-
-
-
-
-
-
-                        <h1>Customer's Information</h1>
-
-                        <div class="customer-input-container hidden">
-                            <input type="text" name="name" placeholder="Enter your name" required>
-                            <input type="number" name="contact-number" placeholder="Enter your contact number" required>
-
-                            <select name="gender" id="" required>
-                                <option value="" selected disabled>Select Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="others">Others</option>
-                            </select>
-
-                            <input type="email" name="email" placeholder="Enter your email (optional)">
-                            <input type="text" name="address" placeholder="Enter your address" required>
-
-
-                        </div>
-
-                        <h1 class="hidden"> Fitting or Measurement Time and Date</h1>
-
-                        <div class="customer-input-container hidden">
-                            <input type="date" name="date" placeholder="Enter date of pickup"
-                                title="Select the date for pickup" required>
-                            <input type="time" name="time" placeholder="Enter time of pickup"
-                                title="Select the time for pickup" required>
-                        </div>
-
-                        <h1 class="hidden">Upload Photo/s <em>(if applicable)</em></h1>
-
-                        <div class="upload-container hidden">
-                            <!-- Custom styled file input -->
-                            <label for="photo_uploaded" class="custom-file-upload">
-                                <i class="fa fa-cloud-upload"></i> Choose Files
+                    if ($result->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <label class="service-box">
+                                <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>" required>
+                                <img src="admin/settings/<?php echo $row['service_photo']; ?>"
+                                    alt="<?php echo $row['service_name']; ?>">
+                                <h2><?php echo $row['service_name']; ?></h2>
+                                <p><?php echo $row['service_description']; ?></p>
                             </label>
-                            <input type="file" name="photo_uploaded[]" id="photo_uploaded" multiple accept="image/*"
-                                onchange="previewImages()">
-
-                            <!-- Container for image previews -->
-                            <div id="preview-container" class="preview-container"></div>
-
-                            <!-- Clear Selection button (Initially hidden) -->
-                            <button type="button" id="clear-selection" style="display: none;"
-                                onclick="clearSelection(event)">Clear Selection</button>
-                        </div>
-
-
-                        <p class="instruction hidden"><b>Instruction:</b> To select multiple images at once, simply hold
-                            down
-                            the Ctrl key on your keyboard while clicking on the desired images. This allows you to
-                            choose multiple images simultaneously.</p>
-
-
-
-
-                        <h1 class="hidden">Message</h1>
-
-                        <div class="customer-input-container hidden">
-                            <textarea name="message" id=""></textarea>
-                        </div>
-
-                        <p class="instruction hidden"><b>Tip:</b> To better assist you, please use the textbox above to
-                            provide the details of your request. This will help us understand your needs more clearly
-                            and ensure we address your specifications accurately.</p>
-
-
-                    </div>
-
+                            <?php
+                        }
+                    } else {
+                        echo "No services found.";
+                    }
+                    ?>
                 </div>
+            </div>
+            <!-- end of select service -->
+
+
+
+            <h2 class="hidden">Customer's Information</h2>
+            <div class="customer-input-container hidden">
+                <input type="text" name="name" placeholder="Enter your name" required>
+                <input type="number" name="contact-number" placeholder="Enter your contact number" required>
+
+                <select name="gender" id="" required>
+                    <option value="" selected disabled>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
+                </select>
+
+                <input type="email" name="email" placeholder="Enter your email (optional)">
+                <input type="text" name="address" placeholder="Enter your address" required>
+            </div>
+
+            <h2 class="hidden"> Fitting or Measurement Time and Date</h2>
+            <div class="customer-input-container hidden">
+                <input type="date" name="date" placeholder="Enter date of pickup" title="Select the date for pickup"
+                    required>
+                <input type="time" name="time" placeholder="Enter time of pickup" title="Select the time for pickup"
+                    required>
+            </div>
+
+            <h2 class="hidden">Upload Photo/s <em>(if applicable)</em></h2>
+
+            <div class="upload-container hidden">
+                <!-- Custom styled file input -->
+                <label for="photo_uploaded" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i> Choose Files
+                </label>
+                <input type="file" name="photo_uploaded[]" id="photo_uploaded" multiple accept="image/*"
+                    onchange="previewImages()">
+
+                <!-- Container for image previews -->
+                <div id="preview-container" class="preview-container"></div>
+
+                <!-- Clear Selection button (Initially hidden) -->
+                <button type="button" id="clear-selection" style="display: none;" onclick="clearSelection(event)">Clear
+                    Selection</button>
+            </div>
+
+
+            <p class="instruction hidden"><b>Instruction:</b> To select multiple images at once, simply hold
+                down
+                the Ctrl key on your keyboard while clicking on the desired images. This allows you to
+                choose multiple images simultaneously.</p>
 
 
 
 
+            <h2 class="hidden">Message</h2>
+
+            <div class="customer-input-container hidden">
+                <textarea name="message" id=""></textarea>
+            </div>
+
+            <p class="instruction hidden"><b>Tip:</b> To better assist you, please use the textbox above to
+                provide the details of your request. This will help us understand your needs more clearly
+                and ensure we address your specifications accurately.</p>
 
 
 
 
+            <div class="product-buttons-container hidden">
+                <a id="return" href="index.php?#services"><i class="fa-solid fa-arrow-left"></i>
+                    RETURN</a>
+                <div id="order-container">
 
-                <div class="product-buttons-container hidden">
-                    <a id="return" href="index.php?#services"><i class="fa-solid fa-arrow-left"></i>
-                        RETURN</a>
-                    <div id="order-container">
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Make an AJAX request to check the login status
+                            fetch('check_login_status.php')
+                                .then(response => response.json())
+                                .then(data => {
+                                    const orderContainer = document.getElementById('order-container');
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                // Make an AJAX request to check the login status
-                                fetch('check_login_status.php')
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        const orderContainer = document.getElementById('order-container');
-
-                                        if (data.loggedIn) {
-                                            // If logged in, display the "Order Now" button
-                                            orderContainer.innerHTML = '<button id="order-now" type="submit" name="request"><i class="fa-solid fa-bell-concierge"></i> SUBMIT</button>';
-                                        } else {
-                                            // If not logged in, display the "Log in to order" text
-                                            orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to book</span>';
-                                        }
-                                    })
-                                    .catch(error => console.error('Error checking login status:', error));
-                            });
-                        </script>
-                        <!-- The button or text will be dynamically inserted here -->
-                    </div>
-
+                                    if (data.loggedIn) {
+                                        // If logged in, display the "Order Now" button
+                                        orderContainer.innerHTML = '<button id="order-now" type="submit" name="request"><i class="fa-solid fa-bell-concierge"></i> SUBMIT</button>';
+                                    } else {
+                                        // If not logged in, display the "Log in to order" text
+                                        orderContainer.innerHTML = '<span style="color: gray; cursor: not-allowed;"><i class="fa-solid fa-bell-concierge"></i> Log in to book</span>';
+                                    }
+                                })
+                                .catch(error => console.error('Error checking login status:', error));
+                        });
+                    </script>
+                    <!-- The button or text will be dynamically inserted here -->
                 </div>
-
 
             </div>
+
         </form>
-
-
-
-
-
-
-
-
-
-
     </main>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
 </body>
 
 </html>
@@ -296,7 +246,7 @@ if (isset($_GET['view_id'])) {
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form.details-main-contianer');
+        const form = document.querySelector('form.form-container');
         const loadingIndicator = document.getElementById('loading-indicator');
 
         form.addEventListener('submit', function (event) {

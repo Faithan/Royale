@@ -27,7 +27,6 @@ body.dark-mode main {
 .request-main-container {
     border: 1px solid var(--box-shadow);
     width: 80%;
-    height: 80%;
     background-color: var(--second-bgcolor);
     border-radius: 10px;
     display: flex;
@@ -52,10 +51,10 @@ body.dark-mode main {
 .request-main-container .table-container {
     background-color: var(--first-bgcolor);
     width: 100%;
-    height:  550px;
-    border: 1px solid var(--box-shadow);
+    height: 550px;
     border-radius: 5px;
     overflow-y: scroll;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 
@@ -70,13 +69,12 @@ body.dark-mode main {
 /* table */
 .styled-table {
     border-collapse: collapse;
-    font-size:1.5rem;
+    font-size: 1.5rem;
     text-align: left;
     width: 100%;
-    border-collapse: separate;
     margin-bottom: 20px;
     max-height: 550px;
-   
+
 }
 
 .styled-table thead tr {
@@ -86,7 +84,7 @@ body.dark-mode main {
 }
 
 
-.styled-table thead th{
+.styled-table thead th {
     padding: 10px 5px;
     position: sticky;
     top: 0;
@@ -103,17 +101,20 @@ body.dark-mode main {
 .styled-table td {
     padding: 5px 5px;
     border: 1px solid var(--box-shadow);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    text-align: center;
 }
 
-.styled-table tbody{
-    
-}
 
 .styled-table tbody tr {
-    cursor: pointer; /* Indicates the row is clickable */
+    cursor: pointer;
+    /* Indicates the row is clickable */
     border-bottom: 1px solid #dddddd;
     transition: background-color 0.3s ease;
     color: var(--text-color);
+
 
 }
 
@@ -125,9 +126,6 @@ body.dark-mode main {
     background-color: var(--first-bgcolor);
 }
 
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #001C31;
-}
 
 .styled-table tbody tr:hover {
     background-color: var(--hover-color);
@@ -136,17 +134,19 @@ body.dark-mode main {
 
 
 
-.photo-gallery{
+.photo-gallery {
     display: flex;
     gap: 5px;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
+
 }
 
 .styled-table td img {
     max-width: 50px;
     max-height: 50px;
     border-radius: 5px;
+
 }
 
 
@@ -171,19 +171,19 @@ body.dark-mode main {
 
 .request-main-container .info-container {
     background-color: var(--first-bgcolor);
-    width: 100%;    
+    width: 100%;
     border: 1px solid var(--box-shadow);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height:500px;
 }
 
 
 
 
-.info-container .image-container{
+.info-container .image-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -191,12 +191,9 @@ body.dark-mode main {
     overflow-x: scroll;
     gap: 10px;
     background-color: var(--second-bgcolor);
-    height: fit-content;
-    width: auto;
- 
 }
 
-.image-container img{
+.image-container img {
     max-height: 200px;
     max-width: 200px;
     background-color: var(--first-bgcolor);
@@ -205,33 +202,36 @@ body.dark-mode main {
     border-radius: 5px;
 }
 
-.info-container .request-info-container{
+.info-container .request-info-container {
     display: flex;
     flex-direction: column;
     color: var(--text-color);
     flex-grow: 1;
+    overflow-y: scroll;
+
 }
 
 
-.request-info{
+.request-info {
     overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 10px;
+
 }
 
-.request-info p{
+.request-info p {
     font-size: 1.6rem;
     padding: 10px 20px;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 3px;
     background-color: var(--second-bgcolor);
 }
 
 
-.info-container .button-container{
+.info-container .button-container {
     position: sticky;
     bottom: 0;
     display: flex;
@@ -247,45 +247,49 @@ body.dark-mode main {
     border-bottom: 0;
 }
 
-.info-container .button-container button{
+.info-container .button-container button {
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
     border: 1px solid var(--box-shadow);
     font-size: 1.4rem;
     color: var(--text-color);
-    background-color:var(--first-bgcolor);
+    background-color: var(--first-bgcolor);
 }
 
-.info-container .button-container button:hover{
+.info-container .button-container button:hover {
     box-shadow: 0 0 0 2px var(--hover-color);
 }
 
 
-.request-info-container h1{
+.request-info-container h1 {
     color: var(--text-color);
     margin: 10px 0 30px 0;
     border: 1px solid var(--box-shadow);
     border-right: 0;
     border-left: 0;
-    font-size: 2rem;
+    border-top: 0;
+    font-size: 2.5rem;
     text-transform: capitalize;
     border-radius: 0;
-    background-color: var(--second-bgcolor);
-   
+    background-color: var(--first-bgcolor);
+
 }
+
 .request-info-container .status-cancelled {
     color: red;
     margin: 10px 0 30px 0;
     border: 1px solid var(--box-shadow);
     border-right: 0;
     border-left: 0;
-    font-size: 2rem;
+    border-top: 0;
+    font-size: 2.5rem;
     text-transform: capitalize;
     border-radius: 0;
-    background-color: var(--second-bgcolor);
-   
+    background-color: var(--first-bgcolor);
+
 }
+
 .temp-hidden {
     display: none;
 }
@@ -316,7 +320,7 @@ body.dark-mode main {
 
 
 
-@media only screen and (max-width: 575.98px){
+@media only screen and (max-width: 575.98px) {
     main {
         position: relative;
         width: 100%;
@@ -333,28 +337,29 @@ body.dark-mode main {
         border: none;
         border-bottom: 1px solid var(--box-shadow);
     }
-    
-    
+
+
     /* Dark mode styles */
     body.dark-mode main {
         background-image: url(../system_images/home-dark.svg);
         /* Dark mode background image */
     }
-    
-    
-    
+
+
+
     .request-main-container {
         border: 1px solid var(--box-shadow);
         width: 100%;
-        height: 100%;
+        height:100%;
         background-color: var(--second-bgcolor);
         border-radius: 0;
         display: flex;
         flex-direction: column;
         padding: 20px 5px;
-    
+
+
     }
-    
+
     .request-main-container h1 {
         color: var(--text-color);
         background-color: var(--first-bgcolor);
@@ -367,38 +372,38 @@ body.dark-mode main {
         margin-top: 50px;
         font-weight: bold;
     }
-    
-    
+
+
     .request-main-container .table-container {
         background-color: var(--first-bgcolor);
         width: 100%;
-        height:  550px;
+        height: 550px;
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
         overflow-y: scroll;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
     /* table */
     .styled-table {
         border-collapse: collapse;
-        font-size:1.5rem;
+        font-size: 1.5rem;
         text-align: left;
         width: 100%;
         border-collapse: separate;
         margin-bottom: 20px;
         max-height: 550px;
-       
+
     }
-    
+
 
     .styled-table thead th:nth-child(3),
     .styled-table thead th:nth-child(4),
@@ -407,7 +412,7 @@ body.dark-mode main {
     .styled-table thead th:nth-child(7),
     .styled-table thead th:nth-child(8),
     .styled-table thead th:nth-child(9),
-    .styled-table thead th:nth-child(11){
+    .styled-table thead th:nth-child(11) {
         display: none;
     }
 
@@ -417,44 +422,45 @@ body.dark-mode main {
     .styled-table tbody tr td:nth-child(6),
     .styled-table tbody tr td:nth-child(7),
     .styled-table tbody tr td:nth-child(9),
-    .styled-table tbody tr td:nth-child(10){
+    .styled-table tbody tr td:nth-child(10) {
         display: none;
     }
-    
- 
-    
+
+
+
     .styled-table tbody tr {
-        cursor: pointer; /* Indicates the row is clickable */
+        cursor: pointer;
+        /* Indicates the row is clickable */
         border-bottom: 1px solid #dddddd;
         transition: background-color 0.3s ease;
         color: var(--text-color);
-    
+
     }
-    
+
     .styled-table tbody tr:nth-of-type(even) {
         background-color: var(--second-bgcolor);
-        
+
     }
-    
+
     .styled-table tbody tr:nth-of-type(odd) {
         background-color: var(--first-bgcolor);
     }
-    
+
     .styled-table tbody tr:last-of-type {
         border-bottom: 2px solid #001C31;
     }
-    
+
     .styled-table tbody tr:hover {
         background-color: var(--hover-color);
     }
-    
-    
-    
-    
 
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 
 }

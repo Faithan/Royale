@@ -68,6 +68,7 @@ if (isset($_POST['accept_request'])) {
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
     $measurement = !empty($_POST['measurement']) ? $_POST['measurement'] : null;
+    $special_group = !empty($_POST['special_group']) ? $_POST['special_group'] : null;
     $assigned_employee = !empty($_POST['assigned_employee']) ? $_POST['assigned_employee'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
     $down_payment = !empty($_POST['down_payment']) ? $_POST['down_payment'] : null;
@@ -79,6 +80,7 @@ if (isset($_POST['update_request'])) {
         UPDATE royale_request_tbl 
         SET request_status = ?, 
             measurement = IFNULL(?, measurement), 
+            special_group = IFNULL(?, special_group), 
             assigned_employee = IFNULL(?, assigned_employee), 
             deadline = IFNULL(?, deadline), 
             down_payment = IFNULL(?, down_payment), 
@@ -89,7 +91,7 @@ if (isset($_POST['update_request'])) {
 
     // Bind parameters (7 values, so 7 type definitions)
     $new_status = "ongoing";
-    $stmt->bind_param("sssssssi", $new_status, $measurement, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
+    $stmt->bind_param("ssssssssi", $new_status, $measurement,$special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message

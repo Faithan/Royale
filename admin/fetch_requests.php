@@ -7,7 +7,7 @@ $request_status = isset($_GET['request_status']) ? $conn->real_escape_string($_G
 $gender = isset($_GET['gender']) ? $conn->real_escape_string($_GET['gender']) : '';
 
 // Build query to fetch filtered requests
-$query_requests = "SELECT request_id, request_status, name, service_name, gender, address, fitting_date, photo 
+$query_requests = "SELECT request_id, request_status, name, service_name, gender, address, special_group, fitting_date, photo 
                    FROM royale_request_tbl 
                    WHERE 1=1"; // Always true, allows chaining conditions
 
@@ -27,6 +27,7 @@ if ($search_query) {
                           OR name LIKE '%$search_query%' 
                           OR service_name LIKE '%$search_query%' 
                           OR address LIKE '%$search_query%' 
+                            OR special_group LIKE '%$search_query%' 
                           OR fitting_date LIKE '%$search_query%')";
 }
 
@@ -45,18 +46,19 @@ if ($result_requests->num_rows > 0) {
         echo "<td>" . $row_request['service_name'] . "</td>";
         echo "<td>" . ucfirst($row_request['gender']) . "</td>";
         echo "<td>" . $row_request['address'] . "</td>";
+        echo "<td>" . $row_request['special_group'] . "</td>";
         echo "<td>" . $row_request['fitting_date'] . "</td>";
 
         // Display multiple photos if they are comma-separated
         $photos = explode(',', $row_request['photo']);
-        echo "<td>";
+        echo "<td style='max-width: 100px; max-height: 50px; overflow-x: scroll; flex-wrap: nowrap;'>";
         foreach ($photos as $photo) {
-            echo "<img src='../uploads/$photo' alt='Photo' width='50' height='50' style='margin-right: 5px;'>";
+            echo "<img src='../uploads/$photo' alt='Photo' style='margin-right: 5px;'>";
         }
         echo "</td>";
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='8'>No records found.</td></tr>";
+    echo "<tr><td colspan='9'>No records found.</td></tr>";
 }
 ?>
