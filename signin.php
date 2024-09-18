@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signin'])) {
             $_SESSION['user_id'] = $user_id;
 
             // Redirect to dashboard
-            header('Location: index.php');
+            header('Location: index.php?status=success');
             exit;
         } else {
             header('Location: login.php?status=error'); // Incorrect password

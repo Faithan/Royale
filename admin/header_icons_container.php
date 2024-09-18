@@ -15,12 +15,9 @@
     </div>
 </div>
 
+
+
 <style>
-    .header-icons-container {
-        display: flex;  
-        margin-right: 10px;
-   
-    }
 
     .icon-with-tooltip {
         position: relative;
@@ -33,7 +30,8 @@
 
     .tooltip-text {
         position: absolute;
-        top: 120%; /* Position below the icon */
+        top: 120%;
+        /* Position below the icon */
         left: 50%;
         transform: translateX(-50%);
         background-color: var(--first-bgcolor);
@@ -82,11 +80,11 @@
 
         if (logoutButton) {
             logoutButton.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault(); // Prevent default action
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You won't be able to log back in until you sign in again.",
+                    text: "You will be logged out of your admin account.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#001C31',
@@ -95,8 +93,7 @@
                     cancelButtonText: 'No, cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Redirect to logout URL
-                        window.location.href = 'logout.php';
+                        window.location.href = 'logout.php'; // Redirect to admin logout script
                     }
                 });
             });

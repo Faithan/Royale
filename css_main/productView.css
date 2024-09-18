@@ -3,15 +3,16 @@ body {
     width: 100%;
     height: 100vh;
     background-image: url(../system_images/home-light.svg);
+    /* Only the second image as background */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding: 0 100px;
     border: none;
+    border-bottom: 1px solid var(--box-shadow);
 }
-
 
 /* Dark mode styles */
 body.dark-mode {
@@ -19,29 +20,28 @@ body.dark-mode {
     /* Dark mode background image */
 }
 
-
-
-
 main {
-    border: 1px solid var(--box-shadow);
-    width: 80%;
-    height: 80%;
-    background-color: var(--second-bgcolor);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    background-color: var(--first-bgcolor);
+    overflow-y: scroll;
+    border-top: 1px solid var(--box-shadow);
     padding: 10px;
 }
 
 main h1 {
-    color: var(--text-color);
-    background-color: var(--first-bgcolor);
+    color: var(--pure-white);
+    background-color: var(--button-bg);
     border: 1px solid var(--box-shadow);
     text-align: center;
-    border-radius: 5px;
     font-size: 2.5rem;
     padding: 10px;
     margin-bottom: 10px;
+    border-radius: 5px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 
@@ -71,7 +71,7 @@ main h1 {
 .details-main-contianer .details-container {
     border-radius: 5px;
     width: 100%;
-    height: 550px;
+    height: 100%;
     background-color: var(--first-bgcolor);
     border: 1px solid var(--box-shadow);
     position: relative;
@@ -233,10 +233,6 @@ main h1 {
     font-size: 1.4rem;
 }
 
-.product-buttons-container button:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
-}
-
 .product-buttons-container #return {
     background-color: var(--second-bgcolor);
     color: var(--text-color);
@@ -248,7 +244,8 @@ main h1 {
 }
 
 .product-buttons-container #return:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+    background-color: var(--hover-color);
+    transition: ease-in-out 0.3s;
 }
 
 .product-buttons-container #order-now {
@@ -256,6 +253,10 @@ main h1 {
     color: var(--text-color);
 }
 
+.product-buttons-container #order-now:hover {
+    background-color: var(--hover-color);
+    transition: ease-in-out 0.3s;
+}
 
 
 
@@ -328,30 +329,23 @@ main h1 {
 
 
     body {
-        height: auto;
+        padding: 0;
+
     }
-
-
-    /* Dark mode styles */
-    body.dark-mode {
-        background-image: url(../system_images/home-dark.svg);
-        /* Dark mode background image */
-    }
-
-
 
 
     main {
-
         width: 100%;
-        height: 100%;
 
-        display: flex;
-        flex-direction: column;
-
-        margin-top: 60px;
+        padding: 0 10px 10px 10px;
     }
 
+
+
+    main h1 {
+        font-size: 2rem;
+        border-radius: 0;
+    }
 
     .details-main-contianer {
         margin: 0;
@@ -363,20 +357,36 @@ main h1 {
         height: auto;
     }
 
+    .product-info-container label {
+        font-size: 1.5rem;
+
+    }
+
+
+
+    .product-info-container p {
+        font-size: 1.4rem;
+        color: var(--text-color);
+        text-align: justify;
+    }
+
 
 
     .details-main-contianer img {
         max-height: 100%;
         width: 100%;
-       
+
     }
 
     .details-main-contianer .details-container {
-   
+
         height: auto;
-      
+
     }
 
+
+
+    
 
     .product-info-container {
         width: 100%;
@@ -396,12 +406,12 @@ main h1 {
 
 
     .customer-input-container input {
-
+        font-size: 1.5rem;
         width: 100%;
     }
 
     .customer-input-container select {
-
+        font-size: 1.5rem;
         width: 100%;
     }
 

@@ -1,6 +1,7 @@
 <?php
-$isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
+$isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 ?>
+
 
 
 
@@ -37,15 +38,12 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
         </div>
 
 
-
-
-
-
         <a href="#" id="logout-link" class="tooltip-container">
             <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>
             <span class="tooltip-text"><?php echo $isLoggedIn ? 'Logout' : 'Login'; ?></span>
         </a>
 
+        <!-- Include SweetAlert and Custom Script -->
         <!-- Include SweetAlert and Custom Script -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -99,6 +97,7 @@ $isLoggedIn = isset($_SESSION['user_email']); // Check if user is logged in
                 });
             });
         </script>
+
 
 
 

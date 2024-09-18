@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_bio'])) {
     <?php include 'navigation.php'; ?>
 
     <main>
-        <div class="profile-main-container hidden">
+    
             <h1 class="hidden">My Profile</h1>
             <div class="profile-container hidden">
                 <div class="image-container hidden">
@@ -94,12 +94,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_bio'])) {
                         <span><?php echo $masked_password; ?><i class="fa-solid fa-pen-to-square"></i></span></a>
 
                     <form method="POST" id="bio-form">
-                        <textarea name="user_bio" id="user_bio" disabled><?php echo htmlspecialchars($user_bio); ?></textarea>
-                        <button type="button" id="edit-bio-btn"><i class="fa-solid fa-pen-to-square"></i> Edit Bio</button>
+                        <textarea name="user_bio" id="user_bio"
+                            disabled><?php echo htmlspecialchars($user_bio); ?></textarea>
+                        <button type="button" id="edit-bio-btn"><i class="fa-solid fa-pen-to-square"></i> Edit
+                            Bio</button>
                     </form>
                 </div>
             </div>
-            <div class="user-dashboard-container hidden">
+      
 
             </div>
         </div>

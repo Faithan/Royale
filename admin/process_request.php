@@ -1,6 +1,6 @@
 <?php
 include 'dbconnect.php';
-session_start(); // Ensure the session is started to access session variables
+session_start(); // Session can remain if needed for other purposes
 
 $response = array();
 
@@ -26,7 +26,7 @@ try {
             for ($i = 0; $i < $total_files; $i++) {
                 $file_name = $files['name'][$i];
                 $file_tmp = $files['tmp_name'][$i];
-                $file_path = 'uploads/' . $file_name;
+                $file_path = '../uploads/' . $file_name;
                 move_uploaded_file($file_tmp, $file_path);
                 $photo_paths[] = $file_name;
             }
@@ -34,17 +34,13 @@ try {
 
         $photo_paths = implode(',', $photo_paths);
 
-        // Get the logged-in user's ID from the session
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
-        } else {
-            throw new Exception('User not logged in.');
-        }
+        // Set user_id to 0 since this is an admin transaction
+        $user_id = 0;
 
         // Prepare SQL statement to include request_type
         $stmt = $conn->prepare("INSERT INTO royale_request_tbl (request_status, user_id, service_name, name, contact_number, gender, email, address, fitting_date, fitting_time, photo, message, request_type, datetime_request) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         $request_status = 'pending';
-        $request_type = 'online'; // Set request_type to 'online'
+        $request_type = 'walk-in'; // Set request_type to 'walk-in'
         
         // Bind parameters including the new request_type
         $stmt->bind_param('sisssssssssss', $request_status, $user_id, $service_name, $name, $contact_number, $gender, $email, $address, $fitting_date, $fitting_time, $photo_paths, $message, $request_type);

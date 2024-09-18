@@ -168,7 +168,7 @@ if (isset($_GET['view_id'])) {
                 <textarea name="message" id=""></textarea>
             </div>
 
-            <p class="instruction hidden"><b>Tip:</b> To better assist you, please use the textbox above to
+            <p class="instruction hidden" id="last-instruction"><b>Tip:</b> To better assist you, please use the textbox above to
                 provide the details of your request. This will help us understand your needs more clearly
                 and ensure we address your specifications accurately.</p>
 

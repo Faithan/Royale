@@ -9,7 +9,7 @@ $gender = isset($_GET['gender']) ? $conn->real_escape_string($_GET['gender']) : 
 // Build query to fetch filtered requests
 $query_requests = "SELECT request_id, request_status, name, service_name, gender, address, special_group, fitting_date, photo 
                    FROM royale_request_tbl 
-                   WHERE 1=1"; // Always true, allows chaining conditions
+                   WHERE request_type = 'walk-in'"; // Filter by request_type 'online'
 
 // Filter by request_status if a specific status is selected and not "all"
 if ($request_status && $request_status !== 'all') {
@@ -27,7 +27,7 @@ if ($search_query) {
                           OR name LIKE '%$search_query%' 
                           OR service_name LIKE '%$search_query%' 
                           OR address LIKE '%$search_query%' 
-                            OR special_group LIKE '%$search_query%' 
+                          OR special_group LIKE '%$search_query%' 
                           OR fitting_date LIKE '%$search_query%')";
 }
 
@@ -39,7 +39,7 @@ $result_requests = $conn->query($query_requests);
 if ($result_requests->num_rows > 0) {
     while ($row_request = $result_requests->fetch_assoc()) {
         // Start the table row and make it clickable using a hyperlink
-        echo "<tr onclick=\"window.location='view_request.php?request_id=" . $row_request['request_id'] . "'\">";
+        echo "<tr onclick=\"window.location='walkin_view_request.php?request_id=" . $row_request['request_id'] . "'\">";
         echo "<td>" . $row_request['request_id'] . "</td>";
         echo "<td>" . ucfirst($row_request['request_status']) . "</td>";
         echo "<td>" . $row_request['name'] . "</td>";
@@ -51,9 +51,9 @@ if ($result_requests->num_rows > 0) {
 
         // Display multiple photos if they are comma-separated
         $photos = explode(',', $row_request['photo']);
-        echo "<td style='max-width: 100px; max-height: 50px; overflow-x: scroll; flex-wrap: nowrap;'>";
+        echo "<td>";
         foreach ($photos as $photo) {
-            echo "<img src='../uploads/$photo' alt='Photo' style='margin-right: 5px;'>";
+            echo "<img src='../uploads/$photo' alt='Photo' >";
         }
         echo "</td>";
         echo "</tr>";

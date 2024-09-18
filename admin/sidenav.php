@@ -16,7 +16,7 @@
                         class="fa-solid fa-chevron-down"></i></a>
                 <ul class="submenu">
                     <li><a href="online_request.php"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
-                    <li><a href="#"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
+                    <li><a href="walkin_request.php"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
                 </ul>
             </li>
             <li>

@@ -50,8 +50,8 @@ if (isset($_GET['view_id'])) {
     ?>
 
 
-    <main class="hidden">
-        <h1>View Product</h1>
+    <main >
+        <h1 class="hidden">View Product</h1>
 
         <div class="details-main-contianer hidden">
 

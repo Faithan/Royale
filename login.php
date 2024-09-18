@@ -4,7 +4,7 @@ session_start(); // Start the session
 
 
 // Redirect to dashboard if user is already logged in
-if (isset($_SESSION['user_email'])) {
+if (isset($_SESSION['user_id'])) {
     header('Location: index.php'); // Redirect to a page where logged-in users are taken
     exit;
 }

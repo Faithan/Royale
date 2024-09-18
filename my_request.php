@@ -12,12 +12,16 @@ if (!isset($_SESSION['user_id'])) {
 // Get the logged-in user's ID from the session
 $user_id = $_SESSION['user_id'];
 
-// Prepare SQL statement to get records for the logged-in user
-$sql = "SELECT request_id, request_status, user_id, service_name, name, contact_number, gender, email, address, fitting_date, fitting_time, photo, message FROM royale_request_tbl WHERE user_id = ?";
+// Prepare SQL statement to get records for the logged-in user, ordered by request_id in descending order
+$sql = "SELECT request_id, request_status, user_id, service_name, name, contact_number, gender, email, address, fitting_date, fitting_time, photo, message 
+        FROM royale_request_tbl 
+        WHERE user_id = ? 
+        ORDER BY request_id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id); // Bind the user_id as an integer
 $stmt->execute();
 $result = $stmt->get_result();
+
 ?>
 
 
@@ -49,90 +53,89 @@ $result = $stmt->get_result();
 
     <main>
 
-        <div class="request-main-container hidden">
-            <h1 class="hidden">My Request</h1>
-            <div class="table-container">
+        <h1 class="hidden">My Request</h1>
+
+        <div class="table-container">
 
 
-                <table class="styled-table hidden">
-                    <thead>
-                        <tr>
-                            <!-- <th>Request ID</th> -->
-                            <th>Status</th>
-                            <th>Service Name</th>
-                            <th>Name</th>
-                            <th>Contact Number</th>
-                            <th>Gender</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Fitting Date</th>
-                            <th>Fitting Time</th>
-                            <th>Photos</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                // Convert comma-separated photo paths into an array
-                                $photo_array = explode(',', $row['photo']);
-                                ?>
-                                <tr>
-                                    <td style="display:none;"><?php echo htmlspecialchars($row['request_id']); ?></td>
-                                    <!-- Hidden request_id -->
-                                    <td><?php echo htmlspecialchars($row['request_status']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['service_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['gender']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['address']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['fitting_date']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['fitting_time']); ?></td>
-                                    <td class="photo-gallery">
-                                        <?php
-                                        // Display photos if available
-                                        foreach ($photo_array as $photo) {
-                                            if (!empty($photo)) {
-                                                echo '<img src="uploads/' . htmlspecialchars($photo) . '" alt="Uploaded Photo">';
-                                            }
+            <table class="styled-table hidden">
+                <thead>
+                    <tr>
+                        <!-- <th>Request ID</th> -->
+                        <th>Status</th>
+                        <th>Service Name</th>
+                        <th>Name</th>
+                        <th>Contact Number</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Fitting Date</th>
+                        <th>Fitting Time</th>
+                        <th>Photos</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            // Convert comma-separated photo paths into an array
+                            $photo_array = explode(',', $row['photo']);
+                            ?>
+                            <tr>
+                                <td style="display:none;"><?php echo htmlspecialchars($row['request_id']); ?></td>
+                                <!-- Hidden request_id -->
+                                <td><?php echo htmlspecialchars($row['request_status']); ?></td>
+                                <td><?php echo htmlspecialchars($row['service_name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
+                                <td><?php echo htmlspecialchars($row['gender']); ?></td>
+                                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                <td><?php echo htmlspecialchars($row['address']); ?></td>
+                                <td><?php echo htmlspecialchars($row['fitting_date']); ?></td>
+                                <td><?php echo htmlspecialchars($row['fitting_time']); ?></td>
+                                <td >
+                                    <div class="photo-gallery">
+                                    <?php
+                                    // Display photos if available
+                                    foreach ($photo_array as $photo) {
+                                        if (!empty($photo)) {
+                                            echo '<img src="uploads/' . htmlspecialchars($photo) . '" alt="Uploaded Photo">';
                                         }
-                                        ?>
-                                    </td>
-                                
+                                    }
+                                    ?>
+                                    </div>
+                                </td>
 
-                                </tr>
-                                <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='13'>No requests found.</td></tr>";
+
+                            </tr>
+                            <?php
                         }
+                    } else {
+                        echo "<tr><td colspan='13'>No requests found.</td></tr>";
+                    }
 
-                        // Close the connection
-                        $conn->close();
-                        ?>
-                    </tbody>
-                </table>
+                    // Close the connection
+                    $conn->close();
+                    ?>
+                </tbody>
+            </table>
 
-
-                <script>
-                    document.querySelectorAll('.styled-table tbody tr').forEach(row => {
-                        row.addEventListener('click', function () {
-                            const requestId = this.querySelector('td:first-child').innerText; // Get the Request ID or any unique data
-                            window.location.href = `my_request_view.php?request_id=${requestId}`; // Redirect with request_id in the URL
-                        });
+            <script>
+                document.querySelectorAll('.styled-table tbody tr').forEach(row => {
+                    row.addEventListener('click', function () {
+                        const requestId = this.querySelector('td:first-child').innerText; // Get the Request ID or any unique data
+                        window.location.href = `my_request_view.php?request_id=${requestId}`; // Redirect with request_id in the URL
                     });
+                });
 
+            </script>
 
-                </script>
-
-
-
+            <div class="anchor-container">
+                <a href="index.php?#home"><i class="fa-solid fa-arrow-left"></i> Return</a>
             </div>
+
         </div>
-
-
 
     </main>
 

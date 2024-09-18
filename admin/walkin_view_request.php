@@ -28,8 +28,6 @@ if ($result->num_rows > 0) {
 }
 
 
-
-
 ?>
 
 
@@ -83,35 +81,36 @@ if ($result->num_rows > 0) {
 
 
                 <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
-                    <h1>View Request</h1>
+                    <h1 class="hidden">View Request</h1>
 
                     <!-- accept or cancel -->
-                    <form method="POST" action="request_action.php" method="POST" class="request-details-container">
+                    <form method="POST" action="walkin_request_action.php" method="POST" class="request-details-container">
                         <div class="information-container">
 
-                       
-                                <div class="request-details-img">
-                                    <?php
-                                    $photos = explode(',', $row['photo']);
-                                    foreach ($photos as $photo) {
-                                        echo "<img src='../uploads/$photo' alt='Photo' onclick='openModal(this.src)' style='margin-right: 10px;'>";
-                                    }
-                                    ?>
-                                </div>
-                         
 
-                            <p class="note"><b>Tips:</b> This section contains the image related to the customer's
+                            <div class="request-details-img hidden">
+                                <?php
+                                $photos = explode(',', $row['photo']);
+                                foreach ($photos as $photo) {
+                                    echo "<img src='../uploads/$photo' alt='Photo' onclick='openModal(this.src)' style='margin-right: 10px;'>";
+                                }
+                                ?>
+                            </div>
+
+
+                            <p class="note hidden"><b>Tips:</b> This section contains the image related to the
+                                customer's
                                 request. Click on the image to view it in full screen.</p>
 
 
-                            <h2
+                            <h2 class="hidden"
                                 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
                                 Customer's Information</h2>
-                            <h2
+                            <h2 class="hidden"
                                 style="display:<?php echo ($row['request_status'] === 'completed') ? 'block' : 'none'; ?>">
                                 Customer and Request Recorded Information</h2>
 
-                            <div class="request-details-container2">
+                            <div class="request-details-container2 hidden">
 
                                 <div class="request-details">
                                     <label>User ID:</label>
@@ -205,7 +204,7 @@ if ($result->num_rows > 0) {
 
                             <div style="align-self: center;">
                                 <button type="submit" name="accept_request" id="accept_button">Accept</button>
-                                <button type="submit" name="cancel_request" id="cancel_button">Reject</button>
+
                             </div>
 
 
@@ -230,7 +229,7 @@ if ($result->num_rows > 0) {
 
 
                     <!-- update and ongoing  -->
-                    <form action="request_action.php" method="POST" class="additional-info-container">
+                    <form action="walkin_request_action.php" method="POST" class="additional-info-container">
                         <h2 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
                             Additional Information</h2>
 
@@ -433,8 +432,8 @@ if ($result->num_rows > 0) {
 
 
                 <!-- request-details-container -->
-                <div class="view-button-container">
-                    <a id="return-request" onclick="window.location.href='online_request.php'"><i
+                <div class="view-button-container hidden">
+                    <a id="return-request" onclick="window.location.href='walkin_request.php'"><i
                             class="fa-solid fa-arrow-left"></i> Return</a>
                 </div>
 

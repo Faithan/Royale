@@ -1,4 +1,4 @@
-main {
+body {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -9,49 +9,52 @@ main {
     background-position: center;
     display: flex;
     align-items: center;
-    justify-content: center;
     padding: 0 100px;
     border: none;
     border-bottom: 1px solid var(--box-shadow);
 }
 
-
 /* Dark mode styles */
-body.dark-mode main {
+body.dark-mode {
     background-image: url(../system_images/home-dark.svg);
     /* Dark mode background image */
 }
 
 
-
-.profile-main-container {
+main {
+    width: 100%;
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    background-color: var(--first-bgcolor);
+    overflow-y: scroll;
     border: 1px solid var(--box-shadow);
-    width: 80%;
-    height: 80%;
     background-color: var(--second-bgcolor);
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     padding: 10px;
     gap: 10px;
-
 }
 
-.profile-main-container h1 {
-    background-color: var(--button-bg);
-    font-size: 1.5rem;
-    font-weight: bold;
+
+main h1 {
     color: var(--pure-white);
+    background-color: var(--button-bg);
     border: 1px solid var(--box-shadow);
     text-align: center;
-    border-radius: 5px;
     font-size: 2.5rem;
+    margin-bottom: 10px;
     padding: 10px;
-    margin-bottom: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 
-.profile-main-container .profile-container {
+
+
+
+
+.profile-container {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -175,11 +178,10 @@ body.dark-mode main {
 /* edit name contianer */
 
 
-
 .edit-main-container {
     border: 1px solid var(--box-shadow);
-    width: 40%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     background-color: var(--second-bgcolor);
     border-radius: 10px;
     display: flex;
@@ -299,151 +301,49 @@ body.dark-mode main {
 
 
 @media only screen and (max-width: 575.98px) {
-    main {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    body {
         padding: 0;
-        padding-top: 60px;
-        border: none;
-        border-bottom: 1px solid var(--box-shadow);
+
     }
 
+    main {
+        padding: 0;
+    }
 
+    .profile-container {
 
-
-
-    .profile-main-container {
-        border: 1px solid var(--box-shadow);
-        width: 100%;
-        height: 100%;
-        background-color: var(--second-bgcolor);
-        border-radius: 0;
-        display: flex;
         flex-direction: column;
-        padding: 10px;
-        gap: 10px;
 
     }
 
+    main h1 {
+        font-size: 2rem;
 
-
-    .profile-main-container .profile-container {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        gap: 10px;
     }
+
 
     .image-container img {
-        width: 100%;
-        height: auto;
-        background-color: var(--first-bgcolor);
-        padding: 30px;
-        border-radius: 5px;
-        border: 1px solid var(--box-shadow);
+        height: 200px;
+        padding: 20px;
+
     }
 
-   
-    .profile-container .user-info-container {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        background-color: var(--first-bgcolor);
-        height: 100%;
-        padding: 10px;
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        color: var(--text-color);
-        gap: 10px;
-    }
-
-
-  
-    .profile-container form button {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid var(--box-shadow);
-        color: var(--pure-white);
-        background-color: var(--button-bg);
+    .image-container h2 {
         font-size: 1.5rem;
-        font-weight: bold
-    }
-
-    .profile-container form button:hover {
-        box-shadow: 0 0 0 2px var(--hover-color);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* edit name contianer */
-
-
-
-    .edit-main-container {
-        border: 1px solid var(--box-shadow);
-        width: 100%;
-        height: 100%;
-        background-color: var(--second-bgcolor);
         border-radius: 0;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        padding: 10px;
-        gap: 10px;
-
     }
 
+    .profile-container .user-info-container {
+        border-radius: 0;
+    }
 
-
-    .edit-main-container h1 {
-        background-color: var(--button-bg);
+    .user-info-container a {
         font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--pure-white);
-        border: 1px solid var(--box-shadow);
-        text-align: center;
-        border-radius: 5px;
-        font-size: 2.5rem;
-        padding: 10px;
-        margin-bottom: 0;
     }
 
-
-    .edit-main-container form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 10px;
-
+    .profile-container form textarea {
+        font-size: 1.5rem;
     }
-
-
-   
-
-
 
 
 }

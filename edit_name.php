@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-    <main>
+    <main style="">
         <div class="edit-main-container hidden">
             <h1 class="hidden">Edit Name</h1>
             <form id="edit-name-form" method="POST">
@@ -126,11 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <main>
-
-
-
-    </main>
+    
 
 </body>
 

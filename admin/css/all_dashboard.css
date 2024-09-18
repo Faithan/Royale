@@ -33,7 +33,7 @@ main .header-container {
     justify-content: space-between;
     align-items: center;
     height: 60px;
-    padding: 20px;
+    padding: 0px;
     background-color: var(--first-bgcolor);
     z-index: 10;
 }
@@ -50,7 +50,8 @@ main .header-container {
 
 .header-container .header-icons-container {
     display: flex;
-    gap: 20px;
+    gap: 40px;
+    margin-right: 40px;
 }
 
 .header-container .header-icons-container i {
@@ -166,7 +167,20 @@ body.admin-dark-mode main .content-container {
     border-radius: 5px;
 }
 
+/* button for add reservation in walkin */
+.search-container button {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    border: 1px solid var(--box-shadow);
+    padding: 10px;
+    background-color: var(--second-bgcolor);
+    border-radius: 5px;
+}
 
+.search-container button:hover{
+    background-color: var(--hover-color);
+    transition: ease-in-out 0.3s;
+}
 
 
 
@@ -214,6 +228,7 @@ td {
     color: var(--text-color);
     border: 1px solid var(--box-shadow);
     cursor: pointer;
+    max-width: 100px;
 
 }
 
@@ -234,6 +249,7 @@ td img {
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 
 
 
@@ -515,19 +531,20 @@ td img {
 
 
 
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    table {
-        font-size: 14px;
-    }
 
-    td,
-    th {
-        padding: 8px;
-    }
 
-    td img {
-        width: 40px;
-        height: 40px;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+/* add request */
+
+
+
+

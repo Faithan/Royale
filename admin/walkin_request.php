@@ -16,6 +16,7 @@ $result = $conn->query($query);
 if (!$result) {
     die("Error fetching request statuses: " . $conn->error);
 }
+
 ?>
 
 
@@ -26,7 +27,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Requests</title>
+    <title>Walk-In Requests</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
@@ -49,7 +50,7 @@ if (!$result) {
 
                 <div class="header-label-container">
                     <i class="fa-solid fa-earth-asia"></i>
-                    <label for="">Online Request</label>
+                    <label for="">Walk-In Request</label>
                 </div>
 
                 <?php
@@ -80,6 +81,8 @@ if (!$result) {
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
+
+                        <button onclick="window.location.href='add_request.php'"><i class="fa-solid fa-plus"></i> Add Request</button>
                     </div>
 
 
@@ -117,6 +120,7 @@ if (!$result) {
 
 
 
+
 <script>
     function fetchFilteredData() {
         const searchQuery = document.querySelector("input[name='search_query']").value;
@@ -124,7 +128,7 @@ if (!$result) {
         const gender = document.querySelector("select[name='gender']").value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `online_fetch_requests.php?search_query=${searchQuery}&request_status=${requestStatus}&gender=${gender}`, true);
+        xhr.open('GET', `walkin_fetch_requests.php?search_query=${searchQuery}&request_status=${requestStatus}&gender=${gender}`, true);
         xhr.onload = function () {
             if (this.status === 200) {
                 document.querySelector('.table-container tbody').innerHTML = this.responseText;
@@ -143,13 +147,6 @@ if (!$result) {
     });
 
 </script>
-
-
-
-
-
-
-
 
 
 

@@ -65,68 +65,66 @@ if (isset($_GET['request_id'])) {
 
     <main>
 
-        <div class="request-main-container hidden">
-            <h1 class="hidden">Request Viewer</h1>
-            <div class="info-container">
-                <div class="image-container">
-                    <?php
-                    // Convert the comma-separated photo paths into an array
-                    $photo_array = explode(',', $row['photo']);
 
-                    // Loop through each photo and display it
-                    foreach ($photo_array as $photo) {
-                        if (!empty($photo)) {
-                            echo '<img src="uploads/' . htmlspecialchars($photo) . '" alt="Uploaded Photo" style="max-width:200px; margin:5px;">';
-                        }
-                    }
-                    ?>
-                </div>
+        <h1 class="hidden">Request Viewer</h1>
 
+        <div class="image-container hidden">
+            <?php
+            // Convert the comma-separated photo paths into an array
+            $photo_array = explode(',', $row['photo']);
 
-                <div class="request-info-container">
-                    <h1 class="<?php echo ($row['request_status'] === 'cancelled') ? 'status-cancelled' : ''; ?>">
-                        <?php echo htmlspecialchars($row['request_status']); ?>
-                    </h1>
-                    <div class="request-info">
-                        <p><strong>Request Id:</strong> <?php echo htmlspecialchars($row['request_id']); ?></p>
-                        <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
-                        <p><strong>Name:</strong> <?php echo htmlspecialchars($row['name']); ?></p>
-                        <p><strong>Contact Number:</strong> <?php echo htmlspecialchars($row['contact_number']); ?></p>
-                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($row['gender']); ?></p>
-                        <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
-                        <p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
-                        <p><strong>Fitting Date:</strong> <?php echo htmlspecialchars($row['fitting_date']); ?></p>
-                        <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
-                        <p><strong>Message:</strong> <?php echo htmlspecialchars($row['message']); ?></p>
-                        <p><strong>Date and Time Requested:</strong> <?php echo htmlspecialchars($row['datetime_request']); ?></p>
-                        <p><strong>Fee:</strong> <?php echo htmlspecialchars($row['fee']); ?></p>
-                        <p><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
-                        <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
-                        <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
-                        <p><strong>Balance:</strong> <?php echo htmlspecialchars($row['balance']); ?></p>
-                        <p><strong>Down Payment:</strong> <?php echo htmlspecialchars($row['down_payment']); ?></p>
-                        <p><strong>Down Payment Date:</strong> <?php echo htmlspecialchars($row['down_payment_date']); ?></p>
-                        <p><strong>Final Payment:</strong> <?php echo htmlspecialchars($row['final_payment']); ?></p>
-                        <p><strong>Final Payment Date:</strong> <?php echo htmlspecialchars($row['final_payment_date']); ?></p>
-                        <p><strong>Refund:</strong> <?php echo htmlspecialchars($row['refund']); ?></p>
-                        <p><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
-
-                    </div>
-                </div>
-
-                <div class="button-container">
-                    <button onclick="window.history.back();"><i class="fa-solid fa-arrow-left"></i> Return</button>
+            // Loop through each photo and display it
+            foreach ($photo_array as $photo) {
+                if (!empty($photo)) {
+                    echo '<img src="uploads/' . htmlspecialchars($photo) . '" alt="Uploaded Photo" style="max-width:200px; margin:5px;">';
+                }
+            }
+            ?>
+        </div>
 
 
-                    <button id="cancel-request"
-                        class="<?php echo (in_array($row['request_status'], ['cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Cancel Request?
-                    </button>
-                </div>
-
-
+        <div class="request-info-container hidden">
+            <h1 class="<?php echo ($row['request_status'] === 'cancelled') ? 'status-cancelled' : ''; ?>">
+                <?php echo htmlspecialchars($row['request_status']); ?>
+            </h1>
+            <div class="request-info">
+                <p><strong>Request Id:</strong> <?php echo htmlspecialchars($row['request_id']); ?></p>
+                <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
+                <p><strong>Name:</strong> <?php echo htmlspecialchars($row['name']); ?></p>
+                <p><strong>Contact Number:</strong> <?php echo htmlspecialchars($row['contact_number']); ?></p>
+                <p><strong>Gender:</strong> <?php echo htmlspecialchars($row['gender']); ?></p>
+                <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
+                <p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
+                <p><strong>Fitting Date:</strong> <?php echo htmlspecialchars($row['fitting_date']); ?></p>
+                <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
+                <p><strong>Message:</strong> <?php echo htmlspecialchars($row['message']); ?></p>
+                <p><strong>Date and Time Requested:</strong>
+                    <?php echo htmlspecialchars($row['datetime_request']); ?></p>
+                <p><strong>Fee:</strong> <?php echo htmlspecialchars($row['fee']); ?></p>
+                <p><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
+                <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
+                <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
+                <p><strong>Balance:</strong> <?php echo htmlspecialchars($row['balance']); ?></p>
+                <p><strong>Down Payment:</strong> <?php echo htmlspecialchars($row['down_payment']); ?></p>
+                <p><strong>Down Payment Date:</strong> <?php echo htmlspecialchars($row['down_payment_date']); ?>
+                </p>
+                <p><strong>Final Payment:</strong> <?php echo htmlspecialchars($row['final_payment']); ?></p>
+                <p><strong>Final Payment Date:</strong> <?php echo htmlspecialchars($row['final_payment_date']); ?>
+                </p>
+                <p><strong>Refund:</strong> <?php echo htmlspecialchars($row['refund']); ?></p>
+                <p><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
             </div>
         </div>
+
+        <div class="anchor-container">
+            <a href="my_request.php"><i class="fa-solid fa-arrow-left"></i> Return</a>
+            <button id="cancel-request"
+                class="<?php echo (in_array($row['request_status'], ['cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
+                <i class="fa-solid fa-triangle-exclamation"></i> Cancel Request?
+            </button>
+        </div>
+
+
 
 
 
