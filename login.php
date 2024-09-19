@@ -122,17 +122,6 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <!-- script -->
 <script>const container = document.getElementById('container');
     const registerBtn = document.getElementById('register');

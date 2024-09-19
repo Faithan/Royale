@@ -244,6 +244,7 @@ tr:hover {
 
 /* Style the images in the table */
 td img {
+    margin-right: 5px;
     max-width: 30px;
     max-height: 30px;
     border-radius: 5px;
