@@ -46,7 +46,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         ?>
         <div class="readymade-box">
-            <img src="admin/settings/<?php echo $row['photo']; ?>"
+            <img src="admin/<?php echo $row['photo']; ?>"
                 alt="<?php echo $row['product_name']; ?>">
             <h2><?php echo $row['product_name']; ?></h2>
             <div class="info-label"><label for="">Product Type:</label>

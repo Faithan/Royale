@@ -56,29 +56,70 @@ if (!isset($_SESSION['admin_id'])) {
             <div class="content-container">
                 <div class="content">
                     <h1>Add Services</h1>
-                    <form action="" method="post">
-                    <div class="add-services-container">
-                        <div class="add-image-container">
-                            <div class="image-preview">
-                                <img id="preview" src="#" alt="Image Preview" style="display:none;">
+                    <form id="serviceForm" action="process_add_service.php" method="post" enctype="multipart/form-data">
+                        <div class="add-services-container hidden">
+                            <div class="add-image-container">
+                                <div class="image-preview">
+                                    <img id="preview" src="#" alt="Image Preview" style="display:none;">
+                                </div>
+                                <label class="custom-file-upload">
+                                    <input type="file" id="imageUpload" name="service_photo" accept="image/*" required>
+                                    <i class="fa-solid fa-plus"></i> Add Image
+                                </label>
                             </div>
-                            <label class="custom-file-upload">
-                                <input type="file" id="imageUpload" accept="image/*"><i class="fa-solid fa-plus"></i>
-                                Add Image
-                            </label>
-                        </div>
 
-                        <div class="add-info-container">
-                            <h1>Add Service Information</h1>
-                            <input type="text" name="service_name" id="" placeholder="Enter service name">
-                            <textarea name="" id="service_description" placeholder="Enter service Descriptions"></textarea>
+                            <div class="add-info-container hidden">
+                                <h1>Add Service Information</h1>
+                                <input type="text" name="service_name" id="" placeholder="Enter service name" required>
+                                <textarea name="service_description" id="service_description"
+                                    placeholder="Enter service Descriptions" required></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="button-container">
-                        <a href="services_settings.php">Return</a>
-                        <button type="submit" name="add_services">Submit</button>
-                    </div>
+                        <div class="button-container hidden">
+                            <a href="services_settings.php">Return</a>
+                            <button type="submit" name="add_services">Submit</button>
+                        </div>
                     </form>
+
+
+
+
+
+                    <script>
+                        document.getElementById('serviceForm').addEventListener('submit', function (event) {
+                            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+                            // Check if the form is valid before proceeding
+                            if (this.checkValidity()) {
+                                const formData = new FormData(this);
+
+                                // Fetch API call to submit the form data
+                                fetch('process_add_service.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                    .then(response => response.text()) // Get response from server
+                                    .then(data => {
+                                        if (data.includes('Service added successfully')) {
+                                            toastr.success('Service added successfully!');
+                                            setTimeout(() => {
+                                                window.location.href = 'services_settings.php'; // Redirect after success
+                                            }, 500);
+                                        } else {
+                                            toastr.error('Failed to add service: ' + data); // Show server error message
+                                        }
+                                    })
+                                    .catch(error => {
+                                        toastr.error('Error: ' + error);
+                                    });
+                            } else {
+                                // If form validation fails
+                                toastr.error('Please fill in all required fields.');
+                            }
+                        });
+                    </script>
+
+
                 </div>
             </div>
 
@@ -93,27 +134,26 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 <style>
-
-
-    .content h1{
+    .content h1 {
         border-radius: 0px;
     }
+
     .add-services-container {
         display: flex;
         flex-direction: row;
         margin-top: 10px;
         gap: 10px;
         height: 500px;
-        
+
     }
 
-    
+
 
     .add-services-container .add-image-container {
         min-width: 400px;
         max-width: 400px;
         background-color: var(--first-bgcolor);
-        border: 1px solid var(--box-shadow);
+     
         border-radius: 5px;
         display: flex;
         flex-direction: column;
@@ -172,7 +212,7 @@ if (!isset($_SESSION['admin_id'])) {
 
     .add-info-container h1 {
         padding: 10px;
-        background-color: var(--second-bgcolor);
+        background-color: var(--first-bgcolor);
         color: var(--text-color);
         border: 1px solid var(--box-shadow);
         border-top: 0;

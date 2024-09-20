@@ -26,7 +26,7 @@
             while ($row = $result->fetch_assoc()) {
                 ?>
                 <div class="service-box hidden">
-                    <img src="admin/settings/<?php echo $row['service_photo']; ?>" alt="<?php echo $row['service_name']; ?>">
+                    <img src="admin/services/<?php echo $row['service_photo']; ?>" alt="<?php echo $row['service_name']; ?>">
                     <h2><?php echo $row['service_name']; ?></h2>
                     <p><?php echo $row['service_description']; ?></p>
 

@@ -94,7 +94,7 @@ if (isset($_GET['view_id'])) {
                             ?>
                             <label class="service-box">
                                 <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>" required>
-                                <img src="admin/settings/<?php echo $row['service_photo']; ?>"
+                                <img src="admin/services/<?php echo $row['service_photo']; ?>"
                                     alt="<?php echo $row['service_name']; ?>">
                                 <h2><?php echo $row['service_name']; ?></h2>
                                 <p><?php echo $row['service_description']; ?></p>

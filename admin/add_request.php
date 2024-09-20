@@ -86,7 +86,7 @@ if (!isset($_SESSION['admin_id'])) {
                                         <label class="service-box">
                                             <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>"
                                                 required>
-                                            <img src="settings/<?php echo $row['service_photo']; ?>"
+                                            <img src="services/<?php echo $row['service_photo']; ?>"
                                                 alt="<?php echo $row['service_name']; ?>">
                                             <h2><?php echo $row['service_name']; ?></h2>
                                             <p><?php echo $row['service_description']; ?></p>
