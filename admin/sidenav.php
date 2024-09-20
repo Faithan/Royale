@@ -31,7 +31,7 @@
             <hr>
 
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-scissors"></i> Services</a>
+                <a href="services_settings.php" class="menu-toggle"><i class="fa-solid fa-scissors"></i> Services</a>
             </li>
             <li>
                 <a href="#" class="menu-toggle"><i class="fa-solid fa-shirt"></i> Made Products</a>
