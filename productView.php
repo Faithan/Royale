@@ -55,7 +55,7 @@ if (isset($_GET['view_id'])) {
 
         <div class="details-main-contianer hidden">
 
-            <img src="admin/<?php echo $view_data['photo']; ?>" class="hidden">
+            <img src="admin/products/<?php echo $view_data['photo']; ?>" class="hidden">
 
             <div class="details-container hidden">
                 <h1>Product Details</h1>

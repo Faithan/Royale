@@ -483,10 +483,10 @@ body.dark-mode .readymade-products-container {
     color: var(--text-color);
 }
 
-.custom-select:focus {
-    border-color: var(--box-shadow);
-    box-shadow: 0 0 4px var(--search-hover);
+.custom-select:hover{
+    background-color: var(--hover-color);
 }
+
 
 .custom-select option {
     padding: 10px;
