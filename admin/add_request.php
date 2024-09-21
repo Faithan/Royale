@@ -166,13 +166,14 @@ if (!isset($_SESSION['admin_id'])) {
                             provide the details of your request. This will help us understand your needs more clearly
                             and ensure we address your specifications accurately.</p>
 
-                            <div class="anchor-container">
-                        <a href="walkin_request.php"><i class="fa-solid fa-arrow-left"></i> Return</a>
-                        <button type="submit" name="request" id="order-now"><i class="fa-solid fa-bell-concierge"></i>
-                            Submit</button>
-                    </div>
+                        <div class="anchor-container">
+                            <a href="walkin_request.php">Return</a>
+                            <button type="submit" name="request" id="order-now"><i
+                                    class="fa-solid fa-bell-concierge"></i>
+                                Submit</button>
+                        </div>
                     </form>
-                  
+
 
                 </div>
                 <!-- content -->

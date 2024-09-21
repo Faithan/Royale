@@ -23,7 +23,7 @@
             while ($row = $result->fetch_assoc()) {
                 ?>
                 <div class="productType-box">
-                    <img src="admin/<?php echo $row['productType_photo']; ?>"
+                    <img src="admin/producttype/<?php echo $row['productType_photo']; ?>"
                         alt="<?php echo $row['productType_name']; ?>">
                     <h2><?php echo $row['productType_name']; ?></h2>
                     <p><?php echo $row['productType_description']; ?></p>

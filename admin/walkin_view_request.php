@@ -84,7 +84,8 @@ if ($result->num_rows > 0) {
                     <h1 class="hidden">View Request</h1>
 
                     <!-- accept or cancel -->
-                    <form method="POST" action="walkin_request_action.php" method="POST" class="request-details-container">
+                    <form method="POST" action="walkin_request_action.php" method="POST"
+                        class="request-details-container">
                         <div class="information-container">
 
 
@@ -432,9 +433,8 @@ if ($result->num_rows > 0) {
 
 
                 <!-- request-details-container -->
-                <div class="view-button-container hidden">
-                    <a id="return-request" onclick="window.location.href='walkin_request.php'"><i
-                            class="fa-solid fa-arrow-left"></i> Return</a>
+                <div class="view-button-container">
+                    <a id="return-request" onclick="window.location.href='walkin_request.php'">Return</a>
                 </div>
 
 

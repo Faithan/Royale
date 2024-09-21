@@ -434,9 +434,8 @@ if ($result->num_rows > 0) {
 
 
                 <!-- request-details-container -->
-                <div class="view-button-container hidden">
-                    <a id="return-request" onclick="window.location.href='online_request.php'"><i
-                            class="fa-solid fa-arrow-left"></i> Return</a>
+                <div class="view-button-container">
+                    <a id="return-request" onclick="window.location.href='online_request.php'">Return</a>
                 </div>
 
 

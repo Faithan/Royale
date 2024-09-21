@@ -7,11 +7,7 @@ if (!isset($_SESSION['admin_id'])) {
     header("Location: admin_login.php");
     exit();
 }
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +15,7 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Services</title>
+    <title>Add Product Type</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
@@ -33,60 +29,51 @@ if (!isset($_SESSION['admin_id'])) {
 
     <div class="overall-container">
 
-        <?php
-        include 'sidenav.php'
-            ?>
+        <?php include 'sidenav.php'; ?>
 
         <main>
             <div class="header-container">
-
                 <div class="header-label-container">
                     <i class="fa-solid fa-gear"></i>
-                    <label for="">Services Settings</label>
+                    <label for="">Product Type Settings</label>
                 </div>
 
-                <?php
-                include 'header_icons_container.php';
-                ?>
-
+                <?php include 'header_icons_container.php'; ?>
             </div>
-
-
 
             <div class="content-container">
                 <div class="content">
-                    <h1>Add Services</h1>
-                    <form id="serviceForm" action="process_add_service.php" method="post" enctype="multipart/form-data">
-                        <div class="add-services-container hidden">
+                    <h1>Add Product Type</h1>
+                    <form id="productTypeForm" action="process_add_productType.php" method="post"
+                        enctype="multipart/form-data">
+                        <div class="add-product-type-container hidden">
                             <div class="add-image-container">
                                 <div class="image-preview">
                                     <img id="preview" src="#" alt="Image Preview" style="display:none;">
                                 </div>
                                 <label class="custom-file-upload">
-                                    <input type="file" id="imageUpload" name="service_photo" accept="image/*" required>
+                                    <input type="file" id="imageUpload" name="productType_photo" accept="image/*"
+                                        required>
                                     <i class="fa-solid fa-plus"></i> Add Image
                                 </label>
                             </div>
 
                             <div class="add-info-container hidden">
-                                <h1>Add Service Information</h1>
-                                <input type="text" name="service_name" id="" placeholder="Enter service name" required>
-                                <textarea name="service_description" id="service_description"
-                                    placeholder="Enter service Descriptions" required></textarea>
+                                <h1>Add Product Type Information</h1>
+                                <input type="text" name="productType_name" placeholder="Enter product type name"
+                                    required>
+                                <textarea name="productType_description" placeholder="Enter product type description"
+                                    required></textarea>
                             </div>
                         </div>
                         <div class="button-container hidden">
-                            <a href="services_settings.php">Return</a>
-                            <button type="submit" name="add_services">Submit</button>
+                            <a href="productType_settings.php">Return</a>
+                            <button type="submit" name="add_productType">Submit</button>
                         </div>
                     </form>
 
-
-
-
-
                     <script>
-                        document.getElementById('serviceForm').addEventListener('submit', function (event) {
+                        document.getElementById('productTypeForm').addEventListener('submit', function (event) {
                             event.preventDefault(); // Prevent the form from submitting the traditional way
 
                             // Check if the form is valid before proceeding
@@ -94,19 +81,19 @@ if (!isset($_SESSION['admin_id'])) {
                                 const formData = new FormData(this);
 
                                 // Fetch API call to submit the form data
-                                fetch('process_add_service.php', {
+                                fetch('process_add_productType.php', {
                                     method: 'POST',
                                     body: formData
                                 })
                                     .then(response => response.text()) // Get response from server
                                     .then(data => {
-                                        if (data.includes('Service added successfully')) {
-                                            toastr.success('Service added successfully!');
+                                        if (data.includes('Product Type added successfully')) {
+                                            toastr.success('Product Type added successfully!');
                                             setTimeout(() => {
-                                                window.location.href = 'services_settings.php'; // Redirect after success
+                                                window.location.href = 'productType_settings.php'; // Redirect after success
                                             }, 500);
                                         } else {
-                                            toastr.error('Failed to add service: ' + data); // Show server error message
+                                            toastr.error('Failed to add Product Type: ' + data); // Show server error message
                                         }
                                     })
                                     .catch(error => {
@@ -119,7 +106,6 @@ if (!isset($_SESSION['admin_id'])) {
                         });
                     </script>
 
-
                 </div>
             </div>
 
@@ -131,41 +117,33 @@ if (!isset($_SESSION['admin_id'])) {
 
 </html>
 
-
-
 <style>
     .content h1 {
         border-radius: 0px;
     }
 
-    .add-services-container {
+    #productTypeForm {
+        overflow-y: scroll;
+    }
+
+    .add-product-type-container {
         display: flex;
         flex-direction: row;
         margin-top: 10px;
         gap: 10px;
         height: 500px;
-
     }
 
-
-
-    .add-services-container .add-image-container {
+    .add-product-type-container .add-image-container {
         min-width: 400px;
         max-width: 400px;
         background-color: var(--first-bgcolor);
-     
         border-radius: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 10px;
-    }
-
-
-
-    #serviceForm{
-        overflow-y: scroll;
     }
 
     .image-preview {
@@ -199,7 +177,6 @@ if (!isset($_SESSION['admin_id'])) {
         font-size: 1.5rem;
     }
 
-
     input[type="file"] {
         display: none;
     }
@@ -222,7 +199,6 @@ if (!isset($_SESSION['admin_id'])) {
         border-radius: 0;
     }
 
-
     .add-info-container input {
         padding: 10px;
         background-color: var(--second-bgcolor);
@@ -231,7 +207,6 @@ if (!isset($_SESSION['admin_id'])) {
         border-radius: 5px;
         font-size: 2rem;
         text-transform: capitalize;
-
     }
 
 
@@ -245,9 +220,6 @@ if (!isset($_SESSION['admin_id'])) {
         text-transform: capitalize;
         flex-grow: 1;
     }
-
-
-
 
 
     .button-container {
@@ -265,7 +237,7 @@ if (!isset($_SESSION['admin_id'])) {
         border-radius: 5px;
         font-size: 1.5rem;
         font-weight: bold;
-        color: var(--text-color)
+        color: var(--text-color);
     }
 
     .button-container a:hover {
@@ -287,8 +259,6 @@ if (!isset($_SESSION['admin_id'])) {
     }
 </style>
 
-
-
 <script>
     document.getElementById('imageUpload').addEventListener('change', function (event) {
         var preview = document.getElementById('preview');
@@ -304,5 +274,4 @@ if (!isset($_SESSION['admin_id'])) {
             reader.readAsDataURL(file);
         }
     });
-
 </script>

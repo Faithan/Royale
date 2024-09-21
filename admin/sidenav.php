@@ -37,6 +37,9 @@
                 <a href="#" class="menu-toggle"><i class="fa-solid fa-shirt"></i> Made Products</a>
             </li>
             <li>
+                <a href="productType_settings.php" class="menu-toggle"><i class="fa-solid fa-bag-shopping"></i> Product Types</a>
+            </li>
+            <li>
                 <a href="#" class="menu-toggle"><i class="fa-brands fa-web-awesome"></i> About Page</a>
             </li>
             <li>
