@@ -1,4 +1,5 @@
-<h1 class="hidden"><i class="fa-solid fa-scissors"></i> ABOUT <i class="fa-solid fa-scissors fa-flip-horizontal"></i></h1>
+<h1 class="hidden"><i class="fa-solid fa-scissors"></i> ABOUT <i class="fa-solid fa-scissors fa-flip-horizontal"></i>
+</h1>
 <hr class="hidden">
 <p class="hidden">Are you ready to experience the ultimate in customized fashion? At Royale Tailoring, we
     understand that every individual is unique, and your clothing should reflect that uniqueness.
@@ -25,3 +26,109 @@
     fashion like never before with Royale Tailoring!
 </p>
 <img src="system_images/logo.png" alt="" class="hidden">
+
+<h2>What is a Tailor?</h2>
+<p>A tailor specializes in creating, altering, and repairing garments. They work with a wide range of fabrics and
+    materials, including silk, wool, cotton, and leather, and are skilled at using various tools and techniques to
+    create custom-fitted clothing. Tailors may work in a variety of settings, including high-end boutiques, department
+    stores, and private studios, and may specialize in specific types of clothing such as suits, dresses, or outerwear.
+    Many tailors also offer alteration services for garments that do not fit properly, such as hemming pants, shortening
+    sleeves, or adjusting the waistline of a dress.<br><br>
+
+    To become a tailor, individuals typically need to undergo extensive training and gain a range of skills, including
+    measuring and cutting fabric, sewing, and fitting garments. Some tailors may attend vocational or trade schools,
+    while others learn through apprenticeships or on-the-job training. In addition to technical skills, tailors also
+    need to have a keen eye for detail, strong communication skills to work with clients, and the ability to work
+    efficiently and quickly to meet deadlines. A successful tailor should be able to create garments that not only fit
+    well but also look stylish and fashionable.</p><br><br>
+
+
+<h2>What does a Tailor do?</h2>
+<img id="tailordo" src="system_images/tailordo.jpg" alt="" class="hidden">
+<p>Tailors play an essential role in the fashion industry by creating customized clothing and ensuring a perfect fit for
+    individuals. With mass-produced clothing becoming more common, it's becoming harder to find clothing that fits
+    perfectly off the rack. This is where tailors come in; they can take an ill-fitting garment and make adjustments to
+    ensure it fits correctly, or they can create an entirely new garment from scratch to meet the specific needs and
+    preferences of their clients. <br><br>
+
+    Duties and Responsibilities
+    The duties and responsibilities of a tailor may vary depending on their specific job and the type of garments they
+    are working on, but here are some general duties and responsibilities that a tailor may have: <br><br>
+
+    <b>Taking Measurements:</b> Tailors are responsible for accurately measuring clients' bodies to ensure proper fit
+    and
+    tailoring of clothing items.<br>
+    <b>Alterations:</b> Tailors alter and adjust clothing items to fit clients' specific measurements, making changes to
+    seams,
+    hems, cuffs, and other parts of the garment.<br>
+    <b>Sewing and Stitching:</b> Tailors use sewing machines and hand stitching techniques to make alterations, repairs,
+    and
+    custom clothing items.<br>
+    <b>Pattern Making:</b> In some cases, tailors create and modify patterns for clothing based on client requests or
+    design
+    specifications.<br>
+    <b>Consulting Clients:</b> Tailors consult with clients to understand their preferences, style, and specific
+    requirements
+    for custom-made clothing.<br>
+    <b>Fabric Selection:</b> They help clients choose suitable fabrics and materials for their clothing based on the
+    desired
+    style and purpose.<br>
+    <b>Fittings:</b> Tailors conduct fitting sessions with clients to ensure that alterations are accurate and meet the
+    clients' expectations.<br>
+    <b>Quality Control:</b>Tailors inspect finished garments for quality, ensuring that all alterations are
+    well-executed and
+    meet established standards.<br>
+    <b>Repair Work:</b> They repair damaged clothing items, such as torn seams, loose buttons, and broken zippers.
+    Customer Service: Providing excellent customer service is important. Tailors listen to clients' feedback and address
+    any concerns to ensure client satisfaction.
+</p><br><br>
+
+<h2>Types of Tailors</h2>
+<p>There are several types of tailors who specialize in different aspects of clothing alterations and custom garments.
+    Here are some common types of tailors:<br>
+<b>Bespoke Tailors:</b> Bespoke tailors are often considered the most skilled and experienced type of tailor. They
+    create
+    custom-made garments from scratch, working closely with clients to design and fit the garments to their specific
+    measurements and preferences.<br>
+    <b>Custom Tailors:</b> Custom tailors create made-to-measure clothing for clients. They work closely with clients to
+    design
+    and craft garments that fit their specific measurements and preferences.<br>
+    <b>Made-to-Measure Tailors:</b> Made-to-measure tailors use existing patterns to create garments that are customized
+    to a
+    client's measurements. They may make adjustments to the pattern and tailor the garment accordingly, but they do not
+    start from scratch like bespoke tailors.<br>
+    <b>Alteration Tailor:</b> Alteration tailors focus on modifying and adjusting existing clothing to fit clients
+    better. They
+    handle tasks such as shortening hems, taking in or letting out seams, and resizing clothing items.<br>
+    <b>Costume Tailors:</b> Costume tailors specialize in creating garments for theatrical productions, movies, and
+    television
+    shows. They work closely with costume designers to create garments that are historically accurate and fit the
+    specific needs of the production.<br>
+    <b>Bridal Tailor:</b> Bridal tailors specialize in altering wedding dresses and formal attire. They ensure that
+    wedding
+    gowns fit perfectly and make any necessary alterations to achieve the desired look.<br>
+    <b>Suit Tailor:</b> Suit tailors specialize in altering and customizing suits. They ensure that suits fit well and
+    are
+    tailored to a client's body shape and style preferences.<br>
+    <b>Shirt Tailor:</b> Shirt tailors focus on altering and customizing shirts. They can adjust sleeve lengths, collar
+    sizes,
+    and overall fit to provide a polished appearance.<br>
+    <b>Uniform Tailor:</b> Uniform tailors specialize in altering and customizing uniforms for various professions, such
+    as
+    military, law enforcement, healthcare, and hospitality.
+</p><br><br>
+
+<h2>What is the workplace of a Tailor like?</h2>
+<p>The workplace of a tailor can vary depending on the type of work they do. Some tailors may work in small, independent
+    shops, while others may be employed by larger retailers or fashion houses. In a small shop, a tailor may have their
+    own workspace where they have their equipment and sewing machines. They may work alone or with a small team of other
+    tailors.<br><br>
+    In larger retail settings, tailors may work in designated areas where they can perform alterations or fittings for
+    customers. These areas may be located near the dressing rooms or in a separate section of the store. The environment
+    in a retail setting may be busier and more fast-paced, with tailors needing to quickly make adjustments for
+    customers on the go.<br><br>
+    Regardless of the type of workplace, tailors often spend a significant amount of time sitting at a sewing machine or
+    standing at a workbench. They may work long hours, especially during peak seasons such as prom or wedding season. In
+    addition, tailors may need to work with customers directly, taking measurements and discussing design options. They
+    need to have excellent communication skills to ensure they understand what their clients want and to explain what
+    adjustments they will make to garments.</p>

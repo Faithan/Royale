@@ -819,18 +819,35 @@ body.dark-mode .about-container {
 
 .about-container p {
     font-size: 2rem;
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: justify;
     color: var(--text-color);
 }
+
+.about-container h2 {
+    font-size: 2rem;
+    font-family: 'Anton', Arial, sans-serif;
+    color: var(--text-color);
+}
+
+
 
 .about-container img {
     width: 300px;
     align-self: center;
 }
 
+.about-container #tailordo {
+    width: 500px;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: var(--first-bgcolor);
+}
 body.dark-mode .about-container img {
     content: url('../system_images/whitelogo.png');
+}
+body.dark-mode .about-container #tailordo {
+    content: url('../system_images/tailordo.jpg');
 }
 
 /* end */
@@ -1078,7 +1095,7 @@ body.dark-mode .about-container img {
         height: auto;
         border-radius: 10px 10px 0 0;
     }
-    
+
 
     .services-box-container {
         display: flex;
@@ -1166,7 +1183,7 @@ body.dark-mode .about-container img {
         height: auto;
         border-radius: 10px 10px 0 0;
     }
-    
+
 
 
 
@@ -1185,10 +1202,17 @@ body.dark-mode .about-container img {
     .about-container p {
         font-size: 1.8rem;
     }
-    
+
     .about-container img {
         width: 200px;
     }
+
+
+    .about-container #tailordo {
+        width: 200px;
+        margin-top: 10px;
+    }
+
 
     /* end */
 
@@ -1206,11 +1230,11 @@ body.dark-mode .about-container img {
 
     .contact-container h1 {
         font-size: 3rem;
-      
+
     }
 
     .contact-container .second-contact-container {
-      
+
         flex-direction: column;
 
     }

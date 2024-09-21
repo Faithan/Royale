@@ -68,9 +68,7 @@ if (!isset($_SESSION['admin_id'])) {
 
                         </div>
                     </div>
-                    <div class="add-service-container hidden">
-                        <a href="add_services.php"><i class="fa-solid fa-plus"></i> Add Services</a>
-                    </div>
+
                     <div class="main-container-service">
                         <div class="services-box-container hidden">
                             <?php
@@ -101,6 +99,10 @@ if (!isset($_SESSION['admin_id'])) {
 
                         </div>
 
+
+                    </div>
+                    <div class="add-service-container hidden">
+                        <a href="add_services.php"><i class="fa-solid fa-plus"></i> Add Services</a>
                     </div>
 
                     <!-- Modal -->
@@ -322,8 +324,8 @@ if (!isset($_SESSION['admin_id'])) {
     .main-container-service {
         display: flex;
         overflow-y: scroll;
-        overflow-x: hidden;
-        padding: 10px;
+
+
     }
 
 
@@ -332,6 +334,8 @@ if (!isset($_SESSION['admin_id'])) {
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+        padding: 10px;
+        overflow-x: hidden;
     }
 
 
@@ -434,7 +438,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 
     .add-service-container {
-        text-align: right;
+        text-align: center;
         margin-right: 20px;
         padding: 20px;
     }
@@ -526,7 +530,7 @@ if (!isset($_SESSION['admin_id'])) {
         border-radius: 5px;
         font-size: 1.4rem;
         background-color: var(--second-bgcolor);
-        color:var(--text-color)
+        color: var(--text-color)
     }
 
     input[type="file"] {
