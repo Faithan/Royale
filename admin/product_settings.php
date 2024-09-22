@@ -153,17 +153,7 @@ if (!isset($_SESSION['admin_id'])) {
                             // Calculate the total number of pages
                             $totalPages = ceil($totalProducts / $productsPerPage);
 
-                            // Query to select products for the current page
-                            $sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo FROM products LIMIT $start, $productsPerPage";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-
-                                }
-                            } else {
-                                echo "No products found.";
-                            }
+                       
                             ?>
 
 
@@ -449,14 +439,6 @@ if (isset($_GET['success'])) {
 
 
 
-
-
-    .readymade-box img {
-        max-width: 150px;
-        max-height: 150px;
-        align-self: center;
-        border-radius: 2px;
-    }
 
     .readymade-box h2 {
         padding: 10px;

@@ -44,10 +44,22 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        // Split the comma-separated images into an array
+        $images = explode(',', $row['photo']);
         ?>
         <div class="readymade-box">
-            <img src="products/<?php echo $row['photo']; ?>"
-                alt="<?php echo $row['product_name']; ?>">
+            <div class="main-image">
+                <img src="products/<?php echo $images[0]; ?>" alt="<?php echo $row['product_name']; ?>">
+            </div>
+            <div class="thumbnail-container">
+                <?php foreach ($images as $index => $image): ?>
+                    <?php if ($index > 0): // Skip the first image ?>
+                        <div class="thumbnail">
+                            <img src="products/<?php echo $image; ?>" alt="<?php echo $row['product_name']; ?>">
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
             <h2><?php echo $row['product_name']; ?></h2>
             <div class="info-label"><label for="">Product Type:</label>
                 <p><?php echo $row['product_type']; ?></p>
@@ -80,10 +92,9 @@ if ($result->num_rows > 0) {
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
                         </path>
                     </svg>
-                    <span>Edit Product</span>
+                    <span>Open Product</span>
                 </div>
             </a>
-
         </div>
         <?php
     }
@@ -91,3 +102,42 @@ if ($result->num_rows > 0) {
     echo "No products found.";
 }
 ?>
+
+<style>
+    .main-image {
+        width: 100%;
+        max-width: 300px; /* Set a max width for the main image */
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-image img {
+        max-width: 150px; /* Ensure the main image fits the container */
+        height: auto;
+    }
+
+    .thumbnail-container {
+        display: flex;
+        justify-content: center; /* Center the thumbnails */
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .thumbnail {
+        margin: 5px;/* Spacing between thumbnails */
+    }
+
+    .thumbnail img {
+        max-width: 50px; 
+        max-height: 50px;  /* Set a fixed width for the thumbnails */
+        height: auto;
+        cursor: pointer; /* Change cursor to pointer for interactivity */
+        transition: transform 0.2s;
+    }
+
+    .thumbnail img:hover {
+        transform: scale(1.1); /* Scale up on hover */
+    }
+</style>
