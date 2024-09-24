@@ -75,7 +75,7 @@ if ($result->num_rows > 0) {
             </div>
             <p class="description"><?php echo $row['description']; ?></p>
 
-            <a href="productView.php?view_id=<?php echo $row['id']; ?>">
+            <a href="open_product.php?view_id=<?php echo $row['id']; ?>">
                 <div class="default-btn">
                     <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none"
                         stroke-width="2" stroke="#FFF" height="20" width="20" viewBox="0 0 24 24">
