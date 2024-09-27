@@ -23,28 +23,19 @@ if ($result->num_rows > 0) {
     echo "Product not found.";
     exit();
 }
-
-
-
-if (isset($_POST['update_product'])) {
-    echo "Update button clicked."; // Debugging line
-    // Rest of your code to handle the update
-}
 ?>
 
 
 
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="UTF-8">
 
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Settings</title>
-
     <!-- important file -->
     <?php include 'important.php'; ?>
-
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/all_dashboard.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
@@ -70,473 +61,397 @@ if (isset($_POST['update_product'])) {
 
             <div class="content-container">
                 <div class="content">
-                    <h1>Add Product</h1>
+                    <div class="edit-product-container">
+                        <h2>Edit Product</h2>
 
-                    <form id="serviceForm" action="process_update_product.php?view_id=<?php echo $product_id; ?>" method="post" enctype="multipart/form-data">
+                        <!-- Form for updating product images -->
+                        <form action="process_update_product_images.php" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
 
-
-
-
-
-
-                        <div class="add-services-container hidden">
-
-                            <div class="add-image-container">
-
-                                <div class="image-preview" id="imagePreview">
-                                    <!-- Preview images will be inserted here -->
-                                </div>
-                                <label class="custom-file-upload">
-                                    <input type="file" id="imageUpload" name="product_photos[]" accept="image/*"
-                                        multiple required>
-                                    <i class="fa-solid fa-plus"></i> Replace Images
-                                </label>
-                                <button type="button" id="clearImages" onclick="clearImageSelection()">Clear
-                                    Selection</button>
-
-                                <div class="button-container hidden">
-                                    <a href="product_settings.php">Return</a>
-
-                                </div>
-                            </div>
-
-                            <div class="add-info-container hidden">
-                                <h1> Product Information</h1>
-                                <div class="old-image-container">
-                                    <?php
-                                    $images = explode(',', $product['photo']);
-                                    foreach ($images as $image): ?>
-                                        <img src="products/<?php echo $image; ?>" alt="Product Image">
-                                    <?php endforeach; ?>
-                                </div>
-                                <label for="">Product Name:</label>
-                                <input type="text" name="product_name" placeholder="Enter product name"
-                                    value="<?php echo htmlspecialchars($product['product_name']); ?>" required>
-
-
-
-                                <label for="">Product Type:</label>
-                                <!-- Product Type Selection -->
+                            <h3 class="hidden">Current Product Images:</h3>
+                            <div class="product-images hidden">
                                 <?php
-                                $sql = "SELECT DISTINCT productType_name FROM producttype WHERE productType_status ='active'";
-                                $result = $conn->query($sql);
-
-                                // Assume $product['product_type'] contains the currently selected product type
-                                $currentProductType = isset($product['product_type']) ? $product['product_type'] : '';
-
-                                $selectBox = "<select name='product_type' class='custom-select hidden'>";
-                                $selectBox .= "<option value='' " . ($currentProductType == '' ? 'selected' : 'disabled') . ">Select a product type</option>";
-
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        $productType = ucwords(strtolower($row["productType_name"]));
-                                        // Check if this product type is the currently selected one
-                                        $selected = ($productType === $currentProductType) ? 'selected' : '';
-                                        $selectBox .= "<option value='" . $productType . "' " . $selected . ">" . $productType . "</option>";
-                                    }
-                                } else {
-                                    $selectBox .= "<option value=''>No product types found.</option>";
-                                }
-
-                                $selectBox .= "</select>";
-
-                                echo $selectBox;
-                                ?>
-
-                                <label for="">Gender</label>
-                                <select name="gender" class="custom-select hidden">
-                                    <option value="" <?php echo empty($product['gender']) ? 'selected' : 'disabled'; ?>>
-                                        Select Gender</option>
-                                    <option value="male" <?php echo isset($product['gender']) && $product['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
-                                    <option value="female" <?php echo isset($product['gender']) && $product['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
-                                </select>
-
-                                <label for="">Quantity:</label>
-                                <input type="number" name="quantity" placeholder="Enter product quantity"
-                                    value="<?php echo htmlspecialchars($product['quantity']); ?>" required>
-                                <label for="">Price:</label>
-                                <input type="number" name="price" placeholder="Enter product price"
-                                    value="<?php echo htmlspecialchars($product['price']); ?>" required>
-
-
-                                <label for="">Availble Colors:</label>
-                                <input type="text" id="productColors" name="product_colors"
-                                    value="<?php echo htmlspecialchars($product['product_colors']); ?>"
-                                    placeholder="Enter product color">
-                                <p class="note"><b>Note: </b>Each colors are separated with comma, make sre when you
-                                    make changes, always separate it with comma</p>
-                                <label for="">Available Sizes</label>
-                                <input type="text" id="productSizes" name="product_sizes"
-                                    value="<?php echo htmlspecialchars($product['product_sizes']); ?>"
-                                    placeholder="Enter product size">
-                                <p class="note"><b>Note: </b>Each sizes are separated with comma, make sre when you make
-                                    changes, always separate it with comma</p>
-
-                                <label for="">Product Description</label>
-                                <textarea name="product_description" placeholder="Enter product Descriptions"
-                                    required><?php echo htmlspecialchars($product['description']); ?></textarea>
-
-
-                                <button type="submit" name="update_product">Update</button>
+                                $images = explode(',', $product['photo']);
+                                foreach ($images as $image): ?>
+                                    <div class="image-wrapper">
+                                        <img src="products/<?php echo htmlspecialchars($image); ?>" alt="Product Image">
+                                        <label class="remove-checkbox">
+                                            <input type="checkbox" name="delete_images[]"
+                                                value="<?php echo htmlspecialchars($image); ?>">
+                                            Remove
+                                        </label>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
 
-                        </div>
+                            <h3 class="hidden">Add New Images:</h3>
+                            <input type="file" name="product_photos[]" multiple accept="image/*" class="hidden"
+                                onchange="previewImages(event)">
 
-                    </form>
+                            <div class="new-image-preview" id="new-image-preview"></div>
+
+                            <button type="submit" class="edit-btn hidden">Update Images</button>
+                        </form>
+
+
+
+                        <script>
+                            function previewImages(event) {
+                                const previewContainer = document.getElementById('new-image-preview');
+                                previewContainer.innerHTML = ''; // Clear previous previews
+
+                                Array.from(event.target.files).forEach(file => {
+                                    const reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        const imgElement = document.createElement('img');
+                                        imgElement.src = e.target.result;
+
+                                        // Create a clear button for the image
+                                        const clearButton = document.createElement('button');
+                                        clearButton.textContent = 'Clear';
+                                        clearButton.type = 'button'; // Set button type to prevent form submission
+
+                                        // Apply styles directly in JavaScript
+                                        clearButton.style.backgroundColor = 'white'; // Red background
+                                        clearButton.style.color = 'red'; // White text
+                                        clearButton.style.border = 'none'; // No border
+                                        clearButton.style.borderRadius = '5px'; // Rounded corners
+                                        clearButton.style.cursor = 'pointer'; // Pointer cursor on hover
+                                        clearButton.style.padding = '20px'; // Padding for better look
+
+                                        clearButton.style.fontSize = '1.5rem'; // Font size
+
+         
+                                        // Add event listener to clear the image
+                                        clearButton.onclick = function () {
+                                            previewContainer.removeChild(imgElement);
+                                            previewContainer.removeChild(clearButton);
+                                        }
+
+                                        // Append the image and clear button to the preview container
+                                        previewContainer.appendChild(imgElement);
+                                        previewContainer.appendChild(clearButton);
+                                    }
+                                    reader.readAsDataURL(file);
+                                });
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+
+
+
+                        <!-- Form for updating product details -->
+                        <form action="process_update_product_details.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+
+
+
+
+
+                            <label for="product_name">Product Name:</label>
+                            <input type="text" name="product_name" class="hidden"
+                                value="<?php echo htmlspecialchars($product['product_name']); ?>">
+
+
+
+
+
+
+                            <label for="">Product Type:</label>
+                            <!-- Product Type Selection -->
+                            <?php
+                            $sql = "SELECT DISTINCT productType_name FROM producttype WHERE productType_status ='active'";
+                            $result = $conn->query($sql);
+
+                            // Assume $product['product_type'] contains the currently selected product type
+                            $currentProductType = isset($product['product_type']) ? $product['product_type'] : '';
+
+                            $selectBox = "<select name='product_type' class='custom-select hidden'>";
+                            $selectBox .= "<option value='' " . ($currentProductType == '' ? 'selected' : 'disabled') . ">Select a product type</option>";
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $productType = ucwords(strtolower($row["productType_name"]));
+                                    // Check if this product type is the currently selected one
+                                    $selected = ($productType === $currentProductType) ? 'selected' : '';
+                                    $selectBox .= "<option value='" . $productType . "' " . $selected . ">" . $productType . "</option>";
+                                }
+                            } else {
+                                $selectBox .= "<option value=''>No product types found.</option>";
+                            }
+
+                            $selectBox .= "</select>";
+
+                            echo $selectBox;
+                            ?>
+
+
+
+
+
+                            <label for="">Gender</label>
+                            <select name="gender" class="custom-select hidden">
+                                <option value="" <?php echo empty($product['gender']) ? 'selected' : 'disabled'; ?>>
+                                    Select Gender</option>
+                                <option value="male" <?php echo isset($product['gender']) && $product['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
+                                <option value="female" <?php echo isset($product['gender']) && $product['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
+                            </select>
+
+
+
+
+
+                            <label for="price">Price:</label>
+                            <input type="number" name="price" class="hidden"
+                                value="<?php echo htmlspecialchars($product['price']); ?>">
+
+
+
+
+                            <label>Colors:</label>
+                            <div class="checkbox-group hidden">
+                                <?php
+                                $colors = explode(',', $product['product_colors']);
+                                $colors = array_filter(array_map('trim', $colors)); // Trim and remove empty values
+                                foreach ($colors as $color): ?>
+                                    <div class="color-label" style="color: <?php echo htmlspecialchars(trim($color)); ?>;">
+                                        <input type="checkbox" name="existing_colors[]"
+                                            value="<?php echo htmlspecialchars(trim($color)); ?>">
+                                        <?php echo htmlspecialchars(trim($color)); ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <input type="text" name="new_colors" placeholder="Add new colors (comma-separated)"
+                                class="hidden">
+
+
+
+
+
+
+
+                            <label>Sizes:</label>
+                            <div class="checkbox-group hidden">
+                                <?php
+                                $sizes = explode(',', $product['product_sizes']);
+                                $sizes = array_filter(array_map('trim', $sizes)); // Trim and remove empty values
+                                foreach ($sizes as $size): ?>
+                                    <div class="color-label" style="color: var(--text-color);">
+                                        <input type="checkbox" name="existing_sizes[]"
+                                            value="<?php echo htmlspecialchars(trim($size)); ?>">
+                                        <?php echo htmlspecialchars(trim($size)); ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <input type="text" name="new_sizes" placeholder="Add new sizes (comma-separated)"
+                                class="hidden">
+
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" name="quantity" class="hidden"
+                                value="<?php echo htmlspecialchars($product['quantity']); ?>">
+
+                            <label for="product_description">Description:</label>
+                            <textarea class="hidden"
+                                name="product_description"><?php echo htmlspecialchars($product['description']); ?></textarea>
+
+                            <button type="submit" class="edit-btn hidden">Update Product Details</button>
+                        </form>
+
+
+                    </div>
+
+
+
+
                 </div>
             </div>
 
         </main>
 
+
+
     </div>
+
+
+
+
 
 </body>
 
 </html>
 
+
+
 <script>
-    function updateImagePreview() {
-        const previewContainer = document.getElementById('imagePreview');
-        const fileInput = document.getElementById('imageUpload');
-        previewContainer.innerHTML = ''; // Clear previous previews
-
-        const files = fileInput.files;
-
-        if (files.length === 0) {
-            // Hide the clear button if no images are selected
-            clearButton.style.display = 'none';
-        } else {
-            // Show the clear button if images are selected
-            clearButton.style.display = 'block';
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    previewContainer.appendChild(img);
-                };
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            }
+    $(document).ready(function () {
+        // Check for success message
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('update_success')) {
+            toastr.success('Product updated successfully!');
         }
-    }
 
-    function clearImageSelection() {
-        const previewContainer = document.getElementById('imagePreview');
-        const fileInput = document.getElementById('imageUpload');
-
-        previewContainer.innerHTML = ''; // Clear the image previews
-        fileInput.value = ''; // Reset the file input
-        clearButton.style.display = 'none'; // Hide the clear button
-    }
-
-    // Add the clear button dynamically
-    const clearButton = document.createElement('button');
-    clearButton.type = 'button';
-    clearButton.textContent = 'Clear Selection';
-    clearButton.style.display = 'none'; // Initially hidden
-    clearButton.onclick = clearImageSelection;
-    document.getElementById('imagePreview').appendChild(clearButton);
-
-    // Event listener for image upload
-    document.getElementById('imageUpload').addEventListener('change', updateImagePreview);
+        // Check for error message
+        if (urlParams.get('update_error')) {
+            toastr.error('An error occurred while updating the product.');
+        }
+    });
 </script>
 
 
 
 
-<style>
-    .input-field {
-        display: flex;
-        gap: 10px;
-    }
-
-    .input-field input {
-        flex-grow: 1;
-    }
-
-    .input-field button {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid var(--box-shadow);
-        background-color: var(--second-bgcolor);
-        color: var(--text-color);
-        font-weight: bold;
-    }
-
-    .input-field button:hover {
-        background-color: var(--hover-color);
-    }
-
-
-    /* colors and sizes */
-    .preview {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        border: 2px dashed var(--box-shadow);
-        padding: 10px;
-    }
-
-    .preview button {
-        font-weight: bold;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid var(--box-shadow);
-        background-color: var(--cancel-color);
-        color: var(--pure-white);
-        font-size: 1.3rem;
-
-    }
-
-    .preview button:hover {
-        border-color: var(--pure-white);
-    }
-
-    .preview #colorList,
-    .preview #sizeList {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-
-
-    }
-
-    .preview #colorList div,
-    .preview #sizeList div {
-        padding: 5px;
-        background-color: var(--second-bgcolor);
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        text-transform: capitalize;
-        font-size: 1.5rem;
-        padding: 10px;
-        color: var(--text-color);
-    }
-</style>
-
-
 
 
 <style>
-    .content h1 {
-        border-radius: 0px;
-    }
-
-    .add-services-container {
+    .edit-product-container {
         display: flex;
-        flex-direction: row;
-        margin-top: 10px;
+        flex-direction: column;
+        overflow-y: scroll;
         gap: 10px;
-
-
     }
 
-
-
-
-    .add-services-container .add-image-container {
-        min-width: 400px;
-        max-width: 400px;
-        background-color: var(--first-bgcolor);
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        padding: 10px;
-    }
-
-    .add-image-container button {
-        border: transparent;
-        font-size: 1.5rem;
-        font-weight: bold;
-        background-color: var(--first-bgcolor);
-        color: var(--cancel-color);
-    }
-
-
-
-    #serviceForm {
-        overflow-y: scroll;
-        height: 90%;
-    }
-
-    .image-preview {
-        width: 100%;
-        height: 400px;
-        display: flex;
-        flex-direction: column;
-        background-color: var(--second-bgcolor);
-        border: 2px dashed var(--box-shadow);
-        border-radius: 10px;
-        overflow-y: scroll;
-        gap: 20px;
-
-    }
-
-    .image-preview img {
-        max-width: 70%;
-        max-height: 70%;
-        object-fit: cover;
-        align-self: center;
-        padding: 10px;
-        background-color: var(--first-bgcolor);
-    }
-
-    .custom-file-upload {
-        margin-top: 10px;
-        padding: 10px 20px;
-        background-color: transparent;
-        color: var(--text-color);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .edit-product-container h2 {
         text-align: center;
-        transition: background-color 0.3s ease;
-        font-size: 1.5rem;
+        font-size: 2.5rem;
+        padding: 10px;
+        background-color: var(--button-bg);
+        color: var(--pure-white);
+        border: 1px solid var(--box-shadow);
+        margin: 0;
+    }
+
+    .edit-product-container h3 {
+        font-size: 2rem;
+        color: var(--text-color);
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .edit-product-container form {
+
+        padding-top: 20px;
+    }
+
+    .edit-product-container label {
+        display: block;
+        margin-bottom: 5px;
         font-weight: bold;
+        color: var(--text-color);
+        font-size: 1.8rem;
     }
 
-
-    input[type="file"] {
-        display: none;
-    }
-
-    .add-info-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    .edit-product-container select,
+    .edit-product-container input,
+    .edit-product-container textarea {
         width: 100%;
-        height: auto;
-        overflow-y: scroll;
-    }
-
-    .add-info-container h1 {
         padding: 10px;
-        background-color: var(--first-bgcolor);
-        color: var(--text-color);
-        border: 1px solid var(--box-shadow);
-        border-top: 0;
-        border-left: 0;
-        border-right: 0;
-        border-radius: 0;
-    }
-
-    .add-info-container label {
-        font-size: 1.5rem;
-        color: var(--text-color);
-
-    }
-
-    .add-info-container .note {
-        font-size: 1.4rem;
-        color: var(--text-color);
-    }
-
-
-    .add-info-container input {
-        padding: 10px;
-        background-color: var(--second-bgcolor);
-        color: var(--text-color);
+        margin-bottom: 15px;
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
-
-
-    }
-
-    .add-info-container select {
-        padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        font-size: 1.5rem;
-        text-transform: capitalize;
-
     }
 
-
-    .add-info-container textarea {
-        padding: 10px;
-        background-color: var(--second-bgcolor);
-        color: var(--text-color);
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        font-size: 1.5rem;
-        text-transform: capitalize;
-        flex-grow: 1;
-        height: 100px;
-    }
-
-
-
-
-
-    .button-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 10px;
-    }
-
-    .button-container a {
-        padding: 10px 20px;
-        background-color: var(--second-bgcolor);
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--text-color)
-    }
-
-    .button-container a:hover {
-        background-color: var(--hover-color);
-    }
-
-    .add-info-container button {
+    .edit-product-container button {
         padding: 10px 20px;
         background-color: var(--button-bg);
-        border: 1px solid var(--box-shadow);
         color: var(--pure-white);
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
-        font-size: 1.5rem;
+        cursor: pointer;
+        font-size: 1.6rem;
+        transition: background-color 0.3s;
+        margin: 5px;
+        width: fit-content;
         font-weight: bold;
     }
 
-    .add-info-container button:hover {
+    .edit-product-container button:hover {
         box-shadow: 0 0 0 4px var(--hover-color);
     }
 
-
-
-
-
-
-    .old-image-container {
+    .edit-product-container .checkbox-group {
         display: flex;
-        align-items: center;
-        justify-content: center;
         flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+        justify-content: center;
     }
 
-
-
-    .old-image-container img {
-        max-width: 100px;
-        max-height: ;
-        margin: 5px;
-
+    .edit-product-container .color-label {
+        display: flex;
+        padding: 5px;
+        border-radius: 5px;
+        position: relative;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        font-size: 1.7rem;
+        font-weight: bold;
     }
 
-    .old-image-container img:hover {
-        transform: scale(1.1);
+    .edit-product-container .color-label input {
+        font-size: 1.7rem;
+        margin-right: 5px;
+    }
+
+    .edit-product-container .color-label:hover {
+        opacity: 0.8;
+    }
+
+    .edit-product-container .remove-label {
+        margin-left: 10px;
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: none;
+    }
+
+    .edit-product-container .color-label:hover .remove-label {
+        display: inline;
+        font-size: 1.5rem;
+    }
+
+    .edit-product-container .image-wrapper {
+        display: inline-block;
+        position: relative;
+        margin: 10px;
+    }
+
+    .edit-product-container .image-wrapper img {
+        max-height: 200px;
+        max-width: 200px;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .edit-product-container .remove-checkbox {
+        display: block;
+        text-align: center;
+        margin-top: 5px;
+        font-size: 1.5rem;
+    }
+
+    .edit-product-container .new-image-preview {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .edit-product-container .new-image-preview img {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
     }
 </style>

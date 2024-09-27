@@ -459,6 +459,7 @@ body.dark-mode .readymade-products-container {
     outline: none;
     color: var(--text-color);
     background-color: var(--second-bgcolor);
+    font-weight: bold;
 }
 
 .search-input:focus {
@@ -481,6 +482,8 @@ body.dark-mode .readymade-products-container {
     background-position: right 15px top 50%;
     background-size: 10px 10px;
     color: var(--text-color);
+    font-weight: bold;
+
 }
 
 .custom-select:hover{

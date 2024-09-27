@@ -317,7 +317,6 @@ if (isset($_GET['success'])) {
 
     .readymade-products-container {
         width: 100%;
-        padding: 10px 0;
 
         background-color: var(--second-bgcolor);
         z-index: 1;
@@ -338,7 +337,7 @@ if (isset($_GET['success'])) {
 
     .readymade-search-container {
         width: 100%;
-        background-color: var(--first-bgcolor);
+        background-color: var(--button-bg);
         padding: 10px 40px;
         display: flex;
         justify-content: space-between;
@@ -358,7 +357,8 @@ if (isset($_GET['success'])) {
         transition: all 0.3s ease;
         outline: none;
         color: var(--text-color);
-        background-color: var(--second-bgcolor);
+        background-color: var(--first-bgcolor);
+        font-weight: bold;
     }
 
     .search-input:focus {
@@ -372,7 +372,7 @@ if (isset($_GET['success'])) {
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
-        background-color: var(--second-bgcolor);
+        background-color: var(--first-bgcolor);
         appearance: none;
         outline: none;
         cursor: pointer;
@@ -381,11 +381,9 @@ if (isset($_GET['success'])) {
         background-position: right 15px top 50%;
         background-size: 10px 10px;
         color: var(--text-color);
+        font-weight: bold;
     }
 
-    .custom-select:hover{
-        background-color: var(--hover-color);
-    }
 
     
 
@@ -400,7 +398,7 @@ if (isset($_GET['success'])) {
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
-        background-color: var(--second-bgcolor);
+        background-color: var(--first-bgcolor);
         appearance: none;
         outline: none;
         cursor: pointer;
@@ -409,9 +407,7 @@ if (isset($_GET['success'])) {
         background-position: right 15px top 50%;
         background-size: 10px 10px;
         color: var(--text-color);
-    }
-    .readymade-search-container a:hover{
-        background-color: var(--hover-color);
+        font-weight: bold;
     }
 
 
