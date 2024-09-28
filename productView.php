@@ -7,11 +7,6 @@ session_start(); // Start the session
 // Assuming user_id is stored in the session upon user login
 $user_id = $_SESSION['user_id'] ?? null; // Get user ID from session
 
-// Check if user is logged in
-if (!$user_id) {
-    echo "You need to be logged in to place an order.";
-    exit;
-}
 
 $response = ['success' => false, 'message' => ''];
 
@@ -85,7 +80,7 @@ if (isset($_GET['view_id'])) {
     ?>
 
 
-    
+
     <main>
         <h1 class="hidden">View Product</h1>
 
@@ -254,16 +249,71 @@ if (isset($_GET['view_id'])) {
                     <div class="product-buttons-container hidden">
                         <a id="return" href="index.php?#readymade_products"> RETURN</a>
                         <div>
-                            <button type="submit" name="action" value="buy">
+                            <button class="action-button" type="submit" name="action" value="buy">
                                 <i class="fa-solid fa-bell-concierge"></i> ORDER
                             </button>
                         </div>
                         <div>
-                            <button type="submit" name="action" value="rent">
+                            <button class="action-button" type="submit" name="action" value="rent">
                                 <i class="fa-solid fa-hand-holding-heart"></i> RENT
                             </button>
                         </div>
                     </div>
+
+
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            fetch('check_login_status.php')
+                                .then(response => response.json())
+                                .then(data => {
+                                    const buttons = document.querySelectorAll('.action-button');
+
+                                    if (data.loggedIn) {
+                                        // Enable buttons if user is logged in
+                                        buttons.forEach(button => {
+                                            button.classList.remove('not-allowed');
+                                            button.disabled = false; // Optional: Enable the button
+                                        });
+                                    } else {
+                                        // Change text and add the not-allowed class if not logged in
+                                        buttons.forEach(button => {
+                                            button.classList.add('not-allowed');
+                                            button.disabled = true; // Optional: Disable the button
+
+                                            // Change button text directly
+                                            if (button.name === 'action' && button.value === 'buy') {
+                                                button.textContent = 'Log in to order';
+                                            } else if (button.name === 'action' && button.value === 'rent') {
+                                                button.textContent = 'Log in to rent';
+                                            }
+                                        });
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error checking login status:', error);
+                                });
+                        });
+
+                    </script>
+
+
+                    <style>
+                        .action-button {
+                            cursor: pointer;
+                            /* Default cursor style */
+                        }
+
+                        .action-button.not-allowed {
+                            cursor: not-allowed;
+                            /* Change cursor to not-allowed */
+                            opacity: 0.5;
+                            /* Make the button look disabled */
+                            pointer-events: none;
+                            /* Prevent any interaction */
+                        }
+                    </style>
+
 
                 </form>
 
