@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Extract existing colors, sizes, and gender
-    $colors = explode(',', $product['product_colors']);
-    $sizes = explode(',', $product['product_sizes']);
+    $colors = array_filter(array_map('trim', explode(',', $product['product_colors'])));
+    $sizes = array_filter(array_map('trim', explode(',', $product['product_sizes'])));
     $current_gender = $product['gender'];
 
     // Collect form inputs
@@ -36,15 +36,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_colors = isset($_POST['new_colors']) ? explode(',', $_POST['new_colors']) : [];
     $new_sizes = isset($_POST['new_sizes']) ? explode(',', $_POST['new_sizes']) : [];
     
-    // Merge existing and new values
+    // Clean and merge colors
     $final_colors = array_diff($colors, $existing_colors); // Remove checked colors
-    $final_colors = array_merge($final_colors, array_map('trim', $new_colors)); // Add new colors
+    $final_colors = array_merge($final_colors, array_filter(array_map('trim', $new_colors))); // Add new colors, ensuring no empty values
 
+    // Clean and merge sizes
     $final_sizes = array_diff($sizes, $existing_sizes); // Remove checked sizes
-    $final_sizes = array_merge($final_sizes, array_map('trim', $new_sizes)); // Add new sizes
+    $final_sizes = array_merge($final_sizes, array_filter(array_map('trim', $new_sizes))); // Add new sizes, ensuring no empty values
 
+    // Convert arrays back to strings
     $product_colors = implode(',', $final_colors);
     $product_sizes = implode(',', $final_sizes);
+
+    // Check if the arrays are empty and set them to NULL or an empty string if needed
+    $product_colors = !empty($product_colors) ? $product_colors : NULL;
+    $product_sizes = !empty($product_sizes) ? $product_sizes : NULL;
 
     $quantity = $_POST['quantity'];
     $product_description = $_POST['product_description'];
@@ -74,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $product_sizes, 
         $quantity, 
         $product_description, 
-        $gender, // Bind the gender value
+        $gender, 
         $product_id
     );
 

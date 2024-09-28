@@ -13,7 +13,7 @@ $start = ($page - 1) * $productsPerPage;
 // Base SQL query
 $sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo 
         FROM products 
-        WHERE 1";
+        WHERE product_status='active'";
 
 // Add filtering conditions
 if ($search) {

@@ -1,8 +1,8 @@
 <div class="readymade-products-container" id="readymade_products">
     <h1 class="hidden"><i class="fa-solid fa-shirt"></i> READY MADE PRODUCTS <i class="fa-solid fa-shirt"></i></h1>
 
-
     <div class="readymade-search-container">
+
         <!-- product Type -->
         <?php
         // Assuming you've included the necessary database connection file
@@ -27,8 +27,12 @@
 
         echo $selectBox;
         ?>
+
+
+
         <!-- search bar -->
         <input type="text" id="search-input" placeholder="Search..." class="search-input hidden">
+
         <!-- gender -->
         <select name="gender" class="custom-select hidden">
             <option value="all" selected disabled>Select Gender</option>
@@ -36,6 +40,8 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
         </select>
+
+
 
     </div>
     <!-- end -->
@@ -94,17 +100,7 @@
         // Calculate the total number of pages
         $totalPages = ceil($totalProducts / $productsPerPage);
 
-        // Query to select products for the current page
-        $sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo FROM products LIMIT $start, $productsPerPage";
-        $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-            
-            }
-        } else {
-            echo "No products found.";
-        }
         ?>
 
 
@@ -113,7 +109,7 @@
 
 
 
-    
+
 
 
 
@@ -204,3 +200,4 @@
 
 
 </div>
+<!-- end ready made -->

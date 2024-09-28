@@ -121,7 +121,7 @@ if ($result->num_rows > 0) {
 
                                         clearButton.style.fontSize = '1.5rem'; // Font size
 
-         
+
                                         // Add event listener to clear the image
                                         clearButton.onclick = function () {
                                             previewContainer.removeChild(imgElement);
@@ -149,7 +149,8 @@ if ($result->num_rows > 0) {
 
                         <!-- Form for updating product details -->
                         <form action="process_update_product_details.php" method="post">
-                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                            <label for="product_name">Product Id:</label>
+                            <input type="number" name="product_id" class="hidden" value="<?php echo $product_id; ?>" readonly>
 
 
 
@@ -232,11 +233,6 @@ if ($result->num_rows > 0) {
                                 class="hidden">
 
 
-
-
-
-
-
                             <label>Sizes:</label>
                             <div class="checkbox-group hidden">
                                 <?php
@@ -263,6 +259,19 @@ if ($result->num_rows > 0) {
 
                             <button type="submit" class="edit-btn hidden">Update Product Details</button>
                         </form>
+
+
+
+                        <!-- Form for deleting product -->
+                        <form id="deleteProductForm" action="process_delete_product.php" class="delete-container"
+                            method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+
+                            <a href="open_product.php">Return</a>
+                            <button type="button" id="deleteProductBtn" class="delete-btn hidden">Delete
+                                Product</button>
+                        </form>
+
 
 
                     </div>
@@ -304,7 +313,28 @@ if ($result->num_rows > 0) {
     });
 </script>
 
+<script>
+    document.getElementById('deleteProductBtn').addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent the form from submitting immediately
 
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form if confirmed
+                document.getElementById('deleteProductForm').submit();
+            }
+        });
+    });
+
+</script>
 
 
 
@@ -453,5 +483,47 @@ if ($result->num_rows > 0) {
         margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
+    }
+
+
+
+
+
+
+
+    /* for deletion */
+    .delete-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete-container a{
+        background-color: var(--second-bgcolor);
+        color: var(--text-color);
+        border: 1px solid var(--box-shadow);
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.6rem;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        margin: 5px;
+    }
+
+    .delete-container .delete-btn {
+        background-color: var(--cancel-color);
+        color: white;
+        border: 1px solid var(--box-shadow);
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.6rem;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        margin: 5px;
+    }
+
+    .delete-btn:hover {
+
+        box-shadow: 0 0 0 4px var(--hover-color);
     }
 </style>

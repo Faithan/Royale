@@ -253,6 +253,10 @@ if (!isset($_SESSION['admin_id'])) {
 
 
                     </div>
+                    <!-- end ready made -->
+
+
+
 
                 </div>
 
@@ -282,6 +286,21 @@ if (isset($_GET['success'])) {
 }
 ?>
 
+<script>
+    $(document).ready(function () {
+    // Check for success message after deletion
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('delete_success')) {
+        toastr.success('Product deleted successfully!');
+    }
+
+    // Check for error message after deletion
+    if (urlParams.get('delete_error')) {
+        toastr.error('An error occurred while deleting the product.');
+    }
+});
+
+</script>
 
 
 
