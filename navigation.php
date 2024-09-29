@@ -25,8 +25,9 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
         <div class="user-menu">
             <i class="fa-solid fa-circle-user" id="userIcon"></i>
             <div class="dropdown-content" id="dropdownMenu">
-                <a href="my_profile.php" id="myProfileLink">MY PROFILE</a>
-                <a href="my_request.php" id="myRequestLink">MY REQUEST</a>
+                <a href="my_profile.php" id="myProfileLink"><i class="fa-solid fa-user"></i> MY PROFILE</a>
+                <a href="my_request.php" id="myRequestLink"><i class="fa-solid fa-bell-concierge"></i> MY REQUEST</a>
+                <a href="my_order.php" id="myOrderLink"><i class="fa-solid fa-cart-shopping"></i> MY ORDER</a>
                 <!-- Add more menu items here in the future -->
             </div>
 
@@ -95,6 +96,11 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
                     event.preventDefault();
                     checkLoginAndRedirect(this, 'my_request.php');
                 });
+
+                document.getElementById('myOrderLink').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    checkLoginAndRedirect(this, 'my_order.php');
+                });
             });
         </script>
 
@@ -122,6 +128,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
             <a href="index.php#contact">CONTACT</a>
             <a href="my_profile.php">MY PROFILE</a>
             <a href="my_request.php">MY REQUEST</a>
+            <a href="my_order.php">MY ORDER</a>
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
             <a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>" id="mobile-login-link">
                 <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>

@@ -78,7 +78,7 @@ if (isset($_GET['view_id'])) {
     </div>
 
         <form method="post" action="process_request.php" enctype="multipart/form-data" class="form-container">
-            <h1 class="hidden">Service Form</h1>
+            <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> Service Form</h1>
 
             <!-- select service -->
             <div class="services-box-wrapper">
@@ -176,7 +176,7 @@ if (isset($_GET['view_id'])) {
 
 
             <div class="product-buttons-container hidden">
-                <a id="return" href="index.php?#services"><i class="fa-solid fa-arrow-left"></i>
+                <a id="return" href="index.php?#services">
                     RETURN</a>
                 <div id="order-container">
 

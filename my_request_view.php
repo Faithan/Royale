@@ -66,7 +66,7 @@ if (isset($_GET['request_id'])) {
     <main>
 
 
-        <h1 class="hidden">Request Viewer</h1>
+        <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> Request Viewer</h1>
 
         <div class="image-container hidden">
             <?php
@@ -117,7 +117,7 @@ if (isset($_GET['request_id'])) {
         </div>
 
         <div class="anchor-container">
-            <a href="my_request.php"><i class="fa-solid fa-arrow-left"></i> Return</a>
+            <a href="my_request.php">Return</a>
             <button id="cancel-request"
                 class="<?php echo (in_array($row['request_status'], ['cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
                 <i class="fa-solid fa-triangle-exclamation"></i> Cancel Request?

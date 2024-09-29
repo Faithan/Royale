@@ -82,7 +82,7 @@ if (isset($_GET['view_id'])) {
 
 
     <main>
-        <h1 class="hidden">View Product</h1>
+        <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> View Product</h1>
 
         <div class="details-main-contianer hidden">
 
@@ -250,7 +250,7 @@ if (isset($_GET['view_id'])) {
                         <a id="return" href="index.php?#readymade_products"> RETURN</a>
                         <div>
                             <button class="action-button" type="submit" name="action" value="buy">
-                                <i class="fa-solid fa-bell-concierge"></i> ORDER
+                                <i class="fa-solid fa-cart-shopping"></i> ORDER
                             </button>
                         </div>
                         <div>

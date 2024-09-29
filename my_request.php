@@ -53,7 +53,7 @@ $result = $stmt->get_result();
 
     <main>
 
-        <h1 class="hidden">My Request</h1>
+        <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> My Request</h1>
 
         <div class="table-container">
 
@@ -132,7 +132,7 @@ $result = $stmt->get_result();
             </script>
 
             <div class="anchor-container">
-                <a href="index.php?#home"><i class="fa-solid fa-arrow-left"></i> Return</a>
+                <a href="index.php?#home">Return</a>
             </div>
 
         </div>
