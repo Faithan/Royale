@@ -205,8 +205,8 @@ if ($result->num_rows > 0) {
 
 
                             <div style="align-self: center;">
-                                <button type="submit" name="accept_request" id="accept_button">Accept</button>
                                 <button type="submit" name="cancel_request" id="cancel_button">Reject</button>
+                                <button type="submit" name="accept_request" id="accept_button">Accept</button>
                             </div>
 
 

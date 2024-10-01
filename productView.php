@@ -110,12 +110,13 @@ if (isset($_GET['view_id'])) {
                     <input type="hidden" name="product_type" id="" value="<?php echo $view_data['product_type']; ?> ">
                     <input type="hidden" name="product_gender" id="" value="<?php echo $view_data['gender']; ?> ">
                     <input type="hidden" name="price" id="" value="<?php echo $view_data['price']; ?> ">
+                    <input type="hidden" name="rent_price" id="" value="<?php echo $view_data['rent_price']; ?> ">
                     <input type="hidden" name="photo" id="" value="<?php echo $view_data['photo']; ?> ">
                     <input type="hidden" name="order_type" value="online">
                     <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 
 
-                    <label for=" product-name"> <?php echo $view_data['product_name']; ?></label>
+                    <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
 
                     <div style="display: flex; gap: 5px; align-items:center; justify-content:center;">
                         <label for="product-type"> <?php echo $view_data['product_type']; ?></label>
@@ -241,6 +242,16 @@ if (isset($_GET['view_id'])) {
                                 title="Select the time for pickup" required>
                         </div>
 
+                        <h1 >Number of days <em style="font-size:1.5rem">(for rent only)</em></h1>
+
+                        <div class="customer-input-container hidden">
+                            <input type="number" name="days_of_rent" placeholder="Enter number of days"
+                                title="enter number of days" >
+                          
+                        </div>
+
+
+
 
                     </div>
 
@@ -250,12 +261,12 @@ if (isset($_GET['view_id'])) {
                         <a id="return" href="index.php?#readymade_products"> RETURN</a>
                         <div>
                             <button class="action-button" type="submit" name="action" value="buy">
-                                <i class="fa-solid fa-cart-shopping"></i> ORDER
+                                <i class="fa-solid fa-cart-shopping"></i> ORDER ₱<?php echo $view_data['price'] ?>
                             </button>
                         </div>
                         <div>
                             <button class="action-button" type="submit" name="action" value="rent">
-                                <i class="fa-solid fa-hand-holding-heart"></i> RENT
+                                <i class="fa-solid fa-hand-holding-heart"></i> RENT  ₱<?php echo $view_data['rent_price'] ?>/day
                             </button>
                         </div>
                     </div>

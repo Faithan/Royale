@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Prepare SQL statement to get orders for the logged-in user, ordered by order_id in descending order
-$sql = "SELECT order_id, order_status, order_type, order_variation, user_name, user_contact_number, user_gender, user_email, user_address, pickup_date, pickup_time, product_name, product_type, product_color, product_size, product_quantity, product_price, product_photo, datetime_order 
+$sql = "SELECT *
         FROM royale_product_order_tbl 
         WHERE user_id = ? 
         ORDER BY order_id DESC";
@@ -71,6 +71,7 @@ $result = $stmt->get_result();
                         <th>Size</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Rent Price</th>
                         <th>Pickup Date</th>
                         <th>Pickup Time</th>
                         <th>Photos</th>
@@ -94,6 +95,7 @@ $result = $stmt->get_result();
                                 <td><?php echo htmlspecialchars($row['product_size']); ?></td>
                                 <td><?php echo htmlspecialchars($row['product_quantity']); ?></td>
                                 <td>₱<?php echo htmlspecialchars($row['product_price']); ?></td>
+                                <td>₱<?php echo htmlspecialchars($row['product_rent_price']); ?></td>
                                 <td><?php echo htmlspecialchars($row['pickup_date']); ?></td>
                                 <td><?php echo htmlspecialchars($row['pickup_time']); ?></td>
                                 <td>

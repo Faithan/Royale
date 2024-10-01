@@ -150,7 +150,8 @@ if ($result->num_rows > 0) {
                         <!-- Form for updating product details -->
                         <form action="process_update_product_details.php" method="post">
                             <label for="product_name">Product Id:</label>
-                            <input type="number" name="product_id" class="hidden" value="<?php echo $product_id; ?>" readonly>
+                            <input type="number" name="product_id" class="hidden" value="<?php echo $product_id; ?>"
+                                readonly>
 
 
 
@@ -209,10 +210,13 @@ if ($result->num_rows > 0) {
 
 
 
-                            <label for="price">Price:</label>
+                            <label for="price">Price (₱):</label>
                             <input type="number" name="price" class="hidden"
                                 value="<?php echo htmlspecialchars($product['price']); ?>">
 
+                            <label for="price">Rent Price (₱):</label>
+                            <input type="number" name="rent_price" class="hidden"
+                                value="<?php echo htmlspecialchars($product['rent_price']); ?>">
 
 
 
@@ -229,9 +233,11 @@ if ($result->num_rows > 0) {
                                     </div>
                                 <?php endforeach; ?>
                             </div>
+                            <p class="note"><b>Note:</b> check the color you want to remove before clicking the update button</p>
                             <input type="text" name="new_colors" placeholder="Add new colors (comma-separated)"
                                 class="hidden">
 
+                           
 
                             <label>Sizes:</label>
                             <div class="checkbox-group hidden">
@@ -246,8 +252,11 @@ if ($result->num_rows > 0) {
                                     </div>
                                 <?php endforeach; ?>
                             </div>
+                            <p class="note"><b>Note:</b> check the size you want to remove before clicking the update button</p>
                             <input type="text" name="new_sizes" placeholder="Add new sizes (comma-separated)"
                                 class="hidden">
+
+                               
 
                             <label for="quantity">Quantity:</label>
                             <input type="number" name="quantity" class="hidden"
@@ -360,13 +369,13 @@ if ($result->num_rows > 0) {
     .edit-product-container h3 {
         font-size: 2rem;
         color: var(--text-color);
-        margin-bottom: 10px;
+        margin:10px 0;
         text-align: center;
     }
 
     .edit-product-container form {
 
-        padding-top: 20px;
+        padding-top: 0;
     }
 
     .edit-product-container label {
@@ -374,7 +383,7 @@ if ($result->num_rows > 0) {
         margin-bottom: 5px;
         font-weight: bold;
         color: var(--text-color);
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .edit-product-container select,
@@ -385,9 +394,39 @@ if ($result->num_rows > 0) {
         margin-bottom: 15px;
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
+        text-align: center;
+    }
+
+    .edit-product-container textarea {
+        height: 100px;
+        text-align: justify;
+    }
+
+    .edit-product-container input[type='file']{
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.8rem;
+        background-color: var(--first-bgcolor);
+        color: var(--text-color);
+
+    }
+
+
+    .product-images{
+        background-color: var(--second-bgcolor);
+        padding: 10px;
+        border: 1px dashed var(--box-shadow);
+        border-radius: 5px;
+    }
+    .product-images img{
+        background-color: var(--first-bgcolor);
+        padding: 5px;
     }
 
     .edit-product-container button {
@@ -498,7 +537,7 @@ if ($result->num_rows > 0) {
         align-items: center;
     }
 
-    .delete-container a{
+    .delete-container a {
         background-color: var(--second-bgcolor);
         color: var(--text-color);
         border: 1px solid var(--box-shadow);
@@ -525,5 +564,15 @@ if ($result->num_rows > 0) {
     .delete-btn:hover {
 
         box-shadow: 0 0 0 4px var(--hover-color);
+    }
+
+
+
+
+    .note{
+        font-size: 1.5rem;
+        margin: 5px 0;
+        text-align: center;
+        color:gray;
     }
 </style>

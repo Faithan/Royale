@@ -38,3 +38,10 @@
 </script>
 
 
+
+<!-- use this to disable right click -->
+<!-- <script>
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+</script> -->

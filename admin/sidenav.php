@@ -12,7 +12,7 @@
 
             <hr>
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-calendar-day"></i> Request <i
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-bell-concierge"></i> Request <i
                         class="fa-solid fa-chevron-down"></i></a>
                 <ul class="submenu">
                     <li><a href="online_request.php"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
@@ -20,11 +20,11 @@
                 </ul>
             </li>
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-bell-concierge"></i> Orders <i
+                <a href="#" class="menu-toggle"><i class="fa-solid fa-cart-shopping"></i> Orders <i
                         class="fa-solid fa-chevron-down"></i></a>
                 <ul class="submenu">
-                    <li><a href="#"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
-                    <li><a href="#"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
+                    <li><a href="online_order.php"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
+                    <li><a href="walkin_order.php"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
 
                 </ul>
             </li>

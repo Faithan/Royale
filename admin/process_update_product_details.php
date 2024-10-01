@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_name = $_POST['product_name'];
     $product_type = $_POST['product_type'];
     $price = $_POST['price'];
+    $rent_price = $_POST['rent_price'];
 
     // Handle existing colors and sizes
     $existing_colors = isset($_POST['existing_colors']) ? $_POST['existing_colors'] : [];
@@ -63,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 product_name = ?, 
                 product_type = ?, 
                 price = ?, 
+                rent_price = ?, 
                 product_colors = ?, 
                 product_sizes = ?, 
                 quantity = ?, 
@@ -72,10 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        'ssdsssssi', 
+        'ssddsssssi', 
         $product_name, 
         $product_type, 
         $price, 
+        $rent_price,
         $product_colors, 
         $product_sizes, 
         $quantity, 

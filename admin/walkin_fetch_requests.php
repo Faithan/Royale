@@ -24,6 +24,7 @@ if ($gender && $gender !== 'all') {
 // Filter by search query if provided
 if ($search_query) {
     $query_requests .= " AND (request_id LIKE '%$search_query%' 
+                            OR request_status LIKE '%$search_query%'
                           OR name LIKE '%$search_query%' 
                           OR service_name LIKE '%$search_query%' 
                           OR address LIKE '%$search_query%' 

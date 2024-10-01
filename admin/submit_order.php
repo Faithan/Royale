@@ -5,7 +5,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get user ID from the session
     $user_id = $_POST['user_id'] ?? null; 
-    $order_type = $_POST['order_type'] ?? 'online'; // Should always be 'online'
+    $order_type = $_POST['order_type'] ?? 'walkin'; // Should always be 'online'
     
     // Check if 'action' is set, to avoid undefined array key error
     if (isset($_POST['action'])) {

@@ -11,10 +11,9 @@ $productsPerPage = 8;
 $start = ($page - 1) * $productsPerPage;
 
 // Base SQL query
-$sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo 
+$sql = "SELECT *
         FROM products 
         WHERE product_status='active'";
-
 
 // Add filtering conditions
 if ($search) {
@@ -51,13 +50,13 @@ if ($result->num_rows > 0) {
         ?>
         <div class="readymade-box">
             <div class="main-image">
-                <img src="admin/products/<?php echo $images[0]; ?>" alt="<?php echo $row['product_name']; ?>">
+                <img src="products/<?php echo $images[0]; ?>" alt="<?php echo $row['product_name']; ?>">
             </div>
             <div class="thumbnail-container">
                 <?php foreach ($images as $index => $image): ?>
                     <?php if ($index > 0): // Skip the first image ?>
                         <div class="thumbnail">
-                            <img src="admin/products/<?php echo $image; ?>" alt="<?php echo $row['product_name']; ?>">
+                            <img src="products/<?php echo $image; ?>" alt="<?php echo $row['product_name']; ?>">
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -79,16 +78,16 @@ if ($result->num_rows > 0) {
 
             <a href="productView.php?view_id=<?php echo $row['id']; ?>">
                 <div class="default-btn">
-                    <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none"
-                        stroke-width="2" stroke="#FFF" height="20" width="20" viewBox="0 0 24 24">
+                    <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2"
+                        stroke="#FFF" height="20" width="20" viewBox="0 0 24 24">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle r="3" cy="12" cx="12"></circle>
                     </svg>
                     <span>Quick View</span>
                 </div>
                 <div class="hover-btn">
-                    <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none"
-                        stroke-width="2" stroke="#ffd300" height="20" width="20" viewBox="0 0 24 24">
+                    <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2"
+                        stroke="#ffd300" height="20" width="20" viewBox="0 0 24 24">
                         <circle r="1" cy="21" cx="9"></circle>
                         <circle r="1" cy="21" cx="20"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
@@ -108,7 +107,8 @@ if ($result->num_rows > 0) {
 <style>
     .main-image {
         width: 100%;
-        max-width: 300px; /* Set a max width for the main image */
+        max-width: 300px;
+        /* Set a max width for the main image */
         margin: auto;
         display: flex;
         align-items: center;
@@ -116,30 +116,36 @@ if ($result->num_rows > 0) {
     }
 
     .main-image img {
-        max-width: 150px; /* Ensure the main image fits the container */
+        max-width: 150px;
+        /* Ensure the main image fits the container */
         height: auto;
     }
 
     .thumbnail-container {
         display: flex;
-        justify-content: center; /* Center the thumbnails */
+        justify-content: center;
+        /* Center the thumbnails */
         margin-top: 10px;
         flex-wrap: wrap;
     }
 
     .thumbnail {
-        margin: 5px;/* Spacing between thumbnails */
+        margin: 5px;
+        /* Spacing between thumbnails */
     }
 
     .thumbnail img {
-        max-width: 50px; 
-        max-height: 50px;  /* Set a fixed width for the thumbnails */
+        max-width: 50px;
+        max-height: 50px;
+        /* Set a fixed width for the thumbnails */
         height: auto;
-        cursor: pointer; /* Change cursor to pointer for interactivity */
+        cursor: pointer;
+        /* Change cursor to pointer for interactivity */
         transition: transform 0.2s;
     }
 
     .thumbnail img:hover {
-        transform: scale(1.1); /* Scale up on hover */
+        transform: scale(1.1);
+        /* Scale up on hover */
     }
 </style>

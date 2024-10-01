@@ -19,13 +19,14 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products Settings</title>
+    <title>Add Request</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
 
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/all_dashboard.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/add_order.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
 </head>
 
@@ -41,8 +42,8 @@ if (!isset($_SESSION['admin_id'])) {
             <div class="header-container">
 
                 <div class="header-label-container">
-                    <i class="fa-solid fa-gear"></i>
-                    <label for="">Products Settings</label>
+                    <i class="fa-solid fa-person-walking"></i>
+                    <label for="">Walk-In Orders</label>
                 </div>
 
                 <?php
@@ -52,15 +53,12 @@ if (!isset($_SESSION['admin_id'])) {
             </div>
 
 
-
             <div class="content-container">
                 <div class="content">
                     <div class="readymade-products-container" id="readymade_products">
-                      
-
+                    
                         <div class="readymade-search-container">
-                             <!-- search bar -->
-                             <input type="text" id="search-input" placeholder="Search..." class="search-input hidden">
+
                             <!-- product Type -->
                             <?php
                             // Assuming you've included the necessary database connection file
@@ -85,7 +83,12 @@ if (!isset($_SESSION['admin_id'])) {
 
                             echo $selectBox;
                             ?>
-                           
+
+
+
+                            <!-- search bar -->
+                            <input type="text" id="search-input" placeholder="Search..." class="search-input hidden">
+
                             <!-- gender -->
                             <select name="gender" class="custom-select hidden">
                                 <option value="all" selected disabled>Select Gender</option>
@@ -94,7 +97,7 @@ if (!isset($_SESSION['admin_id'])) {
                                 <option value="female">Female</option>
                             </select>
 
-                            <a href="add_product.php"><i class="fa-solid fa-plus"></i> Add Products</a>
+
 
                         </div>
                         <!-- end -->
@@ -153,7 +156,7 @@ if (!isset($_SESSION['admin_id'])) {
                             // Calculate the total number of pages
                             $totalPages = ceil($totalProducts / $productsPerPage);
 
-                       
+
                             ?>
 
 
@@ -179,7 +182,7 @@ if (!isset($_SESSION['admin_id'])) {
 
                                 function loadProducts(page, searchTerm, productType, gender) {
                                     const xhr = new XMLHttpRequest();
-                                    xhr.open('POST', 'load_products.php', true);
+                                    xhr.open('POST', 'walkin_load_products.php', true);
                                     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                     xhr.onload = function () {
                                         if (this.status === 200) {
@@ -256,62 +259,42 @@ if (!isset($_SESSION['admin_id'])) {
                     <!-- end ready made -->
 
 
-
-
                 </div>
+                <!-- content -->
 
 
             </div>
+
+        </main>
+
     </div>
-
-    </main>
-
-    </div>
-
 
 </body>
 
 </html>
 
 
+
+
+
+
+
+<!-- button script -->
+
+
+
 <?php
-// At the beginning of your product_settings.php
-if (isset($_GET['success'])) {
-    $successMessage = $_GET['success'];
-    echo "<script>
-            window.onload = function() {
-                toastr.success('$successMessage');
-            };
-          </script>";
+// Inside online_request.php
+if (isset($_GET['status']) && $_GET['status'] == 'accepted') {
+    echo "<script>toastr.success('Request accepted and details updated successfully');</script>";
+} elseif (isset($_GET['status']) && $_GET['status'] == 'ongoing') {
+    echo "<script>toastr.success('Request ongoing and details updated successfully');</script>";
+} elseif (isset($_GET['status']) && $_GET['status'] == 'completed') {
+    echo "<script>toastr.success('Request Completed! and details updated successfully');</script>";
+} elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
+    echo "<script>toastr.success('Request Cancelled Successfully!');</script>";
 }
 ?>
-
-<script>
-    $(document).ready(function () {
-    // Check for success message after deletion
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('delete_success')) {
-        toastr.success('Product deleted successfully!');
-    }
-
-    // Check for error message after deletion
-    if (urlParams.get('delete_error')) {
-        toastr.error('An error occurred while deleting the product.');
-    }
-});
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -328,266 +311,9 @@ if (isset($_GET['success'])) {
 
 <style>
 
-
-    .content{
-        overflow-y: scroll;
-    }
-    /* Ready made products container */
-
-    .readymade-products-container {
-        width: 100%;
-
-        background-color: var(--second-bgcolor);
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        margin-bottom: 20px;
-    }
-
-    .readymade-products-container h1 {
-        margin: 0;
-        padding: 25px 0 10px 0;
-    }
-
-  
-
-    .readymade-search-container {
-        width: 100%;
-        background-color: var(--first-bgcolor);
-        padding: 10px 40px;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        align-items: center;
-        border-bottom: 1px solid var(--box-shadow);
-        border-left: none;
-        border-right: none;
-    }
-
-
-    .search-input {
-        padding: 10px 20px;
-        border: 1px solid var(--box-shadow);
-        border-radius: 25px;
-        font-size: 1.5rem;
-        transition: all 0.3s ease;
-        outline: none;
-        color: var(--text-color);
-        background-color: var(--second-bgcolor);
-        font-weight: bold;
-    }
-
-    .search-input:focus {
-        border-color: var(--box-shadow);
-        box-shadow: 0 0 4px var(--search-hover);
-    }
-
-
-    .custom-select {
-        padding: 10px 10px;
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        font-size: 1.5rem;
-        background-color: var(--second-bgcolor);
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-repeat: no-repeat;
-        background-position: right 15px top 50%;
-        background-size: 10px 10px;
-        color: var(--text-color);
-        font-weight: bold;
-    }
-
-
     
 
-    .custom-select option {
-        padding: 10px;
-    }
-
-
-    
-    .readymade-search-container a{
-        padding: 10px 10px;
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        font-size: 1.5rem;
-        background-color: var(--second-bgcolor);
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-repeat: no-repeat;
-        background-position: right 15px top 50%;
-        background-size: 10px 10px;
-        color: var(--text-color);
-        font-weight: bold;
-    }
 
 
 
-    .readymade-box-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        padding: 20px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .readymade-box {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        background-color: var(--first-bgcolor);
-        color: var(--text-color);
-        padding: 20px;
-        border-radius: 5px;
-        border: 1px solid var(--box-shadow);
-    }
-
-
-
-
-    .readymade-box h2 {
-        padding: 10px;
-        text-align: center;
-        font-size: 2rem;
-        text-transform: capitalize;
-    }
-
-    .readymade-box .info-label p {
-        text-transform: capitalize;
-    }
-
-    .readymade-box .info-label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 1.6rem;
-    }
-
-
-    .readymade-box .info-label label {
-        font-weight: bold;
-    }
-
-    .readymade-box .description {
-        margin: 10px 0;
-        text-align: justify;
-        height: 30px;
-        overflow-y: scroll;
-        font-size: 1.4rem;
-    }
-
-
-
-
-
-
-    /* paging */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0 0 0;
-    }
-
-    .pagination-link {
-        display: inline-block;
-        padding: 10px 15px;
-        margin: 0 5px;
-        background-color: var(--first-bgcolor);
-        border: 1px solid var(--box-shadow);
-        border-radius: 5px;
-        color: var(--text-color);
-        text-decoration: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .pagination-link.active {
-        background-color: var(--shopnow-bg);
-        color: var(--pure-white);
-    }
-
-    .pagination-link:hover {
-        background-color: var(--box-shadow);
-    }
-
-    .pagination-link.disabled {
-        color: #ccc;
-        cursor: not-allowed;
-    }
-
-
-
-
-
-
-
-    /* shop now button */
-
-    .readymade-box a {
-        position: relative;
-        overflow: hidden;
-        outline: none;
-        cursor: pointer;
-        border-radius: 10px;
-        border: solid 4px var(--box-shadow);
-        font-family: inherit;
-        justify-content: center;
-
-    }
-
-    .default-btn,
-    .hover-btn {
-        background-color: var(--shopnow-bg);
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        padding: 10px 0;
-        font-size: 1.5rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        transition: all .3s ease;
-    }
-
-    .hover-btn {
-        position: absolute;
-        inset: 0;
-        background-color: var(--first-bgcolor);
-        transform: translate(0%, 100%);
-    }
-
-    .default-btn span {
-        color: var(--pure-white);
-        font-weight: bold;
-    }
-
-    .hover-btn span {
-        color: var(--text-color);
-        font-weight: bold;
-    }
-
-    a:hover .default-btn {
-        transform: translate(0%, 0%);
-    }
-
-    a:hover .hover-btn {
-        transform: translate(0%, 0%);
-    }
-
-    /* end */
 </style>

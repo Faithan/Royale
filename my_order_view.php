@@ -101,6 +101,7 @@ if (isset($_GET['order_id'])) {
                 <p><strong>Product Size:</strong> <?php echo htmlspecialchars($row['product_size']); ?></p>
                 <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['product_quantity']); ?></p>
                 <p><strong>Price:</strong> <?php echo htmlspecialchars($row['product_price']); ?></p>
+                <p><strong>Rent Price:</strong> <?php echo htmlspecialchars($row['product_rent_price']); ?></p>
                 <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
                 <p><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
                 <p><strong>Date and Time Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>

@@ -8,18 +8,15 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-// Fetch distinct request statuses from the royale_request_tbl
-$query = "SELECT DISTINCT request_status FROM royale_request_tbl";
+// Fetch distinct order statuses from the royale_product_order_tbl
+$query = "SELECT DISTINCT order_status FROM royale_product_order_tbl";
 $result = $conn->query($query);
 
 // Check if query was successful
 if (!$result) {
-    die("Error fetching request statuses: " . $conn->error);
+    die("Error fetching order statuses: " . $conn->error);
 }
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walk-In Requests</title>
+    <title>Online Orders</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
@@ -41,65 +38,56 @@ if (!$result) {
 
     <div class="overall-container">
 
-        <?php
-        include 'sidenav.php'
-            ?>
+        <?php include 'sidenav.php'; ?>
 
         <main>
             <div class="header-container">
 
                 <div class="header-label-container">
-                    <i class="fa-solid fa-person-walking"></i>
-                    <label for="">Walk-In Request</label>
+                    <i class="fa-solid fa-earth-asia"></i>
+                    <label for="">Online Orders</label>
                 </div>
 
-                <?php
-                include 'header_icons_container.php';
-                ?>
-
+                <?php include 'header_icons_container.php'; ?>
             </div>
-
-
 
             <div class="content-container">
                 <div class="content">
                     <div class="search-container hidden">
                         <!-- Search and Filter Form -->
                         <input type="search" name="search_query" placeholder="Search...">
-                        <select name="request_status" id="request_status">
-                            <option value="all" selected disabled>Select Status type</option>
+                        <select name="order_status" id="order_status">
+                            <option value="all" selected disabled>Select Status</option>
                             <option value="all">All</option>
                             <?php
                             while ($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row['request_status'] . "'>" . ucfirst($row['request_status']) . "</option>";
+                                echo "<option value='" . $row['order_status'] . "'>" . ucfirst($row['order_status']) . "</option>";
                             }
                             ?>
                         </select>
-                        <select name="gender" id="gender">
+                        <select name="user_gender" id="user_gender">
                             <option value="all" selected>Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
-
-                        <button onclick="window.location.href='add_request.php'"><i class="fa-solid fa-plus"></i> Add
-                            Request</button>
                     </div>
-
 
                     <div class="table-container hidden">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Request ID</th>
-                                    <th>Request Status</th>
-                                    <th>Name</th>
-                                    <th>Service Name</th>
-                                    <th>Gender</th>
-                                    <th>Address</th>
-                                    <th>Special Group</th>
-                                    <th>Fitting Date</th>
-                                    <th>Photos</th>
+                                    <th>Order ID</th>
+                                    <th>Order Status</th>
+                                    <th>Order Variation</th>
+                                    <th>User Name</th>
+                                    <th>Product Name</th>
+                                    <th>Product Quantity</th>
+                                    <th>Product Price</th>
+                                    <th>Rent Price</th>
+                                    <th>Pickup Date</th>
+                                    <th>Pickup Time</th>
+                                    <th>Product Photo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,27 +97,21 @@ if (!$result) {
                     </div>
                 </div>
             </div>
-
         </main>
-
     </div>
 
 </body>
 
 </html>
 
-
-
-
-
 <script>
     function fetchFilteredData() {
         const searchQuery = document.querySelector("input[name='search_query']").value;
-        const requestStatus = document.querySelector("select[name='request_status']").value;
-        const gender = document.querySelector("select[name='gender']").value;
+        const orderStatus = document.querySelector("select[name='order_status']").value;
+        const userGender = document.querySelector("select[name='user_gender']").value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `walkin_fetch_requests.php?search_query=${searchQuery}&request_status=${requestStatus}&gender=${gender}`, true);
+        xhr.open('GET', `online_fetch_order.php?search_query=${searchQuery}&order_status=${orderStatus}&user_gender=${userGender}`, true);
         xhr.onload = function () {
             if (this.status === 200) {
                 document.querySelector('.table-container tbody').innerHTML = this.responseText;
@@ -140,24 +122,13 @@ if (!$result) {
 
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("input[name='search_query']").addEventListener('input', fetchFilteredData);
-        document.querySelector("select[name='request_status']").addEventListener('change', fetchFilteredData);
-        document.querySelector("select[name='gender']").addEventListener('change', fetchFilteredData);
+        document.querySelector("select[name='order_status']").addEventListener('change', fetchFilteredData);
+        document.querySelector("select[name='user_gender']").addEventListener('change', fetchFilteredData);
 
         // Trigger fetching data on page load to display all data
         fetchFilteredData();
     });
-
 </script>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -165,12 +136,10 @@ if (!$result) {
 <?php
 // Inside online_request.php
 if (isset($_GET['status']) && $_GET['status'] == 'accepted') {
-    echo "<script>toastr.success('Request accepted and details updated successfully');</script>";
-} elseif (isset($_GET['status']) && $_GET['status'] == 'ongoing') {
-    echo "<script>toastr.success('Request ongoing and details updated successfully');</script>";
+    echo "<script>toastr.success('Order accepted and details updated successfully');</script>";
 } elseif (isset($_GET['status']) && $_GET['status'] == 'completed') {
-    echo "<script>toastr.success('Request Completed! and details updated successfully');</script>";
-} elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
-    echo "<script>toastr.success('Request Cancelled Successfully!');</script>";
+    echo "<script>toastr.success('Order Completed! and details updated successfully');</script>";
+}  elseif (isset($_GET['status']) && $_GET['status'] == 'cancelled') {
+    echo "<script>toastr.success('Order Cancelled Successfully!');</script>";
 }
 ?>

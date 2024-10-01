@@ -110,6 +110,7 @@ if (!isset($_SESSION['admin_id'])) {
                                 </select>
                                 <input type="number" name="quantity" placeholder="Enter product quantity" required>
                                 <input type="number" name="price" placeholder="Enter product price" required>
+                                <input type="number" name="rent_price" placeholder="Enter product rent price" required>
 
 
 

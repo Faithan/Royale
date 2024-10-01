@@ -42,7 +42,7 @@ if (!isset($_SESSION['admin_id'])) {
             <div class="header-container">
 
                 <div class="header-label-container">
-                    <i class="fa-solid fa-earth-asia"></i>
+                    <i class="fa-solid fa-person-walking"></i>
                     <label for="">Walk-In Request</label>
                 </div>
 
@@ -69,7 +69,7 @@ if (!isset($_SESSION['admin_id'])) {
                 <div class="content">
                     <form method="post" action="process_request.php" enctype="multipart/form-data"
                         class="form-container">
-                        <h1 class="hidden">Request Form</h1>
+                        <h1>Request Form</h1>
 
                         <!-- select service -->
                         <div class="services-box-wrapper">
