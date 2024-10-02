@@ -1,3 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php
 require 'dbconnect.php';
 session_start();
@@ -13,14 +32,17 @@ if (isset($_POST['add_product'])) {
     $product_name = $_POST['product_name'];
     $product_type = $_POST['product_type'];
     $gender = $_POST['gender'];
-    $quantity = $_POST['quantity'];
     $price = $_POST['price'];
     $rent_price = $_POST['rent_price'];
+    $product_color = $_POST['product_color'];
     $description = $_POST['product_description'];
 
-    // Colors and sizes are sent as comma-separated strings, so no need to use implode()
-    $product_colors = $_POST['product_colors'] ?? ''; // Already comma-separated
-    $product_sizes = $_POST['product_sizes'] ?? '';   // Already comma-separated
+    // Sizess
+    $extra_small = isset($_POST['extra_small']) ? (int)$_POST['extra_small'] : 0;
+    $small = isset($_POST['small']) ? (int)$_POST['small'] : 0;
+    $medium = isset($_POST['medium']) ? (int)$_POST['medium'] : 0;
+    $large = isset($_POST['large']) ? (int)$_POST['large'] : 0;
+    $extra_large = isset($_POST['extra_large']) ? (int)$_POST['extra_large'] : 0;
 
     // Handling product images
     $image_names = [];
@@ -35,12 +57,28 @@ if (isset($_POST['add_product'])) {
     $product_images = implode(",", $image_names);
 
     // Insert the data into the 'products' table
-    $sql = "INSERT INTO products (product_status, product_name, product_type, gender, quantity, price, rent_price, product_colors, product_sizes, description, photo) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (product_status, product_name, product_type, gender, price, rent_price, product_color, extra_small, small, medium, large, extra_large, product_description, photo) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
         $product_status = 'active'; // Default status is 'active'
-        $stmt->bind_param('sssssidssss', $product_status, $product_name, $product_type, $gender, $quantity, $price, $rent_price, $product_colors, $product_sizes, $description, $product_images);
+        $stmt->bind_param(
+            'ssssdssiiiiiss',
+            $product_status,
+            $product_name,
+            $product_type,
+            $gender,
+            $price,
+            $rent_price,
+            $product_color,
+            $extra_small,
+            $small,
+            $medium,
+            $large,
+            $extra_large,
+            $description,
+            $product_images
+        );
 
         if ($stmt->execute()) {
             // Redirect to success page or show success message

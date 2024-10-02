@@ -74,7 +74,7 @@ if (!isset($_SESSION['admin_id'])) {
 
                                 <div class="button-container hidden">
                                     <a href="product_settings.php">Return</a>
-                                 
+
                                 </div>
                             </div>
 
@@ -108,42 +108,48 @@ if (!isset($_SESSION['admin_id'])) {
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
-                                <input type="number" name="quantity" placeholder="Enter product quantity" required>
+
                                 <input type="number" name="price" placeholder="Enter product price" required>
                                 <input type="number" name="rent_price" placeholder="Enter product rent price" required>
 
-
-
-
-                                <!-- Hidden inputs to store color and size values -->
-                                <input type="hidden" name="product_colors" id="productColorsInput">
-                                <input type="hidden" name="product_sizes" id="productSizesInput">
-
-                                <!-- Color and size input UI (remains the same) -->
-                                <div class="input-field">
-                                    <input type="text" id="productColors" placeholder="Enter product color">
-                                    <button type="button" id="addColorButton">Add Color</button>
-                                </div>
-                                <div class="preview">
-                                    <div id="colorList"></div>
-                                    <button type="button" id="clearLastColorButton">Clear Last Color</button>
+                                <div style="display:flex; flex-direction:column; align-items: center; width:100%">
+                                    <label for="" style="font-size:1.5rem; color:var(--text-color)">Product Color
+                                    </label>
+                                    <input type="color" name="product_color"
+                                        style="height:50px; width:50px; padding:0; border:0; ">
                                 </div>
 
-                                <div class="input-field">
-                                    <input type="text" id="productSizes" placeholder="Enter product size">
-                                    <button type="button" id="addSizeButton">Add Size</button>
-                                </div>
-                                <div class="preview">
-                                    <div id="sizeList"></div>
-                                    <button type="button" id="clearLastSizeButton">Clear Last Size</button>
-                                </div>
 
+                                <div class="info-container2"
+                                    style="display:flex; flex-direction:row; gap:10px;  flex-wrap: wrap; justify-content: center;justify-content: center; ">
+
+                                    <div class="info-container3" style="display:flex; flex-direction:column;">
+                                        <label for="">available extra small </label>
+                                        <input type="number" name="extra_small">
+                                    </div>
+                                    <div class="info-container3" style="display:flex; flex-direction:column;">
+                                        <label for="">available small </label>
+                                        <input type="number" name="small">
+                                    </div>
+                                    <div class="info-container3" style="display:flex; flex-direction:column;">
+                                        <label for="">available medium </label>
+                                        <input type="number" name="medium">
+                                    </div>
+                                    <div class="info-container3" style="display:flex; flex-direction:column;">
+                                        <label for="">available large </label>
+                                        <input type="number" name="large">
+                                    </div>
+                                    <div class="info-container3" style="display:flex; flex-direction:column;">
+                                        <label for="">available extra large </label>
+                                        <input type="number" name="extra_large">
+                                    </div>
+                                </div>
 
 
                                 <textarea name="product_description" placeholder="Enter product Descriptions"
                                     required></textarea>
 
-                                    <button type="submit" name="add_product">Submit</button>
+                                <button type="submit" name="add_product">Submit</button>
                             </div>
 
                         </div>
@@ -222,107 +228,6 @@ if (!isset($_SESSION['admin_id'])) {
     document.getElementById('imageUpload').addEventListener('change', updateImagePreview);
 
 </script>
-
-
-
-
-
-<!-- colors -->
-
-<script>
-    // Before form submission, set the hidden fields with color and size lists
-    document.getElementById('serviceForm').onsubmit = function () {
-        document.getElementById('product_colors').value = colorList.join(',');
-        document.getElementById('product_sizes').value = sizeList.join(',');
-    };
-
-
-    // Arrays to store colors and sizes
-    const colorList = [];
-    const sizeList = [];
-
-    // HTML elements for displaying and storing data
-    const colorListContainer = document.getElementById('colorList');
-    const sizeListContainer = document.getElementById('sizeList');
-    const productColorsInput = document.getElementById('productColorsInput');
-    const productSizesInput = document.getElementById('productSizesInput');
-
-    // Add color to the list
-    document.getElementById('addColorButton').onclick = function () {
-        const colorInput = document.getElementById('productColors');
-        const color = colorInput.value.trim();
-
-        if (color) {
-            colorList.push(color);
-            updateColorList();
-            colorInput.value = ''; // Clear input field
-        }
-    };
-
-    // Clear the last color
-    document.getElementById('clearLastColorButton').onclick = function () {
-        colorList.pop(); // Remove the last color
-        updateColorList();
-    };
-
-    // Update the displayed color list and hidden input field
-    function updateColorList() {
-        colorListContainer.innerHTML = ''; // Clear previous list
-        colorList.forEach(color => {
-            const colorItem = document.createElement('div');
-            colorItem.textContent = color; // Display the color name
-            colorListContainer.appendChild(colorItem);
-        });
-        productColorsInput.value = colorList.join(','); // Update hidden input field with comma-separated values
-    }
-
-    // Add size to the list
-    document.getElementById('addSizeButton').onclick = function () {
-        const sizeInput = document.getElementById('productSizes');
-        const size = sizeInput.value.trim();
-
-        if (size) {
-            sizeList.push(size);
-            updateSizeList();
-            sizeInput.value = ''; // Clear input field
-        }
-    };
-
-    // Clear the last size
-    document.getElementById('clearLastSizeButton').onclick = function () {
-        sizeList.pop(); // Remove the last size
-        updateSizeList();
-    };
-
-    // Update the displayed size list and hidden input field
-    function updateSizeList() {
-        sizeListContainer.innerHTML = ''; // Clear previous list
-        sizeList.forEach(size => {
-            const sizeItem = document.createElement('div');
-            sizeItem.textContent = size; // Display the size name
-            sizeListContainer.appendChild(sizeItem);
-        });
-        productSizesInput.value = sizeList.join(','); // Update hidden input field with comma-separated values
-    }
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -515,7 +420,8 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
 
@@ -526,7 +432,8 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         text-transform: capitalize;
@@ -538,7 +445,8 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         text-transform: capitalize;
@@ -546,7 +454,23 @@ if (!isset($_SESSION['admin_id'])) {
         height: 100px;
     }
 
+    .info-container3 label {
+        font-size: 1.6rem;
+        color: var(--text-color);
+        text-transform: capitalize;
+    }
 
+    .info-container3 input {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        width: 100%;
+    }
+
+
+    .info-container3 {
+        justify-content: center;
+        align-items: center;
+    }
 
 
 
@@ -585,5 +509,4 @@ if (!isset($_SESSION['admin_id'])) {
     .add-info-container button[name="add_product"]:hover {
         box-shadow: 0 0 0 4px var(--hover-color);
     }
-
 </style>

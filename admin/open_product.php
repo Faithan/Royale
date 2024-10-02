@@ -218,53 +218,48 @@ if ($result->num_rows > 0) {
                             <input type="number" name="rent_price" class="hidden"
                                 value="<?php echo htmlspecialchars($product['rent_price']); ?>">
 
-
-
-                            <label>Colors:</label>
-                            <div class="checkbox-group hidden">
-                                <?php
-                                $colors = explode(',', $product['product_colors']);
-                                $colors = array_filter(array_map('trim', $colors)); // Trim and remove empty values
-                                foreach ($colors as $color): ?>
-                                    <div class="color-label" style="color: <?php echo htmlspecialchars(trim($color)); ?>;">
-                                        <input type="checkbox" name="existing_colors[]"
-                                            value="<?php echo htmlspecialchars(trim($color)); ?>">
-                                        <?php echo htmlspecialchars(trim($color)); ?>
-                                    </div>
-                                <?php endforeach; ?>
+                            <div style="display:flex; flex-direction:column; align-items: center; width:100%">
+                                <label for="" style="color:var(--text-color)">Product Color
+                                </label>
+                                <input type="color" name="product_color"
+                                    style="height:50px; width:50px; padding:0; border:0; "  value="<?php echo htmlspecialchars($product['product_color']); ?>">
                             </div>
-                            <p class="note"><b>Note:</b> check the color you want to remove before clicking the update button</p>
-                            <input type="text" name="new_colors" placeholder="Add new colors (comma-separated)"
-                                class="hidden">
 
-                           
 
-                            <label>Sizes:</label>
-                            <div class="checkbox-group hidden">
-                                <?php
-                                $sizes = explode(',', $product['product_sizes']);
-                                $sizes = array_filter(array_map('trim', $sizes)); // Trim and remove empty values
-                                foreach ($sizes as $size): ?>
-                                    <div class="color-label" style="color: var(--text-color);">
-                                        <input type="checkbox" name="existing_sizes[]"
-                                            value="<?php echo htmlspecialchars(trim($size)); ?>">
-                                        <?php echo htmlspecialchars(trim($size)); ?>
-                                    </div>
-                                <?php endforeach; ?>
+                            <div class="info-container2"
+                                style="display:flex; flex-direction:row; gap:10px;  flex-wrap: wrap; justify-content: center;justify-content: center; ">
+
+                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                    <label for="">available extra small </label>
+                                    <input type="number" name="extra_small"  value="<?php echo htmlspecialchars($product['extra_small']); ?>">
+                                </div>
+                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                    <label for="">available small </label>
+                                    <input type="number" name="small"  value="<?php echo htmlspecialchars($product['small']); ?>">
+                                </div>
+                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                    <label for="">available medium </label>
+                                    <input type="number" name="medium"  value="<?php echo htmlspecialchars($product['medium']); ?>">
+                                </div>
+                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                    <label for="">available large </label>
+                                    <input type="number" name="large"  value="<?php echo htmlspecialchars($product['large']); ?>">
+                                </div>
+                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                    <label for="">available extra large </label>
+                                    <input type="number" name="extra_large"  value="<?php echo htmlspecialchars($product['extra_large']); ?>">
+                                </div>
                             </div>
-                            <p class="note"><b>Note:</b> check the size you want to remove before clicking the update button</p>
-                            <input type="text" name="new_sizes" placeholder="Add new sizes (comma-separated)"
-                                class="hidden">
 
-                               
 
-                            <label for="quantity">Quantity:</label>
-                            <input type="number" name="quantity" class="hidden"
-                                value="<?php echo htmlspecialchars($product['quantity']); ?>">
+
+
+
+
 
                             <label for="product_description">Description:</label>
                             <textarea class="hidden"
-                                name="product_description"><?php echo htmlspecialchars($product['description']); ?></textarea>
+                                name="product_description"><?php echo htmlspecialchars($product['product_description']); ?></textarea>
 
                             <button type="submit" class="edit-btn hidden">Update Product Details</button>
                         </form>
@@ -369,7 +364,7 @@ if ($result->num_rows > 0) {
     .edit-product-container h3 {
         font-size: 2rem;
         color: var(--text-color);
-        margin:10px 0;
+        margin: 10px 0;
         text-align: center;
     }
 
@@ -392,7 +387,8 @@ if ($result->num_rows > 0) {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.7rem;
         background-color: var(--second-bgcolor);
@@ -405,7 +401,7 @@ if ($result->num_rows > 0) {
         text-align: justify;
     }
 
-    .edit-product-container input[type='file']{
+    .edit-product-container input[type='file'] {
         width: 100%;
         padding: 10px;
         margin-bottom: 0;
@@ -418,13 +414,14 @@ if ($result->num_rows > 0) {
     }
 
 
-    .product-images{
+    .product-images {
         background-color: var(--second-bgcolor);
         padding: 10px;
         border: 1px dashed var(--box-shadow);
         border-radius: 5px;
     }
-    .product-images img{
+
+    .product-images img {
         background-color: var(--first-bgcolor);
         padding: 5px;
     }
@@ -569,10 +566,10 @@ if ($result->num_rows > 0) {
 
 
 
-    .note{
+    .note {
         font-size: 1.5rem;
         margin: 5px 0;
         text-align: center;
-        color:gray;
+        color: gray;
     }
 </style>

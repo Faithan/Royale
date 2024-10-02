@@ -5,8 +5,8 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_id = $_POST['product_id'];
 
-    // Fetch existing product details from the database, including gender
-    $stmt = $conn->prepare("SELECT product_colors, product_sizes, gender FROM products WHERE id = ?");
+    // Fetch existing product details from the database, including gender and color
+    $stmt = $conn->prepare("SELECT product_color, extra_small, small, medium, large, extra_large, gender FROM products WHERE id = ?");
     $stmt->bind_param('i', $product_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -18,72 +18,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Extract existing colors, sizes, and gender
-    $colors = array_filter(array_map('trim', explode(',', $product['product_colors'])));
-    $sizes = array_filter(array_map('trim', explode(',', $product['product_sizes'])));
-    $current_gender = $product['gender'];
-
     // Collect form inputs
     $product_name = $_POST['product_name'];
     $product_type = $_POST['product_type'];
     $price = $_POST['price'];
     $rent_price = $_POST['rent_price'];
-
-    // Handle existing colors and sizes
-    $existing_colors = isset($_POST['existing_colors']) ? $_POST['existing_colors'] : [];
-    $existing_sizes = isset($_POST['existing_sizes']) ? $_POST['existing_sizes'] : [];
     
-    // Handle new colors and sizes
-    $new_colors = isset($_POST['new_colors']) ? explode(',', $_POST['new_colors']) : [];
-    $new_sizes = isset($_POST['new_sizes']) ? explode(',', $_POST['new_sizes']) : [];
+    // Collect product color and sizes
+    $product_color = $_POST['product_color']; // Getting the color from the form
+    $extra_small = $_POST['extra_small'];
+    $small = $_POST['small'];
+    $medium = $_POST['medium'];
+    $large = $_POST['large'];
+    $extra_large = $_POST['extra_large'];
     
-    // Clean and merge colors
-    $final_colors = array_diff($colors, $existing_colors); // Remove checked colors
-    $final_colors = array_merge($final_colors, array_filter(array_map('trim', $new_colors))); // Add new colors, ensuring no empty values
-
-    // Clean and merge sizes
-    $final_sizes = array_diff($sizes, $existing_sizes); // Remove checked sizes
-    $final_sizes = array_merge($final_sizes, array_filter(array_map('trim', $new_sizes))); // Add new sizes, ensuring no empty values
-
-    // Convert arrays back to strings
-    $product_colors = implode(',', $final_colors);
-    $product_sizes = implode(',', $final_sizes);
-
-    // Check if the arrays are empty and set them to NULL or an empty string if needed
-    $product_colors = !empty($product_colors) ? $product_colors : NULL;
-    $product_sizes = !empty($product_sizes) ? $product_sizes : NULL;
-
-    $quantity = $_POST['quantity'];
-    $product_description = $_POST['product_description'];
-
-    // Handle gender
-    $gender = $_POST['gender']; // Collect the gender value from the form
-
     // Prepare and execute the update query
     $sql = "UPDATE products SET 
                 product_name = ?, 
                 product_type = ?, 
                 price = ?, 
                 rent_price = ?, 
-                product_colors = ?, 
-                product_sizes = ?, 
-                quantity = ?, 
-                description = ?,
+                product_color = ?, 
+                extra_small = ?, 
+                small = ?, 
+                medium = ?, 
+                large = ?, 
+                extra_large = ?, 
                 gender = ? 
             WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        'ssddsssssi', 
+        'ssddsssssssi', 
         $product_name, 
         $product_type, 
         $price, 
         $rent_price,
-        $product_colors, 
-        $product_sizes, 
-        $quantity, 
-        $product_description, 
-        $gender, 
+        $product_color, 
+        $extra_small, 
+        $small, 
+        $medium, 
+        $large, 
+        $extra_large,
+        $product['gender'], // Assuming gender remains unchanged
         $product_id
     );
 

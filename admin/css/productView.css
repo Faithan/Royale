@@ -1,9 +1,10 @@
-.content{
+.content {
     min-width: 100%;
 
     overflow: scroll;
     gap: 10px;
 }
+
 .details-main-contianer {
     margin: 0;
     display: flex;
@@ -15,7 +16,7 @@
 
 
 
-.details-main-contianer .product-image-gallery{
+.details-main-contianer .product-image-gallery {
     overflow-x: scroll;
     border: 1px solid var(--box-shadow);
     display: flex;
@@ -26,11 +27,12 @@
     border-radius: 5px;
     min-width: 35%;
     max-width: 40%;
+    flex-wrap: wrap;
 }
 
 
 
-.product-image-gallery img{
+.product-image-gallery img {
     border-radius: 5px;
     border: 1px solid var(--box-shadow);
     align-self: flex-start;
@@ -43,7 +45,7 @@
 
 .details-main-contianer .details-container {
     border-radius: 5px;
-   
+
     background-color: var(--first-bgcolor);
     border: 1px solid var(--box-shadow);
     position: relative;
@@ -54,7 +56,7 @@
 
 
 .product-info-container {
-   
+
     background-color: var(--first-bgcolor);
     overflow-y: scroll;
     display: flex;
@@ -122,7 +124,7 @@
 }
 
 
-#quantity{
+#quantity {
     background-color: var(--first-bgcolor);
     color: var(--text-color);
 }
@@ -137,12 +139,15 @@
 
 .color-container label {
     display: inline-block;
-    border: 1px solid transparent; /* Add border for the active state */
+    border: 1px solid transparent;
+    /* Add border for the active state */
 }
 
-.color-container input[type="radio"]:checked + label {
-    background-color: var(--hover-color); /* Change the border color when selected */
-    transform: scale(1.05); /* Scale up the selected label for a nice effect */
+.color-container input[type="radio"]:checked+label {
+    background-color: var(--hover-color);
+    /* Change the border color when selected */
+    transform: scale(1.05);
+    /* Scale up the selected label for a nice effect */
 }
 
 
@@ -156,12 +161,15 @@
 
 .size-container label {
     display: inline-block;
-    border: 1px solid transparent; /* Add border for the active state */
+    border: 1px solid transparent;
+    /* Add border for the active state */
 }
 
-.size-container input[type="radio"]:checked + label {
-    background-color: var(--hover-color); /* Change the border color when selected */
-    transform: scale(1.05); /* Scale up the selected label for a nice effect */
+.size-container input[type="radio"]:checked+label {
+    background-color: var(--hover-color);
+    /* Change the border color when selected */
+    transform: scale(1.05);
+    /* Scale up the selected label for a nice effect */
 }
 
 
@@ -174,7 +182,8 @@
 }
 
 .quantity-button {
-    background-color: var(--second-bgcolor); /* Primary color */
+    background-color: var(--second-bgcolor);
+    /* Primary color */
     color: var(--text-color);
     border: 1px solid var(--box-shadow);
     border-radius: 50%;
@@ -187,7 +196,8 @@
 }
 
 .quantity-button:hover {
-    background-color: var(--hover-color); /* Darker shade on hover */
+    background-color: var(--hover-color);
+    /* Darker shade on hover */
 }
 
 .quantity-input {
@@ -195,15 +205,18 @@
     text-align: center;
     border: none;
     border-radius: 5px;
-    margin: 0 0 0 10px; /* Space between buttons and input */
+    margin: 0 0 0 10px;
+    /* Space between buttons and input */
     font-size: 1.8rem;
     font-weight: bold;
     padding: 5px;
 }
 
 .quantity-input:focus {
-    outline: none; /* Remove default focus outline */
-    border-color: #007bff; /* Highlight border on focus */
+    outline: none;
+    /* Remove default focus outline */
+    border-color: #007bff;
+    /* Highlight border on focus */
 }
 
 
@@ -216,14 +229,15 @@
 .customer-input-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 10px;
+    gap: 10px;
     margin-top: 20px;
 }
 
 .customer-input-container input {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -233,7 +247,8 @@
 .customer-input-container select {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -428,7 +443,7 @@
     }
 
 
-    .details-main-contianer .product-image-gallery{
+    .details-main-contianer .product-image-gallery {
         overflow-x: scroll;
         border: 1px solid var(--box-shadow);
         display: flex;
@@ -438,12 +453,12 @@
         background-color: var(--second-bgcolor);
         border-radius: 5px;
         min-width: 100%;
-     
+
     }
 
 
 
-    
+
 
 
     .details-main-contianer img {
@@ -459,9 +474,9 @@
 
 
 
-    
 
- 
+
+
 
 
 
@@ -479,7 +494,7 @@
         width: 100%;
     }
 
-  
+
 
 
 }

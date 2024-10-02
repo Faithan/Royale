@@ -11,14 +11,14 @@ $productsPerPage = 8;
 $start = ($page - 1) * $productsPerPage;
 
 // Base SQL query
-$sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo 
+$sql = "SELECT *
         FROM products 
         WHERE product_status='active'";
 
 // Add filtering conditions
 if ($search) {
     $search = $conn->real_escape_string($search);
-    $sql .= " AND (product_name LIKE '%$search%' OR description LIKE '%$search%')";
+    $sql .= " AND (product_name LIKE '%$search%' OR product_description LIKE '%$search%')";
 }
 
 if ($product_type !== 'all') {
@@ -70,10 +70,8 @@ if ($result->num_rows > 0) {
             <div class="info-label"><label for="">Price:</label>
                 <p>₱ <?php echo $row['price']; ?></p>
             </div>
-            <div class="info-label"><label for="">Quantity:</label>
-                <p><?php echo $row['quantity']; ?></p>
-            </div>
-            <p class="description"><?php echo $row['description']; ?></p>
+        
+            <p class="description"><?php echo $row['product_description']; ?></p>
 
             <a href="open_product.php?view_id=<?php echo $row['id']; ?>">
                 <div class="default-btn">
