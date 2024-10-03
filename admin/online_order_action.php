@@ -68,34 +68,87 @@ if (isset($_POST['accept_order'])) {
 
 
 
-// complete order
 
+
+
+
+
+// Complete order
 if (isset($_POST['complete_order'])) {
     $order_id = $_POST['order_id'];
     $payment = !empty($_POST['payment']) ? $_POST['payment'] : null;
     $payment_date = !empty($_POST['payment_date']) ? $_POST['payment_date'] : null;
 
-    // Prepare SQL query
-    $stmt = $conn->prepare("
-        UPDATE royale_product_order_tbl 
-        SET order_status = 'completed',
-            payment = IFNULL(?, payment),
-            payment_date = IFNULL(?, payment_date)
-        WHERE order_id = ?
-    ");
+    // Start transaction
+    $conn->begin_transaction();
 
-    // Bind parameters (2 values for the columns and 1 for the where clause)
-    $stmt->bind_param("ssi", $payment, $payment_date, $order_id);
+    try {
+        // Prepare SQL query to update the order status and payment details
+        $stmt = $conn->prepare("
+            UPDATE royale_product_order_tbl 
+            SET order_status = 'completed',
+                payment = IFNULL(?, payment),
+                payment_date = IFNULL(?, payment_date)
+            WHERE order_id = ?
+        ");
 
-    if ($stmt->execute()) {
-        // Redirect back to the order view or show a success message
-        header("Location: online_order.php?status=completed");
-        exit();
-    } else {
-        echo "Error updating record: " . $stmt->error;
+        // Bind parameters (2 values for the columns and 1 for the where clause)
+        $stmt->bind_param("ssi", $payment, $payment_date, $order_id);
+
+        if ($stmt->execute()) {
+            $stmt->close(); // Close the statement after execution
+
+            // After successfully completing the order, update the product quantity
+
+            // Retrieve the product ID, color, and quantity from the order
+            $order_query = "SELECT product_id, product_color, product_quantity, product_size FROM royale_product_order_tbl WHERE order_id = ?";
+            $order_stmt = $conn->prepare($order_query);
+            $order_stmt->bind_param("i", $order_id);
+            $order_stmt->execute();
+            $order_stmt->store_result(); // Store the result set
+
+            if ($order_stmt->num_rows > 0) {
+                $order_stmt->bind_result($product_id, $product_color, $product_quantity, $product_size);
+                if ($order_stmt->fetch()) {
+                    // Determine the column name based on the product size
+                    $size_column = strtolower($product_size); // Assuming size values are 'Small', 'Medium', etc.
+
+                    // Prepare the update query for the product quantity
+                    $update_query = "UPDATE products SET $size_column = $size_column - ? WHERE id = ? AND product_color = ?";
+
+                    if ($update_stmt = $conn->prepare($update_query)) {
+                        $update_stmt->bind_param('iis', $product_quantity, $product_id, $product_color);
+
+                        // Execute the update
+                        if ($update_stmt->execute()) {
+                            // Successfully updated product quantity
+                            $conn->commit(); // Commit the transaction
+                            header("Location: online_order.php?status=completed");
+                            exit();
+                        } else {
+                            throw new Exception("Error updating product quantity: " . $update_stmt->error);
+                        }
+                   
+                    } else {
+                        throw new Exception("Failed to prepare update SQL statement.");
+                    }
+                }
+            } else {
+                throw new Exception("No order found for this ID.");
+            }
+            $order_stmt->close(); // Close the order statement
+        } else {
+            throw new Exception("Error updating record: " . $stmt->error);
+        }
+
+        $stmt->close(); // Close the main statement
+    } catch (Exception $e) {
+        $conn->rollback(); // Rollback the transaction if there's an error
+        echo $e->getMessage();
+    } finally {
+        // Close the database connection
+        $conn->close();
     }
 }
-
-
 
 ?>

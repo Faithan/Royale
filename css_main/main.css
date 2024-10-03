@@ -58,6 +58,7 @@ html {
 
 
     --text-color: #001C31;
+    --text-color2: gray;
     --text-shadow: rgb(200, 200, 200);
     --border-color: #001C31;
     --hover-color: #2326452f;
@@ -85,6 +86,7 @@ html {
     --thumb-hover: #6f6f6f;
 
     --text-color: white;
+    --text-color2: gray;
     --first-bgcolor: #242526;
     --second-bgcolor: #18191A;
     --text-shadow: rgb(105, 105, 105);
@@ -441,6 +443,7 @@ button:hover{
     cursor: pointer;
     transition: color 0.3s ease;
     color: var(--text-color);
+    font-size: 2rem;
 }
 
 
@@ -504,6 +507,12 @@ button:hover{
     cursor: pointer;
 }
 
+
+
+.user-menu:hover .tooltip-text {
+    visibility: visible; /* Show tooltip on hover */
+    opacity: 1; /* Fade in */
+}
 
 
 
@@ -632,6 +641,10 @@ footer {
     font-size: 2.5rem;
     transition: ease-in-out 0.3s;
 }
+
+
+
+
 
 
 /* end */

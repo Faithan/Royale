@@ -225,7 +225,8 @@ main h2{
 .customer-input-container input {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -235,7 +236,8 @@ main h2{
 .customer-input-container select {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -245,7 +247,8 @@ main h2{
 .customer-input-container textarea {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -287,13 +290,14 @@ input[type="file"] {
     font-weight: bold;
     transition: background-color 0.3s ease;
     color: var(--text-color);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 
 
 .custom-file-upload:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+   background-color: var(--hover-color);
 }
 
 
@@ -332,8 +336,8 @@ input[type="file"] {
 #clear-selection {
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: var(--cancel-color);
-    color: white;
+    background-color: var(--first-bgcolor);
+    color: var(--cancel-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -341,7 +345,7 @@ input[type="file"] {
 }
 
 #clear-selection:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+   background-color: var(--hover-color);
 }
 
 
@@ -383,17 +387,11 @@ input[type="file"] {
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 
-.product-buttons-container span {
-    padding: 8px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    border: 1px solid var(--box-shadow);
-    font-size: 1.4rem;
-}
 
 
 .product-buttons-container #return {
@@ -402,7 +400,8 @@ input[type="file"] {
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 

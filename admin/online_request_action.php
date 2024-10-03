@@ -42,16 +42,15 @@ if (isset($_POST['accept_request'])) {
     $service_name = $_POST['service_name'];
     $fitting_date = $_POST['fitting_date'];
     $fitting_time = $_POST['fitting_time'];
-    $fee = $_POST['fee'];
+  
 
     // Update the request status and other fields
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
-        SET request_status = ?, name = ?, contact_number = ?, gender = ?, address = ?, email = ?, message = ?, service_name = ?, fitting_date = ?, fitting_time = ?, fee = ? 
-        WHERE request_id = ?
+        SET request_status = ?, name = ?, contact_number = ?, gender = ?, address = ?, email = ?, message = ?, service_name = ?, fitting_date = ?, fitting_time = ? WHERE request_id = ?
     ");
     $new_status = "accepted";
-    $stmt->bind_param("sssssssssssi", $new_status, $name, $contact_number, $gender, $address, $email, $message, $service_name, $fitting_date, $fitting_time, $fee, $request_id);
+    $stmt->bind_param("ssssssssssi", $new_status, $name, $contact_number, $gender, $address, $email, $message, $service_name, $fitting_date, $fitting_time, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message
@@ -67,7 +66,9 @@ if (isset($_POST['accept_request'])) {
 
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
+
     $measurement = !empty($_POST['measurement']) ? $_POST['measurement'] : null;
+    $fee = !empty($_POST['fee']) ? $_POST['fee'] : null;
     $special_group = !empty($_POST['special_group']) ? $_POST['special_group'] : null;
     $assigned_employee = !empty($_POST['assigned_employee']) ? $_POST['assigned_employee'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
@@ -80,6 +81,7 @@ if (isset($_POST['update_request'])) {
         UPDATE royale_request_tbl 
         SET request_status = ?, 
             measurement = IFNULL(?, measurement), 
+            fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
             assigned_employee = IFNULL(?, assigned_employee), 
             deadline = IFNULL(?, deadline), 
@@ -91,7 +93,7 @@ if (isset($_POST['update_request'])) {
 
     // Bind parameters (7 values, so 7 type definitions)
     $new_status = "ongoing";
-    $stmt->bind_param("ssssssssi", $new_status, $measurement,$special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
+    $stmt->bind_param("sssssssssi", $new_status, $measurement, $fee, $special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message

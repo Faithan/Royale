@@ -293,17 +293,12 @@
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 
-.product-buttons-container span {
-    padding: 8px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    border: 1px solid var(--box-shadow);
-    font-size: 1.4rem;
-}
+
 
 .product-buttons-container #return {
     background-color: var(--second-bgcolor);
@@ -311,7 +306,8 @@
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 

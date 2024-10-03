@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect form inputs
     $product_name = $_POST['product_name'];
     $product_type = $_POST['product_type'];
+    $previous_price = $_POST['previous_price'];
     $price = $_POST['price'];
     $rent_price = $_POST['rent_price'];
     
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "UPDATE products SET 
                 product_name = ?, 
                 product_type = ?, 
+                previous_price = ?, 
                 price = ?, 
                 rent_price = ?, 
                 product_color = ?, 
@@ -49,9 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        'ssddsssssssi', 
+        'ssdddsssssssi', 
         $product_name, 
         $product_type, 
+        $previous_price, 
         $price, 
         $rent_price,
         $product_color, 

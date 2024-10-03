@@ -45,95 +45,84 @@ main h1 {
 }
 
 
-.table-container {
-    margin-bottom: 60px;
-    background-color: var(--first-bgcolor);
-    width: 100%;
-    border-radius: 5px;
 
-}
-
-
-
-/* table */
-.styled-table {
-    border-collapse: collapse;
-    font-size: 1.5rem;
-    text-align: center;
-    width: 100%;
-}
-
-.styled-table thead tr {
-    color: var(--pure-white);
-    text-align: center;
-
-}
-
-
-.styled-table thead th {
-    padding: 10px 5px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #001C31;
-}
-
-.styled-table th {
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 5px;
-    border: 1px solid var(--box-shadow);
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-align: center;
-    max-width: 100px;
-}
-
-
-.styled-table tbody tr {
-    cursor: pointer;
-    /* Indicates the row is clickable */
-    border-bottom: 1px solid #dddddd;
-    transition: background-color 0.3s ease;
-    color: var(--text-color);
-
-
-}
-
-.styled-table tbody tr:nth-of-type(even) {
+.order-list {
+    padding: 10px 20px;
     background-color: var(--second-bgcolor);
 }
 
-.styled-table tbody tr:nth-of-type(odd) {
+.order-container {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--box-shadow);
+    margin: 15px 0;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    border-radius: 5px;
     background-color: var(--first-bgcolor);
 }
 
-
-.styled-table tbody tr:hover {
-    background-color: var(--hover-color);
+.order-container:hover {
+    transform: scale(1.01);
 }
 
-
-
-
 .photo-gallery {
+    flex: 1;
+    flex-direction: row;
     display: flex;
     overflow-x: scroll;
     gap: 10px;
     padding: 10px;
 }
 
-.styled-table td img {
-    max-width: 40px;
-    max-height: 40px;
+.photo-gallery img {
+    max-height: 200px;
+    max-width: 200px;
+    margin: 5px;
     border-radius: 5px;
+    padding: 5px;
+    background-color: var(--first-bgcolor);
+    border-bottom: 1px solid var(--box-shadow);
 }
 
+.details {
+    flex: 2;
+    padding-left: 20px;
+    border-left: 1px solid var(--box-shadow);
+}
 
+.details h3 {
+    margin: 0 0 10px;
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 3rem;
+    text-transform: capitalize;
+    text-align: center;
+    border-bottom: 1px solid var(--box-shadow);
+    padding: 10px;
+}
+
+.details p {
+    margin: 5px 0;
+    font-size: 1.5rem;
+    color: var(--text-color2);
+}
+
+.details p strong{
+    color: var(--text-color);
+}
+
+.details .price {
+    font-size: 2rem;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: bold;
+}
+
+.cancelled {
+    color: red;
+}
 
 .anchor-container {
     padding: 10px;
@@ -149,38 +138,34 @@ main h1 {
     gap: 20px;
 }
 
-.anchor-container a {
+.anchor-container a{
     background-color: var(--second-bgcolor);
     color: var(--text-color);
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.5rem;
 }
 
-.anchor-container a:hover {
-    background-color: var(--hover-color);
-    transition: ease-in-out 0.3s;
-}
 
 
 .anchor-container button {
     background-color: var(--second-bgcolor);
-    color: var(--text-color);
+    color: var(--cancel-color);
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 1.5rem;
 }
 
-.anchor-container button:hover {
+.anchor-container a:hover, .anchor-container button:hover {
     background-color: var(--hover-color);
     transition: ease-in-out 0.3s;
 }
-
-
 
 
 

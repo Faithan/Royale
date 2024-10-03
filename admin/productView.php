@@ -35,20 +35,7 @@ if (isset($_GET['view_id'])) {
         $photos = [];
     }
 
-    // Split the product_colors field into an array of individual colors
-    if (!empty($view_data['product_colors'])) {
-        $colors = array_unique(array_map('trim', explode(',', $view_data['product_colors']))); // Removing duplicates and trimming
-    } else {
-        $colors = [];
-    }
 
-
-    // Split the product_sizes field into an array of individual sizes
-    if (!empty($view_data['product_sizes'])) {
-        $sizes = array_unique(array_map('trim', explode(',', $view_data['product_sizes']))); // Removing duplicates and trimming
-    } else {
-        $sizes = [];
-    }
 }
 ?>
 
@@ -183,9 +170,9 @@ if (isset($_GET['view_id'])) {
                                     }
 
                                     .color-circle {
-                                        width: 40px;
+                                        width: 35px;
                                         /* Adjust the size of the circle */
-                                        height: 40px;
+                                        height: 35px;
                                         /* Adjust the size of the circle */
                                         border-radius: 50%;
                                         /* Makes the div a circle */
@@ -193,6 +180,9 @@ if (isset($_GET['view_id'])) {
                                         /* Optional: adds a border to the circle */
                                     }
                                 </style>
+
+
+
 
 
                                 <label for="">Available Sizes:</label>
@@ -212,21 +202,30 @@ if (isset($_GET['view_id'])) {
                                         exit;
                                     }
 
-                                    // Fetch size quantities (including those with 0 values)
-                                    $sizes = [];
-                                    $sizes['Extra Small'] = intval($view_data['extra_small']);
-                                    $sizes['Small'] = intval($view_data['small']);
-                                    $sizes['Medium'] = intval($view_data['medium']);
-                                    $sizes['Large'] = intval($view_data['large']);
-                                    $sizes['Extra Large'] = intval($view_data['extra_large']);
+                                    // Map column names to human-readable size labels
+                                    $sizes = [
+                                        'extra_small' => 'Extra Small',
+                                        'small' => 'Small',
+                                        'medium' => 'Medium',
+                                        'large' => 'Large',
+                                        'extra_large' => 'Extra Large',
+                                    ];
+
+                                    // Fetch size quantities
+                                    foreach ($sizes as $size_col => $size_name) {
+                                        $quantities[$size_col] = intval($view_data[$size_col]);
+                                    }
                                     ?>
 
                                     <div class="size-container">
-                                        <?php if (!empty($sizes)): ?>
-                                            <?php foreach ($sizes as $size => $quantity): ?>
+                                        <?php if (!empty($quantities)): ?>
+                                            <?php foreach ($quantities as $size_col => $quantity): ?>
                                                 <label class="size-box <?php echo $quantity == 0 ? 'disabled' : ''; ?>">
-                                                    <input type="radio" name="product_size" value="<?php echo $size; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
-                                                    <span><?php echo $size . ' (' . $quantity . ')'; ?></span>
+                                                    <!-- Value now set to column name -->
+                                                    <input type="radio" name="product_size" value="<?php echo $size_col; ?>"
+                                                        <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
+                                                    <!-- Display human-readable size and quantity -->
+                                                    <span><?php echo $sizes[$size_col] . ' (' . $quantity . ')'; ?></span>
                                                 </label>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -259,7 +258,6 @@ if (isset($_GET['view_id'])) {
                                         position: relative;
                                         transition: background-color 0.3s;
                                         /* Smooth transition for background color */
-
                                     }
 
                                     .size-box span {
@@ -280,7 +278,6 @@ if (isset($_GET['view_id'])) {
                                     .size-box.disabled {
                                         background-color: var(--first-bgcolor);
                                         /* Gray background for disabled */
-
                                         border-color: #f5c6cb;
                                         /* Gray border for disabled */
                                         cursor: not-allowed;
@@ -295,11 +292,8 @@ if (isset($_GET['view_id'])) {
                                     }
 
                                     .size-box.checked {
-
-                                        /* Change to your desired checked color */
                                         border: 2px solid var(--text-color);
-
-                                        /* Text color when checked */
+                                        /* Change to your desired checked color */
                                     }
                                 </style>
 
@@ -329,6 +323,9 @@ if (isset($_GET['view_id'])) {
 
 
 
+
+
+
                                 <?php
                                 // Example PHP logic to sum up sizes (Make sure this runs correctly)
                                 $total_quantity = 0;
@@ -338,6 +335,7 @@ if (isset($_GET['view_id'])) {
                                 $total_quantity += intval($view_data['large']);
                                 $total_quantity += intval($view_data['extra_large']);
                                 ?>
+
 
                                 <label for="quantity">Quantity:</label>
                                 <div class="quantity-input-container">
@@ -475,6 +473,41 @@ if (isset($_GET['view_id'])) {
                                         </button>
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Check total quantity from PHP variable
+                                        const totalQuantity = <?php echo json_encode($total_quantity); ?>;
+
+                                        const buttons = document.querySelectorAll('.action-button');
+
+                                        if (totalQuantity === 0) {
+                                            buttons.forEach(button => {
+                                                button.classList.add('not-allowed');
+                                                button.disabled = true;
+                                                // Add tooltip text
+                                                button.setAttribute('title', 'Out of stock');
+                                            });
+                                        }
+                                    });
+                                </script>
+
+                                <style>
+                                    .action-button {
+                                        cursor: pointer;
+                                        /* Default cursor style */
+                                    }
+
+                                    .action-button.not-allowed {
+                                        cursor: not-allowed;
+                                        /* Change cursor to not-allowed */
+                                        opacity: 0.5;
+                                        /* Make the button look disabled */
+                                        pointer-events: none;
+                                        /* Prevent any interaction */
+                                    }
+                                </style>
+
 
 
 

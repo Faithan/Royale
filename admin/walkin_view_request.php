@@ -203,9 +203,9 @@ if ($result->num_rows > 0) {
                             </div>
 
 
-                            <div style="align-self: center;">
-                                <button type="submit" name="accept_request" id="accept_button">Accept</button>
-
+                            <div class="first-button-container">
+                                <button type="submit" name="accept_request" id="accept_button"
+                                    class="accept_button">Accept</button>
                             </div>
 
 
@@ -308,7 +308,10 @@ if ($result->num_rows > 0) {
 
                         </div>
 
-                        <button type="submit" name="update_request" id="update_button">Update</button>
+                        <div class="first-button-container">
+                            <button type="submit" name="update_request" id="update_button"
+                                class="accept_button">Update</button>
+                        </div>
 
 
                         <p class="note"
@@ -398,9 +401,10 @@ if ($result->num_rows > 0) {
                             </div>
 
                         </div>
-
-                        <button type="submit" name="complete_request" id="complete_button">Complete</button>
-
+                        <div class="first-button-container">
+                            <button type="submit" name="complete_request" id="complete_button"
+                                class="accept_button">Complete</button>
+                        </div>
                         <p class="note"
                             style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
                             <b>Instruction:</b> This section contains the final step where the payment is

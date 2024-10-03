@@ -126,12 +126,17 @@
 }
 
 .readymade-box h2 {
+    text-align: center;
+    font-size: 3rem;
+    text-transform: capitalize;
+}
+.readymade-box h3 {
     padding: 10px;
     text-align: center;
     font-size: 2rem;
     text-transform: capitalize;
+    font-weight: normal;
 }
-
 .readymade-box .info-label p {
     text-transform: capitalize;
 }

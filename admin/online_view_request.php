@@ -86,7 +86,8 @@ if ($result->num_rows > 0) {
                     <h1 class="hidden">View Request</h1>
 
                     <!-- accept or cancel -->
-                    <form method="POST" action="online_request_action.php" method="POST" class="request-details-container">
+                    <form method="POST" action="online_request_action.php" method="POST"
+                        class="request-details-container">
                         <div class="information-container">
 
 
@@ -196,17 +197,15 @@ if ($result->num_rows > 0) {
                                     <input type="time" name="fitting_time" id=""
                                         value="<?php echo $row['fitting_time']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                 </div>
-                                <div class="request-details">
-                                    <label>Fee(₱):</label>
-                                    <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
-                                        oninput="calculateBalance()" required <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                                </div>
+
                             </div>
 
 
-                            <div style="align-self: center;">
-                                <button type="submit" name="cancel_request" id="cancel_button">Reject</button>
-                                <button type="submit" name="accept_request" id="accept_button">Accept</button>
+                            <div class="first-button-container">
+                                <button type="submit" name="cancel_request" id="cancel_button"
+                                    class="cancel_button">Reject</button>
+                                <button type="submit" name="accept_request" id="accept_button"
+                                    class="accept_button">Accept</button>
                             </div>
 
 
@@ -249,6 +248,12 @@ if ($result->num_rows > 0) {
 
 
                         <div class="request-details-container2">
+
+                            <div class="request-details">
+                                <label>Fee(₱):</label>
+                                <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
+                                    oninput="calculateBalance()" required <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
 
                             <div class="request-details">
                                 <label>Special Group <em>*if applicable*</em>:</label>
@@ -309,7 +314,10 @@ if ($result->num_rows > 0) {
 
                         </div>
 
-                        <button type="submit" name="update_request" id="update_button">Update</button>
+                        <div class="first-button-container">
+                            <button type="submit" name="update_request" id="update_button"
+                                class="accept_button">Update</button>
+                        </div>
 
 
                         <p class="note"
@@ -399,9 +407,10 @@ if ($result->num_rows > 0) {
                             </div>
 
                         </div>
-
-                        <button type="submit" name="complete_request" id="complete_button">Complete</button>
-
+                        <div class="first-button-container">
+                            <button type="submit" name="complete_request" id="complete_button"
+                                class="accept_button">Complete</button>
+                        </div>
                         <p class="note"
                             style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
                             <b>Instruction:</b> This section contains the final step where the payment is

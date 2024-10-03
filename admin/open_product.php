@@ -85,12 +85,24 @@ if ($result->num_rows > 0) {
                             </div>
 
                             <h3 class="hidden">Add New Images:</h3>
-                            <input type="file" name="product_photos[]" multiple accept="image/*" class="hidden"
-                                onchange="previewImages(event)">
-
+                            <div class="file-upload-container">
+                                <label for="file-input" class="custom-file-upload">
+                                    <i class="fa fa-cloud-upload"></i> Select Images
+                                </label>
+                                <input id="file-input" type="file" name="product_photos[]" multiple accept="image/*"
+                                    style="display:none;" onchange="previewImages(event)">
+                            </div>
                             <div class="new-image-preview" id="new-image-preview"></div>
 
                             <button type="submit" class="edit-btn hidden">Update Images</button>
+
+
+
+                            <p class="note"><b>Instruction: </b>This section allows you to edit the product images. It
+                                shows how you can remove a picture and update it with a new one. Simply click 'Update
+                                Images'
+                                when you're done.</p>
+
                         </form>
 
 
@@ -149,105 +161,126 @@ if ($result->num_rows > 0) {
 
                         <!-- Form for updating product details -->
                         <form action="process_update_product_details.php" method="post">
-                            <label for="product_name">Product Id:</label>
-                            <input type="number" name="product_id" class="hidden" value="<?php echo $product_id; ?>"
-                                readonly>
+                            <div class="info-container2">
+                                <div class="info-container3">
+                                    <label for="product_name">Product Id:</label>
+                                    <input type="number" name="product_id" class="hidden"
+                                        value="<?php echo $product_id; ?>" readonly>
+                                </div>
+
+
+
+
+                                <div class="info-container3">
+                                    <label for="product_name">Product Name:</label>
+                                    <input type="text" name="product_name" class="hidden"
+                                        value="<?php echo htmlspecialchars($product['product_name']); ?>">
+                                </div>
+
+
+
+
+                                <div class="info-container3">
+                                    <label for="">Product Type:</label>
+                                    <!-- Product Type Selection -->
+                                    <?php
+                                    $sql = "SELECT DISTINCT productType_name FROM producttype WHERE productType_status ='active'";
+                                    $result = $conn->query($sql);
+
+                                    // Assume $product['product_type'] contains the currently selected product type
+                                    $currentProductType = isset($product['product_type']) ? $product['product_type'] : '';
+
+                                    $selectBox = "<select name='product_type' class='custom-select hidden'>";
+                                    $selectBox .= "<option value='' " . ($currentProductType == '' ? 'selected' : 'disabled') . ">Select a product type</option>";
+
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            $productType = ucwords(strtolower($row["productType_name"]));
+                                            // Check if this product type is the currently selected one
+                                            $selected = ($productType === $currentProductType) ? 'selected' : '';
+                                            $selectBox .= "<option value='" . $productType . "' " . $selected . ">" . $productType . "</option>";
+                                        }
+                                    } else {
+                                        $selectBox .= "<option value=''>No product types found.</option>";
+                                    }
+
+                                    $selectBox .= "</select>";
+
+                                    echo $selectBox;
+                                    ?>
+                                </div>
+
+
+
+                                <div class="info-container3">
+                                    <label for="">Gender</label>
+                                    <select name="gender" class="custom-select hidden">
+                                        <option value="" <?php echo empty($product['gender']) ? 'selected' : 'disabled'; ?>>
+                                            Select Gender</option>
+                                        <option value="male" <?php echo isset($product['gender']) && $product['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
+                                        <option value="female" <?php echo isset($product['gender']) && $product['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
+                                    </select>
+                                </div>
+
+                                <div class="info-container3">
+                                    <label for="price">Previous Price (₱):</label>
+                                    <input type="number" name="previous_price" class="hidden"
+                                        value="<?php echo htmlspecialchars($product['previous_price']); ?>">
+                                </div>
+
+                                <div class="info-container3">
+                                    <label for="price">Price (₱):</label>
+                                    <input type="number" name="price" class="hidden"
+                                        value="<?php echo htmlspecialchars($product['price']); ?>">
+                                </div>
+                                <div class="info-container3">
+                                    <label for="price">Rent Price (₱):</label>
+                                    <input type="number" name="rent_price" class="hidden"
+                                        value="<?php echo htmlspecialchars($product['rent_price']); ?>">
+                                </div>
+                            </div>
 
 
 
 
 
-                            <label for="product_name">Product Name:</label>
-                            <input type="text" name="product_name" class="hidden"
-                                value="<?php echo htmlspecialchars($product['product_name']); ?>">
 
-
-
-
-
-
-                            <label for="">Product Type:</label>
-                            <!-- Product Type Selection -->
-                            <?php
-                            $sql = "SELECT DISTINCT productType_name FROM producttype WHERE productType_status ='active'";
-                            $result = $conn->query($sql);
-
-                            // Assume $product['product_type'] contains the currently selected product type
-                            $currentProductType = isset($product['product_type']) ? $product['product_type'] : '';
-
-                            $selectBox = "<select name='product_type' class='custom-select hidden'>";
-                            $selectBox .= "<option value='' " . ($currentProductType == '' ? 'selected' : 'disabled') . ">Select a product type</option>";
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $productType = ucwords(strtolower($row["productType_name"]));
-                                    // Check if this product type is the currently selected one
-                                    $selected = ($productType === $currentProductType) ? 'selected' : '';
-                                    $selectBox .= "<option value='" . $productType . "' " . $selected . ">" . $productType . "</option>";
-                                }
-                            } else {
-                                $selectBox .= "<option value=''>No product types found.</option>";
-                            }
-
-                            $selectBox .= "</select>";
-
-                            echo $selectBox;
-                            ?>
-
-
-
-
-
-                            <label for="">Gender</label>
-                            <select name="gender" class="custom-select hidden">
-                                <option value="" <?php echo empty($product['gender']) ? 'selected' : 'disabled'; ?>>
-                                    Select Gender</option>
-                                <option value="male" <?php echo isset($product['gender']) && $product['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
-                                <option value="female" <?php echo isset($product['gender']) && $product['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
-                            </select>
-
-
-
-
-
-                            <label for="price">Price (₱):</label>
-                            <input type="number" name="price" class="hidden"
-                                value="<?php echo htmlspecialchars($product['price']); ?>">
-
-                            <label for="price">Rent Price (₱):</label>
-                            <input type="number" name="rent_price" class="hidden"
-                                value="<?php echo htmlspecialchars($product['rent_price']); ?>">
 
                             <div style="display:flex; flex-direction:column; align-items: center; width:100%">
                                 <label for="" style="color:var(--text-color)">Product Color
                                 </label>
                                 <input type="color" name="product_color"
-                                    style="height:50px; width:50px; padding:0; border:0; "  value="<?php echo htmlspecialchars($product['product_color']); ?>">
+                                    style="height:50px; width:50px; padding:0; border:0; "
+                                    value="<?php echo htmlspecialchars($product['product_color']); ?>">
                             </div>
 
 
-                            <div class="info-container2"
-                                style="display:flex; flex-direction:row; gap:10px;  flex-wrap: wrap; justify-content: center;justify-content: center; ">
+                            <div class="info-container2">
 
-                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                <div class="info-container3">
                                     <label for="">available extra small </label>
-                                    <input type="number" name="extra_small"  value="<?php echo htmlspecialchars($product['extra_small']); ?>">
+                                    <input type="number" name="extra_small"
+                                        value="<?php echo htmlspecialchars($product['extra_small']); ?>">
                                 </div>
-                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                <div class="info-container3">
                                     <label for="">available small </label>
-                                    <input type="number" name="small"  value="<?php echo htmlspecialchars($product['small']); ?>">
+                                    <input type="number" name="small"
+                                        value="<?php echo htmlspecialchars($product['small']); ?>">
                                 </div>
-                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                <div class="info-container3">
                                     <label for="">available medium </label>
-                                    <input type="number" name="medium"  value="<?php echo htmlspecialchars($product['medium']); ?>">
+                                    <input type="number" name="medium"
+                                        value="<?php echo htmlspecialchars($product['medium']); ?>">
                                 </div>
-                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                <div class="info-container3">
                                     <label for="">available large </label>
-                                    <input type="number" name="large"  value="<?php echo htmlspecialchars($product['large']); ?>">
+                                    <input type="number" name="large"
+                                        value="<?php echo htmlspecialchars($product['large']); ?>">
                                 </div>
-                                <div class="info-container3" style="display:flex; flex-direction:column;">
+                                <div class="info-container3">
                                     <label for="">available extra large </label>
-                                    <input type="number" name="extra_large"  value="<?php echo htmlspecialchars($product['extra_large']); ?>">
+                                    <input type="number" name="extra_large"
+                                        value="<?php echo htmlspecialchars($product['extra_large']); ?>">
                                 </div>
                             </div>
 
@@ -261,6 +294,14 @@ if ($result->num_rows > 0) {
                             <textarea class="hidden"
                                 name="product_description"><?php echo htmlspecialchars($product['product_description']); ?></textarea>
 
+
+
+
+                            <p class="note"><b>Instruction: </b>This section allows you to edit the product details. It
+                                shows the current information of the product. If you want to edit the product, simply
+                                replace the values in the input fields. Click the update button to save the changes you have mine.S</p>
+
+
                             <button type="submit" class="edit-btn hidden">Update Product Details</button>
                         </form>
 
@@ -270,10 +311,11 @@ if ($result->num_rows > 0) {
                         <form id="deleteProductForm" action="process_delete_product.php" class="delete-container"
                             method="post">
                             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-
-                            <a href="open_product.php">Return</a>
                             <button type="button" id="deleteProductBtn" class="delete-btn hidden">Delete
                                 Product</button>
+
+                            <a href="open_product.php">Return</a>
+
                         </form>
 
 
@@ -344,6 +386,25 @@ if ($result->num_rows > 0) {
 
 
 <style>
+    /* Custom file upload button */
+    .custom-file-upload {
+        display: inline-block;
+        padding: 10px;
+        cursor: pointer;
+        background-color: var(--second-bgcolor);
+        color: white;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        border: 0;
+        border-bottom: 1px solid var(---box-shadow);
+    }
+
+    .custom-file-upload:hover {
+        background-color: var(--hover-color);
+    }
+
     .edit-product-container {
         display: flex;
         flex-direction: column;
@@ -369,7 +430,9 @@ if ($result->num_rows > 0) {
     }
 
     .edit-product-container form {
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding-top: 0;
     }
 
@@ -397,12 +460,13 @@ if ($result->num_rows > 0) {
     }
 
     .edit-product-container textarea {
+        width: 90%;
         height: 100px;
         text-align: justify;
     }
 
     .edit-product-container input[type='file'] {
-        width: 100%;
+        text-align: center;
         padding: 10px;
         margin-bottom: 0;
         border: none;
@@ -428,9 +492,10 @@ if ($result->num_rows > 0) {
 
     .edit-product-container button {
         padding: 10px 20px;
-        background-color: var(--button-bg);
-        color: var(--pure-white);
-        border: 1px solid var(--box-shadow);
+        background-color: var(--second-bgcolor);
+        color: var(--text-color);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
@@ -438,11 +503,13 @@ if ($result->num_rows > 0) {
         margin: 5px;
         width: fit-content;
         font-weight: bold;
+
     }
 
     .edit-product-container button:hover {
-        box-shadow: 0 0 0 4px var(--hover-color);
+        background-color: var(--hover-color);
     }
+
 
     .edit-product-container .checkbox-group {
         display: flex;
@@ -461,6 +528,23 @@ if ($result->num_rows > 0) {
         transition: opacity 0.3s;
         font-size: 1.7rem;
         font-weight: bold;
+    }
+
+
+
+    .info-container2 {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        justify-content: center;
+
+    }
+
+    .info-container3 {
+        display: flex;
+        flex-direction: column;
     }
 
     .edit-product-container .color-label input {
@@ -508,8 +592,15 @@ if ($result->num_rows > 0) {
 
     .edit-product-container .new-image-preview {
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         margin-top: 10px;
+        background-color: var(--second-bgcolor);
+        padding: 10px;
+        border: 1px solid var(--box-shadow);
+        border-radius: 5px;
     }
 
     .edit-product-container .new-image-preview img {
@@ -519,6 +610,8 @@ if ($result->num_rows > 0) {
         margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        padding: 5px;
+        background-color: var(--first-bgcolor);
     }
 
 
@@ -528,16 +621,13 @@ if ($result->num_rows > 0) {
 
 
     /* for deletion */
-    .delete-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    .delete-container {}
 
     .delete-container a {
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
@@ -546,10 +636,17 @@ if ($result->num_rows > 0) {
         margin: 5px;
     }
 
+
+    .delete-container a:hover {
+        background-color: var(--hover-color);
+
+    }
+
     .delete-container .delete-btn {
-        background-color: var(--cancel-color);
-        color: white;
-        border: 1px solid var(--box-shadow);
+        background-color: var(--second-bgcolor);
+        color: var(--cancel-color);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
@@ -559,8 +656,7 @@ if ($result->num_rows > 0) {
     }
 
     .delete-btn:hover {
-
-        box-shadow: 0 0 0 4px var(--hover-color);
+        background-color: var(--hover-color);
     }
 
 

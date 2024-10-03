@@ -312,7 +312,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 <style>
     .content h1 {
-        border-radius: 0px;
+
     }
 
     .add-services-container {
@@ -485,7 +485,8 @@ if (!isset($_SESSION['admin_id'])) {
     .button-container a {
         padding: 10px 20px;
         background-color: var(--second-bgcolor);
-        border: 1px solid var(--box-shadow);
+        border: 0;
+        border-bottom: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         font-weight: bold;

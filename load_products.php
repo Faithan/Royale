@@ -11,16 +11,14 @@ $productsPerPage = 8;
 $start = ($page - 1) * $productsPerPage;
 
 // Base SQL query
-$sql = "SELECT id, product_status, product_name, product_type, gender, quantity, price, description, photo 
+$sql = "SELECT *
         FROM products 
         WHERE product_status='active'";
-
 
 // Add filtering conditions
 if ($search) {
     $search = $conn->real_escape_string($search);
-    $sql .= " AND (product_name LIKE '%$search%' OR description LIKE '%$search%' OR product_type LIKE '%$search%'
-            OR price LIKE '%$search%')";
+    $sql .= " AND (product_name LIKE '%$search%' OR product_description LIKE '%$search%')";
 }
 
 if ($product_type !== 'all') {
@@ -63,19 +61,20 @@ if ($result->num_rows > 0) {
                 <?php endforeach; ?>
             </div>
             <h2><?php echo $row['product_name']; ?></h2>
+
+            <div style="display:flex; flex-direction: row; justify-content:center; align-items:center; font-size:1.5rem;">
+                <h3><del>₱<?php echo $row['previous_price']; ?></del></h3>
+                <h3>₱<?php echo $row['price']; ?></h3>
+            </div>
+
             <div class="info-label"><label for="">Product Type:</label>
                 <p><?php echo $row['product_type']; ?></p>
             </div>
             <div class="info-label"><label for="">Gender:</label>
                 <p><?php echo $row['gender']; ?></p>
             </div>
-            <div class="info-label"><label for="">Price:</label>
-                <p>₱ <?php echo $row['price']; ?></p>
-            </div>
-            <div class="info-label"><label for="">Quantity:</label>
-                <p><?php echo $row['quantity']; ?></p>
-            </div>
-            <p class="description"><?php echo $row['description']; ?></p>
+          
+            <p class="description"><?php echo $row['product_description']; ?></p>
 
             <a href="productView.php?view_id=<?php echo $row['id']; ?>">
                 <div class="default-btn">

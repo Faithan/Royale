@@ -151,7 +151,8 @@ body.admin-dark-mode main .content-container {
 .search-container input {
     font-size: 1.5rem;
     color: var(--text-color);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     padding: 10px;
     background-color: var(--second-bgcolor);
     border-radius: 5px;
@@ -161,7 +162,8 @@ body.admin-dark-mode main .content-container {
 .search-container select {
     font-size: 1.5rem;
     color: var(--text-color);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     padding: 10px;
     background-color: var(--second-bgcolor);
     border-radius: 5px;
@@ -171,7 +173,8 @@ body.admin-dark-mode main .content-container {
 .search-container button {
     font-size: 1.5rem;
     color: var(--text-color);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     padding: 10px;
     background-color: var(--second-bgcolor);
     border-radius: 5px;
@@ -216,6 +219,7 @@ th {
     border: 1px solid var(--box-shadow);
     position: sticky;
     top: 0;
+  
 }
 
 /* Style the table rows */
@@ -307,14 +311,12 @@ td img {
     border: 1px solid var(--box-shadow);
 }
 
-.request-details-container button:hover {
-    box-shadow: 0 0 0 4px var(--hover-color);
-}
 
 
-#cancel_button {
-    color: var(--pure-white);
-    background-color: var(--cancel-color);
+
+.cancel_button {
+    color: var(--cancel-color);
+    background-color: var(--second-bgcolor);
 }
 
 
@@ -474,7 +476,8 @@ td img {
     font-size: 1.7rem;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 #return-request:hover {
@@ -482,9 +485,6 @@ td img {
     transition: ease-in-out 0.3s;
 }
 
-.view-button-container button:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
-}
 
 
 
@@ -617,15 +617,7 @@ td img {
     border: 1px solid var(--box-shadow);
 }
 
-.order-details-container button:hover {
-    box-shadow: 0 0 0 4px var(--hover-color);
-}
 
-
-#cancel_button {
-    color: var(--pure-white);
-    background-color: var(--cancel-color);
-}
 
 
 
@@ -664,6 +656,7 @@ td img {
     border: 1px solid var(--box-shadow);
     border-radius: 5px;
 }
+
 
 .information-container {
     display: flex;
@@ -784,17 +777,39 @@ td img {
     font-size: 1.7rem;
     border-radius: 5px;
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 #return-order:hover {
     background-color: var(--hover-color);
 }
 
-.view-button-container button:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+.first-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
+
+.first-button-container  button:hover {
+    background-color:  var(--hover-color);
+}
+
+
+.first-button-container .cancel_button{
+    color: var(--cancel-color);
+    background-color: var(--second-bgcolor);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
+}
+.first-button-container .accept_button{
+    color: var(--button-bg);
+    background-color: var(--second-bgcolor);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
+}
 
 
 

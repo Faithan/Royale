@@ -61,15 +61,19 @@ if ($result->num_rows > 0) {
                 <?php endforeach; ?>
             </div>
             <h2><?php echo $row['product_name']; ?></h2>
+
+            <div style="display:flex; flex-direction: row; justify-content:center; align-items:center; font-size:1.5rem;">
+                <h3><del>₱<?php echo $row['previous_price']; ?></del></h3>
+                <h3>₱<?php echo $row['price']; ?></h3>
+            </div>
+
             <div class="info-label"><label for="">Product Type:</label>
                 <p><?php echo $row['product_type']; ?></p>
             </div>
             <div class="info-label"><label for="">Gender:</label>
                 <p><?php echo $row['gender']; ?></p>
             </div>
-            <div class="info-label"><label for="">Price:</label>
-                <p>₱ <?php echo $row['price']; ?></p>
-            </div>
+        
         
             <p class="description"><?php echo $row['product_description']; ?></p>
 

@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_name = $_POST['product_name'] ?? '';
     $product_type = $_POST['product_type'] ?? '';
     $product_gender = $_POST['product_gender'] ?? '';
-    $product_color = $_POST['color'] ?? '';
-    $product_size = $_POST['size'] ?? '';
+    $product_color = $_POST['product_color'] ?? '';
+    $product_size = $_POST['product_size'] ?? '';
     $product_quantity = $_POST['quantity'] ?? '';
     $product_price = $_POST['price'] ?? '';
     $product_rent_price = $_POST['rent_price'] ?? '';

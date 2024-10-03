@@ -7,7 +7,7 @@ $request_status = isset($_GET['request_status']) ? $conn->real_escape_string($_G
 $gender = isset($_GET['gender']) ? $conn->real_escape_string($_GET['gender']) : '';
 
 // Build query to fetch filtered requests
-$query_requests = "SELECT request_id, request_status, name, service_name, gender, address, special_group, fitting_date, photo 
+$query_requests = "SELECT *
                    FROM royale_request_tbl 
                    WHERE request_type = 'online'"; // Filter by request_type 'online'
 
@@ -24,7 +24,8 @@ if ($gender && $gender !== 'all') {
 // Filter by search query if provided
 if ($search_query) {
     $query_requests .= " AND (request_id LIKE '%$search_query%' 
-                            OR request_status LIKE '%$search_query%' 
+                          OR request_status LIKE '%$search_query%' 
+                          OR work_status LIKE '%$search_query%'
                           OR name LIKE '%$search_query%' 
                           OR service_name LIKE '%$search_query%' 
                           OR address LIKE '%$search_query%' 
@@ -43,6 +44,7 @@ if ($result_requests->num_rows > 0) {
         echo "<tr onclick=\"window.location='online_view_request.php?request_id=" . $row_request['request_id'] . "'\">";
         echo "<td>" . $row_request['request_id'] . "</td>";
         echo "<td>" . ucfirst($row_request['request_status']) . "</td>";
+        echo "<td>" . ucfirst($row_request['work_status']) . "</td>";
         echo "<td>" . $row_request['name'] . "</td>";
         echo "<td>" . $row_request['service_name'] . "</td>";
         echo "<td>" . ucfirst($row_request['gender']) . "</td>";

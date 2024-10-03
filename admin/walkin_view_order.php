@@ -215,10 +215,10 @@ if ($result->num_rows > 0) {
                                 conflicts and workload issues, please ensure you contact the client.
                             </p>
 
-                            <div
+                            <div class="first-button-container"
                                 style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
-                                <button type="submit" name="cancel_order" id="cancel_button">Reject</button>
-                                <button type="submit" name="accept_order" id="accept_button">Accept</button>
+                                <button type="submit" name="cancel_order"  class="cancel_button">Reject</button>
+                                <button type="submit" name="accept_order"  class="accept_button">Accept</button>
                             </div>
 
 
@@ -275,10 +275,10 @@ if ($result->num_rows > 0) {
 
 
 
-                        <div
+                        <div  class="first-button-container"
                             style="align-self: center; display:<?php echo ($row['order_status'] === 'pending' || $row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === '') ? 'none' : 'block'; ?>">
-                            <button type="submit" name="cancel_order" id="cancel_button">Cancel</button>
-                            <button type="submit" name="complete_order" id="complete_button">Complete Order</button>
+                            <button type="submit" name="cancel_order" class="cancel_button" class="cancel_button">Cancel</button>
+                            <button type="submit" name="complete_order" class="accept_button">Complete Order</button>
                         </div>
 
 

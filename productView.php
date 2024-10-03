@@ -114,6 +114,7 @@ if (isset($_GET['view_id'])) {
                     <input type="hidden" name="photo" id="" value="<?php echo $view_data['photo']; ?> ">
                     <input type="hidden" name="order_type" value="online">
                     <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                    <input type="hidden" name="product_color" value="<?php echo $view_data['product_color']; ?> ">
 
 
                     <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
@@ -134,45 +135,194 @@ if (isset($_GET['view_id'])) {
                         ?>
                     </label>
 
-                    <label for="">Available Color:</label>
+
+                    <label for="">Product Color:</label>
                     <div class="color-container">
-                        <?php if (!empty($colors)): ?>
-                            <?php foreach ($colors as $color): ?>
-                                <div style="display: flex; align-items: center;">
-                                    <input type="radio" id="<?php echo trim($color); ?>" name="color"
-                                        value="<?php echo trim($color); ?>" style="display: none;" required>
-                                    <label for="<?php echo trim($color); ?>"
-                                        style="border-color: <?php echo htmlspecialchars(trim($color)); ?>; color: <?php echo htmlspecialchars(trim($color)); ?>; padding: 5px 10px;  border-radius: 5px; cursor: pointer; transition: transform 0.3s;">
-                                        <?php echo htmlspecialchars(trim($color)); ?>
-                                    </label>
-                                </div>
-                            <?php endforeach; ?>
+                        <?php if (!empty($view_data['product_color'])): ?>
+                            <?php
+                            $product_color = trim($view_data['product_color']); // Get the product color
+                            ?>
+                            <div class="color-circle"
+                                style="background-color: <?php echo htmlspecialchars($product_color); ?>;">
+                            </div>
                         <?php else: ?>
-                            <p>No colors available for this product.</p>
+                            <p>No color available for this product.</p>
                         <?php endif; ?>
                     </div>
+
+                    <style>
+                        .color-container {
+                            display: flex;
+                            align-items: center;
+                            /* Center-aligns the circle vertically */
+                            gap: 10px;
+                            /* Space between the circle and any text */
+                        }
+
+                        .color-circle {
+                            width: 35px;
+                            /* Adjust the size of the circle */
+                            height: 35px;
+                            /* Adjust the size of the circle */
+                            border-radius: 50%;
+                            /* Makes the div a circle */
+                            border: 1px solid var(--box-shadow);
+                            /* Optional: adds a border to the circle */
+                        }
+                    </style>
+
 
 
 
                     <label for="">Available Sizes:</label>
                     <div class="size-container">
                         <?php
-                        // Assuming $sizes is an array of sizes fetched from the database
-                        if (!empty($sizes)): ?>
-                            <?php foreach ($sizes as $size): ?>
-                                <div style="display: flex; align-items: center;">
-                                    <input type="radio" id="<?php echo trim($size); ?>" name="size"
-                                        value="<?php echo trim($size); ?>" style="display: none;" required>
-                                    <label for="<?php echo trim($size); ?>"
-                                        style="border-color: var(--color-border); color: var(--color-text); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: transform 0.3s;">
-                                        <?php echo htmlspecialchars(trim($size)); ?>
+                        // Fetch product details
+                        $view_query = "SELECT * FROM products WHERE id = ?";
+                        if ($stmt = $conn->prepare($view_query)) {
+                            $stmt->bind_param('i', $view_id);
+                            $stmt->execute();
+                            $view_result = $stmt->get_result();
+                            $view_data = $view_result->fetch_assoc();
+                            $stmt->close();
+                        } else {
+                            $response['message'] = 'Failed to prepare SQL statement for fetching product details.';
+                            echo json_encode($response);
+                            exit;
+                        }
+
+                        // Map column names to human-readable size labels
+                        $sizes = [
+                            'extra_small' => 'Extra Small',
+                            'small' => 'Small',
+                            'medium' => 'Medium',
+                            'large' => 'Large',
+                            'extra_large' => 'Extra Large',
+                        ];
+
+                        // Fetch size quantities
+                        foreach ($sizes as $size_col => $size_name) {
+                            $quantities[$size_col] = intval($view_data[$size_col]);
+                        }
+                        ?>
+
+                        <div class="size-container">
+                            <?php if (!empty($quantities)): ?>
+                                <?php foreach ($quantities as $size_col => $quantity): ?>
+                                    <label class="size-box <?php echo $quantity == 0 ? 'disabled' : ''; ?>">
+                                        <!-- Value now set to column name -->
+                                        <input type="radio" name="product_size" value="<?php echo $size_col; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
+                                        <!-- Display human-readable size and quantity -->
+                                        <span><?php echo $sizes[$size_col] . ' (' . $quantity . ')'; ?></span>
                                     </label>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>No sizes available for this product.</p>
-                        <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No sizes available for this product.</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
+
+                    <style>
+                        .size-container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                            /* Space between boxes */
+                        }
+
+                        .size-box {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            text-align: center;
+                            padding: 10px;
+                            /* Height of the size box */
+                            border-radius: 5px;
+                            /* Rounded corners */
+                            cursor: pointer;
+                            /* Pointer on hover */
+                            background-color: var(--second-bgcolor);
+                            /* Light background color */
+                            position: relative;
+                            transition: background-color 0.3s;
+                            /* Smooth transition for background color */
+                        }
+
+                        .size-box span {
+                            font-size: 1.5rem;
+                            font-weight: bold;
+                        }
+
+                        .size-box:hover {
+                            background-color: var(--hover-color);
+                            /* Change color on hover */
+                        }
+
+                        .size-box input[type="radio"] {
+                            display: none;
+                            /* Hide radio buttons */
+                        }
+
+                        .size-box.disabled {
+                            background-color: var(--first-bgcolor);
+                            /* Gray background for disabled */
+                            border-color: #f5c6cb;
+                            /* Gray border for disabled */
+                            cursor: not-allowed;
+                            /* Not-allowed cursor for disabled */
+                        }
+
+                        .size-box.disabled span {
+                            color: #f5c6cb;
+                            /* Gray text color for disabled */
+                            pointer-events: none;
+                            /* Prevent clicks on disabled sizes */
+                        }
+
+                        .size-box.checked {
+                            border: 2px solid var(--text-color);
+                            /* Change to your desired checked color */
+                        }
+                    </style>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const sizeBoxes = document.querySelectorAll('.size-box');
+
+                            sizeBoxes.forEach(box => {
+                                box.addEventListener('click', function () {
+                                    // Uncheck all boxes and remove checked class
+                                    sizeBoxes.forEach(b => {
+                                        b.classList.remove('checked');
+                                        b.querySelector('input[type="radio"]').checked = false;
+                                    });
+
+                                    // Check the clicked box's radio input and add checked class
+                                    const radioInput = box.querySelector('input[type="radio"]');
+                                    if (radioInput && !box.classList.contains('disabled')) {
+                                        radioInput.checked = true;
+                                        box.classList.add('checked');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+
+
+
+
+
+
+                    <?php
+                    // Example PHP logic to sum up sizes (Make sure this runs correctly)
+                    $total_quantity = 0;
+                    $total_quantity += intval($view_data['extra_small']);
+                    $total_quantity += intval($view_data['small']);
+                    $total_quantity += intval($view_data['medium']);
+                    $total_quantity += intval($view_data['large']);
+                    $total_quantity += intval($view_data['extra_large']);
+                    ?>
 
 
                     <label for="quantity">Quantity:</label>
@@ -182,22 +332,28 @@ if (isset($_GET['view_id'])) {
                         <button type="button" id="increase-quantity" class="quantity-button">+</button>
                     </div>
 
-
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             const quantityInput = document.getElementById('quantity');
                             const increaseButton = document.getElementById('increase-quantity');
                             const decreaseButton = document.getElementById('decrease-quantity');
 
-                            // Increase quantity
+                            // Set the available quantity (This should come from your PHP logic)
+                            const availableQuantity = <?php echo $total_quantity; ?>; // Ensure this outputs the correct total
+
+                            // Update the quantity input value based on available quantity
                             increaseButton.addEventListener('click', function () {
-                                quantityInput.value = parseInt(quantityInput.value) + 1;
+                                const currentQuantity = parseInt(quantityInput.value);
+                                if (currentQuantity < availableQuantity) { // Check if the current quantity is less than available
+                                    quantityInput.value = currentQuantity + 1;
+                                }
                             });
 
                             // Decrease quantity
                             decreaseButton.addEventListener('click', function () {
-                                if (parseInt(quantityInput.value) > 1) {
-                                    quantityInput.value = parseInt(quantityInput.value) - 1;
+                                const currentQuantity = parseInt(quantityInput.value);
+                                if (currentQuantity > 1) { // Ensure it doesn't go below 1
+                                    quantityInput.value = currentQuantity - 1;
                                 }
                             });
                         });
@@ -207,10 +363,39 @@ if (isset($_GET['view_id'])) {
 
 
 
-                    <label for="">Stocks: <?php echo $view_data['quantity'] ?></label>
 
-                    <p><?php echo $view_data['description']; ?></p>
 
+                    <?php
+                    // Fetch product details
+                    $view_query = "SELECT * FROM products WHERE id = ?";
+                    if ($stmt = $conn->prepare($view_query)) {
+                        $stmt->bind_param('i', $view_id);
+                        $stmt->execute();
+                        $view_result = $stmt->get_result();
+                        $view_data = $view_result->fetch_assoc();
+                        $stmt->close();
+                    } else {
+                        $response['message'] = 'Failed to prepare SQL statement for fetching product details.';
+                        echo json_encode($response);
+                        exit;
+                    }
+
+                    // Calculate total quantity from size columns
+                    $total_quantity = 0; // Initialize total quantity
+                    
+                    // Sum the values from each size column
+                    $total_quantity = intval($view_data['extra_small']) +
+                        intval($view_data['small']) +
+                        intval($view_data['medium']) +
+                        intval($view_data['large']) +
+                        intval($view_data['extra_large']);
+                    ?>
+
+                    <label for="">Total Stocks: <span><?php echo $total_quantity; ?></span>
+                        <!-- Display total quantity --> </label>
+
+
+                    <p><?php echo $view_data['product_description']; ?></p>
 
                     <div class="customer-info-container hidden">
                         <h1>Customer's Information</h1>
@@ -242,12 +427,12 @@ if (isset($_GET['view_id'])) {
                                 title="Select the time for pickup" required>
                         </div>
 
-                        <h1 >Number of days <em style="font-size:1.5rem">(for rent only)</em></h1>
+                        <h1>Number of days <em style="font-size:1.5rem">(for rent only)</em></h1>
 
                         <div class="customer-input-container hidden">
                             <input type="number" name="days_of_rent" placeholder="Enter number of days"
-                                title="enter number of days" >
-                          
+                                title="enter number of days">
+
                         </div>
 
 
@@ -266,12 +451,11 @@ if (isset($_GET['view_id'])) {
                         </div>
                         <div>
                             <button class="action-button" type="submit" name="action" value="rent">
-                                <i class="fa-solid fa-hand-holding-heart"></i> RENT  ₱<?php echo $view_data['rent_price'] ?>/day
+                                <i class="fa-solid fa-hand-holding-heart"></i> RENT
+                                ₱<?php echo $view_data['rent_price'] ?>/day
                             </button>
                         </div>
                     </div>
-
-
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
@@ -280,34 +464,44 @@ if (isset($_GET['view_id'])) {
                                 .then(data => {
                                     const buttons = document.querySelectorAll('.action-button');
 
-                                    if (data.loggedIn) {
-                                        // Enable buttons if user is logged in
-                                        buttons.forEach(button => {
-                                            button.classList.remove('not-allowed');
-                                            button.disabled = false; // Optional: Enable the button
-                                        });
-                                    } else {
-                                        // Change text and add the not-allowed class if not logged in
+                                    // Check total quantity
+                                    const totalQuantity = <?php echo json_encode($total_quantity); ?>;
+
+                                    if (totalQuantity === 0) {
                                         buttons.forEach(button => {
                                             button.classList.add('not-allowed');
-                                            button.disabled = true; // Optional: Disable the button
-
-                                            // Change button text directly
-                                            if (button.name === 'action' && button.value === 'buy') {
-                                                button.textContent = 'Log in to order';
-                                            } else if (button.name === 'action' && button.value === 'rent') {
-                                                button.textContent = 'Log in to rent';
-                                            }
+                                            button.disabled = true;
+                                            // Add tooltip text
+                                            button.setAttribute('title', 'Out of stock');
                                         });
+                                    } else {
+                                        if (data.loggedIn) {
+                                            // Enable buttons if user is logged in
+                                            buttons.forEach(button => {
+                                                button.classList.remove('not-allowed');
+                                                button.disabled = false;
+                                            });
+                                        } else {
+                                            // Change text and add the not-allowed class if not logged in
+                                            buttons.forEach(button => {
+                                                button.classList.add('not-allowed');
+                                                button.disabled = true;
+
+                                                // Change button text directly
+                                                if (button.name === 'action' && button.value === 'buy') {
+                                                    button.textContent = 'Log in to order';
+                                                } else if (button.name === 'action' && button.value === 'rent') {
+                                                    button.textContent = 'Log in to rent';
+                                                }
+                                            });
+                                        }
                                     }
                                 })
                                 .catch(error => {
                                     console.error('Error checking login status:', error);
                                 });
                         });
-
                     </script>
-
 
                     <style>
                         .action-button {
@@ -324,7 +518,6 @@ if (isset($_GET['view_id'])) {
                             /* Prevent any interaction */
                         }
                     </style>
-
 
                 </form>
 
