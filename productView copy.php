@@ -82,45 +82,21 @@ if (isset($_GET['view_id'])) {
 
 
     <main>
-
+   
 
         <div class="details-main-contianer hidden">
+     
 
-            <!-- Product Image Gallery -->
+            <!-- Display multiple product images in a gallery format -->
             <div class="product-image-gallery">
                 <?php if (!empty($photos)): ?>
-                    <!-- Main Product Image -->
-                    <div class="main-product-image">
-                        <img src="admin/products/<?php echo trim($photos[0]); ?>" id="mainImage" alt="Main Product Image">
-                    </div>
-                    <!-- Thumbnail Images -->
-                    <div class="thumbnail-container">
-                        <?php foreach ($photos as $photo): ?>
-                            <img src="admin/products/<?php echo trim($photo); ?>" class="thumbnail" alt="Thumbnail Image"
-                                onclick="changeImage(this)">
-                        <?php endforeach; ?>
-                    </div>
+                    <?php foreach ($photos as $photo): ?>
+                        <img src="admin/products/<?php echo trim($photo); ?>" class="product-image" alt="Product Image">
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>No images available for this product.</p>
                 <?php endif; ?>
             </div>
-
-
-
-            <script>
-                function changeImage(thumbnail) {
-                    const mainImage = document.getElementById('mainImage');
-                    mainImage.src = thumbnail.src; // Change the main image source to the clicked thumbnail
-
-                    // Update the active thumbnail class
-                    const thumbnails = document.querySelectorAll('.thumbnail');
-                    thumbnails.forEach(thumb => {
-                        thumb.classList.remove('active'); // Remove active class from all thumbnails
-                    });
-                    thumbnail.classList.add('active'); // Add active class to the clicked thumbnail
-                }
-            </script>
-
 
 
             <div class="details-container hidden">
@@ -253,7 +229,6 @@ if (isset($_GET['view_id'])) {
                             flex-wrap: wrap;
                             gap: 10px;
                             /* Space between boxes */
-                            
                         }
 
                         .size-box {
@@ -271,15 +246,12 @@ if (isset($_GET['view_id'])) {
                             /* Light background color */
                             position: relative;
                             transition: background-color 0.3s;
-                          
-                      
                             /* Smooth transition for background color */
                         }
 
                         .size-box span {
                             font-size: 1.5rem;
                             font-weight: bold;
-                            
                         }
 
                         .size-box:hover {

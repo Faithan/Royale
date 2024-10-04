@@ -230,7 +230,7 @@ body.dark-mode .home-container::before {
 
 .service-box {
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 10px;
     padding: 40px;
     min-width: 400px;
@@ -420,7 +420,7 @@ body.dark-mode .home-container::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     margin-bottom: 20px;
 }
@@ -444,7 +444,7 @@ body.dark-mode .readymade-products-container {
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-left: none;
     border-right: none;
 }
@@ -452,7 +452,7 @@ body.dark-mode .readymade-products-container {
 
 .search-input {
     padding: 10px 20px;
-    border:0;
+    border: 0;
     border-bottom: 1px solid var(--box-shadow);
     border-radius: 25px;
     font-size: 1.5rem;
@@ -471,7 +471,7 @@ body.dark-mode .readymade-products-container {
 
 .custom-select {
     padding: 10px 10px;
-    border:0;
+    border: 0;
     border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     font-size: 1.5rem;
@@ -488,7 +488,7 @@ body.dark-mode .readymade-products-container {
 
 }
 
-.custom-select:hover{
+.custom-select:hover {
     background-color: var(--hover-color);
 }
 
@@ -517,7 +517,7 @@ body.dark-mode .readymade-products-container {
     color: var(--text-color);
     padding: 20px;
     border-radius: 5px;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 
@@ -538,7 +538,7 @@ body.dark-mode .readymade-products-container {
 }
 
 .readymade-box h3 {
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     font-size: 2rem;
     text-transform: capitalize;
@@ -587,7 +587,7 @@ body.dark-mode .readymade-products-container {
     padding: 10px 15px;
     margin: 0 5px;
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     color: var(--text-color);
     text-decoration: none;
@@ -623,7 +623,7 @@ body.dark-mode .readymade-products-container {
     outline: none;
     cursor: pointer;
     border-radius: 10px;
-    border: solid 4px var(--box-shadow);
+    border-bottom: solid 4px var(--box-shadow);
     font-family: inherit;
     justify-content: center;
 
@@ -712,7 +712,7 @@ a:hover .hover-btn {
 
 .productType-box {
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 10px;
     padding: 40px;
     min-width: 400px;
@@ -808,9 +808,7 @@ a:hover .hover-btn {
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 1;
-    border: 1px solid var(--box-shadow);
-    border-left: none;
-    border-right: none;
+    border: none;
     display: flex;
     flex-direction: column;
 }
@@ -855,9 +853,11 @@ body.dark-mode .about-container {
     padding: 5px;
     background-color: var(--first-bgcolor);
 }
+
 body.dark-mode .about-container img {
     content: url('../system_images/whitelogo.png');
 }
+
 body.dark-mode .about-container #tailordo {
     content: url('../system_images/tailordo.jpg');
 }
@@ -950,7 +950,8 @@ body.dark-mode .about-container #tailordo {
     color: var(--text-color);
     padding: 5px;
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 
@@ -961,14 +962,16 @@ body.dark-mode .about-container #tailordo {
     color: var(--text-color);
     padding: 5px;
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
 }
 
 .right button {
     padding: 10px;
     color: var(--pure-white);
     font-weight: bold;
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     background-color: var(--button-bg);
 }

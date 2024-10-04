@@ -63,7 +63,7 @@ if ($result->num_rows > 0) {
             <h2><?php echo $row['product_name']; ?></h2>
 
             <div style="display:flex; flex-direction: row; justify-content:center; align-items:center; font-size:1.5rem;">
-                <h3><del>₱<?php echo $row['previous_price']; ?></del></h3>
+                <h3 style="font-size: 1.5rem; color: var(--text-color2);"><del>₱<?php echo $row['previous_price']; ?></del></h3>
                 <h3>₱<?php echo $row['price']; ?></h3>
             </div>
 

@@ -70,7 +70,7 @@ if (isset($_GET['order_id'])) {
     <main>
 
 
-        <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> Order Viewer</h1>
+    
 
         <div class="image-container hidden">
             <?php

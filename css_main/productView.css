@@ -57,31 +57,72 @@ main h1 {
 
 
 
-.details-main-contianer .product-image-gallery{
-    overflow-x: scroll;
-    border: 1px solid var(--box-shadow);
+
+
+
+
+.product-image-gallery {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--box-shadow);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.main-product-image img {
+    border-radius: 5px;
+    max-width: 400px;
+    /* Responsive */
+    max-height: 400px;
+    /* Maintain aspect ratio */
+}
+
+.thumbnail-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: scroll;
+    /* Allows horizontal scrolling */
     gap: 10px;
     padding: 10px;
     background-color: var(--second-bgcolor);
-    border-radius: 5px;
-    min-width: 35%;
-    max-width: 40%;
+
+    width: 100%;
+    /* Full width */
 }
 
-
-
-.product-image-gallery img{
+.thumbnail {
     border-radius: 5px;
     border: 1px solid var(--box-shadow);
-    align-self: flex-start;
-    height: 100%;
-    max-width: 500px;
-    margin: 0;
-    background-color: var(--first-bgcolor);
-    padding: 5px;
+    max-width: 100px;
+    /* Thumbnail width */
+    cursor: pointer;
+    /* Change cursor on hover */
+    opacity: 0.5;
+    /* Semi-transparent */
+    transition: opacity 0.3s ease;
+    /* Smooth transition */
 }
+
+.thumbnail.active {
+    opacity: 1;
+    /* Fully opaque for the active thumbnail */
+    box-shadow: 0 0 4px var(--hover-color);
+    /* Dark shadow effect */
+}
+
+.thumbnail:hover {
+    opacity: 0.8;
+    /* Slightly increase opacity on hover */
+}
+
+
+
+
+
+
+
+
 
 .details-main-contianer .details-container {
     border-radius: 5px;
@@ -166,7 +207,7 @@ main h1 {
 }
 
 
-#quantity{
+#quantity {
     background-color: var(--first-bgcolor);
     color: var(--text-color);
 }
@@ -181,12 +222,15 @@ main h1 {
 
 .color-container label {
     display: inline-block;
-    border: 1px solid transparent; /* Add border for the active state */
+    border: 1px solid transparent;
+    /* Add border for the active state */
 }
 
-.color-container input[type="radio"]:checked + label {
-    background-color: var(--hover-color); /* Change the border color when selected */
-    transform: scale(1.05); /* Scale up the selected label for a nice effect */
+.color-container input[type="radio"]:checked+label {
+    background-color: var(--hover-color);
+    /* Change the border color when selected */
+    transform: scale(1.05);
+    /* Scale up the selected label for a nice effect */
 }
 
 
@@ -200,12 +244,15 @@ main h1 {
 
 .size-container label {
     display: inline-block;
-    border: 1px solid transparent; /* Add border for the active state */
+    border: 1px solid transparent;
+    /* Add border for the active state */
 }
 
-.size-container input[type="radio"]:checked + label {
-    background-color: var(--hover-color); /* Change the border color when selected */
-    transform: scale(1.05); /* Scale up the selected label for a nice effect */
+.size-container input[type="radio"]:checked+label {
+    background-color: var(--hover-color);
+    /* Change the border color when selected */
+    transform: scale(1.05);
+    /* Scale up the selected label for a nice effect */
 }
 
 
@@ -218,7 +265,8 @@ main h1 {
 }
 
 .quantity-button {
-    background-color: var(--second-bgcolor); /* Primary color */
+    background-color: var(--second-bgcolor);
+    /* Primary color */
     color: var(--text-color);
     border: 1px solid var(--box-shadow);
     border-radius: 50%;
@@ -231,7 +279,8 @@ main h1 {
 }
 
 .quantity-button:hover {
-    background-color: var(--hover-color); /* Darker shade on hover */
+    background-color: var(--hover-color);
+    /* Darker shade on hover */
 }
 
 .quantity-input {
@@ -239,15 +288,18 @@ main h1 {
     text-align: center;
     border: none;
     border-radius: 5px;
-    margin: 0 0 0 10px; /* Space between buttons and input */
+    margin: 0 0 0 10px;
+    /* Space between buttons and input */
     font-size: 1.8rem;
     font-weight: bold;
     padding: 5px;
 }
 
 .quantity-input:focus {
-    outline: none; /* Remove default focus outline */
-    border-color: #007bff; /* Highlight border on focus */
+    outline: none;
+    /* Remove default focus outline */
+    border-color: #007bff;
+    /* Highlight border on focus */
 }
 
 
@@ -331,18 +383,26 @@ main h1 {
 
 
 
-.product-buttons-container #return {
+main .return-button {
+    width: 100%;
     background-color: var(--second-bgcolor);
     color: var(--text-color);
-    padding: 8px 10px;
+    padding: 10px;
     border-radius: 5px;
     font-weight: bold;
     border: 0;
     border-bottom: 1px solid var(--box-shadow);
     font-size: 1.4rem;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.product-buttons-container #return:hover {
+main .return-button a {
+    display: block;
+}
+
+main .return-button:hover {
     background-color: var(--hover-color);
     transition: ease-in-out 0.3s;
 }
@@ -470,22 +530,65 @@ main h1 {
     }
 
 
-    .details-main-contianer .product-image-gallery{
-        overflow-x: scroll;
-        border: 1px solid var(--box-shadow);
+
+
+    .product-image-gallery {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
+       
+        margin-top: 10px;
+    }
+
+    .main-product-image img {
+        border-radius: 5px;
+        max-width: 400px;
+        /* Responsive */
+        max-height: 250px;
+        /* Maintain aspect ratio */
+    }
+
+    .thumbnail-container {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: scroll;
+        /* Allows horizontal scrolling */
         gap: 10px;
         padding: 10px;
         background-color: var(--second-bgcolor);
+        width: 100%;
+        /* Full width */
+    }
+
+    .thumbnail {
         border-radius: 5px;
-        min-width: 100%;
-     
+        border: 1px solid var(--box-shadow);
+        max-width: 60px;
+        /* Thumbnail width */
+        cursor: pointer;
+        /* Change cursor on hover */
+        opacity: 0.5;
+        /* Semi-transparent */
+        transition: opacity 0.3s ease;
+        /* Smooth transition */
+    }
+
+    .thumbnail.active {
+        opacity: 1;
+        /* Fully opaque for the active thumbnail */
+        box-shadow: 0 0 4px var(--hover-color);
+        /* Dark shadow effect */
+    }
+
+    .thumbnail:hover {
+        opacity: 0.8;
+        /* Slightly increase opacity on hover */
     }
 
 
 
-    
+
+
 
 
     .details-main-contianer img {
@@ -501,9 +604,9 @@ main h1 {
 
 
 
-    
 
- 
+
+
 
 
 
@@ -521,7 +624,7 @@ main h1 {
         width: 100%;
     }
 
-  
+
 
 
 }

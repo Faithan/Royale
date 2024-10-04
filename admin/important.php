@@ -54,19 +54,6 @@ toastr.success('Product updated successfully!');
 </script>
 
 
-<script>
-        // Configure Toastr options globally
-        toastr.options = {
-          "positionClass": "toast-bottom-right", // Change to your preferred position
-          "closeButton": true,
-          "progressBar": true,
-          "timeOut": "2000",
-          "extendedTimeOut": "1000"
-        };
-
-        // Example of triggering a notification
-        toastr.success('Product updated successfully!');
-    </script>
 
 
 <!-- use this to disable right click -->
