@@ -24,9 +24,9 @@ main {
     width: 100%;
     height: calc(100vh - 60px);
     margin-top: 60px;
-    background-color: var(--first-bgcolor);
+    background-color: var(--second-bgcolor);
     overflow-y: scroll;
-    border-top: 1px solid var(--box-shadow);
+  
     padding: 10px;
 }
 
@@ -65,9 +65,10 @@ main h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     padding: 10px;
     border-radius: 5px;
+    background-color: var(--first-bgcolor);
 }
 
 .main-product-image img {
@@ -86,7 +87,7 @@ main h1 {
     gap: 10px;
     padding: 10px;
     background-color: var(--second-bgcolor);
-
+    border-bottom: 1px solid var(--box-shadow);
     width: 100%;
     /* Full width */
 }
@@ -129,7 +130,7 @@ main h1 {
     width: 100%;
     height: 100%;
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -385,7 +386,7 @@ main h1 {
 
 main .return-button {
     width: 100%;
-    background-color: var(--second-bgcolor);
+    background-color: var(--first-bgcolor);
     color: var(--text-color);
     padding: 10px;
     border-radius: 5px;

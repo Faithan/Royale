@@ -28,3 +28,24 @@
         elements.forEach(element => observer.observe(element));
     });
 </script>
+
+
+<style>
+    .toast-top-right-custom {
+        top: 65px; /* Adjust this value to move it lower */
+        right: 0; /* You can also adjust this for horizontal positioning */
+    }
+</style>
+
+<script>
+    toastr.options = {
+        "positionClass": "toast-top-right-custom", // Using the custom class
+        "closeButton": true,
+        "progressBar": true,
+        "timeOut": "2000",
+        "extendedTimeOut": "1000"
+    };
+
+    // Triggering a Toastr notification
+    toastr.success('Product updated successfully!');
+</script>
