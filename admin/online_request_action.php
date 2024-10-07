@@ -63,7 +63,6 @@ if (isset($_POST['accept_request'])) {
 
 
 
-
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
 
@@ -76,10 +75,11 @@ if (isset($_POST['update_request'])) {
     $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : null;
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
 
-    // Prepare SQL query, using IFNULL to keep existing values if the inputs are empty
+    // Prepare SQL query, adding work_status = 'pending'
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = ?, 
+            work_status = 'pending', 
             measurement = IFNULL(?, measurement), 
             fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
@@ -91,7 +91,7 @@ if (isset($_POST['update_request'])) {
         WHERE request_id = ?
     ");
 
-    // Bind parameters (7 values, so 7 type definitions)
+    // Bind parameters (8 values since work_status is hardcoded)
     $new_status = "ongoing";
     $stmt->bind_param("sssssssssi", $new_status, $measurement, $fee, $special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
 

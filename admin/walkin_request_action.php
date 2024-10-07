@@ -48,10 +48,11 @@ if (isset($_POST['accept_request'])) {
 
 
 
-
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
+
     $measurement = !empty($_POST['measurement']) ? $_POST['measurement'] : null;
+    $fee = !empty($_POST['fee']) ? $_POST['fee'] : null;
     $special_group = !empty($_POST['special_group']) ? $_POST['special_group'] : null;
     $assigned_employee = !empty($_POST['assigned_employee']) ? $_POST['assigned_employee'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
@@ -59,11 +60,13 @@ if (isset($_POST['update_request'])) {
     $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : null;
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
 
-    // Prepare SQL query, using IFNULL to keep existing values if the inputs are empty
+    // Prepare SQL query, adding work_status = 'pending'
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = ?, 
+            work_status = 'pending', 
             measurement = IFNULL(?, measurement), 
+            fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
             assigned_employee = IFNULL(?, assigned_employee), 
             deadline = IFNULL(?, deadline), 
@@ -73,9 +76,9 @@ if (isset($_POST['update_request'])) {
         WHERE request_id = ?
     ");
 
-    // Bind parameters (7 values, so 7 type definitions)
+    // Bind parameters (8 values since work_status is hardcoded)
     $new_status = "ongoing";
-    $stmt->bind_param("ssssssssi", $new_status, $measurement,$special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
+    $stmt->bind_param("sssssssssi", $new_status, $measurement, $fee, $special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message
@@ -85,7 +88,6 @@ if (isset($_POST['update_request'])) {
         echo "Error updating record: " . $stmt->error;
     }
 }
-
 
 
 

@@ -58,7 +58,7 @@ if ($result->num_rows > 0) {
 
         <?php
         include 'sidenav.php'
-            ?>
+        ?>
 
         <main>
             <div class="header-container">
@@ -350,7 +350,14 @@ if ($result->num_rows > 0) {
                             }
 
                             // Fetch the current work status from the database
-                            $current_work_status = ''; // You should set this to the current work status from your database
+                            $request_id = $row['request_id']; // Assuming you have the request ID in the $row variable
+                            $current_status_query = "SELECT work_status FROM royale_request_tbl WHERE request_id = ?";
+                            $stmt = $conn->prepare($current_status_query);
+                            $stmt->bind_param("i", $request_id);
+                            $stmt->execute();
+                            $stmt->bind_result($current_work_status);
+                            $stmt->fetch();
+                            $stmt->close();
                             ?>
 
                             <div class="request-details">
@@ -368,6 +375,7 @@ if ($result->num_rows > 0) {
                                     ?>
                                 </select>
                             </div>
+
 
 
 
@@ -505,7 +513,7 @@ if ($result->num_rows > 0) {
 
 <!-- JavaScript for showing/hiding buttons -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var status = document.querySelector('.content').getAttribute('data-status');
         var buttons = {
             accept_button: ['Pending'],
@@ -514,7 +522,7 @@ if ($result->num_rows > 0) {
             cancel_button: ['Pending']
         };
 
-        Object.keys(buttons).forEach(function (buttonId) {
+        Object.keys(buttons).forEach(function(buttonId) {
             document.getElementById(buttonId).style.display =
                 buttons[buttonId].includes(status) ? 'inline-block' : 'none';
         });

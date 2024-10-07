@@ -805,7 +805,7 @@ td img {
     border-bottom: 1px solid var(--box-shadow);
 }
 .first-button-container .accept_button{
-    color: var(--button-bg);
+    color: var(--text-color);
     background-color: var(--second-bgcolor);
     border: 0;
     border-bottom: 1px solid var(--box-shadow);

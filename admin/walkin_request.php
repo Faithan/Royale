@@ -93,6 +93,7 @@ if (!$result) {
                                 <tr>
                                     <th>Request ID</th>
                                     <th>Request Status</th>
+                                    <th>Work Status <em style="font-size: 1rem;">(form employee)</em></th>
                                     <th>Name</th>
                                     <th>Service Name</th>
                                     <th>Gender</th>

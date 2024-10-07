@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+
+
+
+@font-face {
+    font-family: Royale;
+    src: url(../fonts/BaskervvilleSC-Regular.ttf);
+}
+
+
+/* scroll bar settings */
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--first-bgcolor);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--second-bgcolor);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--thumb-hover);
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+:root {
+    --thumb-hover: #c5c5c5;
+
+    font-size: 62.5%;
+    /* 10px on default */
+
+    --pure-white: white;
+    --first-bgcolor: white;
+
+    --second-bgcolor: #F4F4F4;
+
+
+    --text-color: #001C31;
+    --text-shadow: rgb(200, 200, 200);
+    --border-color: #001C31;
+    --hover-color: #2326452f;
+    --box-shadow: #A4ADB4;
+    --box-shadow-hover: rgb(221, 221, 221);
+
+    /* home */
+    --padding-color: #F4F4F4;
+
+    --search-hover: #474866;
+
+    --shopnow-bg: #001C31;
+    --return-bg: #414141;
+    --button-bg: #001C31;
+    --button-bg2: rgba(0, 43, 76, 0.637);
+
+    --text-bg: #001C31;
+
+
+    --cancel-color: #dc3545;
+}
+
+
+.admin-dark-mode {
+
+    --thumb-hover: #6f6f6f;
+
+    --text-color: white;
+    --first-bgcolor: #242526;
+    --second-bgcolor: #18191A;
+    --text-shadow: rgb(105, 105, 105);
+    --border-color: #25274D;
+    --hover-color: #6f6f6f;
+    --padding-color: #18191A;
+
+
+    --box-shadow: #606161;
+    --box-shadow-hover: rgb(57, 57, 57);
+
+    --shopnow-bg: #131415;
+
+
+
+}
+
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+
+}
+
+p {
+    font-family: 'Anton', Arial, sans-serif;
+}
+
+h1 {
+    font-size: 6rem;
+    color: var(--text-color);
+    text-align: start;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+
+
+
+
+/* page animation */
+
+.hidden-animation{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.6s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* nav shadow */
+
+.navigation-container {
+    transition: box-shadow 0.3s ease;
+}
+
+.navigation-container.shadow {
+    box-shadow: 0 4px 2px -3px var(--box-shadow);
+}
+
+
+
+
+
+
+
+
+/* toastr */
+/* Customize the Toastr container */
+.toast-container {
+    z-index: 9999 !important;
+    /* Ensure it appears above other content */
+}
+
+/* Customize success toast */
+.toast-success {
+    background-color: var(--button-bg) !important;
+    /* Green color for success */
+    color: #fff;
+}
+
+/* Customize error toast */
+.toast-error {
+    background-color: var(--cancel-color) !important;
+    /* Red color for error */
+    color: #fff;
+}
+
+/* Customize the toast title */
+.toast-title {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Customize the toast message */
+.toast-message {
+    font-size: 1.4rem !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* loading screen effect */
+
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    /* Ensure it's on top of all content */
+
+
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--first-bgcolor);
+    /* Dark overlay */
+    z-index: -1;
+    /* Behind the spinner */
+}
+
+.lds-facebook {
+    color: var(--text-color);
+    /* Change color here */
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: currentColor;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0s;
+}
+
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+
+    50%,
+    100% {
+        top: 24px;
+        height: 32px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
