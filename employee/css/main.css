@@ -58,6 +58,7 @@ html {
 
 
     --text-color: #001C31;
+    --text-color2: gray;
     --text-shadow: rgb(200, 200, 200);
     --border-color: #001C31;
     --hover-color: #2326452f;
@@ -119,14 +120,6 @@ a {
 
 p {
     font-family: 'Anton', Arial, sans-serif;
-}
-
-h1 {
-    font-size: 6rem;
-    color: var(--text-color);
-    text-align: start;
-    margin-bottom: 40px;
-    align-items: center;
 }
 
 
@@ -292,6 +285,63 @@ h1 {
 
 
 
+/* nav */
+header {
+    background-color: var(--first-bgcolor);
+    color: var(--text-color);
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    font-weight: bold;
+
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 2px var(--text-shadow);
+}   
+
+nav {
+    display: none;
+    flex-direction: column;
+
+    width: 100%;
+
+}
+
+.nav-toggle {
+    display: block;
+    background-color: var(--first-bgcolor);
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 2.5rem;
+
+}
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav-links li {
+    padding: 15px;
+    text-align: center;
+    background-color: var(--second-bgcolor);
+    border-bottom: 1px solid var(--first-bgcolor);
+ 
+}
+
+.nav-links li a {
+    font-size: 2rem;
+    text-decoration: none;
+    display: block;
+    color: var(--text-color);
+}
 
 
 

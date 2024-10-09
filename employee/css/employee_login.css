@@ -28,10 +28,10 @@ body.dark-mode {
 }
 
 .login-box {
-    background-color: var(--first-bgcolor);
+    background-color: white;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;    
+    box-shadow: 0 15px 25px var(--box-shadow);
     text-align: center;
     width: 350px;
   

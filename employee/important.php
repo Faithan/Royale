@@ -12,7 +12,7 @@
 <script src="../toastr/toastr.min.js"></script>
 
 
-
+<link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
 
 
 
@@ -22,7 +22,7 @@
 <!-- scroll animation -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const elements = document.querySelectorAll('.hidden');
+        const elements = document.querySelectorAll('.hidden-animation');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

@@ -1,0 +1,106 @@
+
+/* Basic reset for mobile compatibility */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--second-bgcolor);
+}
+
+
+.dashboard-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.dashboard-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px var(--hover-color);
+    margin-bottom: 20px;
+}
+
+
+.dashboard-card h1{
+    font-size: 2.5rem;
+}
+
+.dashboard-card h2{
+    font-size: 2rem;
+}
+
+.dashboard-card h3{
+    font-size: 2rem;
+ 
+    margin-bottom: 10px;
+}
+
+.dashboard-card h4{
+    font-size: 2rem;
+    text-transform: uppercase;
+  
+    margin-bottom: 10px;
+}
+
+
+.dashboard-card p{
+    font-size: 1.8rem;
+    color: var(--text-color2);
+}
+
+.request-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.request-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.request-images {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.request-photo {
+    width: 100px;
+    /* Adjust the width as needed */
+    height: auto;
+    border-radius: 5px;
+}
+
+.accept-btn,
+.reject-btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--box-shadow);
+    font-weight: bold;
+}
+
+
+.reject-btn {
+  color: var(--cancel-color);
+}
+
+
+
+.accept-btn:hover,
+.reject-btn:hover {
+    background-color: var(--hover-color);
+ }

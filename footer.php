@@ -41,6 +41,11 @@
         <i class="fa-solid fa-user-shield"></i> Log in as Admin
     </a>
 
+    <a href="admin/admin_login.php" target="_blank">
+        <i class="fa-solid fa-user-shield"></i> Log in as Employee
+    </a>
+
+
 
     <p>Be the first to know about events, new content, products, or brands at Royale.</p>
     <a href="#"><b>Subcribe to our newsletter</b></a>
