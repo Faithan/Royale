@@ -28,6 +28,9 @@
 
                 </ul>
             </li>
+            <li>
+            <a href="calendar.php" class="menu-toggle"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
+            </li>
             <hr>
 
             <li>

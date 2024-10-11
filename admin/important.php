@@ -14,14 +14,9 @@
 
 
 
-
-
-
-
-
 <!-- scroll animation -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const elements = document.querySelectorAll('.hidden');
 
         const observer = new IntersectionObserver((entries) => {
@@ -41,8 +36,10 @@
 
 <style>
     .toast-top-right-custom {
-        top: 65px; /* Adjust this value to move it lower */
-        right: 0; /* You can also adjust this for horizontal positioning */
+        top: 65px;
+        /* Adjust this value to move it lower */
+        right: 0;
+        /* You can also adjust this for horizontal positioning */
     }
 </style>
 

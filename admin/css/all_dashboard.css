@@ -45,6 +45,10 @@ main .header-container {
     font-weight: bold;
 }
 
+.header-container .header-label-container i{
+    margin-right: 10px  ;
+}
+
 
 
 

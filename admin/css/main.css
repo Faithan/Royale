@@ -100,7 +100,6 @@ html {
     --shopnow-bg: #131415;
 
 
-
 }
 
 
@@ -338,36 +337,36 @@ button:hover{
 /* side nav container */
 
 .sidenav-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--button-bg);
-    width: 250px;
-    height: 100vh;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background-color: var(--button-bg) !important;
+    width: 250px !important; 
+    height: 100vh !important;
 
 
 }
 
 .logo-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
-    height: 60px;
-    background-color: var(--first-bgcolor);
-    z-index: 10;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    width: 100% !important;
+    align-items: center !important;
+    height: 60px !important;
+    background-color: var(--first-bgcolor) !important;
+    z-index: 10 !important;
 }
 
 .logo-container label {
     font-weight: bold;
-    font-size: 2.5rem;
-    color: var(--text-color);
-    text-shadow: 0 2px 2px var(--text-shadow);
+    font-size: 2.5rem !important;
+    color: var(--text-color) !important;
+    text-shadow: 0 2px 2px var(--text-shadow) !important;
 }
 
 .logo-container i {
-    font-size: 2rem;
+    font-size: 2rem !important;
     margin-right: 5px;
 }
 
@@ -394,7 +393,7 @@ button:hover{
 }
 
 .menu>li>a.menu-toggle:hover {
-    background-color: var(--hover-color);
+    background-color: var(--button-bg2);
 }
 
 .menu>li>a.menu-toggle {
@@ -427,7 +426,7 @@ button:hover{
     color: var(--pure-white);
     text-decoration: none;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
     background-color: var(--button-bg2);
 }
 
@@ -487,7 +486,7 @@ button:hover{
 }
 
 .logout-container button i {
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
 }
 
 
