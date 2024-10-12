@@ -545,23 +545,29 @@ while ($row = mysqli_fetch_assoc($result2)) {
 
     /* Event Type Colors */
     .fc-event-request {
-        background-color: #38a3a5;
+        background-color: #00b4b4;
         /* Blue for Requests */
         color: white;
         /* Text color */
         font-size: 1.5rem;
+        font-weight: bold;      
+        border:0;
+        padding: 2px;
     }
 
     .fc-event-order {
-        background-color: #219EBC;
+        background-color:#e30031;
         /* Green for Orders */
         color: white;
         /* Text color */
         font-size: 1.5rem;
+        font-weight: bold;
+        border:0;
+        padding: 2px;
     }
 
     .fc-event-datetime-request {
-        background-color: #38a3a596;
+        background-color: #00b4b455;
         /* Teal for Request Dates */
         color: white;
         /* Text color */
@@ -569,7 +575,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
     }
 
     .fc-event-datetime-order {
-        background-color: #219dbc83;
+        background-color: #e3003181;
         /* Yellow for Order Dates */
         color: white;
         /* Text color */

@@ -41,8 +41,8 @@
         <i class="fa-solid fa-user-shield"></i> Log in as Admin
     </a>
 
-    <a href="admin/admin_login.php" target="_blank">
-        <i class="fa-solid fa-user-shield"></i> Log in as Employee
+    <a href="employee/employee_login.php" target="_blank">
+        <i class="fa-solid fa-user-tie"></i> Log in as Employee
     </a>
 
 

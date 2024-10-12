@@ -9,8 +9,6 @@
         exit();
     }
 
-
-    // line graph
     // Fetch data from the database for requests
     $query1 = "SELECT * FROM `royale_request_tbl` WHERE 1";
     $result1 = mysqli_query($conn, $query1);
@@ -18,17 +16,13 @@
     $fitting_dates = [];
     $deadlines = [];
     $datetime_requests = [];
-
     $total_request_income = 0; // Initialize variable for total request income
-
-
 
     // Fetching data for requests
     while ($row = mysqli_fetch_assoc($result1)) {
         $fitting_dates[] = $row['fitting_date'];
         $deadlines[] = $row['deadline'];
         $datetime_requests[] = $row['datetime_request'];
-
         $total_request_income += $row['down_payment'] + $row['final_payment'];
     }
 
@@ -38,53 +32,14 @@
 
     $pickup_dates = [];
     $datetime_orders = [];
-
     $total_product_income = 0; // Initialize variable for total product income
 
     // Fetching data for orders
     while ($row = mysqli_fetch_assoc($result2)) {
         $pickup_dates[] = $row['pickup_date'];
         $datetime_orders[] = $row['datetime_order'];
-
         $total_product_income += $row['payment']; // Calculate total product income
     }
-
-
-    // bar graph
-    // Fetch daily income for requests (down payment)
-    $income_down_payment_query = "SELECT down_payment_date AS payment_date, SUM(down_payment) AS total_down_payment
-FROM royale_request_tbl
-GROUP BY down_payment_date";
-    $income_down_payment_result = mysqli_query($conn, $income_down_payment_query);
-
-    $income_down_payment_data = [];
-    while ($row = mysqli_fetch_assoc($income_down_payment_result)) {
-        $income_down_payment_data[$row['payment_date']] = $row['total_down_payment'];
-    }
-
-    // Fetch daily income for requests (final payment)
-    $income_final_payment_query = "SELECT final_payment_date AS payment_date, SUM(final_payment) AS total_final_payment
- FROM royale_request_tbl
- GROUP BY final_payment_date";
-    $income_final_payment_result = mysqli_query($conn, $income_final_payment_query);
-
-    $income_final_payment_data = [];
-    while ($row = mysqli_fetch_assoc($income_final_payment_result)) {
-        $income_final_payment_data[$row['payment_date']] = $row['total_final_payment'];
-    }
-
-    // Fetch daily income for orders (payment)
-    $income_order_payment_query = "SELECT payment_date AS payment_date, SUM(payment) AS total_order_payment
- FROM royale_product_order_tbl
- GROUP BY payment_date";
-    $income_order_payment_result = mysqli_query($conn, $income_order_payment_query);
-
-    $income_order_payment_data = [];
-    while ($row = mysqli_fetch_assoc($income_order_payment_result)) {
-        $income_order_payment_data[$row['payment_date']] = $row['total_order_payment'];
-    }
-
-
 
     ?>
 
@@ -98,7 +53,7 @@ GROUP BY down_payment_date";
 
         <!-- important file -->
         <?php include 'important.php'; ?>
-        <script src="../chart_ext/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
         <link rel="stylesheet" href="css/all_dashboard.css?v=<?php echo time(); ?>">
         <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
@@ -116,15 +71,11 @@ GROUP BY down_payment_date";
                     <?php include 'header_icons_container.php'; ?>
                 </div>
                 <div class="content-container">
-                    <div class="content" style=" background-color: transparent; border:none;">
+                    <div class="content">
                         <div class="chart-container">
                             <canvas id="lineChart1" class="custom-chart"></canvas>
                             <canvas id="lineChart2" class="custom-chart"></canvas>
-                            <!-- Add this canvas for the bar chart -->
-                            <canvas id="incomeBarChart" class="custom-chart"></canvas>
                             <canvas id="pieChart" class="custom-chart pie-chart"></canvas> <!-- Add class for pie chart -->
-
-
                         </div>
                     </div>
                 </div>
@@ -132,7 +83,6 @@ GROUP BY down_payment_date";
         </div>
 
         <script>
-            // line chart
             // Convert PHP arrays to JavaScript for the first chart
             const fittingDates = <?php echo json_encode($fitting_dates); ?>;
             const deadlines = <?php echo json_encode($deadlines); ?>;
@@ -191,8 +141,6 @@ GROUP BY down_payment_date";
                 }
             });
 
-
-            // line chart
             // Convert PHP arrays to JavaScript for the second chart
             const pickupDates = <?php echo json_encode($pickup_dates); ?>;
             const datetimeOrders = <?php echo json_encode($datetime_orders); ?>;
@@ -242,7 +190,6 @@ GROUP BY down_payment_date";
                 }
             });
 
-
             // Create Pie Chart for Income
             const totalRequestIncome = <?php echo $total_request_income; ?>;
             const totalProductIncome = <?php echo $total_product_income; ?>;
@@ -267,81 +214,6 @@ GROUP BY down_payment_date";
                         title: {
                             display: true,
                             text: 'Income Distribution'
-                        }
-                    }
-                }
-            });
-
-
-
-
-
-
-
-            // bar chart
-
-            // Convert PHP arrays to JavaScript for the bar chart
-            const incomeDownPaymentData = <?php echo json_encode($income_down_payment_data); ?>;
-            const incomeFinalPaymentData = <?php echo json_encode($income_final_payment_data); ?>;
-            const incomeOrderPaymentData = <?php echo json_encode($income_order_payment_data); ?>;
-
-            // Get unique dates from all three arrays
-            const allIncomeDates = [...new Set([
-                ...Object.keys(incomeDownPaymentData),
-                ...Object.keys(incomeFinalPaymentData),
-                ...Object.keys(incomeOrderPaymentData)
-            ])];
-
-            // Sort dates chronologically
-            const sortedIncomeDates = allIncomeDates.sort((a, b) => new Date(a) - new Date(b));
-
-            // Prepare data for the bar chart
-            const downPaymentIncome = sortedIncomeDates.map(date => incomeDownPaymentData[date] || 0);
-            const finalPaymentIncome = sortedIncomeDates.map(date => incomeFinalPaymentData[date] || 0);
-            const orderPaymentIncome = sortedIncomeDates.map(date => incomeOrderPaymentData[date] || 0);
-
-            const ctx4 = document.getElementById('incomeBarChart').getContext('2d');
-            const incomeBarChart = new Chart(ctx4, {
-                type: 'bar',
-                data: {
-                    labels: sortedIncomeDates, // Use sorted dates as labels
-                    datasets: [{
-                            label: 'Down Payment Income',
-                            data: downPaymentIncome,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color for down payments
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Final Payment Income',
-                            data: finalPaymentIncome,
-                            backgroundColor: 'rgba(255, 206, 86, 0.6)', // Color for final payments
-                            borderColor: 'rgba(255, 206, 86, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Order Payment Income',
-                            data: orderPaymentIncome,
-                            backgroundColor: 'rgba(153, 102, 255, 0.6)', // Color for order payments
-                            borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Daily Income from Down Payments, Final Payments, and Orders'
                         }
                     }
                 }
@@ -374,42 +246,34 @@ GROUP BY down_payment_date";
 
 
     <style>
-
-        .content-container{
-            background-color: none;
-        }
         .content {
             overflow-y: scroll;
             overflow-x: none;
             width: 100%;
-            background-color: transparent;
         }
 
         .chart-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            gap:10px;
         }
 
         /* Add this to your CSS file */
         /* Add this to your CSS file */
         .custom-chart {
             max-width: 49%;
-            max-height: 300px;
+            max-height: 400px;
             background-color: var(--first-bgcolor);
             border-radius: 8px;
-            box-shadow: 0 2px 4px var(--box-shadow);
 
-            padding: 20px;
         }
 
         .pie-chart {
-            max-height: 300px;
+            max-height: 200px;
             /* Specific height for pie chart */
             background-color: var(--first-bgcolor);
-            box-shadow: 0 2px 4px var(--box-shadow);
-            padding: 20px;
+
             /* Background color for better visibility */
         }
 

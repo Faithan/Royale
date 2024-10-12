@@ -67,6 +67,7 @@ main .header-container {
 .header-container .header-icons-container i:hover {
     opacity: .5;
     transition: .3s;
+    color:#00b4b455;
 }
 
 
