@@ -87,8 +87,8 @@ while ($row = mysqli_fetch_assoc($result2)) {
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/all_dashboard.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
-   
- 
+
+
     <title>Royale Calendar</title>
 </head>
 
@@ -125,6 +125,13 @@ while ($row = mysqli_fetch_assoc($result2)) {
 
                     <!-- Calendar -->
                     <div id="calendar"></div>
+
+                    <div class="legend-container">legend: 
+                        <div class="circles" style="background-color: #00b4b4"></div>Requests
+                        <div class="circles" style="background-color: #e30031"></div>Orders
+                        <div class="circles" style="background-color: #00b4b455"></div>DateTime Request <em style="font-size: 1.2rem;">(can't be clicked)</em>
+                        <div class="circles" style="background-color: #e3003181"></div>DateTime Order <em style="font-size: 1.2rem;">(can't be clicked)</em>
+                    </div>
                 </div>
             </div>
         </main>
@@ -152,7 +159,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
 
 
 
-  
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -370,7 +377,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
         color: var(--text-color);
         background-color: var(--second-bgcolor);
         border: none;
-        border-bottom: 1px solid var(--box-shadow);
+        border: 1px solid var(--box-shadow);
     }
 
     .date-selection button {
@@ -379,6 +386,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
         border-radius: 2px;
         background-color: var(--button-bg);
         color: var(--pure-white);
+        font-weight: bold;
     }
 
     .date-selection button:hover {
@@ -388,6 +396,22 @@ while ($row = mysqli_fetch_assoc($result2)) {
 
 
 
+    .legend-container {
+        display: flex;
+        margin: 0 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-color2);
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .legend-container .circles {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+    }
 
 
 
@@ -452,7 +476,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
         /* Max width for larger screens */
         animation: fadeIn 0.3s;
         /* Fade-in effect */
-        color:(--text-color);
+        color: (--text-color);
     }
 
     .modal-header {
@@ -496,7 +520,7 @@ while ($row = mysqli_fetch_assoc($result2)) {
         font-family: 'Anton', Arial, sans-serif;
         font-size: 1.6rem;
         color: var(--text-color);
-     
+
     }
 
     .event-item b {
@@ -509,17 +533,18 @@ while ($row = mysqli_fetch_assoc($result2)) {
     }
 
     .btn {
-        background-color: #007bff;
-        color: white;
+        background-color: var(--second-bgcolor);
+        color: var(--text-color);
         border: none;
         padding: 10px 15px;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+        border-bottom: 1px solid var(--box-shadow);
+        font-weight: bold;
+    }   
 
     .btn:hover {
-        background-color: #0056b3;
+        background-color: var(--hover-color);
         transform: translateY(-2px);
     }
 
@@ -550,19 +575,19 @@ while ($row = mysqli_fetch_assoc($result2)) {
         color: white;
         /* Text color */
         font-size: 1.5rem;
-        font-weight: bold;      
-        border:0;
+        font-weight: bold;
+        border: 0;
         padding: 2px;
     }
 
     .fc-event-order {
-        background-color:#e30031;
+        background-color: #e30031;
         /* Green for Orders */
         color: white;
         /* Text color */
         font-size: 1.5rem;
         font-weight: bold;
-        border:0;
+        border: 0;
         padding: 2px;
     }
 

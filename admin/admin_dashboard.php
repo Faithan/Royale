@@ -374,15 +374,16 @@ GROUP BY down_payment_date";
 
 
     <style>
-
-        .content-container{
+        .content-container {
             background-color: none;
         }
-        .content {
+
+        .content-container .content {
             overflow-y: scroll;
             overflow-x: none;
             width: 100%;
             background-color: transparent;
+            box-shadow: 0 0 0 0;
         }
 
         .chart-container {
