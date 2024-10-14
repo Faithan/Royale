@@ -59,7 +59,7 @@ main h1 {
 .request-container {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid var(--box-shadow);
+    box-shadow:  0 2px 4px var(--box-shadow);
     margin: 15px 0;
     padding: 15px;
     cursor: pointer;

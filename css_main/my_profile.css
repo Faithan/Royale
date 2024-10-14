@@ -246,7 +246,8 @@ main h1 {
     padding: 10px;
     color: var(--text-color);
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     font-size: 1.7rem;
 }
@@ -255,17 +256,18 @@ main h1 {
     padding: 10px;
     color: var(--text-color);
     background-color: var(--first-bgcolor);
-    border: 1px solid var(--box-shadow);
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     border-radius: 5px;
     font-size: 1.7rem;
 }
 
 .buttons-container a:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+   background-color: var(--hover-color);
 }
 
 .buttons-container button:hover {
-    box-shadow: 0 0 0 2px var(--hover-color);
+    background-color: var(--hover-color);
 }
 
 

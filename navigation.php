@@ -21,9 +21,29 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
         </ul>
     </div>
 
+
+    <?php
+    $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
+    $userName = ''; // Initialize user name variable
+
+    // Fetch user name if logged in
+    if ($isLoggedIn) {
+        // Assuming you have a database connection already established as $conn
+        $userId = $_SESSION['user_id'];
+        $query = "SELECT user_name FROM royale_user_tbl WHERE user_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $userId); // Bind the user_id
+        $stmt->execute();
+        $stmt->bind_result($userName);
+        $stmt->fetch();
+        $stmt->close();
+    }
+    ?>
+
     <div class="icon-container">
         <div class="user-menu">
             <i class="fa-solid fa-circle-user" id="userIcon"></i>
+            <span><?php echo htmlspecialchars($userName); ?></span> <!-- Display the user name -->
             <div class="dropdown-content" id="dropdownMenu">
                 <a href="my_profile.php" id="myProfileLink"><i class="fa-solid fa-user"></i> MY PROFILE</a>
                 <!-- Add more menu items here in the future -->
@@ -59,11 +79,11 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
         <!-- Include SweetAlert and Custom Script -->
         <!-- Include SweetAlert and Custom Script -->
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 var isLoggedIn = <?php echo json_encode($isLoggedIn); ?>; // Pass PHP variable to JS
 
                 // Handle logout
-                document.getElementById('logout-link').addEventListener('click', function (event) {
+                document.getElementById('logout-link').addEventListener('click', function(event) {
                     event.preventDefault(); // Prevent the default action
 
                     if (isLoggedIn) {
@@ -99,17 +119,17 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
                     }
                 }
 
-                document.getElementById('myProfileLink').addEventListener('click', function (event) {
+                document.getElementById('myProfileLink').addEventListener('click', function(event) {
                     event.preventDefault();
                     checkLoginAndRedirect(this, 'my_profile.php');
                 });
 
-                document.getElementById('myRequestLink').addEventListener('click', function (event) {
+                document.getElementById('myRequestLink').addEventListener('click', function(event) {
                     event.preventDefault();
                     checkLoginAndRedirect(this, 'my_request.php');
                 });
 
-                document.getElementById('myOrderLink').addEventListener('click', function (event) {
+                document.getElementById('myOrderLink').addEventListener('click', function(event) {
                     event.preventDefault();
                     checkLoginAndRedirect(this, 'my_order.php');
                 });
@@ -132,9 +152,10 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 
     <!-- mobile nav -->
     <div class="burger-menu-container">
+       
         <i class="fa-solid fa-bars" id="burgerMenuIcon"></i>
         <div class="burger-menu-dropdown" id="burgerMenuDropdown">
-            <a href="index.php#home">HOME</a>
+            <a href="index.php#home">HOME</a> 
             <a href="index.php#services">SERVICES</a>
             <a href="index.php#about">ABOUT</a>
             <a href="index.php#contact">CONTACT</a>
@@ -198,20 +219,20 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
     }
 
     // Apply the saved dark mode on page load
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         applyDarkMode();
 
         // Add event listener for dark mode toggle in the main nav
         document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
 
         // Add event listener for dark mode toggle in the burger menu
-        document.getElementById('darkModeToggle2').addEventListener('click', function (e) {
+        document.getElementById('darkModeToggle2').addEventListener('click', function(e) {
             e.preventDefault();
             toggleDarkMode();
         });
 
         // Add event listener for the burger menu toggle
-        document.getElementById('burgerMenuIcon').addEventListener('click', function () {
+        document.getElementById('burgerMenuIcon').addEventListener('click', function() {
             var menu = document.getElementById('burgerMenuDropdown');
             var icon = document.getElementById('burgerMenuIcon');
 
@@ -235,7 +256,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 
 <!-- smooth scrolling -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         // Get all the section elements and navbar links
         const sections = document.querySelectorAll("section");
         const navLinks = document.querySelectorAll(".navbar a");
@@ -302,7 +323,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 <script>
     let isScrolling;
 
-    window.addEventListener('scroll', function () {
+    window.addEventListener('scroll', function() {
         const navbar = document.getElementById('navbar');
 
         // Add the shadow when scrolling
@@ -312,9 +333,8 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
         clearTimeout(isScrolling);
 
         // Set a timeout to remove the shadow after scrolling stops
-        isScrolling = setTimeout(function () {
+        isScrolling = setTimeout(function() {
             navbar.classList.remove('shadow');
         }, 150); // Adjust the delay as needed
     });
-
 </script>
