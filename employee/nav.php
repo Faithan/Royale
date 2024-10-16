@@ -8,7 +8,7 @@
     <nav>
         <ul class="nav-links">
             <li><a href="employee_dashboard.php">Dashboard</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="calendar.php">Calendar</a></li>
             <li><a href="accepted_request.php">Tasks</a></li>
             <li><a href="#" id="logoutBtn">Logout</a></li>
         </ul>

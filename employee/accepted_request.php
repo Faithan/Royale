@@ -58,6 +58,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
                             <p>Contact: <?php echo htmlspecialchars($row['contact_number']); ?></p>
                             <p>Fitting Date: <?php echo htmlspecialchars($row['fitting_date']); ?></p>
                             <p>Fitting Time: <?php echo htmlspecialchars($row['fitting_time']); ?></p>
+                            <p>Deadline: <?php echo htmlspecialchars($row['deadline']); ?></p>
                             <div class="request-images">
                                 <?php
                                 $photos = explode(',', $row['photo']);
@@ -94,7 +95,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
                     <p style="font-size: 1.8rem;"><strong>Address:</strong> <span id="modal-address"></span></p>
                     <p style="font-size: 1.8rem;"><strong>Fitting Date:</strong> <span id="modal-fitting-date"></span></p>
                     <p style="font-size: 1.8rem;"><strong>Fitting Time:</strong> <span id="modal-fitting-time"></span></p>
-                  
+                    <p style="font-size: 1.8rem;"><strong>Deadline:</strong> <span id="modal-deadline"></span></p>
                 </div>
 
                 <!-- Special Section for Measurements -->
@@ -143,6 +144,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
             document.getElementById('modal-address').textContent = data.address;
             document.getElementById('modal-fitting-date').textContent = data.fitting_date;
             document.getElementById('modal-fitting-time').textContent = data.fitting_time;
+            document.getElementById('modal-deadline').textContent = data.deadline;
         
             const currentWorkStatus = data.work_status; // Assuming you have this in your data object
             document.getElementById('work-status-select').value = currentWorkStatus;
@@ -281,6 +283,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
         display: flex;
         gap: 10px;
         margin: 10px 0;
+        overflow-x: scroll;
     }
 
     .request-photo {

@@ -42,8 +42,8 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 
     <div class="icon-container">
         <div class="user-menu">
-            <i class="fa-solid fa-circle-user" id="userIcon"></i>
-            <span><?php echo htmlspecialchars($userName); ?></span> <!-- Display the user name -->
+            <i class="fa-solid fa-circle-user" id="userIcon"> <span><?php echo htmlspecialchars($userName); ?></span> <!-- Display the user name --></i>
+           
             <div class="dropdown-content" id="dropdownMenu">
                 <a href="my_profile.php" id="myProfileLink"><i class="fa-solid fa-user"></i> MY PROFILE</a>
                 <!-- Add more menu items here in the future -->
