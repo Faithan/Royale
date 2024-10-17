@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2024 at 12:21 PM
+-- Generation Time: Oct 17, 2024 at 12:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,6 +76,8 @@ INSERT INTO `admin_tbl` (`admin_id`, `admin_username`, `admin_password`, `admin_
 CREATE TABLE `employee_tbl` (
   `employee_id` int(11) NOT NULL,
   `employee_status` varchar(255) NOT NULL,
+  `employee_username` varchar(255) NOT NULL,
+  `employee_password` text NOT NULL,
   `employee_name` varchar(255) NOT NULL,
   `employee_gender` varchar(255) NOT NULL,
   `employee_birthdate` date NOT NULL,
@@ -89,10 +91,10 @@ CREATE TABLE `employee_tbl` (
 -- Dumping data for table `employee_tbl`
 --
 
-INSERT INTO `employee_tbl` (`employee_id`, `employee_status`, `employee_name`, `employee_gender`, `employee_birthdate`, `employe_position`, `employee_bio`, `employee_photo`, `datetime_created`) VALUES
-(1, 'active', 'Roy M. Ocariza', 'male', '1979-05-14', 'Cutter, Maker and Owner', 'none', '', '2024-09-16 15:05:13'),
-(2, 'active', 'Employee 1', 'Male', '2024-09-04', 'Needle Worker', 'none', '', '2024-09-16 15:11:28'),
-(3, 'active', 'Employee 2', 'female', '2024-09-05', 'Needle Worker', 'none also', '', '2024-09-16 15:12:11');
+INSERT INTO `employee_tbl` (`employee_id`, `employee_status`, `employee_username`, `employee_password`, `employee_name`, `employee_gender`, `employee_birthdate`, `employe_position`, `employee_bio`, `employee_photo`, `datetime_created`) VALUES
+(1, 'active', 'royocariza', 'royocariza', 'Roy M. Ocariza', 'male', '1979-05-14', 'Cutter, Maker and Owner', 'none', '', '2024-09-16 15:05:13'),
+(2, 'active', 'employee1', 'employee1', 'Employee 1', 'Male', '2024-09-04', 'Needle Worker', 'none', '', '2024-09-16 15:11:28'),
+(3, 'active', '', '', 'Employee 2', 'female', '2024-09-05', 'Needle Worker', 'none also', '', '2024-09-16 15:12:11');
 
 -- --------------------------------------------------------
 
@@ -147,7 +149,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_status`, `product_name`, `product_type`, `product_color`, `extra_small`, `small`, `medium`, `large`, `extra_large`, `gender`, `previous_price`, `price`, `rent_price`, `product_description`, `photo`) VALUES
-(12, 'active', 'Tuxedo', 'Formal', '#140a61', 0, 2, 0, 1, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1.jpg'),
+(12, 'active', 'Tuxedo', 'Formal', '#140a61', 0, 1, 0, 1, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1.jpg'),
 (13, 'active', 'gown', 'gown', '', 0, 0, 0, 0, 0, 'female', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'dress.jpg'),
 (16, 'active', 'Gown deluxe', 'school uniform', '', 0, 0, 0, 0, 0, 'female', 0, 21412, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', '21414.png'),
 (19, 'active', 'Tuxedo', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
@@ -239,7 +241,9 @@ INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `or
 (24, 1, 'walkin', 'buy', 'pending', 'khemark ', '091241515', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-06', '16:35:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:36:01'),
 (25, 1, 'online', 'buy', 'pending', 'blue dress buyer', '09124151', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '15:45:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:45:18'),
 (26, 1, 'online', 'buy', 'completed', 'Khemark product size testing', '09121515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '16:38:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'medium', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:38:57'),
-(27, 1, 'online', 'buy', 'completed', 'Khemark buy 2', '09121415515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '16:48:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 2, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:48:33');
+(27, 1, 'online', 'buy', 'completed', 'Khemark buy 2', '09121415515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '16:48:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 2, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:48:33'),
+(28, 0, 'walkin', 'buy', 'completed', 'Khemark', '0953634272', 'Male', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '21:46:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-13', '2024-10-12 14:46:28'),
+(29, 1, 'online', 'buy', 'completed', 'Dogde', '091251661', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-15', '16:52:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-15', '2024-10-14 08:53:01');
 
 -- --------------------------------------------------------
 
@@ -283,9 +287,14 @@ CREATE TABLE `royale_request_tbl` (
 --
 
 INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_employee`, `balance`, `down_payment`, `down_payment_date`, `work_status`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
-(11, 'pending', 'online', 1, 'making', '', 0, 'male', '', '', '0000-00-00', '00:00:00', 'dress2 - Copy.jpg,gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', 0, 0, '0000-00-00', '', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
-(12, 'pending', 'online', 1, 'repair', '', 0, 'male', '', '', '0000-00-00', '00:00:00', 'dress - Copy.jpg,dress2.jpg', '', 0, '', '0000-00-00', '', '', 0, 0, '0000-00-00', '', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
-(13, 'pending', 'online', 1, 'making', '', 0, 'male', '', '', '0000-00-00', '00:00:00', 'dress2.jpg,gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', 0, 0, '0000-00-00', '', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00');
+(11, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress2 - Copy.jpg,gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', 0, 0, '0000-00-00', 'pending', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
+(12, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress - Copy.jpg,dress2.jpg', '', 0, '', '0000-00-00', '', 'Roy M. Ocariza', 0, 0, '0000-00-00', 'in progress', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
+(13, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress2.jpg,gsdfa - Copy.jpg', '', 0, 'ARM-HOle 29\r\nwaist 23\r\nlength 50', '0000-00-00', '', 'Roy M. Ocariza', 0, 0, '0000-00-00', 'accepted', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
+(46, 'ongoing', 'walk-in', 0, 'Making', 'Name', 9124151125, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-07', '22:22:00', 'gsdfa - Copy.jpg', '', 2000, 'hieght 50\r\nwaist 23\r\narm hole 14\r\n', '0000-00-00', '', 'Employee 1', 0, 0, '0000-00-00', 'completed', 0, '0000-00-00', 0, '', '2024-10-07 21:22:35'),
+(47, 'ongoing', 'walk-in', 0, 'Making', 'Khemark new', 925236161, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-10', '20:51:00', 'gsdfa - Copy.jpg,r1.jpg', '', 5000, 'arm-hole = 14\r\nlenght = 50\r\nwaist = 23\r\n', '2024-10-26', '', 'Employee 1', 4500, 500, '2024-10-09', 'pending', 0, '0000-00-00', 0, '', '2024-10-09 18:51:17'),
+(48, 'ongoing', 'walk-in', 0, 'Making', 'Calendar test', 94522162727, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-12', '10:35:00', 'gsdfa - Copy.jpg', '', 500, '', '2024-10-15', '', '', 0, 0, '0000-00-00', 'pending', 0, '0000-00-00', 0, '', '2024-10-11 09:35:15'),
+(49, 'completed', 'walk-in', 0, 'Making', 'Khemark', 95373737, 'Male', 'khemark@gmail.com', 'tenazas, Lala, LDN', '2024-10-13', '20:42:00', 'gsdfa - Copy.jpg', '', 5000, '', '2024-10-13', '', 'Roy M. Ocariza', 0, 2500, '2024-10-13', 'completed', 2500, '2024-10-14', 0, '', '2024-10-12 20:41:23'),
+(50, 'ongoing', 'walk-in', 0, 'Making', 'Test2', 9311616132, 'Male', '', 'marandi,lala, ldn', '2024-10-17', '00:13:00', 'afas - Copy.jpg,gsdfa - Copy.jpg,r1.jpg', '', 1000, '', '2024-10-17', '', 'Roy M. Ocariza', 500, 500, '2024-10-17', 'accepted', 0, '0000-00-00', 0, '', '2024-10-16 11:13:43');
 
 -- --------------------------------------------------------
 
@@ -370,7 +379,8 @@ INSERT INTO `work_status_tbl` (`work_status_id`, `work_status_name`, `work_statu
 (1, 'pending', 'none'),
 (2, 'accepted', 'none'),
 (3, 'in progress', 'none'),
-(4, 'completed', 'none');
+(4, 'completed', 'none'),
+(5, 'rejected', 'none');
 
 --
 -- Indexes for dumped tables
@@ -486,13 +496,13 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `royale_product_order_tbl`
 --
 ALTER TABLE `royale_product_order_tbl`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `royale_request_tbl`
 --
 ALTER TABLE `royale_request_tbl`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `royale_user_tbl`
@@ -510,7 +520,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `work_status_tbl`
 --
 ALTER TABLE `work_status_tbl`
-  MODIFY `work_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `work_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
