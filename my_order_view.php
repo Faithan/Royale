@@ -52,7 +52,7 @@ if (isset($_GET['order_id'])) {
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/my_order.css?v=<?php echo time(); ?>">
@@ -70,7 +70,7 @@ if (isset($_GET['order_id'])) {
     <main>
 
 
-    
+
 
         <div class="image-container hidden">
             <?php
@@ -88,10 +88,46 @@ if (isset($_GET['order_id'])) {
 
 
         <div class="order-info-container hidden">
-            <h1 class="<?php echo ($row['order_status'] === 'cancelled') ? 'status-cancelled' : ''; ?>">
+
+            <?php
+            // Determine the class based on request status
+            $status_class = ''; // Default class
+
+            if ($row['order_status'] == 'pending') {
+                $status_class = 'text-gray';
+            } elseif ($row['order_status'] == 'ongoing') {
+                $status_class = 'text-blue';
+            } elseif ($row['order_status'] == 'completed') {
+                $status_class = 'text-green';
+            } elseif ($row['order_status'] == 'cancelled') {
+                $status_class = 'text-red';
+            }
+            ?>
+            <h1 class="<?php echo $status_class; ?>">
                 <?php echo htmlspecialchars($row['order_status']); ?>
             </h1>
+            <style>
+                .text-gray {
+                    color: gray;
+                }
+
+                .text-blue {
+                    color: blue;
+                }
+
+                .text-green {
+                    color: green;
+                }
+
+                .text-red {
+                    color: red;
+                }
+            </style>
+
+
+
             <div class="order-info">
+                <p style="font-size: 1.5rem; font-style:italic; color:gray; background-color:var(--first-bgcolor);">Note: If the order status above is marked as "Completed," it means you've already picked up your items from our shop.</p>
                 <p><strong>Order ID:</strong> <?php echo htmlspecialchars($row['order_id']); ?></p>
                 <p><strong>Order Type:</strong> <?php echo htmlspecialchars($row['order_type']); ?></p>
                 <p><strong>Order Variation:</strong> <?php echo htmlspecialchars($row['order_variation']); ?></p>
@@ -104,6 +140,8 @@ if (isset($_GET['order_id'])) {
                 <p><strong>Rent Price:</strong> <?php echo htmlspecialchars($row['product_rent_price']); ?></p>
                 <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
                 <p><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
+                <p><strong>Payment:</strong> <?php echo htmlspecialchars($row['payment']); ?></p>
+                <p><strong>Payment Date:</strong> <?php echo htmlspecialchars($row['payment_date']); ?></p>
                 <p><strong>Date and Time Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
             </div>
         </div>
@@ -133,7 +171,7 @@ if (isset($_GET['order_id'])) {
 
 
 <script>
-    document.getElementById('cancel-order').addEventListener('click', function () {
+    document.getElementById('cancel-order').addEventListener('click', function() {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -148,14 +186,14 @@ if (isset($_GET['order_id'])) {
                 const orderId = <?php echo json_encode($row['order_id']); ?>; // Get order_id
 
                 fetch('cancel_order.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        order_id: orderId
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            order_id: orderId
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {

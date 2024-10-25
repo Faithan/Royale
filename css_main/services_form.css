@@ -33,6 +33,8 @@ main h1 {
     color: var(--pure-white);
     background-color: var(--button-bg);
     border: 1px solid var(--box-shadow);
+    border-left: 0;
+    border-right: 0;
     text-align: center;
     font-size: 2.5rem;
     padding: 10px;

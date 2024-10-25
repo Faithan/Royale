@@ -1,10 +1,10 @@
 <?php
-require 'dbconnect.php'; 
-session_start(); 
+require 'dbconnect.php';
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
-    exit(); 
+    exit();
 }
 
 $user_id = $_SESSION['user_id'];
@@ -14,7 +14,7 @@ $sql = "SELECT *
         WHERE user_id = ? 
         ORDER BY order_id DESC";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id); 
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -53,7 +53,7 @@ $result = $stmt->get_result();
                 while ($row = $result->fetch_assoc()) {
                     $photo_array = explode(',', $row['product_photo']);
                     $status_class = $row['order_status'] == 'cancelled' ? 'cancelled' : '';
-                    ?>
+            ?>
                     <div class="order-container" data-order-id="<?php echo htmlspecialchars($row['order_id']); ?>">
                         <div class="photo-gallery">
                             <?php
@@ -66,7 +66,47 @@ $result = $stmt->get_result();
                         </div>
 
                         <div class="details">
-                            <h3 class="<?php echo $status_class; ?>"><?php echo htmlspecialchars($row['order_status']); ?></h3>
+
+                            <?php
+                            // Determine the class based on request status
+                            $status_class = ''; // Default class
+
+                            if ($row['order_status'] == 'pending') {
+                                $status_class = 'text-gray';
+                            } elseif ($row['order_status'] == 'ongoing') {
+                                $status_class = 'text-blue';
+                            } elseif ($row['order_status'] == 'completed') {
+                                $status_class = 'text-green';
+                            } elseif ($row['order_status'] == 'cancelled') {
+                                $status_class = 'text-red';
+                            }
+                            ?>
+
+                            <h3 class="<?php echo $status_class; ?>">
+                                <?php echo htmlspecialchars($row['order_status']); ?>
+
+
+                            </h3>
+
+
+                            <style>
+                                .text-gray {
+                                    color: gray;
+                                }
+
+                                .text-blue {
+                                    color: blue;
+                                }
+
+                                .text-green {
+                                    color: green;
+                                }
+
+                                .text-red {
+                                    color: red;
+                                }
+                            </style>
+
                             <p class="price">Paid ₱<?php echo htmlspecialchars($row['payment']); ?> </p>
                             <div>
                                 <p><strong>Product:</strong> <?php echo htmlspecialchars($row['product_name']); ?></p>
@@ -77,9 +117,13 @@ $result = $stmt->get_result();
                                 <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
                                 <p><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
                             </div>
+
+                            <div style="text-align: center;">
+                                <b style="font-size: 1.4rem; font-style: italic; color: gray;"><i class="fa-solid fa-eye"></i> Click to view</b>
+                            </div>
                         </div>
                     </div>
-                    <?php
+            <?php
                 }
             } else {
                 echo "<p>No orders found.</p>";
@@ -97,9 +141,9 @@ $result = $stmt->get_result();
 
     <script>
         document.querySelectorAll('.order-container').forEach(container => {
-            container.addEventListener('click', function () {
-                const orderId = this.getAttribute('data-order-id'); 
-                window.location.href = `my_order_view.php?order_id=${orderId}`; 
+            container.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-order-id');
+                window.location.href = `my_order_view.php?order_id=${orderId}`;
             });
         });
     </script>

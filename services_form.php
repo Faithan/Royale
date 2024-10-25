@@ -98,6 +98,8 @@ if (isset($_GET['view_id'])) {
                                     alt="<?php echo $row['service_name']; ?>">
                                 <h2><?php echo $row['service_name']; ?></h2>
                                 <p><?php echo $row['service_description']; ?></p>
+                                <br>
+                                <b class="click-message" style="font-size: 1.4rem; font-style:italic; color:red; font-family: 'Anton', Arial, sans-serif; "><i class="fa-solid fa-hand-pointer"></i> Click to select</b>
                             </label>
                             <?php
                         }
@@ -120,7 +122,7 @@ if (isset($_GET['view_id'])) {
                     <option value="" selected disabled>Select Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                    <option value="others">Others</option>
+                    <option value="unknown">Prefer not to say</option>
                 </select>
 
                 <input type="email" name="email" placeholder="Enter your email (optional)">
@@ -135,7 +137,7 @@ if (isset($_GET['view_id'])) {
                     required>
             </div>
 
-            <h2 class="hidden">Upload Photo/s <em>(if applicable)</em></h2>
+            <h2 class="hidden">Upload Photo/s <em style="font-size:1.4rem; color:gray;">(if applicable)</em></h2>
 
             <div class="upload-container hidden">
                 <!-- Custom styled file input -->

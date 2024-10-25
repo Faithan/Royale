@@ -43,7 +43,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
     <div class="icon-container">
         <div class="user-menu">
             <i class="fa-solid fa-circle-user" id="userIcon"> <span><?php echo htmlspecialchars($userName); ?></span> <!-- Display the user name --></i>
-           
+
             <div class="dropdown-content" id="dropdownMenu">
                 <a href="my_profile.php" id="myProfileLink"><i class="fa-solid fa-user"></i> MY PROFILE</a>
                 <!-- Add more menu items here in the future -->
@@ -51,18 +51,77 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 
         </div>
 
+        <?php
+        $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
+        $pendingRequestCount = 0;
+        $pendingOrderCount = 0;
+
+        if ($isLoggedIn) {
+            $userId = $_SESSION['user_id'];
+
+            // Count pending requests
+            $requestQuery = "SELECT COUNT(*) FROM royale_request_tbl WHERE user_id = ? AND request_status = 'pending'";
+            $requestStmt = $conn->prepare($requestQuery);
+            $requestStmt->bind_param("i", $userId);
+            $requestStmt->execute();
+            $requestStmt->bind_result($pendingRequestCount);
+            $requestStmt->fetch();
+            $requestStmt->close();
+
+            // Count pending orders
+            $orderQuery = "SELECT COUNT(*) FROM royale_product_order_tbl WHERE user_id = ? AND order_status = 'pending'";
+            $orderStmt = $conn->prepare($orderQuery);
+            $orderStmt->bind_param("i", $userId);
+            $orderStmt->execute();
+            $orderStmt->bind_result($pendingOrderCount);
+            $orderStmt->fetch();
+            $orderStmt->close();
+        }
+
+        // Set flag if there are any pending requests or orders
+        $hasPendingItems = $pendingRequestCount > 0 || $pendingOrderCount > 0;
+        ?>
+
+
+
         <div class="user-menu">
             <a href="my_request.php" id="myRequestLink">
                 <i class="fa-solid fa-bell-concierge"></i>
+                <?php if ($isLoggedIn): ?>
+                    <span class="badge"><?php echo   $pendingRequestCount; ?></span>
+                <?php endif; ?>
             </a>
-            <span class="tooltip-text">My Request</span> <!-- Tooltip for My Request -->
+            <span class="tooltip-text">My Request</span>
         </div>
+
+
+
+
         <div class="user-menu">
             <a href="my_order.php" id="myOrderLink">
                 <i class="fa-solid fa-cart-shopping"></i>
+                <?php if ($isLoggedIn): ?>
+                    <span class="badge"><?php echo  $pendingOrderCount; ?></span>
+                <?php endif; ?>
             </a>
-            <span class="tooltip-text">My Order</span> <!-- Tooltip for My Order -->
+            <span class="tooltip-text">My Order</span>
         </div>
+
+
+
+
+        <style>
+            .badge {
+                position: absolute;
+                top: -6px;
+                right: -10px;
+                background-color: red;
+                color: white;
+                border-radius: 50%;
+                padding: 3px 6px;
+                font-size: 1rem;
+            }
+        </style>
 
 
         <div class="tooltip-container">
@@ -152,16 +211,47 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
 
     <!-- mobile nav -->
     <div class="burger-menu-container">
-       
+
         <i class="fa-solid fa-bars" id="burgerMenuIcon"></i>
+        <?php if ($hasPendingItems): ?>
+            <span class="red-dot"></span>
+        <?php endif; ?>
+
+        <style>
+          
+
+            .red-dot {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 8px;
+                height: 8px;
+                background-color: red;
+                border-radius: 50%;
+            }
+        </style>
+
         <div class="burger-menu-dropdown" id="burgerMenuDropdown">
-            <a href="index.php#home">HOME</a> 
+            <a href="index.php#home">HOME</a>
             <a href="index.php#services">SERVICES</a>
             <a href="index.php#about">ABOUT</a>
             <a href="index.php#contact">CONTACT</a>
             <a href="my_profile.php"><i class="fa-solid fa-user"></i> MY PROFILE</a>
-            <a href="my_request.php"><i class="fa-solid fa-bell-concierge"></i> MY REQUEST</a>
-            <a href="my_order.php"><i class="fa-solid fa-cart-shopping"></i> MY ORDER</a>
+
+            <a href="my_request.php">
+                <i class="fa-solid fa-bell-concierge"></i> MY REQUEST
+                <?php if ($isLoggedIn &&   $pendingRequestCount > 0): ?>
+                    <span class="mobile-badge"><?php echo   $pendingRequestCount; ?></span>
+                <?php endif; ?>
+            </a>
+
+            <a href="my_order.php">
+                <i class="fa-solid fa-cart-shopping"></i> MY ORDER
+                <?php if ($isLoggedIn &&  $pendingOrderCount > 0): ?>
+                    <span class="mobile-badge"><?php echo  $pendingOrderCount; ?></span>
+                <?php endif; ?>
+            </a>
+
             <a href="#" id="darkModeToggle2"><i class="fa-solid fa-lightbulb"></i> SWITCH MODE</a>
             <a href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>" id="mobile-login-link">
                 <i class="fa-solid <?php echo $isLoggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket'; ?>"></i>
@@ -169,6 +259,18 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
             </a>
         </div>
     </div>
+
+    <style>
+        .mobile-badge {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 1.2rem;
+            margin-left: 5px;
+            vertical-align: top;
+        }
+    </style>
 
 
 

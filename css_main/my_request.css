@@ -34,7 +34,7 @@ main {
 main h1 {
     color: var(--pure-white);
     background-color: var(--button-bg);
-    border: 1px solid var(--box-shadow);
+    border-bottom: 1px solid var(--box-shadow);
     text-align: center;
     font-size: 2.5rem;
     margin: 10px 0;
@@ -54,12 +54,13 @@ main h1 {
 .request-list {
     padding: 10px 20px;
     background-color: var(--second-bgcolor);
+    margin-bottom: 50px;
 }
 
 .request-container {
     display: flex;
     flex-direction: row;
-    box-shadow:  0 2px 4px var(--box-shadow);
+    box-shadow: 0 1px 2px var(--box-shadow);
     margin: 15px 0;
     padding: 15px;
     cursor: pointer;
@@ -70,7 +71,7 @@ main h1 {
 
 .request-container:hover {
     transform: scale(1.01);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
 }
 
 .photo-gallery {
@@ -98,7 +99,7 @@ main h1 {
 
 .details h3 {
     margin: 0 0 10px;
-    color: var(--text-color);
+
     font-weight: bold;
     font-size: 3rem;
     text-transform: capitalize;
@@ -107,9 +108,7 @@ main h1 {
     padding: 10px;
 }
 
-.details h3.cancelled {
-    color: red; /* Red text for cancelled status */
-}
+
 
 .details p {
     margin: 5px 0;
@@ -119,6 +118,7 @@ main h1 {
 
 .details p strong {
     color: var(--text-color);
+    text-transform: uppercase;
 }
 
 
@@ -140,12 +140,12 @@ main h1 {
 }
 
 .anchor-container a {
-    background-color: var(--second-bgcolor);
+    background-color: var(--first-bgcolor);
     color: var(--text-color);
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     font-size: 1.5rem;
 }
 
@@ -156,13 +156,13 @@ main h1 {
 
 
 .anchor-container button {
-    background-color: var(--second-bgcolor);
+    background-color: var(--first-bgcolor);
     color: var(--cancel-color);
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
-    border:0;
-    border-bottom: 1px solid var(--box-shadow);
+    
+    border: 1px solid var(--box-shadow);
     font-size: 1.5rem;
 }
 
@@ -227,32 +227,35 @@ main h1 {
 .request-info {
     overflow-y: scroll;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
-    padding: 0 20px;
+    padding: 20px;
+    background-color: var(--first-bgcolor);
+   
 
 }
 
 .request-info p {
     flex-grow: 1;
     font-size: 1.6rem;
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--box-shadow);
     border-radius: 3px;
+    font-family: 'Anton', Arial, sans-serif;
     background-color: var(--second-bgcolor);
+    padding: 10px 20px;
+}
+
+.request-info strong {
+    text-transform: uppercase;
 }
 
 
 
 
+
 .request-info-container h1 {
-    color: var(--text-color);
-    margin: 10px 0 30px 0;
-    border: 1px solid var(--box-shadow);
-    border-right: 0;
-    border-left: 0;
-    border-top: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid var(--box-shadow);
     font-size: 2.5rem;
     text-transform: capitalize;
     border-radius: 0;
@@ -492,22 +495,6 @@ main h1 {
         overflow-y: scroll;
         margin-bottom: 60px;
 
-    }
-
-    .request-info p {
-        flex-grow: 1;
-        font-size: 1.4rem;
-          }
-
-
-
-
-    .request-info-container h1 {
-      font-size: 2rem;
-    }
-
-    .request-info-container .status-cancelled {
-      font-size: 2rem;
     }
 
    

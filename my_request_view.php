@@ -48,7 +48,7 @@ if (isset($_GET['request_id'])) {
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/my_request.css?v=<?php echo time(); ?>">
@@ -84,10 +84,75 @@ if (isset($_GET['request_id'])) {
 
 
         <div class="request-info-container hidden">
-            <h1 class="<?php echo ($row['request_status'] === 'cancelled') ? 'status-cancelled' : ''; ?>">
+            <?php
+            // Determine the class based on request status
+            $status_class = ''; // Default class
+
+            if ($row['request_status'] == 'pending') {
+                $status_class = 'text-gray';
+            } elseif ($row['request_status'] == 'ongoing') {
+                $status_class = 'text-blue';
+            } elseif ($row['request_status'] == 'completed') {
+                $status_class = 'text-green';
+            } elseif ($row['request_status'] == 'cancelled') {
+                $status_class = 'text-red';
+            }
+
+            ?>
+
+            <h1 class="<?php echo $status_class; ?>">
                 <?php echo htmlspecialchars($row['request_status']); ?>
             </h1>
+
+            <style>
+                .text-gray {
+                    color: gray;
+                }
+
+                .text-blue {
+                    color: blue;
+                }
+
+                .text-green {
+                    color: green;
+                }
+
+                .text-red {
+                    color: red;
+                }
+            </style>
+
+
             <div class="request-info">
+                <p>
+                    <strong>Work-Status:</strong>
+                    <?php
+                    if (!empty($row['work_status'])) {
+                        $status_color = '';
+
+                        // Set color based on work_status
+                        if ($row['work_status'] == 'pending') {
+                            $status_color = 'gray';
+                        } elseif ($row['work_status'] == 'accepted') {
+                            $status_color = 'blue';
+                        } elseif ($row['work_status'] == 'in progress') {
+                            $status_color = 'blue';
+                        } elseif ($row['work_status'] == 'completed') {
+                            $status_color = 'green';
+                        }
+
+                        // Display work_status with the assigned color
+                        echo '<span style="color: ' . $status_color . '; text-transform:uppercase;">' . htmlspecialchars($row['work_status']) . '</span>';
+                    } else {
+                        echo 'None';  // Or you can leave this blank if you prefer
+                    }
+                    ?>
+                </p>
+
+                <p style="font-size: 1.5rem; font-style:italic; color:gray; background-color:var(--first-bgcolor);">Note: Once the work status is marked as "Completed," you're welcome to pick up your items. If you haven't checked the status yet, no need to worry—we’ll contact you to let you know when it's ready.</p>
+
+                <p><strong>Assigned Employee:</strong> <?php echo htmlspecialchars($row['assigned_employee']); ?></p>
+
                 <p><strong>Request Id:</strong> <?php echo htmlspecialchars($row['request_id']); ?></p>
                 <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
                 <p><strong>Name:</strong> <?php echo htmlspecialchars($row['name']); ?></p>
@@ -101,18 +166,22 @@ if (isset($_GET['request_id'])) {
                 <p><strong>Date and Time Requested:</strong>
                     <?php echo htmlspecialchars($row['datetime_request']); ?></p>
                 <p><strong>Fee:</strong> <?php echo htmlspecialchars($row['fee']); ?></p>
-                <p><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
+
+                <p style="text-transform:uppercase"><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
+ 
+
                 <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
                 <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
-                <p><strong>Balance:</strong> <?php echo htmlspecialchars($row['balance']); ?></p>
-                <p><strong>Down Payment:</strong> <?php echo htmlspecialchars($row['down_payment']); ?></p>
+                <p><strong>Balance:</strong> ₱<?php echo htmlspecialchars($row['balance']); ?></p>
+                <p><strong>Down Payment:</strong> ₱<?php echo htmlspecialchars($row['down_payment']); ?></p>
                 <p><strong>Down Payment Date:</strong> <?php echo htmlspecialchars($row['down_payment_date']); ?>
                 </p>
-                <p><strong>Final Payment:</strong> <?php echo htmlspecialchars($row['final_payment']); ?></p>
+                <p><strong>Final Payment:</strong> ₱<?php echo htmlspecialchars($row['final_payment']); ?></p>
                 <p><strong>Final Payment Date:</strong> <?php echo htmlspecialchars($row['final_payment_date']); ?>
                 </p>
-                <p><strong>Refund:</strong> <?php echo htmlspecialchars($row['refund']); ?></p>
-                <p><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
+
+                <p style="color:red"><strong>Refund:</strong> ₱<?php echo htmlspecialchars($row['refund']); ?></p>
+                <p style="color:red"><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
             </div>
         </div>
 
@@ -141,7 +210,7 @@ if (isset($_GET['request_id'])) {
 
 
 <script>
-    document.getElementById('cancel-request').addEventListener('click', function () {
+    document.getElementById('cancel-request').addEventListener('click', function() {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -156,14 +225,14 @@ if (isset($_GET['request_id'])) {
                 const requestId = <?php echo json_encode($row['request_id']); ?>; // Get request_id
 
                 fetch('cancel_request.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        request_id: requestId
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            request_id: requestId
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
