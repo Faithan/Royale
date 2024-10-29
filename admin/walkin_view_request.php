@@ -16,7 +16,7 @@ if (!filter_var($request_id, FILTER_VALIDATE_INT)) {
 }
 
 
-$stmt = $conn->prepare("SELECT request_id, request_status, user_id, service_name, name, contact_number, gender, address, email, fitting_date, fitting_time, message, fee, measurement, deadline, special_group, assigned_employee, balance, down_payment, down_payment_date, final_payment, final_payment_date, refund, refund_reason, photo, datetime_request FROM royale_request_tbl WHERE request_id = ?");
+$stmt = $conn->prepare("SELECT * FROM royale_request_tbl WHERE request_id = ?");
 $stmt->bind_param("i", $request_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Requests</title>
+    <title>Walkin Requests</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
@@ -149,7 +149,7 @@ if ($result->num_rows > 0) {
 
                                 <div class="request-details">
                                     <label>Message:</label>
-                                    <textarea name="message" id="" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['message']; ?></textarea>
+                                    <textarea name="message" id="message" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['message']; ?></textarea>
                                 </div>
 
 
@@ -195,15 +195,13 @@ if ($result->num_rows > 0) {
                                     <input type="time" name="fitting_time" id=""
                                         value="<?php echo $row['fitting_time']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                 </div>
-                                <div class="request-details">
-                                    <label>Fee(₱):</label>
-                                    <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
-                                        oninput="calculateBalance()" required <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                                </div>
+
                             </div>
 
 
-                            <div class="first-button-container">
+                            <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending') ? '' : 'none'; ?>">
+                                <button type="submit" name="cancel_request" id="cancel_button"
+                                    class="cancel_button">Reject</button>
                                 <button type="submit" name="accept_request" id="accept_button"
                                     class="accept_button">Accept</button>
                             </div>
@@ -236,18 +234,138 @@ if ($result->num_rows > 0) {
 
                         <div class="request-details-container2">
 
+                            <?php
+                            // Fetch default measurements from the database
+                            $defaultMeasurements = [];
+                            $query_measurement = "SELECT `measurement_name` FROM `default_measurement_tbl`";
+                            $result_measurement = $conn->query($query_measurement);
+
+                            if ($result_measurement) {
+                                while ($row_measurement = $result_measurement->fetch_assoc()) {
+                                    $defaultMeasurements[] = $row_measurement['measurement_name'];
+                                }
+                            }
+
+                            // Encode the PHP array to a JavaScript array
+                            $jsDefaultMeasurements = json_encode($defaultMeasurements);
+
+                            // Check if there's already a measurement value in royale_request_tbl
+                            $measurementValue = $row['measurement'];
+                            ?>
 
                             <div class="request-details">
                                 <label>Measurements:</label>
-                                <textarea name="measurement" id="measurement" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['measurement'] ?></textarea>
+
+                                <?php if (empty(trim($measurementValue))): ?>
+                                    <!-- Toggle Switch with Note (only displayed if no measurement exists) -->
+                                    <div style="display: flex; align-items: center;">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="toggleDefaultButton" checked onclick="toggleDefaults()">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span style="margin-left: 10px; font-size: 14px; color: #666;">Toggle on/off for default measurements</span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <!-- Measurements Textarea -->
+                                <textarea name="measurement" id="measurement" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $measurementValue; ?></textarea>
                             </div>
+
+                            <style>
+                                /* Toggle Switch Styling */
+                                .toggle-switch {
+                                    position: relative;
+                                    display: inline-block;
+                                    width: 50px;
+                                    height: 24px;
+                                    margin-left: 10px;
+                                }
+
+                                .toggle-switch input {
+                                    opacity: 0;
+                                    width: 0;
+                                    height: 0;
+                                }
+
+                                .slider {
+                                    position: absolute;
+                                    cursor: pointer;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    background-color: #ccc;
+                                    transition: 0.4s;
+                                    border-radius: 24px;
+                                }
+
+                                .slider:before {
+                                    position: absolute;
+                                    content: "";
+                                    height: 20px;
+                                    width: 20px;
+                                    left: 2px;
+                                    bottom: 2px;
+                                    background-color: white;
+                                    transition: 0.4s;
+                                    border-radius: 50%;
+                                }
+
+                                /* Toggle on state */
+                                input:checked+.slider {
+                                    background-color: #4CAF50;
+                                }
+
+                                input:checked+.slider:before {
+                                    transform: translateX(26px);
+                                }
+                            </style>
+
+                            <script>
+                                // JavaScript array of default measurements from PHP
+                                let defaultValues = <?php echo $jsDefaultMeasurements; ?>;
+                                const measurementField = document.getElementById("measurement");
+
+                                function displayDefaults() {
+                                    // Join the array into a formatted string
+                                    return defaultValues.map(measurement => measurement + ": ").join("\n");
+                                }
+
+                                function toggleDefaults() {
+                                    const isChecked = document.getElementById("toggleDefaultButton").checked;
+
+                                    // Toggle default values based on switch state
+                                    measurementField.value = isChecked ? displayDefaults() : "";
+                                }
+
+                                // Initialize the textarea with default measurements if there's no existing measurement value
+                                window.onload = function() {
+                                    if (measurementField.value.trim() === "") {
+                                        measurementField.value = displayDefaults();
+                                    }
+                                };
+                            </script>
+
+
+
+
+
+
+
 
                         </div>
 
 
 
 
+
                         <div class="request-details-container2">
+
+                            <div class="request-details">
+                                <label>Fee(₱):</label>
+                                <input type="number" name="fee" id="fee" value="<?php echo $row['fee']; ?>"
+                                    oninput="calculateBalance()" required <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
 
                             <div class="request-details">
                                 <label>Special Group <em>*if applicable*</em>:</label>
@@ -257,8 +375,8 @@ if ($result->num_rows > 0) {
 
 
                             <?php
-                            // Fetch available services from the 'services' table
-                            $employee_query = "SELECT employee_name FROM employee_tbl WHERE employee_status = 'active'";
+                            // Fetch employees with "pattern cutter" in the 'employee_position' column
+                            $employee_query = "SELECT employee_name FROM employee_tbl WHERE employee_status = 'active' AND employee_position LIKE '%pattern cutter%'";
                             $employee_result = $conn->query($employee_query);
 
                             if (!$employee_result) {
@@ -267,23 +385,24 @@ if ($result->num_rows > 0) {
                             ?>
 
                             <div class="request-details">
-                                <label>Assigned Employee:</label>
+                                <label>Assigned Pattern Cutter:</label>
 
-                                <input type="hidden" name="request_id" id="" value="<?php echo $row['request_id']; ?>">
+                                <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_employee" id="assigned_employee" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['pattern_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
 
                                     <?php
                                     // Loop through the employees and create <option> elements
                                     while ($employee_row = $employee_result->fetch_assoc()) {
                                         $employee_name = ucfirst($employee_row['employee_name']);
-                                        $selected = ($employee_name === ucfirst($row['assigned_employee'])) ? 'selected' : '';
-                                        echo "<option value='{$employee_name}' {$selected}>{$employee_name}</option>";
+                                        $selected = ($employee_name === ucfirst($row['assigned_pattern_cutter'])) ? 'selected' : '';
+                                        echo "<option value='" . htmlspecialchars($employee_name) . "' {$selected}>" . htmlspecialchars($employee_name) . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
+
 
                             <div class="request-details">
                                 <label>Deadline:</label>
@@ -301,14 +420,111 @@ if ($result->num_rows > 0) {
                             <div class="request-details">
                                 <label>Down Payment Date:</label>
                                 <input type="date" name="down_payment_date" id=""
-                                    value="<?php echo $row['down_payment_date']; ?>">
+                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
+
+                            <?php
+                            // Fetch employees with "pattern cutter" in the 'employee_position' column
+                            $pattern_query = "SELECT pattern_status_name FROM pattern_status_tbl ";
+                            $pattern_result = $conn->query($pattern_query);
+
+                            if (!$pattern_result) {
+                                die("Error fetching pattern: " . $conn->error);
+                            }
+                            ?>
+
+                            <div class="request-details">
+                                <label>Pattern Status:</label>
+                                <?php
+                                // Determine color based on pattern_status value
+                                $patternStatus = ucfirst($row['pattern_status'] ?? 'No Status Yet');
+                                $color = '';
+
+                                switch (strtolower($row['pattern_status'] ?? '')) {
+                                    case 'pending':
+                                        $color = 'gray';
+                                        break;
+                                    case 'accepted':
+                                        $color = 'blue';
+                                        break;
+                                    case 'completed':
+                                        $color = 'green';
+                                        break;
+                                    default:
+                                        $color = 'black'; // Default color if status is not recognized
+                                        break;
+                                }
+                                ?>
+                                <input type="text" name="pattern_status" value="<?php echo $patternStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $color; ?>; font-weight:bold;">
+                            </div>
+
+
+
+
+
+
+
+                            <?php
+                            // Fetch employees with "seamster" or "seamstress" in the 'employee_position' column
+                            $employee_query = "SELECT employee_name FROM employee_tbl WHERE employee_status = 'active' AND (employee_position LIKE '%seamster%' OR employee_position LIKE '%seamstress%')";
+                            $employee_result = $conn->query($employee_query);
+
+                            if (!$employee_result) {
+                                die("Error fetching employee: " . $conn->error);
+                            }
+                            ?>
+
+                            <div class="request-details">
+                                <label>Assigned Tailor:</label>
+
+                                <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
+
+                                <select name="assigned_tailor" id="assigned_tailor" <?php echo ($row['pattern_status']  === 'rejected'  || $row['pattern_status']  === 'accepted'  || $row['pattern_status']  === 'pending' || $row['work_status']  === 'in progress' || $row['work_status']  === 'completed'  || $row['request_status']  === 'completed') ? 'disabled' : ''; ?>>
+                                    <option value="" selected disabled>Select Employee</option>
+
+                                    <?php
+                                    // Loop through the employees and create <option> elements
+                                    while ($employee_row = $employee_result->fetch_assoc()) {
+                                        $employee_name = ucfirst($employee_row['employee_name']);
+                                        $selected = ($employee_name === ucfirst($row['assigned_tailor'])) ? 'selected' : '';
+                                        echo "<option value='" . htmlspecialchars($employee_name) . "' {$selected}>" . htmlspecialchars($employee_name) . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+
+                            <div class="request-details">
+                                <label>Work Status: <em>*from tailor*</em></label>
+                                <?php
+                                // Determine color based on work_status value
+                                $workStatus = ucfirst($row['work_status'] ?? 'No Status Yet');
+                                $workColor = '';
+
+                                switch (strtolower($row['work_status'] ?? '')) {
+                                    case 'pending':
+                                        $workColor = 'gray';
+                                        break;
+                                    case 'in progress':
+                                        $workColor = 'blue';
+                                        break;
+                                    case 'completed':
+                                        $workColor = 'green';
+                                        break;
+                                    default:
+                                        $workColor = 'black'; // Default color if status is not recognized
+                                        break;
+                                }
+                                ?>
+                                <input type="text" name="work_status" value="<?php echo $workStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $workColor; ?>; font-weight:bold;">
+                            </div>
+
 
 
 
                         </div>
 
-                        <div class="first-button-container">
+                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['work_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <button type="submit" name="update_request" id="update_button"
                                 class="accept_button">Update</button>
                         </div>
@@ -340,41 +556,7 @@ if ($result->num_rows > 0) {
                             Final Request Information</h2>
 
                         <div class="request-details-container2">
-                            <?php
-                            // Fetch work statuses from the worker_status_tbl
-                            $status_query = "SELECT work_status_name FROM work_status_tbl";
-                            $status_result = $conn->query($status_query);
 
-                            if (!$status_result) {
-                                die("Error fetching work statuses: " . $conn->error);
-                            }
-
-                            // Fetch the current work status from the database
-                            $request_id = $row['request_id']; // Assuming you have the request ID in the $row variable
-                            $current_status_query = "SELECT work_status FROM royale_request_tbl WHERE request_id = ?";
-                            $stmt = $conn->prepare($current_status_query);
-                            $stmt->bind_param("i", $request_id);
-                            $stmt->execute();
-                            $stmt->bind_result($current_work_status);
-                            $stmt->fetch();
-                            $stmt->close();
-                            ?>
-
-                            <div class="request-details">
-                                <label>Work Status <em>*from employee</em> :</label>
-                                <select name="work_status" id="work_status" <?php echo ($row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
-                                    <option value="" disabled>Select Work Status</option>
-                                    <?php
-                                    // Loop through the statuses and create <option> elements
-                                    while ($status_row = $status_result->fetch_assoc()) {
-                                        $work_status_name = htmlspecialchars($status_row['work_status_name']);
-                                        // Set the current work status as selected
-                                        $selected = ($work_status_name === $current_work_status) ? 'selected' : '';
-                                        echo "<option value='{$work_status_name}' {$selected}>{$work_status_name}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
 
 
 
@@ -409,7 +591,7 @@ if ($result->num_rows > 0) {
                             </div>
 
                         </div>
-                        <div class="first-button-container">
+                        <div class="first-button-container" style="display: <?php echo ($row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <button type="submit" name="complete_request" id="complete_button"
                                 class="accept_button">Complete</button>
                         </div>
@@ -426,7 +608,7 @@ if ($result->num_rows > 0) {
                         <p class="note"
                             style="display:<?php echo ($row['request_status'] === 'completed') ? 'block' : 'none'; ?>">
                             <strong>Request Completed:</strong>
-                            This request has been finalized. The information above is now read-only.
+                            This request has been finalized. The information above is now for reading-only.
                         </p>
 
                         <!-- update and ongoing  -->
@@ -510,24 +692,6 @@ if ($result->num_rows > 0) {
 
 
 
-
-<!-- JavaScript for showing/hiding buttons -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var status = document.querySelector('.content').getAttribute('data-status');
-        var buttons = {
-            accept_button: ['Pending'],
-            update_button: ['Accepted'],
-            complete_button: ['Ongoing'],
-            cancel_button: ['Pending']
-        };
-
-        Object.keys(buttons).forEach(function(buttonId) {
-            document.getElementById(buttonId).style.display =
-                buttons[buttonId].includes(status) ? 'inline-block' : 'none';
-        });
-    });
-</script>
 
 
 

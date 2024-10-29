@@ -51,49 +51,80 @@ if (isset($_POST['accept_request'])) {
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
 
+    // Retrieve input values or set to null if not provided
     $measurement = !empty($_POST['measurement']) ? $_POST['measurement'] : null;
     $fee = !empty($_POST['fee']) ? $_POST['fee'] : null;
     $special_group = !empty($_POST['special_group']) ? $_POST['special_group'] : null;
-    $assigned_employee = !empty($_POST['assigned_employee']) ? $_POST['assigned_employee'] : null;
+    $assigned_pattern_cutter = !empty($_POST['assigned_pattern_cutter']) ? $_POST['assigned_pattern_cutter'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
     $down_payment = !empty($_POST['down_payment']) ? $_POST['down_payment'] : null;
     $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : null;
+    $assigned_tailor = !empty($_POST['assigned_tailor']) ? $_POST['assigned_tailor'] : null;
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
 
-    // Prepare SQL query, adding work_status = 'pending'
+    // Check input values for work_status and pattern_status
+    $work_status = !empty($_POST['work_status']) ? $_POST['work_status'] : 'pending';
+    $pattern_status = !empty($_POST['pattern_status']) ? $_POST['pattern_status'] : 'pending';
+
+    // Prepare SQL query
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = ?, 
-            work_status = 'pending', 
+            work_status = IF(? = 'pending', 'pending', ?), 
             measurement = IFNULL(?, measurement), 
             fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
-            assigned_employee = IFNULL(?, assigned_employee), 
+            assigned_pattern_cutter = IFNULL(?, assigned_pattern_cutter), 
             deadline = IFNULL(?, deadline), 
             down_payment = IFNULL(?, down_payment), 
             down_payment_date = IFNULL(?, down_payment_date), 
+            pattern_status = IF(? = 'pending', 'pending', ?), 
+            assigned_tailor = IFNULL(?, assigned_tailor), 
             balance = IFNULL(?, balance)
         WHERE request_id = ?
     ");
 
-    // Bind parameters (8 values since work_status is hardcoded)
+    // New request status for binding
     $new_status = "ongoing";
-    $stmt->bind_param("sssssssssi", $new_status, $measurement, $fee, $special_group, $assigned_employee, $deadline, $down_payment, $down_payment_date, $balance, $request_id);
 
+    // Bind parameters (13 total)
+    $stmt->bind_param(
+        "ssssssssssssssi",
+        $new_status,
+        $work_status,
+        $work_status,
+        $measurement,
+        $fee,
+        $special_group,
+        $assigned_pattern_cutter,
+        $deadline,
+        $down_payment,
+        $down_payment_date,
+        $pattern_status,
+        $pattern_status,
+        $assigned_tailor,
+        $balance,
+        $request_id
+    );
+
+    // Execute the statement and handle success or error
     if ($stmt->execute()) {
-        // Redirect back to the request view or show a success message
         header("Location: walkin_request.php?status=ongoing");
         exit();
     } else {
         echo "Error updating record: " . $stmt->error;
     }
+
+    // Free resources (optional, but good practice)
+    $stmt->close();
 }
+
 
 
 
 if (isset($_POST['complete_request'])) {
     $request_id = $_POST['request_id'];
-    $work_status = !empty($_POST['work_status']) ? $_POST['work_status'] : null;
+  
     $final_payment = !empty($_POST['final_payment']) ? $_POST['final_payment'] : null;
     $final_payment_date = !empty($_POST['final_payment_date']) ? $_POST['final_payment_date'] : null;
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
@@ -103,7 +134,7 @@ if (isset($_POST['complete_request'])) {
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = 'completed',
-            work_status = IFNULL(?, work_status),
+           
             final_payment = IFNULL(?, final_payment),
             final_payment_date = IFNULL(?, final_payment_date),
             balance = IFNULL(?, balance),
@@ -112,7 +143,7 @@ if (isset($_POST['complete_request'])) {
     ");
 
     // Bind parameters (6 values for the columns and 1 for the where clause)
-    $stmt->bind_param("sssssi", $work_status, $final_payment, $final_payment_date, $balance, $refund, $request_id);
+    $stmt->bind_param("ssssi", $final_payment, $final_payment_date, $balance, $refund, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message

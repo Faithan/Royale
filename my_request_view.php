@@ -151,7 +151,7 @@ if (isset($_GET['request_id'])) {
 
                 <p style="font-size: 1.5rem; font-style:italic; color:gray; background-color:var(--first-bgcolor);">Note: Once the work status is marked as "Completed," you're welcome to pick up your items. If you haven't checked the status yet, no need to worry—we’ll contact you to let you know when it's ready.</p>
 
-                <p><strong>Assigned Employee:</strong> <?php echo htmlspecialchars($row['assigned_employee']); ?></p>
+                <p><strong>Assigned tailor:</strong> <?php echo htmlspecialchars($row['assigned_tailor']); ?></p>
 
                 <p><strong>Request Id:</strong> <?php echo htmlspecialchars($row['request_id']); ?></p>
                 <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
