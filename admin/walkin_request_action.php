@@ -62,15 +62,28 @@ if (isset($_POST['update_request'])) {
     $assigned_tailor = !empty($_POST['assigned_tailor']) ? $_POST['assigned_tailor'] : null;
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
 
-    // Check input values for work_status and pattern_status
+    // First, fetch current work_status and pattern_status from the database
+    $query = "SELECT work_status, pattern_status FROM royale_request_tbl WHERE request_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $current_status = $result->fetch_assoc();
+    $stmt->close();
+
+    // Determine new work_status and pattern_status
     $work_status = !empty($_POST['work_status']) ? $_POST['work_status'] : 'pending';
     $pattern_status = !empty($_POST['pattern_status']) ? $_POST['pattern_status'] : 'pending';
+
+    // Use conditional logic for updating statuses
+    $new_work_status = ($current_status['work_status'] === 'rejected') ? 'pending' : ($current_status['work_status']);
+    $new_pattern_status = ($current_status['pattern_status'] === 'rejected') ? 'pending' : ($current_status['pattern_status']);
 
     // Prepare SQL query
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = ?, 
-            work_status = IF(? = 'pending', 'pending', ?), 
+            work_status = IFNULL(?, work_status), 
             measurement = IFNULL(?, measurement), 
             fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
@@ -78,7 +91,7 @@ if (isset($_POST['update_request'])) {
             deadline = IFNULL(?, deadline), 
             down_payment = IFNULL(?, down_payment), 
             down_payment_date = IFNULL(?, down_payment_date), 
-            pattern_status = IF(? = 'pending', 'pending', ?), 
+            pattern_status = IFNULL(?, pattern_status), 
             assigned_tailor = IFNULL(?, assigned_tailor), 
             balance = IFNULL(?, balance)
         WHERE request_id = ?
@@ -89,10 +102,9 @@ if (isset($_POST['update_request'])) {
 
     // Bind parameters (13 total)
     $stmt->bind_param(
-        "ssssssssssssssi",
+        "ssssssssssssi",
         $new_status,
-        $work_status,
-        $work_status,
+        $new_work_status,
         $measurement,
         $fee,
         $special_group,
@@ -100,8 +112,7 @@ if (isset($_POST['update_request'])) {
         $deadline,
         $down_payment,
         $down_payment_date,
-        $pattern_status,
-        $pattern_status,
+        $new_pattern_status,
         $assigned_tailor,
         $balance,
         $request_id
@@ -118,6 +129,7 @@ if (isset($_POST['update_request'])) {
     // Free resources (optional, but good practice)
     $stmt->close();
 }
+
 
 
 

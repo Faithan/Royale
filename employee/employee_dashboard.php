@@ -13,7 +13,7 @@ $employee_username = $_SESSION['employee_username'];
 $employee_name = $_SESSION['employee_name']; // Make sure you have this set in the session
 
 // Fetch requests with pending work assigned to the logged-in employee
-$query = "SELECT * FROM `royale_request_tbl` WHERE `work_status` = 'pending' AND `assigned_employee` = ?";
+$query = "SELECT * FROM `royale_request_tbl` WHERE `work_status` = 'pending' AND `assigned_tailor` = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('s', $employee_name);
 $stmt->execute();

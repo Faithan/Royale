@@ -155,9 +155,40 @@ if ($result->num_rows > 0) {
 
                                 <div class="request-details">
                                     <label>Request Status:</label>
-                                    <input type="text" name="request_status" id=""
-                                        value="<?php echo ucfirst($row['request_status']); ?>" readonly>
+                                    <?php
+                                    // Determine color based on pattern_status value
+                                    $requestStatus = ucfirst($row['request_status'] ?? 'No Status Yet');
+                                    $requestcolor = '';
+
+                                    switch (strtolower($row['request_status'] ?? '')) {
+                                        case 'rejected':
+                                            $requestcolor = 'red';
+                                            break;
+                                        case 'cancelled':
+                                            $requestcolor = 'red';
+                                            break;
+                                        case 'pending':
+                                            $requestcolor = 'gray';
+                                            break;
+                                        case 'accepted':
+                                            $requestcolor = 'blue';
+                                            break;
+                                        case 'ongoing':
+                                            $requestcolor = 'blue';
+                                            break;
+                                        case 'completed':
+                                            $requestcolor = 'green';
+                                            break;
+                                        default:
+                                            $requestcolor = 'black'; // Default color if status is not recognized
+                                            break;
+                                    }
+                                    ?>
+                                    <input type="text" name="request_status" value="<?php echo $requestStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $requestcolor; ?>; font-weight:bold;">
                                 </div>
+
+
+
                                 <div class="request-details">
                                     <label>Request Id:</label>
                                     <input type="number" name="request_id" id=""
@@ -389,7 +420,7 @@ if ($result->num_rows > 0) {
 
                                 <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['pattern_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
 
                                     <?php
@@ -406,7 +437,7 @@ if ($result->num_rows > 0) {
 
                             <div class="request-details">
                                 <label>Deadline:</label>
-                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
 
@@ -441,6 +472,9 @@ if ($result->num_rows > 0) {
                                 $color = '';
 
                                 switch (strtolower($row['pattern_status'] ?? '')) {
+                                    case 'rejected':
+                                        $color = 'red';
+                                        break;
                                     case 'pending':
                                         $color = 'gray';
                                         break;
@@ -493,7 +527,6 @@ if ($result->num_rows > 0) {
                                 </select>
                             </div>
 
-
                             <div class="request-details">
                                 <label>Work Status: <em>*from tailor*</em></label>
                                 <?php
@@ -502,8 +535,14 @@ if ($result->num_rows > 0) {
                                 $workColor = '';
 
                                 switch (strtolower($row['work_status'] ?? '')) {
+                                    case 'rejected':
+                                        $workColor = 'red';
+                                        break;
                                     case 'pending':
                                         $workColor = 'gray';
+                                        break;
+                                    case 'accepted':
+                                        $workColor = 'blue';
                                         break;
                                     case 'in progress':
                                         $workColor = 'blue';
@@ -518,7 +557,6 @@ if ($result->num_rows > 0) {
                                 ?>
                                 <input type="text" name="work_status" value="<?php echo $workStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $workColor; ?>; font-weight:bold;">
                             </div>
-
 
 
 
@@ -631,12 +669,8 @@ if ($result->num_rows > 0) {
                     <a id="return-request" onclick="window.location.href='walkin_request.php'">Return</a>
                 </div>
 
-
-
-
-
-
             </div> <!-- content cotainer -->
+
         </main>
     </div> <!-- overall container -->
 

@@ -11,7 +11,7 @@ if (!isset($_SESSION['employee_id'])) {
 $employee_name = $_SESSION['employee_name'];
 
 // Fetch accepted requests assigned to the employee
-$query = "SELECT * FROM `royale_request_tbl` WHERE `assigned_employee` = ? AND `work_status` != 'pending'";
+$query = "SELECT * FROM `royale_request_tbl` WHERE `assigned_tailor` = ? AND `work_status` != 'pending'";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('s', $employee_name);
 $stmt->execute();
