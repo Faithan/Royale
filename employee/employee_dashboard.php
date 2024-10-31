@@ -12,13 +12,41 @@ if (!isset($_SESSION['employee_id'])) {
 $employee_username = $_SESSION['employee_username'];
 $employee_name = $_SESSION['employee_name']; // Make sure you have this set in the session
 
+
+
 // Fetch requests with pending work assigned to the logged-in employee
-$query = "SELECT * FROM `royale_request_tbl` WHERE `work_status` = 'pending' AND `assigned_tailor` = ?";
+$query = "SELECT * FROM `royale_request_tbl` 
+          WHERE (`work_status` = 'pending' AND  `assigned_tailor` = ?) 
+          OR ( `pattern_status` = 'pending' AND `assigned_pattern_cutter` = ?)";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('s', $employee_name);
+$stmt->bind_param('ss', $employee_name, $employee_name);
 $stmt->execute();
 $result = $stmt->get_result();
+
+
+
+$employee_positions = isset($_SESSION['employee_position']) ? $_SESSION['employee_position'] : '';
+$positionsArray = array_map('trim', explode(',', $employee_positions)); // Split the string into an array and trim spaces
+
+// Check the number of positions
+if (count($positionsArray) === 2) {
+    // If there are two positions, join them with "and"
+    $positionsList = implode(' and ', $positionsArray);
+} elseif (count($positionsArray) > 2) {
+    // If there are more than two positions, join all except the last with a comma, then append the last with "and"
+    $lastPosition = array_pop($positionsArray); // Remove the last position
+    $positionsList = implode(', ', $positionsArray) . ' and ' . $lastPosition;
+} else {
+    // If there's only one position, just display it
+    $positionsList = $positionsArray[0] ?? '';
+}
 ?>
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,8 +68,9 @@ $result = $stmt->get_result();
     <div class="dashboard-container hidden-animation">
         <div class="dashboard-card">
             <h1>Welcome, <?php echo $employee_name; ?>!</h1><br>
+            <p style="color:blue; text-transform:capitalize;"><?php echo htmlspecialchars($positionsList); ?></p>
             <h2>Employee Dashboard</h2>
-            <p>Here is where you can manage your tasks, profile, and more!</p>
+            <p>Here is where you can manage your pending task and more!</p>
         </div>
 
         <div class="dashboard-card hidden-animation">
@@ -49,8 +78,18 @@ $result = $stmt->get_result();
             <div class="request-cards">
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="request-card" data-request-id="<?php echo $row['request_id']; ?>">
+                        <?php
+                        // Determine if the task is for Pattern Making or Sewing
+                        $taskType = '';
+                        if ($row['pattern_status'] === 'pending' && $row['work_status'] === 'pending') {
+                            $taskType = 'Pattern Making';
+                        } elseif ($row['pattern_status'] === 'completed' && $row['work_status'] === 'pending') {
+                            $taskType = 'Sewing';
+                        }
+                        ?>
+                        <div class="request-card" data-request-id="<?php echo $row['request_id']; ?>" data-task-type="<?php echo $taskType; ?>">
                             <h4><?php echo htmlspecialchars($row['service_name']); ?></h4>
+                            <p style="font-weight:bold; color:#d9534f;"><?php echo $taskType; ?></p> <!-- Emphasis for task type -->
                             <p>Name: <?php echo htmlspecialchars($row['name']); ?></p>
                             <p>Contact: <?php echo htmlspecialchars($row['contact_number']); ?></p>
                             <p>Address: <?php echo htmlspecialchars($row['address']); ?></p>
@@ -72,6 +111,7 @@ $result = $stmt->get_result();
                     <p>No pending requests.</p>
                 <?php endif; ?>
             </div>
+
         </div>
     </div>
 
@@ -89,165 +129,193 @@ $result = $stmt->get_result();
             </div>
         </div>
     </div>
-
-    <script>
-        let currentRequestId = null; // Store the current request ID for the modal
-
-        // Show modal when request card is clicked
-        $('.request-card').click(function() {
-            const requestId = $(this).data('request-id');
-            currentRequestId = requestId; // Set the current request ID
-            const serviceName = $(this).find('h4').text();
-            const name = $(this).find('p').eq(0).text().replace('Name: ', '');
-            const contact = $(this).find('p').eq(1).text().replace('Contact: ', '');
-            const address = $(this).find('p').eq(2).text().replace('Address: ', '');
-            const message = $(this).find('p').eq(3).text().replace('Message: ', '');
-            const specialGroup = $(this).find('p').eq(4).text().replace('Special Group: ', '');
-            const fittingDate = $(this).find('p').eq(5).text().replace('Fitting Date: ', '');
-            const fittingTime = $(this).find('p').eq(6).text().replace('Fitting Time: ', '');
-            const deadline = $(this).find('p').eq(7).text().replace('Deadline: ', '');
-            const photos = $(this).find('.request-images img').map(function() {
-                return $(this).attr('src');
-            }).get();
-
-            // Build modal content
-            let modalContent = `
-        <h4 style="font-size:2rem;">${serviceName}</h4>
-        <p style="font-size:1.8rem;">Name: ${name}</p>
-        <p style="font-size:1.8rem;">Contact: ${contact}</p>
-        <p style="font-size:1.8rem;">Address: ${address}</p>
-        <p style="font-size:1.8rem;">Message: ${message}</p>
-        <p style="font-size:1.8rem;">Special Group: ${specialGroup}</p>
-        <p style="font-size:1.8rem;">Fitting Date: ${fittingDate}</p>
-        <p style="font-size:1.8rem;">Fitting Time: ${fittingTime}</p>
-        <p style="font-size:1.8rem;">Deadline: ${deadline}</p>
-        <div class="modal-images">`;
-
-            photos.forEach(photo => {
-                modalContent += `<img src="${photo}" alt="Request Photo" class="request-photo" onclick="openFullscreenImage('${photo}')">`;
-            });
-
-            modalContent += `</div>`;
-
-            // Set the modal body content
-            $('#modalBody').html(modalContent);
-
-            // Display the modal
-            $('#requestModal').css('display', 'block');
-        });
-
-        // Close the modal when the close button is clicked
-        $('.close-button').click(function() {
-            $('#requestModal').css('display', 'none');
-        });
-
-        // Close the modal when clicking outside of the modal content
-        $(window).click(function(event) {
-            if ($(event.target).is('#requestModal')) {
-                $('#requestModal').css('display', 'none');
-            }
-        });
-
-        // Function to open image in fullscreen
-        function openFullscreenImage(src) {
-            const fullscreenDiv = $('<div class="fullscreen-image-container"></div>');
-            const img = $('<img class="fullscreen-image" src="' + src + '" />');
-            const closeBtn = $('<span class="close-fullscreen">&times;</span>');
-
-            fullscreenDiv.append(closeBtn).append(img).css('display', 'block');
-            $('body').append(fullscreenDiv);
-
-            // Close fullscreen when clicking the close button or outside the image
-            closeBtn.click(function() {
-                fullscreenDiv.remove();
-            });
-
-            fullscreenDiv.click(function(event) {
-                if (event.target === this) {
-                    fullscreenDiv.remove();
-                }
-            });
-        }
-
-        // Accept button functionality with confirmation
-        $('#modalAcceptBtn').click(function() {
-            if (!currentRequestId) return; // Ensure request ID is set
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to accept this request!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, accept it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'process_request.php', // Your PHP file to handle the request
-                        data: {
-                            action: 'accept',
-                            request_id: currentRequestId
-                        },
-                        dataType: 'json', // Expect a JSON response
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire('Accepted!', response.message, 'success');
-                                location.reload(); // Refresh the page to see updated requests
-                            } else {
-                                Swal.fire('Error!', response.message, 'error');
-                            }
-                        },
-                        error: function() {
-                            Swal.fire('Error!', 'There was an error processing your request.', 'error');
-                        }
-                    });
-                }
-            });
-        });
-
-        // Reject button functionality with confirmation
-        $('#modalRejectBtn').click(function() {
-            if (!currentRequestId) return; // Ensure request ID is set
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to reject this request!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, reject it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'process_request.php', // Your PHP file to handle the request
-                        data: {
-                            action: 'reject',
-                            request_id: currentRequestId
-                        },
-                        dataType: 'json', // Expect a JSON response
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire('Rejected!', response.message, 'success');
-                                location.reload(); // Refresh the page to see updated requests
-                            } else {
-                                Swal.fire('Error!', response.message, 'error');
-                            }
-                        },
-                        error: function() {
-                            Swal.fire('Error!', 'There was an error processing your request.', 'error');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
+
+<script>
+    let currentRequestId = null; // Store the current request ID for the modal
+
+    $('.request-card').click(function() {
+        const requestId = $(this).data('request-id');
+        currentRequestId = requestId;
+
+        // Capture the task type from data attribute
+        const taskType = $(this).data('task-type');
+
+        const serviceName = $(this).find('h4').text();
+        const name = $(this).find('p').eq(1).text().replace('Name: ', '');
+        const contact = $(this).find('p').eq(2).text().replace('Contact: ', '');
+        const address = $(this).find('p').eq(3).text().replace('Address: ', '');
+        const message = $(this).find('p').eq(4).text().replace('Message: ', '');
+        const specialGroup = $(this).find('p').eq(5).text().replace('Special Group: ', '');
+        const fittingDate = $(this).find('p').eq(6).text().replace('Fitting Date: ', '');
+        const fittingTime = $(this).find('p').eq(7).text().replace('Fitting Time: ', '');
+        const deadline = $(this).find('p').eq(8).text().replace('Deadline: ', '');
+        const photos = $(this).find('.request-images img').map(function() {
+            return $(this).attr('src');
+        }).get();
+
+        // Build modal content
+        let modalContent = `
+    <h4 style="font-size:2rem;">${serviceName}</h4>
+    <p style="font-weight:bold; color:#d9534f; font-size:1.8rem;">${taskType}</p> <!-- Emphasis for task type -->
+    <p style="font-size:1.8rem;">Name: ${name}</p>
+    <p style="font-size:1.8rem;">Contact: ${contact}</p>
+    <p style="font-size:1.8rem;">Address: ${address}</p>
+    <p style="font-size:1.8rem;">Message: ${message}</p>
+    <p style="font-size:1.8rem;">Special Group: ${specialGroup}</p>
+    <p style="font-size:1.8rem;">Fitting Date: ${fittingDate}</p>
+    <p style="font-size:1.8rem;">Fitting Time: ${fittingTime}</p>
+    <p style="font-size:1.8rem;">Deadline: ${deadline}</p>
+    <div class="modal-images">`;
+
+        photos.forEach(photo => {
+            modalContent += `<img src="${photo}" alt="Request Photo" class="request-photo" onclick="openFullscreenImage('${photo}')">`;
+        });
+
+        modalContent += `</div>`;
+
+        // Set the modal body content
+        $('#modalBody').html(modalContent);
+
+        // Display the modal
+        $('#requestModal').css('display', 'block');
+    });
+
+
+    // Close the modal when the close button is clicked
+    $('.close-button').click(function() {
+        $('#requestModal').css('display', 'none');
+    });
+
+    // Close the modal when clicking outside of the modal content
+    $(window).click(function(event) {
+        if ($(event.target).is('#requestModal')) {
+            $('#requestModal').css('display', 'none');
+        }
+    });
+
+    // Function to open image in fullscreen
+    function openFullscreenImage(src) {
+        const fullscreenDiv = $('<div class="fullscreen-image-container"></div>');
+        const img = $('<img class="fullscreen-image" src="' + src + '" />');
+        const closeBtn = $('<span class="close-fullscreen">&times;</span>');
+
+        fullscreenDiv.append(closeBtn).append(img).css('display', 'block');
+        $('body').append(fullscreenDiv);
+
+        // Close fullscreen when clicking the close button or outside the image
+        closeBtn.click(function() {
+            fullscreenDiv.remove();
+        });
+
+        fullscreenDiv.click(function(event) {
+            if (event.target === this) {
+                fullscreenDiv.remove();
+            }
+        });
+    }
+
+
+    // Accept button functionality with confirmation
+    $('#modalAcceptBtn').click(function() {
+        if (!currentRequestId) return; // Ensure request ID is set
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to accept this request!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, accept it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'process_request.php', // Your PHP file to handle the request
+                    data: {
+                        action: 'accept',
+                        request_id: currentRequestId
+                    },
+                    dataType: 'json', // Expect a JSON response
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire('Accepted!', response.message, 'success');
+                            location.reload(); // Refresh the page to see updated requests
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'There was an error processing your request.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+    // Reject button functionality with confirmation
+    $('#modalRejectBtn').click(function() {
+        if (!currentRequestId) return; // Ensure request ID is set
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to reject this request!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reject it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'process_request.php', // Your PHP file to handle the request
+                    data: {
+                        action: 'reject',
+                        request_id: currentRequestId
+                    },
+                    dataType: 'json', // Expect a JSON response
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire('Rejected!', response.message, 'success');
+                            location.reload(); // Refresh the page to see updated requests
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'There was an error processing your request.', 'error');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -342,7 +410,7 @@ $result = $stmt->get_result();
         /* Subtle shadow */
     }
 
-    .modal-actions{
+    .modal-actions {
         display: flex;
         align-items: center;
         justify-content: center;

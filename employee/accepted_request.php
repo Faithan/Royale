@@ -10,19 +10,24 @@ if (!isset($_SESSION['employee_id'])) {
 
 $employee_name = $_SESSION['employee_name'];
 
-// Fetch accepted requests assigned to the employee
-$query = "SELECT * FROM `royale_request_tbl` WHERE `assigned_tailor` = ? AND `work_status` != 'pending'";
+// Fetch accepted requests assigned to the employee as either tailor or pattern cutter
+$query = "
+    SELECT * FROM `royale_request_tbl` 
+    WHERE (`work_status` != 'pending' AND `work_status` != 'rejected' AND `assigned_tailor` = ?) 
+    OR (`pattern_status` != 'pending' AND `pattern_status` != 'rejected' AND  `assigned_pattern_cutter` = ?) ORDER BY request_id DESC";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('s', $employee_name);
+$stmt->bind_param('ss', $employee_name, $employee_name);
 $stmt->execute();
 $result = $stmt->get_result();
-
 
 // Fetch work status options from the database
 $status_query = "SELECT `work_status_id`, `work_status_name` FROM `work_status_tbl`";
 $status_result = $conn->query($status_query);
 $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +57,24 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
             <div class="request-cards hidden-animation">
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="request-card" onclick="openModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
+                        <?php 
+                            // Determine request type
+                            $isPatternMaking = $row['pattern_status'] === 'accepted' && $row['work_status'] === 'pending';
+                            $isSewing = $row['pattern_status'] === 'completed' && in_array($row['work_status'], ['accepted', 'in progress', 'completed']);
+                            $requestTypeLabel = '';
+
+                            if ($isPatternMaking) {
+                                $requestTypeLabel = 'Pattern Making';
+                            } elseif ($isSewing) {
+                                $requestTypeLabel = 'Sewing';
+                            }
+                        ?>
+                        <div class="request-card <?php echo ($isPatternMaking) ? 'highlight-pattern' : (($isSewing) ? 'highlight-sewing' : ''); ?>" 
+                             onclick="openModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
                             <h4><?php echo htmlspecialchars($row['service_name']); ?></h4>
+                            <?php if ($requestTypeLabel): ?>
+                                <span class="request-label"><?php echo htmlspecialchars($requestTypeLabel); ?></span>
+                            <?php endif; ?>
                             <p>Name: <?php echo htmlspecialchars($row['name']); ?></p>
                             <p>Contact: <?php echo htmlspecialchars($row['contact_number']); ?></p>
                             <p>Fitting Date: <?php echo htmlspecialchars($row['fitting_date']); ?></p>
@@ -145,7 +166,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
             document.getElementById('modal-fitting-date').textContent = data.fitting_date;
             document.getElementById('modal-fitting-time').textContent = data.fitting_time;
             document.getElementById('modal-deadline').textContent = data.deadline;
-        
+
             const currentWorkStatus = data.work_status; // Assuming you have this in your data object
             document.getElementById('work-status-select').value = currentWorkStatus;
 
@@ -268,15 +289,42 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
 
 
 <style>
-
-
-    .request-card {
+   .request-card {
         background-color: #f9f9f9;
         padding: 15px;
         border-radius: 5px;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
         text-align: left;
         cursor: pointer;
+        transition: transform 0.3s;
+        position: relative;
+    }
+
+    .request-card:hover {
+        transform: scale(1.02);
+    }
+
+    .highlight-pattern {
+        border-left: 5px solid #007bff; /* Emphasize pattern making */
+        background-color: #e7f0ff; /* Light background color */
+    }
+
+    .highlight-sewing {
+        border-left: 5px solid #28a745; /* Emphasize sewing */
+        background-color: #e9f7ef; /* Light background color */
+    }
+
+    .request-label {
+        display: inline-block;
+        background-color: #ffcc00; /* Yellow background */
+        color: #fff;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
     }
 
     .request-images {
@@ -291,6 +339,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
         height: auto;
         border-radius: 5px;
     }
+
 
     .modal {
         display: none;
@@ -310,7 +359,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
         padding: 20px;
         border-radius: 10px;
         width: 95%;
-            
+
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
@@ -370,7 +419,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
     .btn-update {
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        align-self:center;
+        align-self: center;
         border: none;
         border-bottom: 1px solid var(--box-shadow);
         margin: 10px 0;
@@ -382,7 +431,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
     }
 
     .btn-update:hover {
-        background-color:var(--hover-color);
+        background-color: var(--hover-color);
     }
 
     /* Additional styles for multiple images */

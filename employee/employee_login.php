@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['employee_id'] = $employee['employee_id'];
             $_SESSION['employee_username'] = $employee['employee_username'];
             $_SESSION['employee_name'] = $employee['employee_name']; // Set the employee name
+            $_SESSION['employee_position'] = $employee['employee_position']; // Set the employee position
 
             // Redirect to dashboard after successful login
             header("Location: employee_dashboard.php?status=success");

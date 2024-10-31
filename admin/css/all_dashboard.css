@@ -394,14 +394,16 @@ td img {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 10px;
     justify-content: space-between;
 }
 
 .request-details-container2 .request-details {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 5px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .request-details label {
@@ -415,25 +417,25 @@ td img {
 
 .request-details input {
     font-size: 1.8rem;
-
-    padding: 7px;
-    border-radius: 5px;
-    border: 1px solid var(--box-shadow);
-
+    padding: 10px;
+    border-radius: 0;
+    border: 0;
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    text-align: center;
+    text-align: right;
+    flex-grow: 1;
 
 }
 
 .request-details select {
     font-size: 1.7rem;
     padding: 7px;
-    border-radius: 5px;
-    border: 1px solid var(--text-shadow);
+    border-radius: 0;
+    border: 0;
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    text-align: center;
+    text-align: right;
+    flex-grow: 1;
 
 }
 
@@ -443,10 +445,11 @@ td img {
     width: 100%;
     font-size: 2rem;
     padding: 7px;
-    border-radius: 5px;
-    border: 1px solid var(--text-shadow);
+    border-radius:0;
+    border: 0;
     color: var(--text-color);
     background-color: var(--second-bgcolor);
+    
 }
 
 

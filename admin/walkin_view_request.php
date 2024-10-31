@@ -284,7 +284,7 @@ if ($result->num_rows > 0) {
                             $measurementValue = $row['measurement'];
                             ?>
 
-                            <div class="request-details">
+                            <div class="request-details" style="flex-direction: column;">
                                 <label>Measurements:</label>
 
                                 <?php if (empty(trim($measurementValue))): ?>
@@ -435,25 +435,6 @@ if ($result->num_rows > 0) {
                             </div>
 
 
-                            <div class="request-details">
-                                <label>Deadline:</label>
-                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-
-
-                            <div class="request-details">
-                                <label>Down Payment(₱):</label>
-                                <input type="number" name="down_payment" id="down_payment"
-                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-                            <div class="request-details">
-                                <label>Down Payment Date:</label>
-                                <input type="date" name="down_payment_date" id=""
-                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
                             <?php
                             // Fetch employees with "pattern cutter" in the 'employee_position' column
                             $pattern_query = "SELECT pattern_status_name FROM pattern_status_tbl ";
@@ -491,6 +472,28 @@ if ($result->num_rows > 0) {
                                 ?>
                                 <input type="text" name="pattern_status" value="<?php echo $patternStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $color; ?>; font-weight:bold;">
                             </div>
+
+
+                            <div class="request-details">
+                                <label>Deadline:</label>
+                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+
+
+                            <div class="request-details">
+                                <label>Down Payment(₱):</label>
+                                <input type="number" name="down_payment" id="down_payment"
+                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+                            <div class="request-details">
+                                <label>Down Payment Date:</label>
+                                <input type="date" name="down_payment_date" id=""
+                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+                          
 
 
 
@@ -618,7 +621,7 @@ if ($result->num_rows > 0) {
                             </div>
 
                             <div class="request-details">
-                                <label><em>(situational)</em> Refund(₱):</label>
+                                <label>Refund(₱): <em>(situational)</em> </label>
                                 <input type="number" name="refund" id="refund" value="<?php echo $row['refund']; ?>"
                                     <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
