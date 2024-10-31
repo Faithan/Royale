@@ -13,21 +13,33 @@ $employee_name = $_SESSION['employee_name'];
 // Fetch accepted requests assigned to the employee as either tailor or pattern cutter
 $query = "
     SELECT * FROM `royale_request_tbl` 
-    WHERE (`work_status` != 'pending' AND `work_status` != 'rejected' AND `assigned_tailor` = ?) 
-    OR (`pattern_status` != 'pending' AND `pattern_status` != 'rejected' AND  `assigned_pattern_cutter` = ?) ORDER BY request_id DESC";
+    WHERE (`work_status` != 'pending' AND `work_status` != 'rejected'   AND `assigned_tailor` = ?) 
+    OR (`pattern_status` != 'pending' AND `pattern_status` != 'rejected' AND `pattern_status` != 'completed' AND  `assigned_pattern_cutter` = ?) ORDER BY request_id DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param('ss', $employee_name, $employee_name);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Fetch work status options from the database
-$status_query = "SELECT `work_status_id`, `work_status_name` FROM `work_status_tbl`";
-$status_result = $conn->query($status_query);
-$work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
+
+
+
+
+// Fetch pattern statuses for select options
+$patternStatusQuery = "SELECT `pattern_status_id`, `pattern_status_name` FROM `pattern_status_tbl` WHERE 1";
+$patternStatusResult = $conn->query($patternStatusQuery);
+$patternStatuses = [];
+while ($row = $patternStatusResult->fetch_assoc()) {
+    $patternStatuses[] = $row; // Store the statuses in an array
+}
+
+// Fetch work statuses for select options
+$workStatusQuery = "SELECT `work_status_id`, `work_status_name`, `work_status_description` FROM `work_status_tbl` WHERE 1";
+$workStatusResult = $conn->query($workStatusQuery);
+$workStatuses = [];
+while ($row = $workStatusResult->fetch_assoc()) {
+    $workStatuses[] = $row; // Store the statuses in an array
+}
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,8 +51,8 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
 
     <?php include 'important.php' ?>
 
-
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
+
 </head>
 
 <body>
@@ -57,29 +69,66 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
             <div class="request-cards hidden-animation">
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <?php 
-                            // Determine request type
-                            $isPatternMaking = $row['pattern_status'] === 'accepted' && $row['work_status'] === 'pending';
-                            $isSewing = $row['pattern_status'] === 'completed' && in_array($row['work_status'], ['accepted', 'in progress', 'completed']);
-                            $requestTypeLabel = '';
 
-                            if ($isPatternMaking) {
-                                $requestTypeLabel = 'Pattern Making';
-                            } elseif ($isSewing) {
-                                $requestTypeLabel = 'Sewing';
-                            }
+
+                        <?php
+                        // Determine request status for styling
+                        $isInProgressOrAccepted = in_array($row['work_status'], ['accepted', 'in progress']) ||
+                            in_array($row['pattern_status'], ['accepted', 'in progress']);
+                        $isCompleted = in_array($row['work_status'], ['completed']) ||
+                            in_array($row['pattern_status'], ['completed']);
+
+                        $cardClass = '';
+
+                        if ($isInProgressOrAccepted) {
+                            $cardClass = 'accepted-in-progress'; // Class for accepted or in-progress requests
+                        } elseif ($isCompleted) {
+                            $cardClass = 'completed'; // Class for completed requests
+                        }
                         ?>
-                        <div class="request-card <?php echo ($isPatternMaking) ? 'highlight-pattern' : (($isSewing) ? 'highlight-sewing' : ''); ?>" 
-                             onclick="openModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
-                            <h4><?php echo htmlspecialchars($row['service_name']); ?></h4>
-                            <?php if ($requestTypeLabel): ?>
-                                <span class="request-label"><?php echo htmlspecialchars($requestTypeLabel); ?></span>
-                            <?php endif; ?>
+                        <div class="request-card <?php echo $cardClass; ?>"
+                            onclick="openModal(<?php echo htmlspecialchars(json_encode($row)); ?>)">
+
+                            <!-- Displaying pattern status and work status with labels -->
+                            <div style="display:flex; justify-content: space-between;">
+
+
+
+                                <?php if ($isInProgressOrAccepted): ?>
+                                    <span class="status pattern-status">Pattern Status: <?php echo htmlspecialchars($row['pattern_status']); ?></span>
+                                <?php elseif ($isCompleted): ?>
+                                    <span class="status work-status">Work Status: <?php echo htmlspecialchars($row['work_status']); ?></span>
+                                <?php endif; ?>
+
+
+
+                                <?php
+                                // Determine request type
+                                $isPatternMaking = in_array($row['pattern_status'], ['accepted', 'completed'])  && $row['work_status'] === 'pending';
+                                $isSewing = $row['pattern_status'] === 'completed' && in_array($row['work_status'], ['accepted', 'in progress', 'completed']);
+                                $requestTypeLabel = '';
+
+                                if ($isPatternMaking) {
+                                    $requestTypeLabel = 'Pattern Making';
+                                } elseif ($isSewing) {
+                                    $requestTypeLabel = 'Sewing';
+                                }
+                                ?>
+
+                                <?php if ($isPatternMaking): ?>
+                                    <span class="request-label" style="background-color: red"><?php echo htmlspecialchars($requestTypeLabel); ?></span>
+                                <?php elseif ($isSewing): ?>
+                                    <span class="request-label" style="background-color: blue"><?php echo htmlspecialchars($requestTypeLabel); ?></span>
+                                <?php endif; ?>
+
+                            </div>
+                            <p>For: <?php echo htmlspecialchars($row['service_name']); ?></p>
+                            <p>Request Id: <?php echo htmlspecialchars($row['request_id']); ?></p>
                             <p>Name: <?php echo htmlspecialchars($row['name']); ?></p>
                             <p>Contact: <?php echo htmlspecialchars($row['contact_number']); ?></p>
-                            <p>Fitting Date: <?php echo htmlspecialchars($row['fitting_date']); ?></p>
-                            <p>Fitting Time: <?php echo htmlspecialchars($row['fitting_time']); ?></p>
                             <p>Deadline: <?php echo htmlspecialchars($row['deadline']); ?></p>
+
+
                             <div class="request-images">
                                 <?php
                                 $photos = explode(',', $row['photo']);
@@ -87,6 +136,7 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
                                     <img src="../uploads/<?php echo htmlspecialchars($photo); ?>" alt="Request Photo" class="request-photo">
                                 <?php endforeach; ?>
                             </div>
+                            <p style="font-style:italic;">(click to open)</p>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -96,234 +146,198 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="requestModal" class="modal">
-        <!-- Add this inside the modal body before the "Work Status" section -->
-        <input type="hidden" id="modal-request-id" value="">
 
-        <div class="modal-content hidden-animation">
+
+
+    <!-- Modal Structure -->
+    <div id="requestModal" class="modal" style="display: none;">
+        <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3 style="font-size: 3rem;" id="modal-service-name"></h3>
+            <h3>Request Details</h3>
+            <div class="request-images" id="modalImages"></div>
+            <h4 style="margin-top: 20px;">Measurements</h4>
+            <p id="modalMeasurements" style="font-size: 1.2rem; font-weight: bold;"></p>
 
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h4 style="font-size: 1.8rem;">Request Details</h4>
-                    <div class="modal-images" id="modal-images">
-                        <!-- Multiple images will be populated here -->
-                    </div>
-                    <p style="font-size: 1.8rem;"><strong>Name:</strong> <span id="modal-name"></span></p>
-                    <p style="font-size: 1.8rem;"><strong>Contact:</strong> <span id="modal-contact"></span></p>
-                    <p style="font-size: 1.8rem;"><strong>Address:</strong> <span id="modal-address"></span></p>
-                    <p style="font-size: 1.8rem;"><strong>Fitting Date:</strong> <span id="modal-fitting-date"></span></p>
-                    <p style="font-size: 1.8rem;"><strong>Fitting Time:</strong> <span id="modal-fitting-time"></span></p>
-                    <p style="font-size: 1.8rem;"><strong>Deadline:</strong> <span id="modal-deadline"></span></p>
-                </div>
-
-                <!-- Special Section for Measurements -->
-                <div class="modal-section measurements">
-                    <h4 style="font-size: 1.8rem; border-bottom: 1px solid var(--box-shadow); margin-bottom: 10px;padding-bottom: 10px;">Measurements</h4>
-                    <div class="measurement-grid" id="modal-measurement" style="font-size: 1.8rem;">
-                        <!-- Measurements will be populated here -->
-                    </div>
-                </div>
-
-                <form id="update-status-form" class="modal-section">
-                    <input type="hidden" id="modal-request-id" value="">
-                    <label for="work-status-select" style="font-size: 1.8rem;"><strong>Work Status:</strong></label>
-
-                    <select id="work-status-select" name="work_status" style="font-size: 1.8rem; border: none ; background-color: var(--first-bgcolor); padding: 5px; border-bottom: 1px solid var(--box-shadow);">
-                        <?php
-                        // Fetch the current work status from the row data
-                        $currentWorkStatus = $row['work_status']; // Assuming $row contains the current request data
-                        foreach ($work_statuses as $status): ?>
-                            <option value="<?php echo htmlspecialchars($status['work_status_name']); ?>"
-                                <?php echo (trim($status['work_status_name']) === trim($currentWorkStatus)) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($status['work_status_name']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-
-
-                    <button type="button" class="btn-update" id="update-btn" onclick="updateWorkStatus()">Update Work Status</button>
-                </form>
-
-
-
-
-            </div>
+            <!-- Conditional Display of Status Select and Update Button -->
+            <form method="post" action="update_status.php" id="statusContainer">
+                <!-- Status select and update button will be dynamically inserted here -->
+            </form>
         </div>
     </div>
 
 
 
-
-    <script>
-        function openModal(data) {
-            document.getElementById('modal-service-name').textContent = data.service_name;
-            document.getElementById('modal-name').textContent = data.name;
-            document.getElementById('modal-contact').textContent = data.contact_number;
-            document.getElementById('modal-address').textContent = data.address;
-            document.getElementById('modal-fitting-date').textContent = data.fitting_date;
-            document.getElementById('modal-fitting-time').textContent = data.fitting_time;
-            document.getElementById('modal-deadline').textContent = data.deadline;
-
-            const currentWorkStatus = data.work_status; // Assuming you have this in your data object
-            document.getElementById('work-status-select').value = currentWorkStatus;
-
-
-            // Set the measurement details if applicable
-            document.getElementById('modal-measurement').textContent = data.measurement;
-
-            // Set the modal images
-            const photos = data.photo.split(',');
-            const modalImagesContainer = document.getElementById('modal-images');
-            modalImagesContainer.innerHTML = ''; // Clear previous images
-            photos.forEach(photo => {
-                const imgElement = document.createElement('img');
-                imgElement.src = '../uploads/' + photo;
-                imgElement.alt = 'Request Photo';
-                imgElement.onclick = function() {
-                    viewFullScreen(imgElement);
-                }; // Add full-screen view on click
-                modalImagesContainer.appendChild(imgElement);
-
-
-
-
-
-                // Hide or show the update button based on the work status
-                const updateButton = document.getElementById('update-btn');
-                if (currentWorkStatus === 'completed') {
-                    updateButton.style.display = 'none'; // Hide button if status is completed
-                    document.getElementById('work-status-select').disabled = true; // Disable the select element
-                } else {
-                    updateButton.style.display = 'block'; // Show button otherwise
-                    document.getElementById('work-status-select').disabled = false; // Enable the select element
-                }
-            });
-
-            document.getElementById('requestModal').style.display = 'block';
-
-
-            // Set the modal request ID
-            document.getElementById('modal-request-id').value = data.request_id; // Assuming you have a request_id field in your data
-
-            document.getElementById('requestModal').style.display = 'block';
-        }
-
-
-        function closeModal() {
-            document.getElementById('requestModal').style.display = 'none';
-        }
-
-
-
-        function viewFullScreen(img) {
-            const fullScreenImg = document.createElement('div');
-            fullScreenImg.classList.add('fullscreen-img');
-            fullScreenImg.innerHTML = '<img src="' + img.src + '" />';
-            document.body.appendChild(fullScreenImg);
-            fullScreenImg.style.display = 'flex';
-
-            fullScreenImg.onclick = function() {
-                document.body.removeChild(fullScreenImg);
-            }
-        }
-
-
-
-        function updateWorkStatus() {
-            const newStatus = document.getElementById('work-status-select').value;
-            const requestId = document.getElementById('modal-request-id').value;
-
-            // SweetAlert confirmation
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to update the work status?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!',
-                cancelButtonText: 'No, cancel!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // AJAX request to update work status
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'update_work_status.php', true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onload = function() {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            Swal.fire('Updated!', response.message, 'success');
-                            closeModal(); // Close the modal
-                            // Optionally refresh the page or update the UI
-                            location.reload(); // This will reload the page to reflect the changes
-                        } else {
-                            Swal.fire('Error!', response.message, 'error');
-                        }
-                    };
-                    xhr.send('work_status=' + encodeURIComponent(newStatus) + '&request_id=' + encodeURIComponent(requestId));
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>
 
+<script>
+    // Store PHP arrays in JavaScript
+    const patternStatuses = <?php echo json_encode($patternStatuses); ?>;
+    const workStatuses = <?php echo json_encode($workStatuses); ?>;
+
+
+    function openModal(request) {
+        const modal = document.getElementById('requestModal');
+        const modalImages = document.getElementById('modalImages');
+        const modalMeasurements = document.getElementById('modalMeasurements');
+        const statusContainer = document.getElementById('statusContainer');
+
+        // Clear previous images and measurements
+        modalImages.innerHTML = '';
+        modalMeasurements.textContent = '';
+        statusContainer.innerHTML = ''; // Clear previous status content
+
+        // Display images
+        const photos = request.photo.split(',');
+        photos.forEach(photo => {
+            const img = document.createElement('img');
+            img.src = `../uploads/${photo.trim()}`;
+            img.alt = "Request Photo";
+            img.className = "request-photo";
+            modalImages.appendChild(img);
+        });
+
+        // Display measurements
+        modalMeasurements.textContent = request.measurement; // Assuming it's a string
+
+
+
+        // Display status select and button based on request type
+        if (request.pattern_status === 'accepted') {
+            // Check if the pattern status is completed
+            const isCompleted = request.pattern_status === 'completed';
+            // Show pattern status select with the current selected status
+            statusContainer.innerHTML = `
+        <label for="patternStatus">Pattern Status:</label>
+        <select name="patternStatus" id="patternStatus" ${isCompleted ? 'disabled' : ''}>
+            ${patternStatuses
+                .filter(status => status.pattern_status_name !== 'rejected' && status.pattern_status_name !== 'pending') // Exclude rejected and pending
+                .map(status => `
+                    <option value="${status.pattern_status_name}" ${status.pattern_status_name === request.pattern_status ? 'selected' : ''}>
+                        ${status.pattern_status_name}
+                    </option>`).join('')}
+        </select>
+        <input type="hidden" name="request_id" value="${request.request_id}"/>
+        <input type="hidden" name="type" value="pattern"/>
+        ${isCompleted ? '' : '<button type="submit">Update Status</button>'}  <!-- Only show the button if not completed -->
+    `;
+        } else if (request.work_status) {
+            // Check if the work status is completed
+            const isCompleted = request.work_status === 'completed';
+            // Show work status select with the current selected status
+            statusContainer.innerHTML = `
+        <label for="workStatus">Work Status:</label>
+        <select name="workStatus" id="workStatus" ${isCompleted ? 'disabled' : ''}>
+            ${workStatuses
+                .filter(status => status.work_status_name !== 'rejected' && status.work_status_name !== 'pending') // Exclude rejected and pending
+                .map(status => `
+                    <option value="${status.work_status_name}" ${status.work_status_name === request.work_status ? 'selected' : ''}>
+                        ${status.work_status_name}
+                    </option>`).join('')}
+        </select>
+        <input type="hidden" name="request_id" value="${request.request_id}"/>
+        <input type="hidden" name="type" value="work"/>
+        ${isCompleted ? '' : '<button type="submit">Update Status</button>'}  <!-- Only show the button if not completed -->
+    `;
+        }
 
 
 
 
+        // Show the modal
+        modal.style.display = "block";
+    }
 
 
 
+    function closeModal() {
+        const modal = document.getElementById('requestModal');
+        modal.style.display = "none";
+    }
 
 
-
-
-
+    // Add an event listener to close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('requestModal')) {
+            closeModal();
+        }
+    };
+</script>
 
 
 
 
 <style>
-   .request-card {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    .dashboard-card {
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .request-card {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         text-align: left;
         cursor: pointer;
-        transition: transform 0.3s;
-        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+
     }
 
     .request-card:hover {
-        transform: scale(1.02);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .highlight-pattern {
-        border-left: 5px solid #007bff; /* Emphasize pattern making */
-        background-color: #e7f0ff; /* Light background color */
+    /* Styles for accepted and in-progress requests */
+    .accepted-in-progress {
+        border-left: 5px solid #007bff;
+        /* Emphasize pattern making */
+        background-color: #e7f0ff;
+        /* Light background color */
     }
 
-    .highlight-sewing {
-        border-left: 5px solid #28a745; /* Emphasize sewing */
-        background-color: #e9f7ef; /* Light background color */
+    /* Styles for completed requests */
+    .completed {
+        border-left: 5px solid #28a745;
+        /* Emphasize sewing */
+        background-color: #e9f7ef;
+        /* Light background color */
+    }
+
+    .status {
+        font-weight: bold;
+        border-radius: 4px;
+        color: white;
+        display: inline-block;
+        margin-bottom: 5px;
+        font-size: 2rem;
+        text-transform: uppercase;
+    }
+
+    .pattern-status {
+        color: #007bff;
+        /* Blue for pattern status */
+    }
+
+    .work-status {
+        color: #28a745;
+        /* Green for work status */
     }
 
     .request-label {
         display: inline-block;
-        background-color: #ffcc00; /* Yellow background */
         color: #fff;
         padding: 5px;
         border-radius: 3px;
-        font-size: 0.9em;
-        position: absolute;
-        top: 10px;
-        right: 10px;
+        font-size: 1.5rem;
+
         font-weight: bold;
     }
 
@@ -331,7 +345,8 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
         display: flex;
         gap: 10px;
         margin: 10px 0;
-        overflow-x: scroll;
+        overflow-x: auto;
+        /* Allow horizontal scrolling */
     }
 
     .request-photo {
@@ -341,26 +356,48 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
     }
 
 
+
+
+
+
+
+
+
+
+
+
+    /* Modal Styles */
     .modal {
         display: none;
+        /* Hidden by default */
         position: fixed;
+        /* Stay in place */
         z-index: 1000;
+        /* Sit on top */
         left: 0;
         top: 0;
         width: 100%;
+        /* Full width */
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
+        /* Full height */
         overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
     }
 
     .modal-content {
-        background-color: var(--first-bgcolor);
-        margin: 5% auto;
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
         padding: 20px;
-        border-radius: 10px;
-        width: 95%;
-
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .close {
@@ -372,110 +409,31 @@ $work_statuses = $status_result->fetch_all(MYSQLI_ASSOC);
 
     .close:hover,
     .close:focus {
-        color: #000;
+        color: black;
+        text-decoration: none;
         cursor: pointer;
     }
 
-
-    .modal-body {
-        padding: 10px 0;
-    }
-
-    .modal-section {
-        margin-bottom: 20px;
-    }
-
-    /* Styling for measurements */
-    .measurements {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        text-transform: uppercase;
-    }
-
-    .measurement-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 15px;
-    }
-
-    .measurement-item {
-        background-color: #fff;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-weight: bold;
-    }
-
-    .measurement-item span {
-        display: block;
-        font-size: 14px;
-        color: #777;
-    }
-
-    /* Button styling */
-    .btn-update {
-        background-color: var(--second-bgcolor);
-        color: var(--text-color);
-        align-self: center;
-        border: none;
-        border-bottom: 1px solid var(--box-shadow);
-        margin: 10px 0;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-update:hover {
-        background-color: var(--hover-color);
-    }
-
-    /* Additional styles for multiple images */
     .modal-images {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        /* Space between images */
+        margin: 10px 0;
+        overflow-x: auto;
+        /* Allow horizontal scrolling */
     }
 
-
-
-    .modal-images img {
-        width: 100px;
-        /* Limit the size of each image */
+    .modal-photo {
+        width: 150px;
         height: auto;
         border-radius: 5px;
-        cursor: pointer;
-        /* Pointer cursor for clickable images */
-        background-color: var(--second-bgcolor);
-        padding: 5px;
     }
 
-    /* Fullscreen Image Styles */
-    .fullscreen-img {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    .fullscreen-img img {
-        max-width: 90%;
-        max-height: 90%;
-    }
-
-    .modal-footer {
+    .modal-measurements {
         margin-top: 20px;
-        text-align: right;
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #007bff;
+        /* Emphasize measurements */
     }
 </style>

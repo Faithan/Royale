@@ -1,0 +1,6 @@
+Array
+(
+    [patternStatus] => 1
+    [request_id] => 53
+    [type] => pattern
+)
