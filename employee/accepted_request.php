@@ -72,19 +72,23 @@ while ($row = $workStatusResult->fetch_assoc()) {
 
 
                         <?php
-                        // Determine request status for styling
-                        $isInProgressOrAccepted = in_array($row['work_status'], ['accepted', 'in progress']) ||
-                            in_array($row['pattern_status'], ['accepted']);
-                        $isCompleted = in_array($row['work_status'], ['completed']) ||
-                            in_array($row['pattern_status'], ['completed']);
+                       // Determine request type
+                       $isPatternMaking = $row['pattern_status'] === 'accepted'  && $row['work_status'] === 'pending';
+                       $isSewing = $row['pattern_status'] === 'completed' && in_array($row['work_status'], ['accepted', 'in progress', 'completed']);
+                       
+                       $requestTypeLabel = '';
+                       $cardClass = '';
 
-                        $cardClass = '';
+                       if ($isPatternMaking) {
+                           $requestTypeLabel = 'Pattern Making';
+                           $cardClass = 'pattern'; // Class for accepted or in-progress requests
+                       } elseif ($isSewing) {
+                           $requestTypeLabel = 'Sewing';
+                           $cardClass = 'sewing'; // Class for completed requests
+                       }
 
-                        if ($isInProgressOrAccepted) {
-                            $cardClass = 'accepted-in-progress'; // Class for accepted or in-progress requests
-                        } elseif ($isCompleted) {
-                            $cardClass = 'completed'; // Class for completed requests
-                        }
+                      
+
                         ?>
 
 
@@ -97,16 +101,7 @@ while ($row = $workStatusResult->fetch_assoc()) {
 
 
                                 <?php
-                                // Determine request type
-                                $isPatternMaking = $row['pattern_status'] === 'accepted'  && $row['work_status'] === 'pending';
-                                $isSewing = $row['pattern_status'] === 'completed' && in_array($row['work_status'], ['accepted', 'in progress', 'completed']);
-                                $requestTypeLabel = '';
-
-                                if ($isPatternMaking) {
-                                    $requestTypeLabel = 'Pattern Making';
-                                } elseif ($isSewing) {
-                                    $requestTypeLabel = 'Sewing';
-                                }
+                              
                                 ?>
 
 
@@ -335,19 +330,15 @@ while ($row = $workStatusResult->fetch_assoc()) {
     }
 
     /* Styles for accepted and in-progress requests */
-    .accepted-in-progress {
-        border-left: 5px solid #007bff;
-        /* Emphasize pattern making */
-        background-color: #e7f0ff;
-        /* Light background color */
+    .pattern {
+        border-left: 5px solid red;
+        background-color: #ffeded;
     }
 
     /* Styles for completed requests */
-    .completed {
-        border-left: 5px solid #28a745;
-        /* Emphasize sewing */
-        background-color: #e9f7ef;
-        /* Light background color */
+    .sewing {
+        border-left: 5px solid blue;
+        background-color: #f2f6fc;
     }
 
     .status {

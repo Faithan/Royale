@@ -59,6 +59,8 @@ if (count($positionsArray) === 2) {
     <?php include 'important.php' ?>
 
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
+    <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/allstyle.css?v=<?php echo time(); ?>">
 </head>
 
 <body>

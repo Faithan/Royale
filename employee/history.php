@@ -10,34 +10,31 @@ if (!isset($_SESSION['employee_id'])) {
 
 $employee_name = $_SESSION['employee_name'];
 
-// Fetch completed pattern making requests sorted by completion date
-$pattern_making_query = "SELECT * FROM royale_request_tbl WHERE assigned_pattern_cutter = ? AND pattern_status = 'completed' ORDER BY pattern_completed_datetime DESC";
-$stmt = $conn->prepare($pattern_making_query);
-$stmt->bind_param("s", $employee_name);
-$stmt->execute();
-$pattern_making_results = $stmt->get_result();
+// Fetch completed tasks (pattern making and sewing) sorted by completion date
+$tasks_query = "
+    SELECT *, 'pattern' AS task_type, pattern_completed_datetime AS completed_datetime FROM royale_request_tbl 
+    WHERE assigned_pattern_cutter = ? AND pattern_status = 'completed'
+    UNION ALL
+    SELECT *, 'sewing' AS task_type, work_completed_datetime AS completed_datetime FROM royale_request_tbl 
+    WHERE assigned_tailor = ? AND work_status = 'completed'
+    ORDER BY completed_datetime DESC";
 
-// Fetch completed sewing requests sorted by completion date
-$sewing_query = "SELECT * FROM royale_request_tbl WHERE assigned_tailor = ? AND work_status = 'completed' ORDER BY work_completed_datetime DESC";
-$stmt = $conn->prepare($sewing_query);
-$stmt->bind_param("s", $employee_name);
+    
+$stmt = $conn->prepare($tasks_query);
+$stmt->bind_param("ss", $employee_name, $employee_name);
 $stmt->execute();
-$sewing_results = $stmt->get_result();
+$tasks_results = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
-
     <?php include 'important.php' ?>
-
     <link rel="shortcut icon" href="../system_images/whitelogo.png" type="image/png">
 </head>
-
 <body>
     <?php include 'nav.php' ?>
     <div class="dashboard-container hidden-animation">
@@ -47,22 +44,20 @@ $sewing_results = $stmt->get_result();
         </div>
 
         <div class="history-container">
-            <!-- Pattern Making Requests -->
-            <h3>Pattern Making</h3>
-            <?php if ($pattern_making_results->num_rows > 0): ?>
-                <?php while ($row = $pattern_making_results->fetch_assoc()): ?>
-                    <div class="request-card history-card pattern-card">
-                        <h4>Request ID: <?php echo $row['request_id']; ?></h4>
-                        <p><strong>Assigned Pattern Cutter:</strong> <?php echo $row['assigned_pattern_cutter']; ?></p>
-                        <p><strong>Pattern Status:</strong> <?php echo $row['pattern_status']; ?></p>
-                        <p><strong>Pattern Completed Date:</strong> <?php echo date('F j, Y, g:i a', strtotime($row['pattern_completed_datetime'])); ?></p>
-                        <p><strong>Description: For</strong> <?php echo $row['service_name']; ?></p>
+            <?php if ($tasks_results->num_rows > 0): ?>
+                <?php while ($row = $tasks_results->fetch_assoc()): ?>
+                    <div class="request-card history-card <?php echo $row['task_type'] === 'pattern' ? 'pattern-card' : 'sewing-card'; ?>">
+                        <h4 style="text-transform:uppercase; color:green">Request ID: <?php echo $row['request_id']; ?></h4>
+                        <strong>Type:</strong> <p><?php echo ucfirst($row['task_type']); ?></p>
+                        <strong style="text-decoration:none">Assigned <?php echo $row['task_type'] === 'pattern' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $row['task_type'] === 'pattern' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></p>
+                        <strong>Status:</strong> <p><?php echo $row['task_type'] === 'pattern' ? $row['pattern_status'] : $row['work_status']; ?></p>
+                        <strong>For: </strong><p><?php echo $row['service_name']; ?></p>
                         <div class="photos">
                             <?php 
                             // Display photos if available
-                            $photos = explode(',', $row['photo']); // Assuming 'photos' is the column name
+                            $photos = explode(',', $row['photo']);
                             foreach ($photos as $photo):
-                                if (!empty(trim($photo))): // Check if photo is not empty
+                                if (!empty(trim($photo))):
                             ?>
                                 <img src="../uploads/<?php echo htmlspecialchars($photo); ?>" alt="Task Photo" class="task-photo">
                             <?php 
@@ -70,50 +65,19 @@ $sewing_results = $stmt->get_result();
                             endforeach; 
                             ?>
                         </div>
+                        <strong>Completed Date:</strong><p><?php echo date('F j, Y, g:i a', strtotime($row['task_type'] === 'pattern' ? $row['pattern_completed_datetime'] : $row['work_completed_datetime'])); ?></p>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
-                <p>No completed pattern making tasks.</p>
-            <?php endif; ?>
-
-            <!-- Sewing Requests -->
-            <h3>Sewing</h3>
-            <?php if ($sewing_results->num_rows > 0): ?>
-                <?php while ($row = $sewing_results->fetch_assoc()): ?>
-                    <div class="request-card history-card sewing-card">
-                        <h4>Request ID: <?php echo $row['request_id']; ?></h4>
-                        <p><strong>Assigned Tailor:</strong> <?php echo $row['assigned_tailor']; ?></p>
-                        <p><strong>Work Status:</strong> <?php echo $row['work_status']; ?></p>
-                        <p><strong>Work Completed Date:</strong> <?php echo date('F j, Y, g:i a', strtotime($row['work_completed_datetime'])); ?></p>
-                        <p><strong>Description: For</strong> <?php echo $row['service_name']; ?></p>
-                        <div class="photos">
-                            <?php 
-                            // Display photos if available
-                            $photos = explode(',', $row['photo']); // Assuming 'photos' is the column name
-                            foreach ($photos as $photo):
-                                if (!empty(trim($photo))): // Check if photo is not empty
-                            ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($photo); ?>" alt="Task Photo" class="task-photo">
-                            <?php 
-                                endif;
-                            endforeach; 
-                            ?>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No completed sewing tasks.</p>
+                <p>No completed tasks.</p>
             <?php endif; ?>
         </div>
     </div>
-
 </body>
-
 </html>
 
 <style>
     body {
-   
         line-height: 1.6; /* Increase line height for better readability */
         color: #333; /* Darker text color for better contrast */
     }
@@ -135,19 +99,17 @@ $sewing_results = $stmt->get_result();
     }
 
     h2 {
-        font-size: 28px; /* Larger font size for main title */
-        margin-bottom: 10px;
+        font-size: 1.5rem; /* Larger font size for main title */
         color: #0056b3; /* Blue color for headings */
     }
 
     h3 {
-   
-        font-size: 24px; /* Font size for section headings */
+        font-size:1.5rem; /* Font size for section headings */
         color: #333; /* Darker color for headings */
     }
 
     h4 {
-        font-size: 20px; /* Slightly larger font size for request ID */
+        font-size: 1.5rem; /* Slightly larger font size for request ID */
         color: #0056b3; /* Blue color for request ID */
     }
 
@@ -165,15 +127,13 @@ $sewing_results = $stmt->get_result();
     }
 
     .pattern-card {
-        border-left: 5px solid #28a745;
-        /* Emphasize sewing */
-        background-color: #e9f7ef;
+        border-left: 5px solid red;
+        background-color: #ffeded;
     }
 
     .sewing-card {
-        border-left: 5px solid #28a745;
-        /* Emphasize sewing */
-        background-color: #e9f7ef;
+        border-left: 5px solid blue;
+        background-color: #f2f6fc;
     }
 
     .request-card:hover {
@@ -196,12 +156,16 @@ $sewing_results = $stmt->get_result();
     }
 
     p {
-        font-size: 16px; /* Increased font size for paragraphs */
-        margin-bottom: 10px; /* Spacing between paragraphs */
+        font-size:1.5rem; /* Increased font size for paragraphs */
+    
+        color: var(--text-color2);
     }
 
     strong {
         font-weight: bold; /* Bold for strong text */
-        color: #0056b3; /* Blue color for strong text */
+      
+        text-transform: uppercase;
+        font-size:1.5rem; /* Increased font size for paragraphs */
+
     }
 </style>
