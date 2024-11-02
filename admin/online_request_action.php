@@ -62,6 +62,7 @@ if (isset($_POST['accept_request'])) {
 }
 
 
+
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
 
@@ -85,19 +86,14 @@ if (isset($_POST['update_request'])) {
     $current_status = $result->fetch_assoc();
     $stmt->close();
 
-    // Determine new work_status and pattern_status
-    $work_status = !empty($_POST['work_status']) ? $_POST['work_status'] : 'pending';
-    $pattern_status = !empty($_POST['pattern_status']) ? $_POST['pattern_status'] : 'pending';
-
-    // Use conditional logic for updating statuses
-    $new_work_status = ($current_status['work_status'] === 'rejected') ? 'pending' : ($current_status['work_status']);
-    $new_pattern_status = ($current_status['pattern_status'] === 'rejected') ? 'pending' : ($current_status['pattern_status']);
-
-    // Prepare SQL query
+    $new_work_status = (empty($current_status['work_status']) || $current_status['work_status'] === 'rejected') ? 'pending' : $current_status['work_status'];
+    $new_pattern_status = (empty($current_status['pattern_status']) || $current_status['pattern_status'] === 'rejected') ? 'pending' : $current_status['pattern_status'];
+    
+    // Prepare SQL query without IFNULL for statuses
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = ?, 
-            work_status = IFNULL(?, work_status), 
+            work_status = ?, 
             measurement = IFNULL(?, measurement), 
             fee = IFNULL(?, fee), 
             special_group = IFNULL(?, special_group), 
@@ -105,7 +101,7 @@ if (isset($_POST['update_request'])) {
             deadline = IFNULL(?, deadline), 
             down_payment = IFNULL(?, down_payment), 
             down_payment_date = IFNULL(?, down_payment_date), 
-            pattern_status = IFNULL(?, pattern_status), 
+            pattern_status = ?, 
             assigned_tailor = IFNULL(?, assigned_tailor), 
             balance = IFNULL(?, balance)
         WHERE request_id = ?

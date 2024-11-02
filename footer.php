@@ -36,7 +36,7 @@
 <div class="footer-column-container hidden">
 
 
-    <h1>STAY UPDATE</h1>
+    <h1>STAY UPDATED</h1>
     <a href="admin/admin_login.php" target="_blank">
         <i class="fa-solid fa-user-shield"></i> Log in as Admin
     </a>

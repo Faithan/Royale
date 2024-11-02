@@ -407,6 +407,30 @@ if ($result->num_rows > 0) {
                             </div>
 
 
+
+
+
+
+                            <div class="request-details">
+                                <label>Deadline:</label>
+                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+
+
+                            <div class="request-details">
+                                <label>Down Payment(₱):</label>
+                                <input type="number" name="down_payment" id="down_payment"
+                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+                            <div class="request-details">
+                                <label>Down Payment Date:</label>
+                                <input type="date" name="down_payment_date" id=""
+                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                            </div>
+
+
                             <?php
                             // Fetch employees with "pattern cutter" in the 'employee_position' column
                             $employee_query = "SELECT employee_name FROM employee_tbl WHERE employee_status = 'active' AND employee_position LIKE '%pattern cutter%'";
@@ -477,30 +501,6 @@ if ($result->num_rows > 0) {
 
 
 
-                            <div class="request-details">
-                                <label>Deadline:</label>
-                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-
-
-                            <div class="request-details">
-                                <label>Down Payment(₱):</label>
-                                <input type="number" name="down_payment" id="down_payment"
-                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-                            <div class="request-details">
-                                <label>Down Payment Date:</label>
-                                <input type="date" name="down_payment_date" id=""
-                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-                           
-
-
-
-
 
 
                             <?php
@@ -518,7 +518,7 @@ if ($result->num_rows > 0) {
 
                                 <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_tailor" id="assigned_tailor" <?php echo ($row['pattern_status']  === 'rejected'  || $row['pattern_status']  === 'accepted'  || $row['pattern_status']  === 'pending' || $row['work_status']  === 'in progress' || $row['work_status']  === 'completed'  || $row['request_status']  === 'completed') ? 'disabled' : ''; ?>>
+                                <select name="assigned_tailor" id="assigned_tailor" <?php echo ($row['pattern_status']  === ''  || $row['pattern_status']  === 'rejected'  || $row['pattern_status']  === 'accepted'  || $row['pattern_status']  === 'pending' || $row['work_status']  === 'in progress' || $row['work_status']  === 'completed'  || $row['request_status']  === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
 
                                     <?php

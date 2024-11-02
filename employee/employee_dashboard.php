@@ -68,7 +68,7 @@ if (count($positionsArray) === 2) {
     <div class="dashboard-container hidden-animation">
         <div class="dashboard-card">
             <h1>Welcome, <?php echo $employee_name; ?>!</h1><br>
-            <p style="color:blue; text-transform:capitalize;"><?php echo htmlspecialchars($positionsList); ?></p>
+            <p style="color:red; text-transform:capitalize;"><?php echo htmlspecialchars($positionsList); ?></p>
             <h2>Employee Dashboard</h2>
             <p>Here is where you can manage your pending task and more!</p>
         </div>
