@@ -82,7 +82,6 @@ body main .content-container {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid var(--box-shadow);
     padding: 20px;
 }
 

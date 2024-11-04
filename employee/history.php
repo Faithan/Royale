@@ -48,10 +48,10 @@ $tasks_results = $stmt->get_result();
                 <?php while ($row = $tasks_results->fetch_assoc()): ?>
                     <div class="request-card history-card <?php echo $row['task_type'] === 'pattern' ? 'pattern-card' : 'sewing-card'; ?>">
                         <h4 style="text-transform:uppercase; color:green">Request ID: <?php echo $row['request_id']; ?></h4>
-                        <strong>Type:</strong> <p><?php echo ucfirst($row['task_type']); ?></p>
-                        <strong style="text-decoration:none">Assigned <?php echo $row['task_type'] === 'pattern' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $row['task_type'] === 'pattern' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></p>
-                        <strong>Status:</strong> <p><?php echo $row['task_type'] === 'pattern' ? $row['pattern_status'] : $row['work_status']; ?></p>
-                        <strong>For: </strong><p><?php echo $row['service_name']; ?></p>
+                        <div class="description"><strong>Type:</strong><p><?php echo ucfirst($row['task_type']); ?></p></div>
+                        <div class="description"><strong style="text-decoration:none">Assigned <?php echo $row['task_type'] === 'pattern' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $row['task_type'] === 'pattern' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></div>
+                        <div class="description"><strong>Status:</strong> <p><?php echo $row['task_type'] === 'pattern' ? $row['pattern_status'] : $row['work_status']; ?></p></div>
+                        <div class="description"><strong>For: </strong><p><?php echo $row['service_name']; ?></p></div>
                         <div class="photos">
                             <?php 
                             // Display photos if available
@@ -78,6 +78,7 @@ $tasks_results = $stmt->get_result();
 
 <style>
     body {
+        font-family: 'Anton', Arial, sans-serif;
         line-height: 1.6; /* Increase line height for better readability */
         color: #333; /* Darker text color for better contrast */
     }
@@ -85,7 +86,7 @@ $tasks_results = $stmt->get_result();
     .dashboard-card {
         margin: 20px 0;
         padding: 20px;
-        border-radius: 8px;
+      
         background-color: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
@@ -94,7 +95,7 @@ $tasks_results = $stmt->get_result();
         margin-top: 20px;
         padding: 20px;
         background-color: #f9f9f9; /* Light background for history section */
-        border-radius: 8px;
+       
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -113,17 +114,22 @@ $tasks_results = $stmt->get_result();
         color: #0056b3; /* Blue color for request ID */
     }
 
+    .description{
+        display: flex;
+    }
+
     .request-card {
         padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        border-radius: 0;
+        box-shadow: none;
         text-align: left;
-        cursor: pointer;
+        border: 1px dashed black;
         transition: transform 0.3s, box-shadow 0.3s;
         margin-bottom: 20px;
         display: flex;
         flex-direction: column;
         background-color: #fff; /* White background for cards */
+        cursor: default;
     }
 
     .pattern-card {
@@ -136,10 +142,6 @@ $tasks_results = $stmt->get_result();
         background-color: #f2f6fc;
     }
 
-    .request-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
 
     .task-photo {
         max-width: 100px; /* Set max width for images */

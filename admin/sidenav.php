@@ -55,7 +55,7 @@
                 <a href="#" class="menu-toggle"><i class="fa-solid fa-people-group"></i> Users</a>
             </li>
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-users"></i> Employees</a>
+                <a href="employee_settings.php" class="menu-toggle"><i class="fa-solid fa-users"></i> Employees</a>
             </li>
         </ul>
 

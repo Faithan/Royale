@@ -70,7 +70,7 @@ if (count($positionsArray) === 2) {
     <div class="dashboard-container hidden-animation">
         <div class="dashboard-card">
             <h1>Welcome, <?php echo $employee_name; ?>!</h1><br>
-            <p style="color:red; text-transform:capitalize;"><?php echo htmlspecialchars($positionsList); ?></p>
+            <p style="color:red; text-transform:capitalize; font-size:1.5rem;"><?php echo htmlspecialchars($positionsList); ?></p><br>
             <h2>Employee Dashboard</h2>
             <p>Here is where you can manage your pending task and more!</p>
         </div>
@@ -107,6 +107,7 @@ if (count($positionsArray) === 2) {
                                     <img src="../uploads/<?php echo htmlspecialchars($photo); ?>" alt="Request Photo" class="request-photo" onclick="openFullscreenImage(this.src)">
                                 <?php endforeach; ?>
                             </div>
+                            <p>(click to open)</p>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>

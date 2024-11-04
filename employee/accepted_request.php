@@ -306,14 +306,14 @@ while ($row = $workStatusResult->fetch_assoc()) {
     .dashboard-card {
         margin: 20px 0;
         padding: 20px;
-        border-radius: 8px;
+      
         background-color: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .request-card {
         padding: 20px;
-        border-radius: 8px;
+    
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         text-align: left;
         cursor: pointer;

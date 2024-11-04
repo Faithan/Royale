@@ -101,9 +101,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 
                     </div>
-                    <div class="add-service-container hidden">
-                        <a href="add_services.php"><i class="fa-solid fa-plus"></i> Add Services</a>
-                    </div>
+                 
 
                     <!-- Modal -->
                     <div id="myModal" class="modal">

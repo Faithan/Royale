@@ -64,28 +64,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-    <div class="login-container">
-        <div class="login-box hidden">
-            <h2 class="hidden">Employee Login</h2>
+    <div class="login-container hidden-animation">
+        <div class="login-box hidden-animation">
+            <h2 class="hidden-animation">Employee Login</h2>
             <!-- Ensure the form action points to this PHP file -->
             <form action="employee_login.php" method="post">
-                <div class="input-box hidden">
+                <div class="input-box hidden-animation">
                     <i class="fas fa-user-shield"></i>
                     <input type="text" name="username" required>
                     <label for="username">Username</label>
                 </div>
-                <div class="input-box hidden">
+                <div class="input-box hidden-animation">
                     <i class="fas fa-lock"></i>
                     <input type="password" name="password" required>
                     <label for="password">Password</label>
                 </div>
 
-                <button type="submit" class="login-btn hidden">Log in</button>
-
-                <div class="remember-me hidden">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
+                <button type="submit" class="login-btn hidden-animation">Log in</button>
             </form>
         </div>
     </div>
