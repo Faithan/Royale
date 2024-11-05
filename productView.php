@@ -439,7 +439,7 @@ if (isset($_GET['view_id'])) {
                                 <option value="" selected disabled>Select Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
-                                <option value="others">Others</option>
+                                <option value="unknown">Prefer not to say</option>
                             </select>
 
                             <input type="email" name="user_email" placeholder="Enter your email (optional)">

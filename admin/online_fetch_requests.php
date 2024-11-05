@@ -25,6 +25,7 @@ if ($gender && $gender !== 'all') {
 if ($search_query) {
     $query_requests .= " AND (request_id LIKE '%$search_query%' 
                           OR request_status LIKE '%$search_query%' 
+                            OR pattern_status LIKE '%$search_query%'
                           OR work_status LIKE '%$search_query%'
                           OR name LIKE '%$search_query%' 
                           OR service_name LIKE '%$search_query%' 
@@ -43,6 +44,7 @@ if ($result_requests->num_rows > 0) {
         // Start the table row and make it clickable using a hyperlink
         echo "<tr onclick=\"window.location='online_view_request.php?request_id=" . $row_request['request_id'] . "'\">";
         echo "<td>" . $row_request['request_id'] . "</td>";
+        echo "<td>" . ucfirst($row_request['pattern_status']) . "</td>";
         echo "<td>" . ucfirst($row_request['request_status']) . "</td>";
         echo "<td>" . ucfirst($row_request['work_status']) . "</td>";
         echo "<td>" . $row_request['name'] . "</td>";
@@ -62,6 +64,5 @@ if ($result_requests->num_rows > 0) {
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='9'>No records found.</td></tr>";
+    echo "<tr><td colspan='10'>No records found.</td></tr>";
 }
-?>

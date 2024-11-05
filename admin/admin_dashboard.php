@@ -380,7 +380,7 @@ GROUP BY down_payment_date";
 
         .content-container .content {
             overflow-y: scroll;
-            overflow-x: none;
+            overflow-x: hidden;
             width: 100%;
             background-color: transparent;
             box-shadow: 0 0 0 0;
@@ -401,7 +401,7 @@ GROUP BY down_payment_date";
             background-color: var(--first-bgcolor);
             border-radius: 8px;
             box-shadow: 0 2px 4px var(--box-shadow);
-
+            border: 1px solid gray;
             padding: 20px;
         }
 

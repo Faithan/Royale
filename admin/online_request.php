@@ -78,7 +78,7 @@ if (!$result) {
                             <option value="all" selected>Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="unknown">unknown</option>
                         </select>
                     </div>
 
@@ -89,6 +89,7 @@ if (!$result) {
                                 <tr>
                                     <th>Request ID</th>
                                     <th>Request Status</th>
+                                    <th>Pattern Status <em style="font-size: 1rem;">(form employee)</em></th>
                                     <th>Work Status <em style="font-size: 1rem;">(form employee)</em></th>
                                     <th>Name</th>
                                     <th>Service Name</th>
