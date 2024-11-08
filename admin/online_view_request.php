@@ -446,7 +446,7 @@ if ($result->num_rows > 0) {
 
                                 <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'accepted' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
 
                                     <?php
@@ -569,7 +569,7 @@ if ($result->num_rows > 0) {
 
                         </div>
 
-                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['work_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'cancelled' || $row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['work_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <button type="submit" name="update_request" id="update_button"
                                 class="accept_button">Update</button>
                         </div>
@@ -636,7 +636,7 @@ if ($result->num_rows > 0) {
                             </div>
 
                         </div>
-                        <div class="first-button-container" style="display: <?php echo ($row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <button type="submit" name="complete_request" id="complete_button"
                                 class="accept_button">Complete</button>
                         </div>

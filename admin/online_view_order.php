@@ -126,10 +126,38 @@ if ($result->num_rows > 0) {
                                     <input type="text" name="user_email" value="<?php echo $row['user_email']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
+                             
+
                                 <div class="order-details">
                                     <label>Order Status:</label>
+                                    <?php
+                                    // Determine color based on pattern_status value
+                                    $orderStatus = ucfirst($row['order_status'] ?? 'No Status Yet');
+                                    $ordercolor = '';
+
+                                    switch (strtolower($row['order_status'] ?? '')) {
+                                        case 'rejected':
+                                            $ordercolor = 'red';
+                                            break;
+                                        case 'cancelled':
+                                            $ordercolor = 'red';
+                                            break;
+                                        case 'pending':
+                                            $ordercolor = 'gray';
+                                            break;
+                                        case 'accepted':
+                                            $ordercolor = 'blue';
+                                            break;
+                                        case 'completed':
+                                            $ordercolor = 'green';
+                                            break;
+                                        default:
+                                            $ordercolor = 'black'; // Default color if status is not recognized
+                                            break;
+                                    }
+                                    ?>
                                     <input type="text" name="order_status"
-                                        value="<?php echo ucfirst($row['order_status']); ?>" readonly>
+                                        value="<?php echo $orderStatus; ?>" style="color: <?php echo $ordercolor; ?>; font-weight:bold;" readonly>
                                 </div>
 
                                 <div class="order-details">

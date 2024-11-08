@@ -230,7 +230,7 @@ body.dark-mode .home-container::before {
 
 .service-box {
     background-color: var(--first-bgcolor);
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 10px;
     padding: 40px;
     min-width: 400px;
@@ -420,7 +420,7 @@ body.dark-mode .home-container::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     margin-bottom: 20px;
 }
@@ -452,8 +452,8 @@ body.dark-mode .readymade-products-container {
 
 .search-input {
     padding: 10px 20px;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+
+    border: 1px solid var(--box-shadow);
     border-radius: 25px;
     font-size: 1.5rem;
     transition: all 0.3s ease;
@@ -471,8 +471,7 @@ body.dark-mode .readymade-products-container {
 
 .custom-select {
     padding: 10px 10px;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     font-size: 1.5rem;
     background-color: var(--second-bgcolor);
@@ -517,7 +516,7 @@ body.dark-mode .readymade-products-container {
     color: var(--text-color);
     padding: 20px;
     border-radius: 5px;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
 }
 
 
@@ -587,7 +586,7 @@ body.dark-mode .readymade-products-container {
     padding: 10px 15px;
     margin: 0 5px;
     background-color: var(--first-bgcolor);
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     color: var(--text-color);
     text-decoration: none;
@@ -712,7 +711,7 @@ a:hover .hover-btn {
 
 .productType-box {
     background-color: var(--first-bgcolor);
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 10px;
     padding: 40px;
     min-width: 400px;

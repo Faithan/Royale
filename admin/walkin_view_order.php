@@ -126,10 +126,37 @@ if ($result->num_rows > 0) {
                                     <input type="text" name="user_email" value="<?php echo $row['user_email']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
+
                                 <div class="order-details">
                                     <label>Order Status:</label>
+                                    <?php
+                                    // Determine color based on pattern_status value
+                                    $orderStatus = ucfirst($row['order_status'] ?? 'No Status Yet');
+                                    $ordercolor = '';
+
+                                    switch (strtolower($row['order_status'] ?? '')) {
+                                        case 'rejected':
+                                            $ordercolor = 'red';
+                                            break;
+                                        case 'cancelled':
+                                            $ordercolor = 'red';
+                                            break;
+                                        case 'pending':
+                                            $ordercolor = 'gray';
+                                            break;
+                                        case 'accepted':
+                                            $ordercolor = 'blue';
+                                            break;
+                                        case 'completed':
+                                            $ordercolor = 'green';
+                                            break;
+                                        default:
+                                            $ordercolor = 'black'; // Default color if status is not recognized
+                                            break;
+                                    }
+                                    ?>
                                     <input type="text" name="order_status"
-                                        value="<?php echo ucfirst($row['order_status']); ?>" readonly>
+                                        value="<?php echo $orderStatus; ?>" style="color: <?php echo $ordercolor; ?>; font-weight:bold;" readonly>
                                 </div>
 
                                 <div class="order-details">
@@ -217,8 +244,8 @@ if ($result->num_rows > 0) {
 
                             <div class="first-button-container"
                                 style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
-                                <button type="submit" name="cancel_order"  class="cancel_button">Reject</button>
-                                <button type="submit" name="accept_order"  class="accept_button">Accept</button>
+                                <button type="submit" name="cancel_order" class="cancel_button">Reject</button>
+                                <button type="submit" name="accept_order" class="accept_button">Accept</button>
                             </div>
 
 
@@ -234,13 +261,13 @@ if ($result->num_rows > 0) {
                                     style="display:<?php echo ($row['order_variation'] === 'rent') ? 'flex' : 'none'; ?>">
                                     <label>Balance (₱):</label>
                                     <input type="number" name="balance" value="<?php
-                                    if (isset($row['product_days_of_rent'], $row['product_rent_price'], $row['payment'])) {
-                                        $balance = ($row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
-                                        echo htmlspecialchars($balance);
-                                    } else {
-                                        echo '';
-                                    }
-                                    ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                                                                if (isset($row['product_days_of_rent'], $row['product_rent_price'], $row['payment'])) {
+                                                                                    $balance = ($row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
+                                                                                    echo htmlspecialchars($balance);
+                                                                                } else {
+                                                                                    echo '';
+                                                                                }
+                                                                                ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
 
@@ -275,7 +302,7 @@ if ($result->num_rows > 0) {
 
 
 
-                        <div  class="first-button-container"
+                        <div class="first-button-container"
                             style="align-self: center; display:<?php echo ($row['order_status'] === 'pending' || $row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === '') ? 'none' : 'block'; ?>">
                             <button type="submit" name="cancel_order" class="cancel_button" class="cancel_button">Cancel</button>
                             <button type="submit" name="complete_order" class="accept_button">Complete Order</button>

@@ -45,7 +45,17 @@ if ($result_orders->num_rows > 0) {
         // Start the table row and make it clickable using a hyperlink
         echo "<tr onclick=\"window.location='walkin_view_order.php?order_id=" . $row_order['order_id'] . "'\">";
         echo "<td>" . $row_order['order_id'] . "</td>";
-        echo "<td>" . ucfirst($row_order['order_status']) . "</td>";
+          // For pattern_status
+          $order_status_color = match (strtolower($row_order['order_status'])) {
+            'pending' => 'gray',
+            'cancelled' => 'red',
+            'accepted', 'ongoing' => 'blue',
+            'completed' => 'green',
+            default => 'black'
+        };
+
+        echo "<td style='color: $order_status_color; font-weight: bold;'>" . ucfirst($row_order['order_status']) . "</td>";
+
         echo "<td>" . $row_order['order_variation'] . "</td>";
         echo "<td>" . $row_order['user_name'] . "</td>";
         echo "<td>" . $row_order['product_name'] . "</td>";

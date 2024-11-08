@@ -44,9 +44,36 @@ if ($result_requests->num_rows > 0) {
         // Start the table row and make it clickable using a hyperlink
         echo "<tr onclick=\"window.location='walkin_view_request.php?request_id=" . $row_request['request_id'] . "'\">";
         echo "<td>" . $row_request['request_id'] . "</td>";
-        echo "<td>" . ucfirst($row_request['pattern_status']) . "</td>";
-        echo "<td>" . ucfirst($row_request['request_status']) . "</td>";
-        echo "<td>" . $row_request['work_status'] . "</td>";
+        // For request_status
+        $request_status_color = match (strtolower($row_request['request_status'])) {
+            'pending' => 'gray',
+            'cancelled' => 'red',
+            'accepted', 'ongoing' => 'blue',
+            'completed' => 'green',
+            default => 'black'
+        };
+        echo "<td style='color: $request_status_color; font-weight: bold;'>" . ucfirst($row_request['request_status']) . "</td>";
+
+        // For pattern_status
+        $pattern_status_color = match (strtolower($row_request['pattern_status'])) {
+            'pending' => 'gray',
+            'cancelled' => 'red',
+            'accepted', 'ongoing' => 'blue',
+            'completed' => 'green',
+            default => 'black'
+        };
+        echo "<td style='color: $pattern_status_color; font-weight: bold;'>" . ucfirst($row_request['pattern_status']) . "</td>";
+
+        // For work_status
+        $work_status_color = match (strtolower($row_request['work_status'])) {
+            'pending' => 'gray',
+            'cancelled' => 'red',
+            'accepted', 'ongoing' => 'blue',
+            'completed' => 'green',
+            default => 'black'
+        };
+        echo "<td style='color: $work_status_color; font-weight: bold;'>" . ucfirst($row_request['work_status']) . "</td>";
+
         echo "<td>" . $row_request['name'] . "</td>";
         echo "<td>" . $row_request['service_name'] . "</td>";
         echo "<td>" . ucfirst($row_request['gender']) . "</td>";
@@ -58,7 +85,7 @@ if ($result_requests->num_rows > 0) {
         $photos = explode(',', $row_request['photo']);
         echo "<td>";
         foreach ($photos as $photo) {
-            echo "<img src='../uploads/$photo' alt='Photo' >";  
+            echo "<img src='../uploads/$photo' alt='Photo' >";
         }
         echo "</td>";
         echo "</tr>";
