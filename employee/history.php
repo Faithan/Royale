@@ -12,14 +12,23 @@ $employee_name = $_SESSION['employee_name'];
 
 // Fetch completed tasks (pattern making and sewing) sorted by completion date
 $tasks_query = "
-    SELECT *, 'pattern' AS task_type, pattern_completed_datetime AS completed_datetime FROM royale_request_tbl 
+    SELECT *, 
+        'pattern' AS task_type, 
+        pattern_completed_datetime AS completed_datetime, 
+        pattern_status,
+        work_status
+    FROM royale_request_tbl 
     WHERE assigned_pattern_cutter = ? AND pattern_status = 'completed'
     UNION ALL
-    SELECT *, 'sewing' AS task_type, work_completed_datetime AS completed_datetime FROM royale_request_tbl 
+    SELECT *, 
+        'sewing' AS task_type, 
+        work_completed_datetime AS completed_datetime,
+        pattern_status,
+        work_status
+    FROM royale_request_tbl 
     WHERE assigned_tailor = ? AND work_status = 'completed'
     ORDER BY completed_datetime DESC";
 
-    
 $stmt = $conn->prepare($tasks_query);
 $stmt->bind_param("ss", $employee_name, $employee_name);
 $stmt->execute();
@@ -46,11 +55,20 @@ $tasks_results = $stmt->get_result();
         <div class="history-container">
             <?php if ($tasks_results->num_rows > 0): ?>
                 <?php while ($row = $tasks_results->fetch_assoc()): ?>
-                    <div class="request-card history-card <?php echo $row['task_type'] === 'pattern' ? 'pattern-card' : 'sewing-card'; ?>">
+                    <?php
+                    // Modify the task type based on pattern_status and work_status
+                    if ($row['pattern_status'] === 'not applicable' && $row['work_status'] === 'completed') {
+                        $task_type = 'repair or resize';
+                    } else {
+                        $task_type = $row['task_type'];
+                    }
+                    ?>
+                    <!-- Add debug info to check class being applied -->
+                    <div class="request-card history-card <?php echo $task_type === 'pattern' ? 'pattern-card' : ($task_type === 'repair or resize' ? 'repair-card' : 'sewing-card'); ?>">
+                        <!-- Debugging line to check the task type -->
+                        <p style="color: green; font-weight: bold; text-transform:uppercase;">Task Type: <?php echo $task_type; ?></p>
                         <h4 style="text-transform:uppercase; color:green">Request ID: <?php echo $row['request_id']; ?></h4>
-                        <div class="description"><strong>Type:</strong><p><?php echo ucfirst($row['task_type']); ?></p></div>
-                        <div class="description"><strong style="text-decoration:none">Assigned <?php echo $row['task_type'] === 'pattern' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $row['task_type'] === 'pattern' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></div>
-                        <div class="description"><strong>Status:</strong> <p><?php echo $row['task_type'] === 'pattern' ? $row['pattern_status'] : $row['work_status']; ?></p></div>
+                        <div class="description"><strong style="text-decoration:none">Assigned <?php echo $task_type === 'pattern' || $task_type === 'repair or resize' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $task_type === 'pattern' || $task_type === 'repair or resize' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></div>
                         <div class="description"><strong>For: </strong><p><?php echo $row['service_name']; ?></p></div>
                         <div class="photos">
                             <?php 
@@ -76,11 +94,18 @@ $tasks_results = $stmt->get_result();
 </body>
 </html>
 
+
 <style>
     body {
         font-family: 'Anton', Arial, sans-serif;
         line-height: 1.6; /* Increase line height for better readability */
         color: #333; /* Darker text color for better contrast */
+    }
+
+   
+    .history-container .repair-card {
+        border-left: 5px solid orange;
+        background-color: #ffedcc; /* Light orange color for repair/resizing tasks */
     }
 
     .dashboard-card {

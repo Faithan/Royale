@@ -29,13 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $request_type = 'pattern making';
             } elseif ($pattern_status === 'completed' && $work_status === 'pending') {
                 $request_type = 'sewing';
+            }  elseif ($pattern_status === 'not applicable' && $work_status === 'pending') {
+                $request_type = 'repair or resize';
             }
 
             if ($action === 'accept') {
                 if ($request_type === 'pattern making') {
                     // Update pattern_status to accepted
                     $query = "UPDATE royale_request_tbl SET pattern_status = 'accepted' WHERE request_id = ?";
-                } elseif ($request_type === 'sewing') {
+                } else if ($request_type === 'sewing') {
+                    // Update work_status to accepted
+                    $query = "UPDATE royale_request_tbl SET work_status = 'accepted' WHERE request_id = ?";
+                }  else if ($request_type === 'repair or resize') {
                     // Update work_status to accepted
                     $query = "UPDATE royale_request_tbl SET work_status = 'accepted' WHERE request_id = ?";
                 }
@@ -55,7 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($request_type === 'sewing') {
                     // Update work_status to rejected
                     $query = "UPDATE royale_request_tbl SET work_status = 'rejected' WHERE request_id = ?";
-                }
+                } elseif ($request_type === 'repair or resize') {
+                    // Update work_status to rejected
+                    $query = "UPDATE royale_request_tbl SET work_status = 'rejected' WHERE request_id = ?";
+                } 
 
                 $stmt = $conn->prepare($query);
                 $stmt->bind_param('i', $request_id);

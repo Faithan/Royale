@@ -112,7 +112,7 @@ if (!isset($_SESSION['admin_id'])) {
                                 <option value="" selected disabled>Select Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
-                                <option value="others">Others</option>
+                                <option value="unknown">Prefer not to say</option>
                             </select>
 
                             <input type="email" name="email" placeholder="Enter your email (optional)">

@@ -320,8 +320,7 @@ main h1 {
 .customer-input-container input {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -331,8 +330,7 @@ main h1 {
 .customer-input-container select {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -377,8 +375,7 @@ main h1 {
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 
@@ -391,8 +388,7 @@ main .return-button {
     padding: 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     font-size: 1.4rem;
     margin-top: 10px;
     text-align: center;

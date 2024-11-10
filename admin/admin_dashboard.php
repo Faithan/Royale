@@ -374,15 +374,13 @@ GROUP BY down_payment_date";
 
 
     <style>
-        .content-container {
-            background-color: none;
-        }
+ 
 
         .content-container .content {
             overflow-y: scroll;
             overflow-x: hidden;
             width: 100%;
-            background-color: transparent;
+
             box-shadow: 0 0 0 0;
         }
 
@@ -391,6 +389,10 @@ GROUP BY down_payment_date";
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
+            background-color: var(--first-bgcolor);
+            padding: 10px;
+            border: 1px solid var(--box-shadow);
+            border-radius: 5px;
         }
 
         /* Add this to your CSS file */
@@ -398,19 +400,20 @@ GROUP BY down_payment_date";
         .custom-chart {
             max-width: 49%;
             max-height: 300px;
-            background-color: var(--first-bgcolor);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px var(--box-shadow);
-            border: 1px solid gray;
+            background-color: var(--second-bgcolor);
+            border: 1px solid var(--box-shadow);
             padding: 20px;
+            border-radius: 5px;
         }
 
         .pie-chart {
             max-height: 300px;
             /* Specific height for pie chart */
-            background-color: var(--first-bgcolor);
-            box-shadow: 0 2px 4px var(--box-shadow);
+      
+            background-color: var(--second-bgcolor);
+            
             padding: 20px;
+            border-radius: 5px;
             /* Background color for better visibility */
         }
 

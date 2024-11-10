@@ -45,20 +45,19 @@ if (isset($_POST['accept_request'])) {
         echo "Error updating record: " . $conn->error;
     }
 }
-
 if (isset($_POST['update_request'])) {
     $request_id = $_POST['request_id'];
 
     // Retrieve input values or set to null if not provided
     $measurement = !empty($_POST['measurement']) ? $_POST['measurement'] : null;
-    $fee = !empty($_POST['fee']) ? $_POST['fee'] : null;
+    $fee = !empty($_POST['fee']) && is_numeric($_POST['fee']) ? $_POST['fee'] : null;
     $special_group = !empty($_POST['special_group']) ? $_POST['special_group'] : null;
     $assigned_pattern_cutter = !empty($_POST['assigned_pattern_cutter']) ? $_POST['assigned_pattern_cutter'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
     $down_payment = !empty($_POST['down_payment']) ? $_POST['down_payment'] : null;
     $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : null;
     $assigned_tailor = !empty($_POST['assigned_tailor']) ? $_POST['assigned_tailor'] : null;
-    $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
+    $balance = !empty($_POST['balance']) && is_numeric($_POST['balance']) ? $_POST['balance'] : null;
 
     // First, fetch current work_status and pattern_status from the database
     $query = "SELECT work_status, pattern_status FROM royale_request_tbl WHERE request_id = ?";
@@ -69,9 +68,16 @@ if (isset($_POST['update_request'])) {
     $current_status = $result->fetch_assoc();
     $stmt->close();
 
+    // Determine new status values
     $new_work_status = (empty($current_status['work_status']) || $current_status['work_status'] === 'rejected') ? 'pending' : $current_status['work_status'];
-    $new_pattern_status = (empty($current_status['pattern_status']) || $current_status['pattern_status'] === 'rejected') ? 'pending' : $current_status['pattern_status'];
-    
+
+    // Set pattern_status to "Not Applicable" if assigned_pattern_cutter is "Not Applicable"
+    if (strtolower($assigned_pattern_cutter) === 'not applicable') {
+        $new_pattern_status = 'not applicable';
+    } else {
+        $new_pattern_status = (empty($current_status['pattern_status']) || $current_status['pattern_status'] === 'rejected') ? 'pending' : $current_status['pattern_status'];
+    }
+
     // Prepare SQL query without IFNULL for statuses
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
@@ -122,7 +128,6 @@ if (isset($_POST['update_request'])) {
     // Free resources (optional, but good practice)
     $stmt->close();
 }
-
 
 
 

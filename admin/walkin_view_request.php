@@ -231,8 +231,7 @@ if ($result->num_rows > 0) {
 
 
                             <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending') ? '' : 'none'; ?>">
-                                <button type="submit" name="cancel_request" id="cancel_button"
-                                    class="cancel_button">Reject</button>
+
                                 <button type="submit" name="accept_request" id="accept_button"
                                     class="accept_button">Accept</button>
                             </div>
@@ -442,8 +441,9 @@ if ($result->num_rows > 0) {
 
                                 <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
-                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'accepted' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                <select name="assigned_pattern_cutter" id="assigned_pattern_cutter" <?php echo ($row['pattern_status'] === 'not applicable' || $row['request_status'] === 'pending' || $row['pattern_status'] === 'accepted' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                     <option value="" selected disabled>Select Employee</option>
+                                    <option value="not applicable" <?php echo ($row['assigned_pattern_cutter'] === 'Not Applicable') ? 'selected' : ''; ?>>Not Applicable</option>
 
                                     <?php
                                     // Loop through the employees and create <option> elements
@@ -457,9 +457,10 @@ if ($result->num_rows > 0) {
                             </div>
 
 
+
                             <?php
-                            // Fetch employees with "pattern cutter" in the 'employee_position' column
-                            $pattern_query = "SELECT pattern_status_name FROM pattern_status_tbl ";
+                            // Fetch pattern statuses from the 'pattern_status_tbl'
+                            $pattern_query = "SELECT pattern_status_name FROM pattern_status_tbl";
                             $pattern_result = $conn->query($pattern_query);
 
                             if (!$pattern_result) {
@@ -470,30 +471,38 @@ if ($result->num_rows > 0) {
                             <div class="request-details">
                                 <label>Pattern Status:</label>
                                 <?php
-                                // Determine color based on pattern_status value
-                                $patternStatus = ucfirst($row['pattern_status'] ?? 'No Status Yet');
-                                $color = '';
+                                // Check if assigned pattern cutter is "Not Applicable"
+                                if (isset($row['assigned_pattern_cutter']) && strtolower($row['assigned_pattern_cutter']) === 'not applicable') {
+                                    $patternStatus = 'Not Applicable';
+                                    $color = 'black'; // Default color for "Not Applicable"
+                                } else {
+                                    // Determine patternStatus and color based on the pattern_status value
+                                    $patternStatus = ucfirst($row['pattern_status'] ?? 'No Status Yet');
+                                    $color = '';
 
-                                switch (strtolower($row['pattern_status'] ?? '')) {
-                                    case 'rejected':
-                                        $color = 'red';
-                                        break;
-                                    case 'pending':
-                                        $color = 'gray';
-                                        break;
-                                    case 'accepted':
-                                        $color = 'blue';
-                                        break;
-                                    case 'completed':
-                                        $color = 'green';
-                                        break;
-                                    default:
-                                        $color = 'black'; // Default color if status is not recognized
-                                        break;
+                                    switch (strtolower($row['pattern_status'] ?? '')) {
+                                        case 'rejected':
+                                            $color = 'red';
+                                            break;
+                                        case 'pending':
+                                            $color = 'gray';
+                                            break;
+                                        case 'accepted':
+                                            $color = 'blue';
+                                            break;
+                                        case 'completed':
+                                            $color = 'green';
+                                            break;
+                                        default:
+                                            $color = 'black'; // Default color if status is not recognized
+                                            break;
+                                    }
                                 }
                                 ?>
-                                <input type="text" name="pattern_status" value="<?php echo $patternStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $color; ?>; font-weight:bold;">
+                                <input type="text" name="pattern_status" value="<?php echo $patternStatus; ?>" placeholder="No Status Yet" readonly style="color: <?php echo $color; ?>; font-weight: bold;">
                             </div>
+
+
 
 
 

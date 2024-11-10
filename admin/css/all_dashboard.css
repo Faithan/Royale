@@ -142,7 +142,7 @@ body.admin-dark-mode main .content-container {
     height: 100%;
     background-color: var(--first-bgcolor);
     border-radius: 5px;
-    box-shadow: 0 2px 4px var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     display: flex;
     flex-direction: column;
     padding: 10px;

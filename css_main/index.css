@@ -644,6 +644,7 @@ body.dark-mode .readymade-products-container {
     font-weight: 500;
     text-transform: uppercase;
     transition: all .3s ease;
+    border: 1px solid var(--box-shadow);
 }
 
 .hover-btn {
@@ -949,8 +950,7 @@ body.dark-mode .about-container #tailordo {
     color: var(--text-color);
     padding: 5px;
     background-color: var(--first-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
 }
 
 
@@ -961,16 +961,14 @@ body.dark-mode .about-container #tailordo {
     color: var(--text-color);
     padding: 5px;
     background-color: var(--first-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
 }
 
 .right button {
     padding: 10px;
     color: var(--pure-white);
     font-weight: bold;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     background-color: var(--button-bg);
 }

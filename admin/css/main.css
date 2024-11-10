@@ -379,6 +379,7 @@ button:hover{
     flex-grow: 1;
     width: 100%;
     overflow-y: scroll;
+    border-right: 1px solid var(--box-shadow);
 }
 
 
