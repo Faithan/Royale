@@ -1,7 +1,7 @@
 <h1 class="hidden"><i class="fa-solid fa-scissors"></i> ABOUT <i class="fa-solid fa-scissors fa-flip-horizontal"></i>
 </h1>
 <hr class="hidden">
-<p style="color:var(--text-color2)">Are you ready to experience the ultimate in customized fashion? At Royale Tailoring, we
+<p style="color:var(--text-color2)"  class="hidden">Are you ready to experience the ultimate in customized fashion? At Royale Tailoring, we
     understand that every individual is unique, and your clothing should reflect that uniqueness.
     Our expert team of tailors is here to bring your fashion dreams to life, one stitch at a time.
     Gone are the days of settling for off-the-rack clothing that doesn't quite fit your style or body
@@ -27,8 +27,8 @@
 </p>
 <img src="system_images/logo.png" alt="" class="hidden">
 
-<h2>What is a Tailor?</h2>
-<p style="color:var(--text-color2)">A tailor specializes in creating, altering, and repairing garments. They work with a wide range of fabrics and
+<h2  class="hidden">What is a Tailor?</h2>
+<p style="color:var(--text-color2)"  class="hidden">A tailor specializes in creating, altering, and repairing garments. They work with a wide range of fabrics and
     materials, including silk, wool, cotton, and leather, and are skilled at using various tools and techniques to
     create custom-fitted clothing. Tailors may work in a variety of settings, including high-end boutiques, department
     stores, and private studios, and may specialize in specific types of clothing such as suits, dresses, or outerwear.
@@ -43,9 +43,9 @@
     well but also look stylish and fashionable.</p><br><br>
 
 
-<h2>What does a Tailor do?</h2>
+<h2  class="hidden">What does a Tailor do?</h2>
 <img id="tailordo" src="system_images/tailordo.jpg" alt="" class="hidden">
-<p style="color:var(--text-color2)">Tailors play an essential role in the fashion industry by creating customized clothing and ensuring a perfect fit for
+<p style="color:var(--text-color2)"  class="hidden">Tailors play an essential role in the fashion industry by creating customized clothing and ensuring a perfect fit for
     individuals. With mass-produced clothing becoming more common, it's becoming harder to find clothing that fits
     perfectly off the rack. This is where tailors come in; they can take an ill-fitting garment and make adjustments to
     ensure it fits correctly, or they can create an entirely new garment from scratch to meet the specific needs and
@@ -84,7 +84,7 @@
 </p><br><br>
 
 <h2>Types of Tailors</h2>
-<p style="color:var(--text-color2)">There are several types of tailors who specialize in different aspects of clothing alterations and custom garments.
+<p style="color:var(--text-color2)"  class="hidden">There are several types of tailors who specialize in different aspects of clothing alterations and custom garments.
     Here are some common types of tailors:<br>
     <b>Bespoke Tailors:</b> Bespoke tailors are often considered the most skilled and experienced type of tailor. They
     create
@@ -119,7 +119,7 @@
 </p><br><br>
 
 <h2>What is the workplace of a Tailor like?</h2>
-<p style="color:var(--text-color2)">The workplace of a tailor can vary depending on the type of work they do. Some tailors may work in small, independent
+<p style="color:var(--text-color2)"  class="hidden">The workplace of a tailor can vary depending on the type of work they do. Some tailors may work in small, independent
     shops, while others may be employed by larger retailers or fashion houses. In a small shop, a tailor may have their
     own workspace where they have their equipment and sewing machines. They may work alone or with a small team of other
     tailors.<br><br>
