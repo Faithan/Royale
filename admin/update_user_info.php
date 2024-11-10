@@ -1,30 +1,34 @@
 <?php
 require 'dbconnect.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize inputs
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST['user_id'];
-    $userName = trim($_POST['user_name']);
-    $userEmail = filter_var($_POST['user_email'], FILTER_SANITIZE_EMAIL);
+    $userName = $_POST['user_name'];
+    $userEmail = $_POST['user_email'];
     $userBio = $_POST['user_bio'];
     $userStatus = $_POST['user_status'];
+    $newPassword = $_POST['user_password'];
 
-    // Update user data in the database
-    $query = "UPDATE `royale_user_tbl` SET `user_name` = ?, `user_email` = ?, `user_bio` = ?, `user_status` = ? WHERE `user_id` = ?";
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("ssssi", $userName, $userEmail, $userBio, $userStatus, $userId);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            echo 'success';
-        } else {
-            echo 'error: No rows affected';
-        }
-        $stmt->close();
+    // Update query to change password only if a new password is provided
+    if (!empty($newPassword)) {
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT); // Hash the new password
+        $query = "UPDATE royale_user_tbl SET user_name=?, user_email=?, user_bio=?, user_status=?, user_password=? WHERE user_id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sssssi", $userName, $userEmail, $userBio, $userStatus, $hashedPassword, $userId);
     } else {
-        echo 'error: ' . $conn->error;  // Log error if the query preparation fails
+        // Query without updating the password
+        $query = "UPDATE royale_user_tbl SET user_name=?, user_email=?, user_bio=?, user_status=? WHERE user_id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssssi", $userName, $userEmail, $userBio, $userStatus, $userId);
     }
 
-    exit();  // Ensure no other output is sent after the response
+    if ($stmt->execute()) {
+        echo 'success';
+    } else {
+        echo 'error';
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>

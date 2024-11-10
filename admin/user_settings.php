@@ -80,6 +80,12 @@ $result = $conn->query($query);
                         <label for="editUserEmail">Email</label>
                         <input type="email" id="editUserEmail" name="user_email">
                     </div>
+
+                    <div class="form-group">
+                        <label for="editUserPassword">New Password</label>
+                        <input type="password" id="editUserPassword" name="user_password" placeholder="Leave blank to keep current password">
+                    </div>
+
                     <div class="form-group">
                         <label for="editUserBio">Bio</label>
                         <textarea id="editUserBio" name="user_bio"></textarea>
@@ -116,6 +122,7 @@ $result = $conn->query($query);
                         $('#editUserEmail').val(user.user_email);
                         $('#editUserBio').val(user.user_bio);
                         $('#editUserStatus').val(user.user_status);
+                  
                         $('#editUserModal').show();
                     }
                 });
@@ -129,6 +136,8 @@ $result = $conn->query($query);
             // Submit the form to update user info with confirmation
             $('#editUserForm').submit(function(e) {
                 e.preventDefault();
+
+                var newPassword = $('#editUserPassword').val();
 
                 // SweetAlert2 Confirmation Dialog
                 Swal.fire({
@@ -168,6 +177,14 @@ $result = $conn->query($query);
             });
         });
     </script>
+
+
+
+
+
+
+
+
 
 
     <script>
@@ -214,6 +231,29 @@ $result = $conn->query($query);
 
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
     /* Modal Styles */
     .modal {
@@ -231,7 +271,7 @@ $result = $conn->query($query);
 
     .modal-content {
         background-color: var(--first-bgcolor);
-        margin: 15% auto;
+        margin: 5% auto;
         padding: 20px;
         border-radius: 8px;
         width: 50%;
@@ -252,8 +292,8 @@ $result = $conn->query($query);
         margin-bottom: 15px;
     }
 
-    .modal h2{
-        color: var(--text-color) ;
+    .modal h2 {
+        color: var(--text-color);
         margin-bottom: 10px;
         font-size: 3rem;
     }
@@ -262,7 +302,7 @@ $result = $conn->query($query);
         font-size: 1.5rem;
         margin-bottom: 5px;
         font-weight: bold;
-        color: var(--text-color) ;
+        color: var(--text-color);
     }
 
     .form-group input,
@@ -274,14 +314,19 @@ $result = $conn->query($query);
         border: 1px solid var(--box-shadow);
         border-radius: 5px;
         background-color: var(--second-bgcolor);
-        color: var(--text-color) ;
+        color: var(--text-color);
     }
 
-    .save-btn{
-        padding: 5px 10px;
+    .save-btn {
+        padding:  10px;
         background-color: #001C31;
         border: 1px solid var(--box-shadow);
         color: white;
+        border-radius: 5px;
+    }
+
+    .save-btn:hover {
+        background-color: var(--hover-button);
     }
 
     /* Search bar style */
@@ -362,7 +407,7 @@ $result = $conn->query($query);
     .user-card-body p {
         margin: 5px 0;
         color: var(--text-color2);
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 
     .user-card-footer {
@@ -377,7 +422,8 @@ $result = $conn->query($query);
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 0.9rem;
+        font-size: 1.5rem;
+        font-weight: bold;
     }
 
     .btn-edit:hover {
