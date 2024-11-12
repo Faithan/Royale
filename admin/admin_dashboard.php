@@ -116,16 +116,266 @@ GROUP BY down_payment_date";
                     <?php include 'header_icons_container.php'; ?>
                 </div>
                 <div class="content-container">
-                    <div class="content" style=" background-color: transparent; border:none;">
+                    <div class="content">
+
+
+                        <?php
+                        // Query for requests
+                        $requestQuery = "SELECT * FROM royale_request_tbl WHERE request_status = 'completed' ORDER BY request_id DESC";
+                        $requestResult = $conn->query($requestQuery);
+
+                        // Query for orders
+                        $orderQuery = "SELECT * FROM royale_product_order_tbl WHERE order_status = 'completed' ORDER BY order_id DESC";
+                        $orderResult = $conn->query($orderQuery);
+                        ?>
+
+
+
+
+
+
+                        <div class="report-container">
+                            <!-- Request Report Cards -->
+                            <div class="report-container2">
+                                <h1><i class="fa-solid fa-bell-concierge"></i> REQUEST REPORTS</h1>
+
+                                <?php
+                                // Query to calculate the daily income from requests (based on down_payment_date and final_payment_date)
+                                $todayIncomeRequestQuery = "
+    SELECT SUM(down_payment + final_payment) AS total_daily_income
+    FROM royale_request_tbl
+    WHERE (DATE(down_payment_date) = CURDATE() OR DATE(final_payment_date) = CURDATE())
+";
+                                $todayIncomeRequestResult = $conn->query($todayIncomeRequestQuery);
+                                $dailyIncome = $todayIncomeRequestResult->fetch_assoc()['total_daily_income'] ?? 0;
+
+                                // Query to calculate the monthly income from requests (based on down_payment_date and final_payment_date)
+                                $thisMonthIncomeRequestQuery = "
+    SELECT SUM(down_payment + final_payment) AS total_monthly_income
+    FROM royale_request_tbl
+    WHERE (MONTH(down_payment_date) = MONTH(CURDATE()) AND YEAR(down_payment_date) = YEAR(CURDATE()))
+       OR (MONTH(final_payment_date) = MONTH(CURDATE()) AND YEAR(final_payment_date) = YEAR(CURDATE()))
+";
+                                $thisMonthIncomeRequestResult = $conn->query($thisMonthIncomeRequestQuery);
+                                $monthlyIncome = $thisMonthIncomeRequestResult->fetch_assoc()['total_monthly_income'] ?? 0;
+
+                                // Query to calculate the annual income from requests (based on down_payment_date and final_payment_date)
+                                $thisYearIncomeRequestQuery = "
+    SELECT SUM(down_payment + final_payment) AS total_annual_income
+    FROM royale_request_tbl
+    WHERE (YEAR(down_payment_date) = YEAR(CURDATE())) OR (YEAR(final_payment_date) = YEAR(CURDATE()))
+";
+                                $thisYearIncomeRequestResult = $conn->query($thisYearIncomeRequestQuery);
+                                $annualIncome = $thisYearIncomeRequestResult->fetch_assoc()['total_annual_income'] ?? 0;
+                                ?>
+                                <!-- Income Section for Requests -->
+                                <div class="income-container">
+                                    <div class="income-box">
+                                        <h2>Daily Income</h2>
+                                        <p>₱<?php echo number_format($dailyIncome, 2); ?></p>
+                                    </div>
+                                    <div class="income-box">
+                                        <h2>Monthly Income</h2>
+                                        <p>₱<?php echo number_format($monthlyIncome, 2); ?></p>
+                                    </div>
+                                    <div class="income-box">
+                                        <h2>Annually Income</h2>
+                                        <p>₱<?php echo number_format($annualIncome, 2); ?></p>
+                                    </div>
+                                </div>
+                                <?php
+                                if ($requestResult->num_rows > 0) {
+                                    while ($request = $requestResult->fetch_assoc()) {
+                                        echo '<div class="report-card">';
+
+                                        echo '<h3>Request ID: ' . $request['request_id'] . '</h3>';
+                                        echo '<p>Status: ' . $request['request_status'] . '</p>';
+                                        echo '<p>Service Name: ' . $request['service_name'] . '</p>';
+                                        echo '<p>Client: ' . $request['name'] . ' (' . $request['gender'] . ')</p>';
+                                        echo '<p>Contact: ' . $request['contact_number'] . '</p>';
+                                        echo '<p>Deadline: ' . $request['deadline'] . '</p>';
+                                        echo '<p>Fee: ₱' . $request['fee'] . '</p>';
+                                        echo '</div>';
+                                    }
+                                } else {
+                                    echo "<p>No requests found.</p>";
+                                }
+                                ?>
+                            </div>
+
+                            <!-- Order Report Cards -->
+                            <div class="report-container2">
+                                <h1><i class="fa-solid fa-cart-shopping"></i> ORDER REPORTS</h1>
+                                <!-- Income Section for Requests -->
+                                <!-- Income Section for Orders -->
+                                <div class="income-container">
+                                    <div class="income-box">
+                                        <h2>Daily Income</h2>
+                                        <p>₱
+                                            <?php
+                                            // Daily Income for Orders
+                                            $todayIncomeOrderQuery = "SELECT SUM(payment) as daily_income FROM royale_product_order_tbl WHERE DATE(payment_date) = CURDATE()";
+                                            $todayIncomeOrderResult = $conn->query($todayIncomeOrderQuery);
+                                            $todayIncomeOrder = $todayIncomeOrderResult->fetch_assoc();
+                                            echo number_format($todayIncomeOrder['daily_income'], 2);
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="income-box">
+                                        <h2>Monthly Income</h2>
+                                        <p>₱
+                                            <?php
+                                            // Monthly Income for Orders
+                                            $monthlyIncomeOrderQuery = "SELECT SUM(payment) as monthly_income FROM royale_product_order_tbl WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())";
+                                            $monthlyIncomeOrderResult = $conn->query($monthlyIncomeOrderQuery);
+                                            $monthlyIncomeOrder = $monthlyIncomeOrderResult->fetch_assoc();
+                                            echo number_format($monthlyIncomeOrder['monthly_income'], 2);
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="income-box">
+                                        <h2>Annually Income</h2>
+                                        <p>₱
+                                            <?php
+                                            // Annual Income for Orders
+                                            $annualIncomeOrderQuery = "SELECT SUM(payment) as annual_income FROM royale_product_order_tbl WHERE YEAR(payment_date) = YEAR(CURDATE())";
+                                            $annualIncomeOrderResult = $conn->query($annualIncomeOrderQuery);
+                                            $annualIncomeOrder = $annualIncomeOrderResult->fetch_assoc();
+                                            echo number_format($annualIncomeOrder['annual_income'], 2);
+                                            ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <?php
+                                if ($orderResult->num_rows > 0) {
+                                    while ($order = $orderResult->fetch_assoc()) {
+                                        echo '<div class="report-card">';
+                                        echo '<h3>Order ID: ' . $order['order_id'] . '</h3>';
+                                        echo '<p>Status: ' . $order['order_status'] . '</p>';
+                                        echo '<p>Order Variation: ' . $order['order_variation'] . '</p>';
+                                        echo '<p>Product: ' . $order['product_name'] . ' (' . $order['product_type'] . ')</p>';
+                                        echo '<p>Client: ' . $order['user_name'] . ' (' . $order['user_gender'] . ')</p>';
+                                        echo '<p>Contact: ' . $order['user_contact_number'] . '</p>';
+                                        echo '<p>Pickup Date: ' . $order['pickup_date'] . '</p>';
+                                        echo '<p>Total Payment: ₱' . $order['payment'] . '</p>';
+                                        echo '</div>';
+                                    }
+                                } else {
+                                    echo "<p>No orders found.</p>";
+                                }
+                                ?>
+                            </div>
+
+
+                            <style>
+                                /* Styling for report container and cards */
+                                .report-container {
+                                    display: flex;
+                                    gap: 10px;
+                                    padding: 10px;
+                                }
+
+
+
+
+
+
+                                .report-container2 {
+                                    flex-grow: 1;
+                                    display: flex;
+                                    gap: 5px;
+                                    flex-direction: column;
+                                    background-color: var(--second-bgcolor);
+                                    overflow-y: scroll;
+                                    max-height: 590px;
+                                }
+
+
+
+                                .income-container {
+                                    display: flex;
+                                    flex-direction: row;
+                                    gap: 5px;
+                                    flex-wrap: wrap;
+                                }
+
+                                .income-box {
+                                    text-align: center;
+                                    flex-grow: 1;
+                                    background-color: var(--first-bgcolor);
+                                    padding: 5px;
+                                    border: 1px dashed var(--box-shadow);
+                                    color: var(--text-color);
+
+                                }
+
+                                .income-box h2 {
+                                    margin-bottom: 5px;
+                                }
+
+                                .report-container2 h1 {
+                                    border-radius: 0;
+                                    position: sticky;
+                                    top: 0;
+                                    z-index: 100;
+                                }
+
+
+
+                                .report-card {
+                                    background-color: var(--first-bgcolor);
+                                    padding: 10px;
+                                    border: 1px dashed var(--box-shadow);
+                                    border-left: green 5px solid;
+
+                                }
+
+
+                                .report-card h3 {
+                                    font-size: 1.5rem;
+                                    margin-bottom: 10px;
+
+                                    color: var(--text-color);
+                                }
+
+                                .report-card p {
+                                    font-size: 1.2rem;
+                                    margin: 5px 0;
+                                    color: var(--text-color2);
+                                }
+
+
+
+
+
+
+
+                                /* Responsive for mobile */
+                                @media (max-width: 768px) {
+                                    .report-container {
+                                        flex-direction: column;
+                                    }
+                                }
+                            </style>
+
+                        </div>
+
+
+
                         <div class="chart-container">
                             <canvas id="lineChart1" class="custom-chart"></canvas>
                             <canvas id="lineChart2" class="custom-chart"></canvas>
                             <!-- Add this canvas for the bar chart -->
                             <canvas id="incomeBarChart" class="custom-chart"></canvas>
                             <canvas id="pieChart" class="custom-chart pie-chart"></canvas> <!-- Add class for pie chart -->
-
-
                         </div>
+
+
+
+
+
+
+
                     </div>
                 </div>
             </main>
@@ -373,9 +623,33 @@ GROUP BY down_payment_date";
 
 
 
-    <style>
- 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style>
         .content-container .content {
             overflow-y: scroll;
             overflow-x: hidden;
@@ -389,9 +663,8 @@ GROUP BY down_payment_date";
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            background-color: var(--first-bgcolor);
-            padding: 10px;
-            border: 1px solid var(--box-shadow);
+            background-color: var(--second-bgcolor);
+            padding: 10px 5px;
             border-radius: 5px;
         }
 
@@ -400,8 +673,8 @@ GROUP BY down_payment_date";
         .custom-chart {
             max-width: 49%;
             max-height: 300px;
-            background-color: var(--second-bgcolor);
-            border: 1px solid var(--box-shadow);
+            background-color: var(--first-bgcolor);
+            border: 1px dashed var(--box-shadow);
             padding: 20px;
             border-radius: 5px;
         }
@@ -409,9 +682,9 @@ GROUP BY down_payment_date";
         .pie-chart {
             max-height: 300px;
             /* Specific height for pie chart */
-      
-            background-color: var(--second-bgcolor);
-            
+
+            background-color: var(--first-bgcolor);
+
             padding: 20px;
             border-radius: 5px;
             /* Background color for better visibility */

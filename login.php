@@ -153,6 +153,8 @@ if (isset($_SESSION['user_id'])) {
             toastr.error('An error occurred. Please try again.', 'Error');
         } else if (status === 'exists') {
             toastr.error('An account with this email already exists.', 'Error');
+        }else if (status === 'inactive') {
+            toastr.error('This account is inactive.', 'Error');
         }
     });
 </script>
