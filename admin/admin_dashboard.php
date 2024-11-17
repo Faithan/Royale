@@ -137,36 +137,45 @@ GROUP BY down_payment_date";
                         <div class="report-container">
                             <!-- Request Report Cards -->
                             <div class="report-container2">
-                                <h1><i class="fa-solid fa-bell-concierge"></i> REQUEST REPORTS</h1>
+                                <h1><i class="fa-solid fa-bell-concierge"></i> REQUESTS SUMMARY</h1>
 
                                 <?php
                                 // Query to calculate the daily income from requests (based on down_payment_date and final_payment_date)
                                 $todayIncomeRequestQuery = "
-    SELECT SUM(down_payment + final_payment) AS total_daily_income
-    FROM royale_request_tbl
-    WHERE (DATE(down_payment_date) = CURDATE() OR DATE(final_payment_date) = CURDATE())
-";
+                                 SELECT SUM(down_payment + final_payment) AS total_daily_income
+                                FROM royale_request_tbl
+                                 WHERE (DATE(down_payment_date) = CURDATE() OR DATE(final_payment_date) = CURDATE())
+                                ";
                                 $todayIncomeRequestResult = $conn->query($todayIncomeRequestQuery);
                                 $dailyIncome = $todayIncomeRequestResult->fetch_assoc()['total_daily_income'] ?? 0;
 
                                 // Query to calculate the monthly income from requests (based on down_payment_date and final_payment_date)
                                 $thisMonthIncomeRequestQuery = "
-    SELECT SUM(down_payment + final_payment) AS total_monthly_income
-    FROM royale_request_tbl
-    WHERE (MONTH(down_payment_date) = MONTH(CURDATE()) AND YEAR(down_payment_date) = YEAR(CURDATE()))
-       OR (MONTH(final_payment_date) = MONTH(CURDATE()) AND YEAR(final_payment_date) = YEAR(CURDATE()))
-";
+                                SELECT SUM(down_payment + final_payment) AS total_monthly_income
+                                FROM royale_request_tbl
+                                WHERE (MONTH(down_payment_date) = MONTH(CURDATE()) AND YEAR(down_payment_date) = YEAR(CURDATE()))
+                                OR (MONTH(final_payment_date) = MONTH(CURDATE()) AND YEAR(final_payment_date) = YEAR(CURDATE()))
+                                ";
                                 $thisMonthIncomeRequestResult = $conn->query($thisMonthIncomeRequestQuery);
                                 $monthlyIncome = $thisMonthIncomeRequestResult->fetch_assoc()['total_monthly_income'] ?? 0;
 
                                 // Query to calculate the annual income from requests (based on down_payment_date and final_payment_date)
                                 $thisYearIncomeRequestQuery = "
-    SELECT SUM(down_payment + final_payment) AS total_annual_income
-    FROM royale_request_tbl
-    WHERE (YEAR(down_payment_date) = YEAR(CURDATE())) OR (YEAR(final_payment_date) = YEAR(CURDATE()))
-";
+                                SELECT SUM(down_payment + final_payment) AS total_annual_income
+                                 FROM royale_request_tbl
+                                WHERE (YEAR(down_payment_date) = YEAR(CURDATE())) OR (YEAR(final_payment_date) = YEAR(CURDATE()))
+                                    ";
                                 $thisYearIncomeRequestResult = $conn->query($thisYearIncomeRequestQuery);
                                 $annualIncome = $thisYearIncomeRequestResult->fetch_assoc()['total_annual_income'] ?? 0;
+
+
+                                // Query to calculate total income (down_payment + final_payment) for all requests
+                                $totalIncomeRequestQuery = "
+                                   SELECT SUM(down_payment + final_payment) AS total_income
+                                  FROM royale_request_tbl
+                                        ";
+                                $totalIncomeRequestResult = $conn->query($totalIncomeRequestQuery);
+                                $totalIncome = $totalIncomeRequestResult->fetch_assoc()['total_income'] ?? 0;
                                 ?>
                                 <!-- Income Section for Requests -->
                                 <div class="income-container">
@@ -179,9 +188,80 @@ GROUP BY down_payment_date";
                                         <p>₱<?php echo number_format($monthlyIncome, 2); ?></p>
                                     </div>
                                     <div class="income-box">
-                                        <h2>Annually Income</h2>
+                                        <h2>Annual Income</h2>
                                         <p>₱<?php echo number_format($annualIncome, 2); ?></p>
                                     </div>
+                                    <!-- New Total Income Box -->
+                                    <div class="income-box">
+                                        <h2>Total Income</h2>
+                                        <p>₱<?php echo number_format($totalIncome, 2); ?></p>
+                                    </div>
+
+                                    <div class="income-box">
+                                        <h2>Daily Request</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of requests made today
+                                            $dailyRequestQuery = "SELECT COUNT(*) AS daily_request_count
+                                            FROM royale_request_tbl
+                                            WHERE DATE(datetime_request) = CURDATE()";
+                                            $dailyRequestResult = $conn->query($dailyRequestQuery);
+                                            $dailyRequest = $dailyRequestResult->fetch_assoc();
+                                            echo $dailyRequest['daily_request_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Monthly Request</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of requests made this month
+                                            $monthlyRequestQuery = "SELECT COUNT(*) AS monthly_request_count
+                                            FROM royale_request_tbl
+                                             WHERE MONTH(datetime_request) = MONTH(CURDATE()) AND YEAR(datetime_request) = YEAR(CURDATE())";
+                                            $monthlyRequestResult = $conn->query($monthlyRequestQuery);
+                                            $monthlyRequest = $monthlyRequestResult->fetch_assoc();
+                                            echo $monthlyRequest['monthly_request_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Annual Request</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of requests made this year
+                                            $annualRequestQuery = "SELECT COUNT(*) AS annual_request_count
+                               FROM royale_request_tbl
+                               WHERE YEAR(datetime_request) = YEAR(CURDATE())";
+                                            $annualRequestResult = $conn->query($annualRequestQuery);
+                                            $annualRequest = $annualRequestResult->fetch_assoc();
+                                            echo $annualRequest['annual_request_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Total Request</h2>
+                                        <p>
+                                            <?php
+                                            // Count the total number of requests
+                                            $totalRequestQuery = "SELECT COUNT(*) AS total_request_count
+                              FROM royale_request_tbl";
+                                            $totalRequestResult = $conn->query($totalRequestQuery);
+                                            $totalRequest = $totalRequestResult->fetch_assoc();
+                                            echo $totalRequest['total_request_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+
+
                                 </div>
                                 <?php
                                 if ($requestResult->num_rows > 0) {
@@ -205,7 +285,7 @@ GROUP BY down_payment_date";
 
                             <!-- Order Report Cards -->
                             <div class="report-container2">
-                                <h1><i class="fa-solid fa-cart-shopping"></i> ORDER REPORTS</h1>
+                                <h1><i class="fa-solid fa-cart-shopping"></i> ORDERS SUMMARY</h1>
                                 <!-- Income Section for Requests -->
                                 <!-- Income Section for Orders -->
                                 <div class="income-container">
@@ -245,6 +325,85 @@ GROUP BY down_payment_date";
                                             ?>
                                         </p>
                                     </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Total Income</h2>
+                                        <p>₱
+                                            <?php
+                                            // Total Income for Orders
+                                            $totalIncomeOrderQuery = "SELECT SUM(payment) as total_income FROM royale_product_order_tbl";
+                                            $totalIncomeOrderResult = $conn->query($totalIncomeOrderQuery);
+                                            $totalIncomeOrder = $totalIncomeOrderResult->fetch_assoc();
+                                            echo number_format($totalIncomeOrder['total_income'], 2);
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Daily Orders</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of orders placed today
+                                            $dailyOrderQuery = "SELECT COUNT(*) AS daily_order_count
+                                            FROM royale_product_order_tbl
+                                             WHERE DATE(datetime_order) = CURDATE()";
+                                            $dailyOrderResult = $conn->query($dailyOrderQuery);
+                                            $dailyOrder = $dailyOrderResult->fetch_assoc();
+                                            echo $dailyOrder['daily_order_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+                                    <div class="income-box">
+                                        <h2>Monthly Orders</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of orders placed this month
+                                            $monthlyOrderQuery = "SELECT COUNT(*) AS monthly_order_count
+                              FROM royale_product_order_tbl
+                              WHERE MONTH(datetime_order) = MONTH(CURDATE()) AND YEAR(datetime_order) = YEAR(CURDATE())";
+                                            $monthlyOrderResult = $conn->query($monthlyOrderQuery);
+                                            $monthlyOrder = $monthlyOrderResult->fetch_assoc();
+                                            echo $monthlyOrder['monthly_order_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="income-box">
+                                        <h2>Annual Order</h2>
+                                        <p>
+                                            <?php
+                                            // Count the number of orders placed this year
+                                            $annualOrderQuery = "SELECT COUNT(*) AS annual_order_count
+                             FROM royale_product_order_tbl
+                             WHERE YEAR(datetime_order) = YEAR(CURDATE())";
+                                            $annualOrderResult = $conn->query($annualOrderQuery);
+                                            $annualOrder = $annualOrderResult->fetch_assoc();
+                                            echo $annualOrder['annual_order_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+                                    <div class="income-box">
+                                        <h2>Total Orders</h2>
+                                        <p>
+                                            <?php
+                                            // Count the total number of orders
+                                            $totalOrderQuery = "SELECT COUNT(*) AS total_order_count
+                            FROM royale_product_order_tbl";
+                                            $totalOrderResult = $conn->query($totalOrderQuery);
+                                            $totalOrder = $totalOrderResult->fetch_assoc();
+                                            echo $totalOrder['total_order_count'];
+                                            ?>
+                                        </p>
+                                    </div>
+
+
+
+
                                 </div>
                                 <?php
                                 if ($orderResult->num_rows > 0) {
@@ -275,11 +434,6 @@ GROUP BY down_payment_date";
                                     padding: 10px;
                                 }
 
-
-
-
-
-
                                 .report-container2 {
                                     flex-grow: 1;
                                     display: flex;
@@ -288,6 +442,7 @@ GROUP BY down_payment_date";
                                     background-color: var(--second-bgcolor);
                                     overflow-y: scroll;
                                     max-height: 590px;
+                                    border-bottom: 2px dashed var(--box-shadow);
                                 }
 
 
@@ -297,6 +452,12 @@ GROUP BY down_payment_date";
                                     flex-direction: row;
                                     gap: 5px;
                                     flex-wrap: wrap;
+                                }
+
+                                .income-container>* {
+                                    flex: 1 1 22%;
+                                    /* Each item takes 22% of the container width, leaving space for gaps */
+                                  
                                 }
 
                                 .income-box {
