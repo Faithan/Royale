@@ -132,8 +132,6 @@ GROUP BY down_payment_date";
 
 
 
-
-
                         <div class="report-container">
                             <!-- Request Report Cards -->
                             <div class="report-container2">
@@ -457,7 +455,7 @@ GROUP BY down_payment_date";
                                 .income-container>* {
                                     flex: 1 1 22%;
                                     /* Each item takes 22% of the container width, leaving space for gaps */
-                                  
+
                                 }
 
                                 .income-box {

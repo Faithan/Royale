@@ -65,7 +65,7 @@ if (isset($_GET['view_id'])) {
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/productView.css?v=<?php echo time(); ?>">
@@ -253,7 +253,7 @@ if (isset($_GET['view_id'])) {
                             flex-wrap: wrap;
                             gap: 10px;
                             /* Space between boxes */
-                            
+
                         }
 
                         .size-box {
@@ -271,15 +271,15 @@ if (isset($_GET['view_id'])) {
                             /* Light background color */
                             position: relative;
                             transition: background-color 0.3s;
-                          
-                      
+
+
                             /* Smooth transition for background color */
                         }
 
                         .size-box span {
                             font-size: 1.5rem;
                             font-weight: bold;
-                            
+
                         }
 
                         .size-box:hover {
@@ -315,11 +315,11 @@ if (isset($_GET['view_id'])) {
                     </style>
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             const sizeBoxes = document.querySelectorAll('.size-box');
 
                             sizeBoxes.forEach(box => {
-                                box.addEventListener('click', function () {
+                                box.addEventListener('click', function() {
                                     // Uncheck all boxes and remove checked class
                                     sizeBoxes.forEach(b => {
                                         b.classList.remove('checked');
@@ -362,7 +362,7 @@ if (isset($_GET['view_id'])) {
                     </div>
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             const quantityInput = document.getElementById('quantity');
                             const increaseButton = document.getElementById('increase-quantity');
                             const decreaseButton = document.getElementById('decrease-quantity');
@@ -371,7 +371,7 @@ if (isset($_GET['view_id'])) {
                             const availableQuantity = <?php echo $total_quantity; ?>; // Ensure this outputs the correct total
 
                             // Update the quantity input value based on available quantity
-                            increaseButton.addEventListener('click', function () {
+                            increaseButton.addEventListener('click', function() {
                                 const currentQuantity = parseInt(quantityInput.value);
                                 if (currentQuantity < availableQuantity) { // Check if the current quantity is less than available
                                     quantityInput.value = currentQuantity + 1;
@@ -379,7 +379,7 @@ if (isset($_GET['view_id'])) {
                             });
 
                             // Decrease quantity
-                            decreaseButton.addEventListener('click', function () {
+                            decreaseButton.addEventListener('click', function() {
                                 const currentQuantity = parseInt(quantityInput.value);
                                 if (currentQuantity > 1) { // Ensure it doesn't go below 1
                                     quantityInput.value = currentQuantity - 1;
@@ -411,7 +411,7 @@ if (isset($_GET['view_id'])) {
 
                     // Calculate total quantity from size columns
                     $total_quantity = 0; // Initialize total quantity
-                    
+
                     // Sum the values from each size column
                     $total_quantity = intval($view_data['extra_small']) +
                         intval($view_data['small']) +
@@ -452,7 +452,9 @@ if (isset($_GET['view_id'])) {
 
                         <div class="customer-input-container hidden">
                             <input type="date" name="pickup_date" placeholder="Enter date of pickup"
-                                title="Select the date for pickup" required>
+                                title="Select the date for pickup" required
+                                min="<?= date('Y-m-d'); ?>">
+
                             <input type="time" name="pickup_time" placeholder="Enter time of pickup"
                                 title="Select the time for pickup" required>
                         </div>
@@ -468,8 +470,54 @@ if (isset($_GET['view_id'])) {
 
 
 
+
+
                     </div>
 
+                    <div class="terms-and-conditions-container hidden">
+                        <input type="checkbox" id="termsCheckbox" name="terms" required>
+                        <label for="termsCheckbox">
+                            I agree to the
+                            <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
+                        </label>
+
+                        <style>
+                            .terms-and-conditions-container {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 10px;
+                                background-color: var(--first-bgcolor);
+                            }
+
+                            .terms-and-conditions-container label {
+                                font-size: 1.5rem;
+                                text-transform: uppercase;
+                                color: var(--text-color);
+                            }
+                        </style>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.querySelector('form.product-info-container');
+                            const termsCheckbox = document.getElementById('termsCheckbox');
+
+                            form.addEventListener('submit', function(event) {
+                                // Check if the terms checkbox is checked
+                                if (!termsCheckbox.checked) {
+                                    event.preventDefault(); // Prevent form submission
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Terms and Conditions',
+                                        text: 'You must agree to the Terms and Conditions before submitting.',
+                                        confirmButtonText: 'Okay',
+                                    });
+                                }
+                            });
+                        });
+                    </script>
 
 
                     <div class="product-buttons-container hidden">
@@ -488,7 +536,7 @@ if (isset($_GET['view_id'])) {
                     </div>
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             fetch('check_login_status.php')
                                 .then(response => response.json())
                                 .then(data => {

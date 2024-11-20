@@ -22,7 +22,7 @@ session_start(); // Start the session
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/index.css?v=<?php echo time(); ?>">
@@ -76,6 +76,12 @@ session_start(); // Start the session
         </section>
 
 
+        <!-- services part -->
+        <?php include 'chatbox.php' ?>
+        <!-- end of services part -->
+
+
+
 
         <section class="services-container" id="services">
 
@@ -111,7 +117,7 @@ session_start(); // Start the session
     <footer>
         <?php
         include 'footer.php'
-            ?>
+        ?>
     </footer>
 
 
@@ -127,7 +133,7 @@ session_start(); // Start the session
 
 <!-- user login success -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get('status');
 

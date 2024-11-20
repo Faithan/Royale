@@ -49,7 +49,7 @@ if (isset($_GET['view_id'])) {
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/services_form.css?v=<?php echo time(); ?>">
@@ -66,16 +66,16 @@ if (isset($_GET['view_id'])) {
 
     <main>
 
-     <!-- Loading Indicator -->
-     <div id="loading-indicator" style="display: none;">
-        <div class="modal-overlay"></div>
-        <div class="lds-facebook">
-            <div></div>
-            <div></div>
-            <div></div>
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
         </div>
-        
-    </div>
 
         <form method="post" action="process_request.php" enctype="multipart/form-data" class="form-container">
             <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> Service Form</h1>
@@ -91,7 +91,7 @@ if (isset($_GET['view_id'])) {
                     if ($result->num_rows > 0) {
                         // Output data of each row
                         while ($row = $result->fetch_assoc()) {
-                            ?>
+                    ?>
                             <label class="service-box">
                                 <input type="radio" name="service_name" value="<?php echo $row['service_name']; ?>" required>
                                 <img src="admin/services/<?php echo $row['service_photo']; ?>"
@@ -101,7 +101,7 @@ if (isset($_GET['view_id'])) {
                                 <br>
                                 <b class="click-message" style="font-size: 1.4rem; font-style:italic; color:red; font-family: 'Anton', Arial, sans-serif; "><i class="fa-solid fa-hand-pointer"></i> Click to select</b>
                             </label>
-                            <?php
+                    <?php
                         }
                     } else {
                         echo "No services found.";
@@ -131,9 +131,10 @@ if (isset($_GET['view_id'])) {
 
             <h2 class="hidden"> Fitting or Measurement Time and Date</h2>
             <div class="customer-input-container hidden">
-                <input type="date" name="date" placeholder="Enter date of pickup" title="Select the date for pickup"
-                    required>
-                <input type="time" name="time" placeholder="Enter time of pickup" title="Select the time for pickup"
+                <input type="date" name="date" placeholder="Enter date" title="Select the date"
+                    required min="<?= date('Y-m-d'); ?>">
+
+                <input type="time" name="time" placeholder="Enter time" title="Select the time "
                     required>
             </div>
 
@@ -170,6 +171,53 @@ if (isset($_GET['view_id'])) {
                 <textarea name="message" id=""></textarea>
             </div>
 
+
+            <div class="terms-and-conditions-container hidden">
+                <input type="checkbox" id="termsCheckbox" name="terms" required>
+                <label for="termsCheckbox">
+                    I agree to the
+                    <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
+                </label>
+
+                <style>
+                    .terms-and-conditions-container {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        background-color: var(--first-bgcolor);
+                    }
+
+                    .terms-and-conditions-container label {
+                        font-size: 1.5rem;
+                        text-transform: uppercase;
+                        color: var(--text-color);
+                    }
+                </style>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.querySelector('form.form-container');
+                    const termsCheckbox = document.getElementById('termsCheckbox');
+
+                    form.addEventListener('submit', function(event) {
+                        // Check if the terms checkbox is checked
+                        if (!termsCheckbox.checked) {
+                            event.preventDefault(); // Prevent form submission
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Terms and Conditions',
+                                text: 'You must agree to the Terms and Conditions before submitting.',
+                                confirmButtonText: 'Okay',
+                            });
+                        }
+                    });
+                });
+            </script>
+
+
             <p class="instruction hidden" id="last-instruction"><b>Tip:</b> To better assist you, please use the textbox above to
                 provide the details of your request. This will help us understand your needs more clearly
                 and ensure we address your specifications accurately.</p>
@@ -183,7 +231,7 @@ if (isset($_GET['view_id'])) {
                 <div id="order-container">
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             // Make an AJAX request to check the login status
                             fetch('check_login_status.php')
                                 .then(response => response.json())
@@ -228,7 +276,7 @@ if (isset($_GET['view_id'])) {
 
 
 
-   
+
 </body>
 
 </html>
@@ -247,11 +295,11 @@ if (isset($_GET['view_id'])) {
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form.form-container');
         const loadingIndicator = document.getElementById('loading-indicator');
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             const formData = new FormData(form);
@@ -264,9 +312,9 @@ if (isset($_GET['view_id'])) {
 
             // Perform the fetch request
             const request = fetch('process_request.php', {
-                method: 'POST',
-                body: formData
-            })
+                    method: 'POST',
+                    body: formData
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
@@ -306,13 +354,13 @@ if (isset($_GET['view_id'])) {
 <!-- radio script -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const serviceBoxes = document.querySelectorAll('.service-box');
 
-        serviceBoxes.forEach(function (box) {
-            box.addEventListener('click', function () {
+        serviceBoxes.forEach(function(box) {
+            box.addEventListener('click', function() {
                 // Remove the 'selected' class from all service boxes
-                serviceBoxes.forEach(function (b) {
+                serviceBoxes.forEach(function(b) {
                     b.classList.remove('selected');
                 });
 
@@ -363,7 +411,7 @@ if (isset($_GET['view_id'])) {
                 if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) { // Limit size to 5MB
                     const reader = new FileReader();
 
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         const imgWrapper = document.createElement('div');
                         imgWrapper.className = 'img-wrapper';
 

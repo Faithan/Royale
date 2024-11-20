@@ -57,6 +57,9 @@
             <li>
                 <a href="employee_settings.php" class="menu-toggle"><i class="fa-solid fa-users"></i> Employees</a>
             </li>
+            <li>
+                <a href="messages.php" class="menu-toggle"><i class="fa-solid fa-envelope"></i> Messages</a>
+            </li>
         </ul>
 
 
