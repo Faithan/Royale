@@ -23,13 +23,15 @@
 <div class="chatbox-container" id="chatbox" style="display: none;">
     <div class="chatbox-header">
         <i class="fa-brands fa-web-awesome"></i>
-        <h3>R O Y A L E</h3>
+        <h3>R O Y A L E </h3>
         <button class="chatbox-close" onclick="toggleChatbox()">X</button>
     </div>
     <div class="chatbox-body">
+        <em style="font-size:1rem; padding-left: 10px;">use this chat box for important concerns only</em>
         <div class="messages">
             <!-- Messages will go here -->
         </div>
+
     </div>
     <div class="chatbox-footer">
         <input type="text" class="chatbox-input" placeholder="Type your message..." />
@@ -99,7 +101,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
     .chatbox-header h3 {
@@ -157,7 +159,7 @@
         padding: 8px 12px;
         border-radius: 15px 15px 0 15px;
         max-width: 70%;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border: 1px solid var(--box-shadow);
     }
@@ -171,7 +173,7 @@
         padding: 8px 12px;
         border-radius: 15px 15px 15px 0;
         max-width: 70%;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border: 1px solid var(--box-shadow);
     }
@@ -207,12 +209,21 @@
     .chatbox-send:hover {
         background-color: #003f6f;
     }
+
+    .message-timestamp {
+    font-size: 0.8rem;
+    color:gray;
+    text-align: right;
+    margin-top: 5px;
+  
+}
+
 </style>
 
 <script>
     const userId = <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null'; ?>;
 
-    function loadMessages() {
+    function loadMessages(userId) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'fetch_messages.php?user_id=' + userId, true);
         xhr.onload = function() {
@@ -235,7 +246,19 @@
                         messageDiv.classList.add('user-message');
                     }
 
-                    messageDiv.textContent = message.message;
+                    // Create message text
+                    const messageText = document.createElement('div');
+                    messageText.classList.add('message-text');
+                    messageText.textContent = message.message;
+                    messageDiv.appendChild(messageText);
+
+                    // Create timestamp div
+                    const timestampDiv = document.createElement('div');
+                    timestampDiv.classList.add('message-timestamp');
+                    timestampDiv.textContent = formatTimestamp(message.timestamp); // Format and display timestamp
+                    messageDiv.appendChild(timestampDiv);
+
+                    // Append messageDiv to container
                     messagesContainer.appendChild(messageDiv);
                 });
 
@@ -257,6 +280,20 @@
         };
         xhr.send();
     }
+
+    // Function to format the timestamp with date and time (e.g., "2024-11-21 14:35:22")
+    function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
 
     // Call loadMessages initially to fetch the latest chat messages when the page loads
     loadMessages();
