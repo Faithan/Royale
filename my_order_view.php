@@ -225,18 +225,20 @@
 
                         // Set options for html2pdf
                         const options = {
-                            margin: 1,
+                            margin: [0.5, 0.5, 0.5, 0.5], // Top, left, bottom, right margins in inches
                             filename: 'Order_Invoice_<?php echo htmlspecialchars($row['order_id']); ?>.pdf',
                             image: {
                                 type: 'jpeg',
-                                quality: 0.98
+                                quality: 1
                             },
                             html2canvas: {
-                                scale: 2
+                                scale: 2, // Adjust scaling factor to fit content
+                                scrollX: 0,
+                                scrollY: 0
                             },
                             jsPDF: {
-                                unit: 'in',
-                                format: 'letter',
+                                unit: 'in', // Measurement unit
+                                format: 'a4', // Use A4 or another suitable size
                                 orientation: 'portrait'
                             }
                         };

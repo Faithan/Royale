@@ -267,19 +267,21 @@ if (isset($_GET['request_id'])) {
 
                     // Set options for html2pdf
                     const options = {
-                        margin: 1,
+                        margin: [0.5, 0.5, 0.5, 0.5], // Smaller margins for more content space
                         filename: 'Invoice_<?php echo htmlspecialchars($row['request_id']); ?>.pdf',
                         image: {
                             type: 'jpeg',
-                            quality: 0.98
+                            quality: 1 // High-quality images
                         },
                         html2canvas: {
-                            scale: 2
+                            scale: 2, // Higher scaling for better rendering
+                            scrollX: 0,
+                            scrollY: 0
                         },
                         jsPDF: {
                             unit: 'in',
-                            format: 'letter',
-                            orientation: 'portrait'
+                            format: 'a4', // A4 page size for standard invoice
+                            orientation: 'portrait' // Portrait layout
                         }
                     };
 
