@@ -293,7 +293,6 @@ if (isset($_GET['view_id'])) {
 
 
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form.form-container');
@@ -305,7 +304,7 @@ if (isset($_GET['view_id'])) {
             const formData = new FormData(form);
 
             // Show loading indicator
-            loadingIndicator.style.display = 'flex'; // Center the spinner
+            loadingIndicator.style.display = 'flex'; // Display the spinner
 
             // Create a promise that resolves after 2 seconds
             const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
@@ -320,9 +319,8 @@ if (isset($_GET['view_id'])) {
                     if (data.status === 'success') {
                         toastr.success(data.message); // Show success message
                         return new Promise(resolve => setTimeout(() => {
-                            location.reload(); // Refresh the page after 2 seconds
-                            resolve();
-                        }, 2000));
+                            window.location.href = 'index.php#services'; // Redirect to index.php
+                        }, 2000)); // Wait for 2 seconds before redirection
                     } else {
                         toastr.error(data.message); // Show error message
                         return Promise.resolve(); // Resolve immediately
@@ -341,8 +339,6 @@ if (isset($_GET['view_id'])) {
         });
     });
 </script>
-
-
 
 
 

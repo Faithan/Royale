@@ -420,6 +420,10 @@ if (count($positionsArray) === 2) {
         gap: 10px;
     }
 
+    .modal-actions button{
+        border: 1px solid var(--box-shadow);
+    }
+
 
     .fullscreen-image-container {
         position: fixed;

@@ -62,7 +62,7 @@ if (isset($_SESSION['user_id'])) {
                 <span>use your email and password</span>
                 <input type="email" name="user_email" placeholder="Email" required>
                 <input type="password" name="user_password" placeholder="Password" required>
-                <a href="#">Forget Your Password?</a>
+               
                 <button type="submit" name="signin">Sign In</button>
             </form>
         </div>
