@@ -85,6 +85,12 @@ if ($result->num_rows > 0) {
                                 style="display:<?php echo ($row['order_status'] === 'completed') || $row['order_status'] === 'cancelled' ? 'block' : 'none'; ?>">
                                 Customer and Request Recorded Information</h2>
 
+                            <div class="first-button-container"
+                                style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
+                                <button type="submit" name="cancel_order" class="cancel_button">Reject</button>
+                                <button type="submit" name="accept_order" class="accept_button">Accept</button>
+                            </div>
+
                             <div class="order-details-container2 hidden">
                                 <div class="order-details">
                                     <label>Order Variation:</label>
@@ -172,12 +178,6 @@ if ($result->num_rows > 0) {
                                 </div>
 
                                 <div class="order-details">
-                                    <label>Product Color:</label>
-                                    <input type="text" name="product_color"
-                                        value="<?php echo ucfirst($row['product_color']); ?>" readonly>
-                                </div>
-
-                                <div class="order-details">
                                     <label>Product Size:</label>
                                     <input type="text" name="product_size"
                                         value="<?php echo ucfirst($row['product_size']); ?>" readonly>
@@ -242,11 +242,7 @@ if ($result->num_rows > 0) {
                                 conflicts and workload issues, please ensure you contact the client.
                             </p>
 
-                            <div class="first-button-container"
-                                style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
-                                <button type="submit" name="cancel_order" class="cancel_button">Reject</button>
-                                <button type="submit" name="accept_order" class="accept_button">Accept</button>
-                            </div>
+
 
 
 

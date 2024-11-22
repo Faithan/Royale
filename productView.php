@@ -139,8 +139,6 @@ if (isset($_GET['view_id'])) {
                     <input type="hidden" name="photo" id="" value="<?php echo $view_data['photo']; ?> ">
                     <input type="hidden" name="order_type" value="online">
                     <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                    <input type="hidden" name="product_color" value="<?php echo $view_data['product_color']; ?> ">
-
 
                     <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
 
@@ -161,19 +159,7 @@ if (isset($_GET['view_id'])) {
                     </label>
 
 
-                    <label for="">Product Color:</label>
-                    <div class="color-container">
-                        <?php if (!empty($view_data['product_color'])): ?>
-                            <?php
-                            $product_color = trim($view_data['product_color']); // Get the product color
-                            ?>
-                            <div class="color-circle"
-                                style="background-color: <?php echo htmlspecialchars($product_color); ?>;">
-                            </div>
-                        <?php else: ?>
-                            <p>No color available for this product.</p>
-                        <?php endif; ?>
-                    </div>
+    
 
                     <style>
                         .color-container {

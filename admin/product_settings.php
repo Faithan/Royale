@@ -370,8 +370,8 @@ if (isset($_GET['success'])) {
 
     .search-input {
         padding: 10px 20px;
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+    
+        border: 1px solid var(--box-shadow);
         border-radius: 25px;
         font-size: 1.5rem;
         transition: all 0.3s ease;
@@ -390,7 +390,7 @@ if (isset($_GET['success'])) {
     .custom-select {
         padding: 10px 10px;
         border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         background-color: var(--second-bgcolor);
@@ -417,7 +417,7 @@ if (isset($_GET['success'])) {
     .readymade-search-container a{
         padding: 10px 10px;
         border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         background-color: var(--second-bgcolor);

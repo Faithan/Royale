@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2024 at 12:09 PM
+-- Generation Time: Nov 22, 2024 at 01:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,6 +70,89 @@ INSERT INTO `admin_tbl` (`admin_id`, `admin_username`, `admin_password`, `admin_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat_messages`
+--
+
+CREATE TABLE `chat_messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `admin_reply` text DEFAULT NULL,
+  `message` text NOT NULL,
+  `timestamp` datetime DEFAULT current_timestamp(),
+  `admin_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chat_messages`
+--
+
+INSERT INTO `chat_messages` (`id`, `user_id`, `admin_reply`, `message`, `timestamp`, `admin_id`) VALUES
+(29, 1, 'hi', 'hi', '2024-11-21 01:44:57', 1),
+(30, 1, NULL, 'hello', '2024-11-21 01:45:37', 0),
+(31, 1, NULL, 'user', '2024-11-21 01:45:56', 0),
+(32, 1, 'hello', 'hello', '2024-11-21 01:46:31', 1),
+(33, 1, NULL, 'user', '2024-11-21 01:55:49', 0),
+(34, 1, 'admin', 'admin', '2024-11-21 01:59:24', 1),
+(35, 1, NULL, 'user', '2024-11-21 02:02:08', 0),
+(36, 1, 'admin', 'admin', '2024-11-21 02:04:52', 1),
+(37, 1, 'admin', 'admin', '2024-11-21 02:11:42', 1),
+(38, 1, NULL, 'user', '2024-11-21 02:25:18', 0),
+(39, 1, 'admin', 'admin', '2024-11-21 18:41:57', 1),
+(40, 1, NULL, 'user', '2024-11-21 18:48:29', 0),
+(41, 1, NULL, 'user', '2024-11-21 18:52:06', 0),
+(42, 1, NULL, 'user', '2024-11-21 18:52:09', 0),
+(43, 1, 'admin', 'admin', '2024-11-21 19:32:10', 1),
+(44, 1, NULL, 'user', '2024-11-21 19:34:53', 0),
+(45, 1, 'admin', 'admin', '2024-11-21 19:45:53', 1),
+(46, 1, NULL, 'user', '2024-11-21 19:46:03', 0),
+(47, 1, 'admin', 'admin', '2024-11-21 20:12:18', 1),
+(48, 1, NULL, 'user', '2024-11-21 20:15:40', 0),
+(49, 1, 'admin', 'admin', '2024-11-21 20:15:47', 1),
+(50, 1, NULL, 'user', '2024-11-21 20:39:36', 0),
+(51, 1, 'admin', 'admin', '2024-11-21 20:49:59', 1),
+(52, 1, NULL, 'user', '2024-11-21 20:53:18', 0),
+(53, 1, 'ok', 'ok', '2024-11-21 20:53:26', 1),
+(54, 1, NULL, 'yow', '2024-11-21 21:00:13', 0),
+(55, 1, 'hey', 'hey', '2024-11-21 21:00:48', 1),
+(56, 1, NULL, 'hi', '2024-11-21 21:00:57', 0),
+(57, 15, NULL, 'hello admin', '2024-11-21 21:13:55', 0),
+(58, 15, NULL, 'hi', '2024-11-21 21:20:30', 0),
+(59, 1, 'hello', 'hello', '2024-11-21 21:20:39', 1),
+(60, 15, 'hello', 'hello', '2024-11-21 21:20:48', 1),
+(61, 15, NULL, 'sup', '2024-11-21 21:21:58', 0),
+(62, 15, 'im fine', 'im fine', '2024-11-21 21:25:13', 1),
+(63, 15, 'hbu?', 'hbu?', '2024-11-21 21:27:19', 1),
+(64, 15, NULL, 'same', '2024-11-21 21:27:29', 0),
+(65, 1, NULL, 'sup', '2024-11-21 21:28:09', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `default_measurement_tbl`
+--
+
+CREATE TABLE `default_measurement_tbl` (
+  `measurement_id` int(11) NOT NULL,
+  `measurement_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `default_measurement_tbl`
+--
+
+INSERT INTO `default_measurement_tbl` (`measurement_id`, `measurement_name`) VALUES
+(1, 'neck'),
+(2, 'bust'),
+(3, 'under bust'),
+(4, 'waist'),
+(5, 'hips'),
+(6, 'shoulder'),
+(7, 'arm length'),
+(8, 'bust height');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employee_tbl`
 --
 
@@ -81,7 +164,7 @@ CREATE TABLE `employee_tbl` (
   `employee_name` varchar(255) NOT NULL,
   `employee_gender` varchar(255) NOT NULL,
   `employee_birthdate` date NOT NULL,
-  `employe_position` varchar(255) NOT NULL,
+  `employee_position` varchar(255) NOT NULL,
   `employee_bio` text NOT NULL,
   `employee_photo` varchar(255) NOT NULL,
   `datetime_created` datetime NOT NULL
@@ -91,33 +174,31 @@ CREATE TABLE `employee_tbl` (
 -- Dumping data for table `employee_tbl`
 --
 
-INSERT INTO `employee_tbl` (`employee_id`, `employee_status`, `employee_username`, `employee_password`, `employee_name`, `employee_gender`, `employee_birthdate`, `employe_position`, `employee_bio`, `employee_photo`, `datetime_created`) VALUES
-(1, 'active', 'royocariza', 'royocariza', 'Roy M. Ocariza', 'male', '1979-05-14', 'Cutter, Maker and Owner', 'none', '', '2024-09-16 15:05:13'),
-(2, 'active', 'employee1', 'employee1', 'Employee 1', 'Male', '2024-09-04', 'Needle Worker', 'none', '', '2024-09-16 15:11:28'),
-(3, 'active', '', '', 'Employee 2', 'female', '2024-09-05', 'Needle Worker', 'none also', '', '2024-09-16 15:12:11');
+INSERT INTO `employee_tbl` (`employee_id`, `employee_status`, `employee_username`, `employee_password`, `employee_name`, `employee_gender`, `employee_birthdate`, `employee_position`, `employee_bio`, `employee_photo`, `datetime_created`) VALUES
+(1, 'active', 'royocariza', 'royocariza', 'Roy M. Ocariza', 'male', '1979-05-14', 'pattern cutter, seamster', 'none', '../employee_img/gsada.jpg', '2024-09-16 15:05:13'),
+(2, 'active', 'employee1', 'employee1', 'Employee 1', 'female', '2024-09-04', 'seamstress', 'none', '../employee_img/wqe.jpg', '2024-09-16 15:11:28'),
+(3, 'active', 'employee2', 'employee2', 'Employee 2', 'female', '2024-09-05', 'seamstress', 'none also', '../employee_img/gsada.jpg', '2024-09-16 15:12:11');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `example`
+-- Table structure for table `pattern_status_tbl`
 --
 
-CREATE TABLE `example` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `colors` varchar(255) NOT NULL,
-  `sizes` varchar(255) NOT NULL,
-  `photo` varchar(255) NOT NULL
+CREATE TABLE `pattern_status_tbl` (
+  `pattern_status_id` int(11) NOT NULL,
+  `pattern_status_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `example`
+-- Dumping data for table `pattern_status_tbl`
 --
 
-INSERT INTO `example` (`id`, `name`, `colors`, `sizes`, `photo`) VALUES
-(42, 'name', 'a:3:{i:0;s:7:\"#eeb4b4\";i:1;s:7:\"#f28c8c\";i:2;s:7:\"#e74040\";}', 'm s l x', ''),
-(43, '', 'a:3:{i:0;s:7:\"#0000FF\";i:1;s:7:\"#e68e8e\";i:2;s:7:\"#f35e5e\";}', 's m l', ''),
-(44, '', 'a:3:{i:0;s:7:\"#0000FF\";i:1;s:7:\"#e68e8e\";i:2;s:7:\"#f35e5e\";}', 's m l', '');
+INSERT INTO `pattern_status_tbl` (`pattern_status_id`, `pattern_status_name`) VALUES
+(1, 'pending'),
+(2, 'rejected'),
+(3, 'accepted'),
+(4, 'completed');
 
 -- --------------------------------------------------------
 
@@ -149,25 +230,27 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_status`, `product_name`, `product_type`, `product_color`, `extra_small`, `small`, `medium`, `large`, `extra_large`, `gender`, `previous_price`, `price`, `rent_price`, `product_description`, `photo`) VALUES
-(12, 'active', 'Tuxedo', 'Formal', '#140a61', 0, 1, 0, 1, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1.jpg'),
+(12, 'active', 'Tuxedo', 'Formal', '#140a61', 0, 1, 3, 4, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1.jpg'),
 (13, 'active', 'gown', 'gown', '', 0, 0, 0, 0, 0, 'female', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'dress.jpg'),
 (16, 'active', 'Gown deluxe', 'school uniform', '', 0, 0, 0, 0, 0, 'female', 0, 21412, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', '21414.png'),
-(19, 'active', 'Tuxedo', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
+(19, 'deleted', 'Tuxedo', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
 (20, 'active', 'Tuxedo', 'formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1 - Copy.jpg'),
 (21, 'active', 'Tuxedo', 'formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
 (41, 'deleted', 'product', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'none so far', 'afas - Copy.jpg,dress - Copy.jpg,dress2.jpg,gsada.jpg'),
-(42, 'active', 'product 2', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'He stepped away from the mic. This was the best take he had done so far, but something seemed missing. Then it struck him all at once. Visuals ran in front of his eyes and music rang in his ears. His eager fingers went to work in an attempt to capture his', '66ef13014ac48-dress.jpg,66ef13014b1ab-gsdfa - Copy.jpg'),
-(43, 'active', 'product 3', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66ef1440ca0aa-dress - Copy.jpg,66ef1440ca742-dress2.jpg,66ef1440cacaa-gsdfa - Copy.jpg'),
-(44, 'active', 'product 4', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Wandering down the path to the pond had become a daily routine. Even when the weather wasn\'t cooperating like today with the wind and rain, Jerry still took the morning stroll down the path until he reached the pond. Although there didn\'t seem to be a par', '66ef15275663f-dress2.jpg,66ef152756b0f-gsdfa - Copy.jpg'),
-(45, 'active', 'test 5', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66ef837da511c-afas - Copy.jpg,66ef837da5a58-dress2.jpg,66ef837da5fb4-gsdfa - Copy.jpg'),
-(46, 'active', 'test', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'Patrick didn\'t want to go. The fact that she was insisting they must go made him want to go even less. He had no desire to make small talk with strangers he would never again see just to be polite. But she insisted that Patrick go, and she would soon find', '66f29574c700a-dress - Copy.jpg,66f29574c7c37-dress2.jpg,66f29574c833a-gsdfa - Copy.jpg'),
-(47, 'active', 'tuxedo 2', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund.', '66fbb55185de5-Tuxedo-Black-PNG.png'),
+(42, 'deleted', 'product 2', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'He stepped away from the mic. This was the best take he had done so far, but something seemed missing. Then it struck him all at once. Visuals ran in front of his eyes and music rang in his ears. His eager fingers went to work in an attempt to capture his', '66ef13014ac48-dress.jpg,66ef13014b1ab-gsdfa - Copy.jpg'),
+(43, 'deleted', 'product 3', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66ef1440ca0aa-dress - Copy.jpg,66ef1440ca742-dress2.jpg,66ef1440cacaa-gsdfa - Copy.jpg'),
+(44, 'deleted', 'product 4', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Wandering down the path to the pond had become a daily routine. Even when the weather wasn\'t cooperating like today with the wind and rain, Jerry still took the morning stroll down the path until he reached the pond. Although there didn\'t seem to be a par', '66ef15275663f-dress2.jpg,66ef152756b0f-gsdfa - Copy.jpg'),
+(45, 'deleted', 'test 5', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66ef837da511c-afas - Copy.jpg,66ef837da5a58-dress2.jpg,66ef837da5fb4-gsdfa - Copy.jpg'),
+(46, 'deleted', 'test', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'Patrick didn\'t want to go. The fact that she was insisting they must go made him want to go even less. He had no desire to make small talk with strangers he would never again see just to be polite. But she insisted that Patrick go, and she would soon find', '66f29574c700a-dress - Copy.jpg,66f29574c7c37-dress2.jpg,66f29574c833a-gsdfa - Copy.jpg'),
+(47, 'deleted', 'tuxedo 2', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund.', '66fbb55185de5-Tuxedo-Black-PNG.png'),
 (48, 'active', 'texudo 3', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund', '66fbb60dc452a-Tuxedo-Black-PNG.png'),
 (49, '', 'new tuxedo', 'Formal', '#1c2537', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
 (50, '', 'new tuxedo', 'Formal', '#1c2537', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
-(51, 'active', 'new tuxedo', 'Formal', '0', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, '0', '66fd54362c384-Tuxedo-Black-PNG.png'),
+(51, 'deleted', 'new tuxedo', 'Formal', '0', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, '0', '66fd54362c384-Tuxedo-Black-PNG.png'),
 (52, 'active', 'red gown', 'Gown', '0', 1, 1, 1, 0, 0, 'female', 0, 3000, 300, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66fd54f444cfd-66ef0e6d3d35e-dress2.jpg'),
-(53, 'active', 'blue dress', 'Gown', '#4444e4', 4, 2, 2, 0, 0, 'female', 0, 2000, 200, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66fd5600e35ea-66ef1440ca0aa-dress - Copy.jpg');
+(53, 'deleted', 'blue dress', 'Gown', '#4444e4', 4, 2, 2, 0, 0, 'female', 0, 2000, 200, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66fd5600e35ea-66ef1440ca0aa-dress - Copy.jpg'),
+(54, 'deleted', 'Barbie couture', 'Gown', '#860688', 3, 1, 1, 1, 0, 'female', 0, 2500, 1000, 'jajdhkjsfhajfksjfjks', '6716019aea36f-fashion-design - Copy.png,6716019aea8f3-fashion-design.png,6716019aeae63-Tuxedo-Black-PNG.png'),
+(55, 'active', 'japan uniform', 'School Uniform', '#ffffff', 2, 2, 1, 0, 0, 'female', 0, 1200, 500, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png');
 
 -- --------------------------------------------------------
 
@@ -238,12 +321,18 @@ CREATE TABLE `royale_product_order_tbl` (
 
 INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_color`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order`) VALUES
 (9, 1, 'online', 'rent', 'completed', 'Khemark', '092356262', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-09-29', '16:28:00', 0, 12, 'Tuxedo ', 'School Uniform ', 'male ', 'black', 'medium', 3, 3000, 0, 'tux.jpg,r1.jpg ', 0, '2024-10-02', '2024-09-28 00:00:00'),
-(24, 1, 'walkin', 'buy', 'pending', 'khemark ', '091241515', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-06', '16:35:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:36:01'),
-(25, 1, 'online', 'buy', 'pending', 'blue dress buyer', '09124151', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '15:45:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:45:18'),
+(24, 1, 'walkin', 'buy', 'cancelled', 'khemark ', '091241515', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-06', '16:35:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:36:01'),
+(25, 1, 'online', 'buy', 'cancelled', 'blue dress buyer', '09124151', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '15:45:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:45:18'),
 (26, 1, 'online', 'buy', 'completed', 'Khemark product size testing', '09121515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '16:38:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'medium', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:38:57'),
 (27, 1, 'online', 'buy', 'completed', 'Khemark buy 2', '09121415515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '16:48:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 2, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:48:33'),
 (28, 0, 'walkin', 'buy', 'completed', 'Khemark', '0953634272', 'Male', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '21:46:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-13', '2024-10-12 14:46:28'),
-(29, 1, 'online', 'buy', 'completed', 'Dogde', '091251661', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-15', '16:52:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-15', '2024-10-14 08:53:01');
+(29, 1, 'online', 'buy', 'completed', 'Dogde', '091251661', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-15', '16:52:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-15', '2024-10-14 08:53:01'),
+(30, 1, 'online', 'buy', 'completed', 'John', '123456789', 'Others', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-22', '06:17:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-22', '2024-10-21 09:17:33'),
+(31, 1, 'online', 'buy', 'completed', 'Khemark', '0912541', 'Male', '', 'tenazas,lala,lanao del norte', '2024-11-13', '22:37:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'large', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-11-13', '2024-11-12 14:37:06'),
+(32, 0, 'walkin', 'buy', 'pending', 'khemark', '0967363634', 'others', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-17', '16:39:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 0, '0000-00-00', '2024-11-17 09:39:09'),
+(33, 1, 'online', 'buy', 'completed', 'Khemark', '09567567567', 'Male', '', 'tenazas,lala,lanao del norte', '2024-11-20', '19:58:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-11-23', '2024-11-20 11:59:12'),
+(34, 1, 'online', 'buy', 'accepted', 'Khemark', '093453535', 'Female', '', 'tenazas,lala,lanao del norte', '2024-11-23', '10:33:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', '#ffffff ', 'small', 1, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 0, '0000-00-00', '2024-11-22 01:33:41'),
+(35, 1, 'walkin', 'rent', 'completed', 'Khemark', '094564645646', 'Female', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-22', '10:35:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', '#ffffff ', 'extra_small', 1, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 0, '2024-11-22', '2024-11-22 01:36:00');
 
 -- --------------------------------------------------------
 
@@ -270,11 +359,15 @@ CREATE TABLE `royale_request_tbl` (
   `measurement` text NOT NULL,
   `deadline` date NOT NULL,
   `special_group` varchar(255) NOT NULL,
-  `assigned_employee` varchar(255) NOT NULL,
+  `assigned_pattern_cutter` varchar(255) NOT NULL,
+  `assigned_tailor` varchar(255) NOT NULL,
   `balance` bigint(255) NOT NULL,
   `down_payment` bigint(255) NOT NULL,
   `down_payment_date` date NOT NULL,
+  `pattern_status` text NOT NULL,
+  `pattern_completed_datetime` datetime NOT NULL,
   `work_status` varchar(255) NOT NULL,
+  `work_completed_datetime` datetime NOT NULL,
   `final_payment` bigint(255) NOT NULL,
   `final_payment_date` date NOT NULL,
   `refund` bigint(255) NOT NULL,
@@ -286,15 +379,18 @@ CREATE TABLE `royale_request_tbl` (
 -- Dumping data for table `royale_request_tbl`
 --
 
-INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_employee`, `balance`, `down_payment`, `down_payment_date`, `work_status`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
-(11, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress2 - Copy.jpg,gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', 0, 0, '0000-00-00', 'pending', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
-(12, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress - Copy.jpg,dress2.jpg', '', 0, '', '0000-00-00', '', 'Roy M. Ocariza', 0, 0, '0000-00-00', 'in progress', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
-(13, 'ongoing', 'online', 1, 'Making', '', 0, 'Male', '', '', '0000-00-00', '00:00:00', 'dress2.jpg,gsdfa - Copy.jpg', '', 0, 'ARM-HOle 29\r\nwaist 23\r\nlength 50', '0000-00-00', '', 'Roy M. Ocariza', 0, 0, '0000-00-00', 'accepted', 0, '0000-00-00', 0, '', '0000-00-00 00:00:00'),
-(46, 'ongoing', 'walk-in', 0, 'Making', 'Name', 9124151125, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-07', '22:22:00', 'gsdfa - Copy.jpg', '', 2000, 'hieght 50\r\nwaist 23\r\narm hole 14\r\n', '0000-00-00', '', 'Employee 1', 0, 0, '0000-00-00', 'completed', 0, '0000-00-00', 0, '', '2024-10-07 21:22:35'),
-(47, 'ongoing', 'walk-in', 0, 'Making', 'Khemark new', 925236161, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-10', '20:51:00', 'gsdfa - Copy.jpg,r1.jpg', '', 5000, 'arm-hole = 14\r\nlenght = 50\r\nwaist = 23\r\n', '2024-10-26', '', 'Employee 1', 4500, 500, '2024-10-09', 'pending', 0, '0000-00-00', 0, '', '2024-10-09 18:51:17'),
-(48, 'ongoing', 'walk-in', 0, 'Making', 'Calendar test', 94522162727, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-12', '10:35:00', 'gsdfa - Copy.jpg', '', 500, '', '2024-10-15', '', '', 0, 0, '0000-00-00', 'pending', 0, '0000-00-00', 0, '', '2024-10-11 09:35:15'),
-(49, 'completed', 'walk-in', 0, 'Making', 'Khemark', 95373737, 'Male', 'khemark@gmail.com', 'tenazas, Lala, LDN', '2024-10-13', '20:42:00', 'gsdfa - Copy.jpg', '', 5000, '', '2024-10-13', '', 'Roy M. Ocariza', 0, 2500, '2024-10-13', 'completed', 2500, '2024-10-14', 0, '', '2024-10-12 20:41:23'),
-(50, 'ongoing', 'walk-in', 0, 'Making', 'Test2', 9311616132, 'Male', '', 'marandi,lala, ldn', '2024-10-17', '00:13:00', 'afas - Copy.jpg,gsdfa - Copy.jpg,r1.jpg', '', 1000, '', '2024-10-17', '', 'Roy M. Ocariza', 500, 500, '2024-10-17', 'accepted', 0, '0000-00-00', 0, '', '2024-10-16 11:13:43');
+INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_pattern_cutter`, `assigned_tailor`, `balance`, `down_payment`, `down_payment_date`, `pattern_status`, `pattern_completed_datetime`, `work_status`, `work_completed_datetime`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
+(51, 'ongoing', 'online', 1, 'Making', 'Khemark', 95854683737, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-26', '10:48:00', 'Tuxedo-Black-PNG.png', 'asap', 1000, 'neck: 25\r\nbust: 12\r\nunder bust: 32\r\nwaist: 23\r\nhips: 23\r\nshoulder: 14\r\narm length: 13\r\nbust height: 23', '2024-10-30', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 500, 500, '2024-10-29', 'completed', '2024-11-02 19:16:24', 'accepted', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-10-25 09:49:01'),
+(52, 'cancelled', 'online', 1, 'Making', 'khemarhjasdgah', 90812151, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-26', '16:05:00', 'gsdfa - Copy.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-10-25 14:05:38'),
+(53, 'ongoing', 'online', 1, 'Making', 'Khemark', 912151, 'Male', '', 'marandi,lala, ldn', '0000-00-00', '00:00:00', 'gsdfa - Copy.jpg', '', 1000, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-10-30', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-10-30', 'completed', '0000-00-00 00:00:00', 'completed', '2024-11-02 19:16:21', 500, '0000-00-00', 0, '', '2024-10-29 14:13:40'),
+(54, 'completed', 'walk-in', 0, 'Making', 'Khemark', 912151516, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-02', '11:33:00', 'gsdfa.jpg,r1.jpg', '', 1000, 'neck: 14\r\nbust: 25\r\nunder bust: 23\r\nwaist: 24\r\nhips: 27\r\nshoulder: 14\r\narm length: 20\r\n', '2024-11-05', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-02', 'completed', '2024-11-02 12:46:42', 'completed', '2024-11-02 12:48:04', 500, '2024-11-03', 0, '', '2024-11-02 10:33:25'),
+(55, 'pending', 'walk-in', 0, 'Making', 'asdasd', 907989, 'male', '', 'marandi,lala, ldn', '2024-11-08', '11:27:00', '', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-08 10:27:50'),
+(56, 'completed', 'online', 1, 'Dress and Cloth Repair', 'Khemark', 95743752, 'Unknown', '', 'marandi,lala, ldn', '2024-11-10', '00:21:00', 'gsdfa - Copy.jpg', '', 500, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-11-11', '', 'not applicable', 'Roy M. Ocariza', 0, 250, '2024-11-10', 'not applicable', '0000-00-00 00:00:00', 'completed', '2024-11-10 10:37:04', 250, '2024-11-11', 0, '', '2024-11-10 10:21:49'),
+(57, 'completed', 'walk-in', 0, 'Dress and Cloth Repair', 'Khemark', 9325336236, 'Unknown', '', 'marandi,lala, ldn', '2024-11-11', '01:00:00', 'afas.jpg', '', 500, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-11-12', '', 'not applicable', 'Roy M. Ocariza', 0, 250, '2024-11-11', 'not applicable', '0000-00-00 00:00:00', 'completed', '2024-11-10 11:05:28', 250, '2024-11-12', 0, '', '2024-11-10 11:00:13'),
+(58, 'pending', 'walk-in', 0, 'Making', 'khemark', 95636346, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-17', '17:36:00', 'gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-17 16:37:07'),
+(59, 'pending', 'online', 1, 'Making', 'khemark', 94324242, 'male', 'khemark.ocariza@gmail.com', 'marandi,lala, ldn', '2024-11-23', '10:38:00', 'gsdfa - Copy.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-22 08:38:49'),
+(60, 'completed', 'online', 1, 'Making', 'Khemark', 9654645646, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-23', '10:44:00', 'afas.jpg', 'asap', 500, 'neck: 21\r\nbust: 12\r\nunder bust: 32\r\nwaist: 21\r\n', '2024-11-26', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 250, '2024-11-22', 'completed', '2024-11-22 08:52:37', 'completed', '2024-11-22 08:53:30', 250, '2024-11-23', 0, '', '2024-11-22 08:44:51'),
+(61, 'cancelled', 'online', 1, 'Making', 'khemark', 945646456, 'male', 'khemark_ocariza@yahoo.com', 'marandi,lala, ldn', '2024-11-22', '10:45:00', 'afas.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-22 08:45:58');
 
 -- --------------------------------------------------------
 
@@ -317,7 +413,7 @@ CREATE TABLE `royale_user_tbl` (
 --
 
 INSERT INTO `royale_user_tbl` (`user_id`, `user_name`, `user_email`, `user_password`, `user_status`, `user_bio`, `date_created`) VALUES
-(1, 'khemark', 'khemark@gmail.com', '$2y$10$TtoMzVSnKY1BCM6NOObO8eoF0Vp1UU2AP/K88fOkuxeYOVI6O3u0u', 'active', 'Hi, I\'m the first user', '2024-09-08 04:50:11'),
+(1, 'khemark', 'khemark@gmail.com', '$2y$10$nq1NR0BTJDj3Yko8ZpEaxeTtgOA9kN7ymu7LlkTLNQqDgAiyONAmu', 'active', 'hi IM first user', '2024-09-08 04:50:11'),
 (15, 'khemark2', 'khemark2@gmail.com', '$2y$10$jEVVtrAKOtpjRWlaKbd9U.5vqoUKSqxUCKwqGTEV13J11QsqusXX.', 'active', '', '2024-09-08 05:45:20'),
 (16, 'ads', 'akagami@gmail.com', '$2y$10$54ZdK7TjtNEMBN8k4ko5/OXkU7UIsHQ7YZApmX8v.FFp7znzK6irW', 'active', '', '2024-10-02 13:23:16');
 
@@ -347,7 +443,7 @@ INSERT INTO `services` (`service_id`, `service_status`, `service_name`, `service
 (12, 'deleted', 'repair', 'Formal attire is a Western dress code category that is designated for the most formal occasions. It denotes a high standard of dressing that is considered appropriate for settings such as weddings, state dinners, balls, and certain social events. ', 'services/3372785.png'),
 (16, 'active', 'Making', 'Dressmaking is the art and craft of creating garments, specifically dresses, from scratch or by altering existing patterns. It involves various techniques such as measuring, cutting, sewing, and fitting to create a garment that fits the wearer perfectly. Dressmakers work with different types of fabrics, trims, and embellishments to bring their designs to life. They can create a wide range of dresses, including formal gowns, wedding dresses, casual wear, and uniforms. Dressmaking allows individuals to have unique and custom-made garments that reflect their personal style and preferences. It combines creativity, skill, and attention to detail to produce beautifully tailored outfits.\r\n', 'sewing-machine (1).png'),
 (17, 'active', 'Dress and Cloth Repair', 'Extend the life of your favorite garments with our professional dress and cloth repairing services! We specialize in a wide range of repairs, from simple hems and seams to intricate alterations and restorations. Whether you need to fix a tear, adjust the fit, or refresh an old favorite, our skilled tailors provide meticulous attention to detail to ensure your clothing looks and feels its best. We work with all types of fabrics and styles, guaranteeing quality repairs that are both affordable and timely. Trust us to breathe new life into your wardrobe!', 'clothing (1).png'),
-(18, 'active', 'T-Shirt Printing', 'Bring your ideas to life with our high-quality t-shirt printing services! Whether you\'re looking to design custom shirts for events, businesses, or personal use, we offer a variety of printing options to suit your needs. Our services include screen printing, digital printing, and heat transfer, all ensuring vibrant, durable designs that last. From small batch orders to bulk printing, we handle it all with precision and care. Choose from a range of t-shirt styles, colors, and sizes, and let us help you create the perfect wearable statement.', 'fashion-design.png'),
+(18, 'active', 'T-Shirt Resizing', 'Transform your favorite T-shirts into the perfect fit with our professional resizing service! Whether you\'ve experienced changes in size or simply want to customize your look, our skilled team can alter your T-shirts to ensure comfort and style. We offer adjustments for length, width, and sleeve size, allowing you to wear your favorite designs with confidence.', 'clothes.png'),
 (19, 'deleted', 'random making', 'Bring your ideas to life with our high-quality t-shirt printing services! Whether you\'re looking to design custom shirts for events, businesses, or personal use, we offer a variety of printing options to suit your needs. Our services include screen printing, digital printing, and heat transfer, all ensuring vibrant, durable designs that last. From small batch orders to bulk printing, we handle it all with precision and care. Choose from a range of t-shirt styles, colors, and sizes, and let us help you create the perfect wearable statement.', 't-shirt.png'),
 (26, 'deleted', 'asdasd', 'asdasd', 'fashion-design.png'),
 (27, 'deleted', 'dasdasd', 'asdasdasd', 'fashion-design.png'),
@@ -399,16 +495,28 @@ ALTER TABLE `admin_tbl`
   ADD PRIMARY KEY (`admin_id`);
 
 --
+-- Indexes for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `default_measurement_tbl`
+--
+ALTER TABLE `default_measurement_tbl`
+  ADD PRIMARY KEY (`measurement_id`);
+
+--
 -- Indexes for table `employee_tbl`
 --
 ALTER TABLE `employee_tbl`
   ADD PRIMARY KEY (`employee_id`);
 
 --
--- Indexes for table `example`
+-- Indexes for table `pattern_status_tbl`
 --
-ALTER TABLE `example`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `pattern_status_tbl`
+  ADD PRIMARY KEY (`pattern_status_id`);
 
 --
 -- Indexes for table `products`
@@ -469,22 +577,34 @@ ALTER TABLE `admin_tbl`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `default_measurement_tbl`
+--
+ALTER TABLE `default_measurement_tbl`
+  MODIFY `measurement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `employee_tbl`
 --
 ALTER TABLE `employee_tbl`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `example`
+-- AUTO_INCREMENT for table `pattern_status_tbl`
 --
-ALTER TABLE `example`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+ALTER TABLE `pattern_status_tbl`
+  MODIFY `pattern_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `producttype`
@@ -496,19 +616,19 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `royale_product_order_tbl`
 --
 ALTER TABLE `royale_product_order_tbl`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `royale_request_tbl`
 --
 ALTER TABLE `royale_request_tbl`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `royale_user_tbl`
 --
 ALTER TABLE `royale_user_tbl`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `services`

@@ -133,7 +133,6 @@
                     <p><strong>Order Variation:</strong> <?php echo htmlspecialchars($row['order_variation']); ?></p>
                     <p><strong>Product Name:</strong> <?php echo htmlspecialchars($row['product_name']); ?></p>
                     <p><strong>Product Type:</strong> <?php echo htmlspecialchars($row['product_type']); ?></p>
-                    <p><strong>Product Color:</strong> <?php echo htmlspecialchars($row['product_color']); ?></p>
                     <p><strong>Product Size:</strong> <?php echo htmlspecialchars($row['product_size']); ?></p>
                     <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['product_quantity']); ?></p>
                     <p><strong>Price:</strong> <?php echo htmlspecialchars($row['product_price']); ?></p>
@@ -206,10 +205,13 @@
 
                     <p class="invoice-date">Generated on: <?php echo date('Y-m-d H:i:s'); ?></p>
 
-                    <!-- Download Button -->
-                    <div style="text-align: center; margin-top: 20px;">
-                        <button id="download-order-invoice-btn" style="padding:5px;"><i class="fa-solid fa-download"></i> Download Invoice</button>
-                    </div>
+
+                </div>
+
+
+                <!-- Download Button -->
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <button id="download-order-invoice-btn" style="padding:5px;"><i class="fa-solid fa-download"></i> Download Invoice</button>
                 </div>
 
 

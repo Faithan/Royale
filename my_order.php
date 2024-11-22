@@ -111,7 +111,6 @@ $result = $stmt->get_result();
                             <div>
                                 <p><strong>Product:</strong> <?php echo htmlspecialchars($row['product_name']); ?></p>
                                 <p><strong>Type:</strong> <?php echo htmlspecialchars($row['product_type']); ?></p>
-                                <p><strong>Color:</strong> <?php echo htmlspecialchars($row['product_color']); ?></p>
                                 <p><strong>Size:</strong> <?php echo htmlspecialchars($row['product_size']); ?></p>
                                 <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['product_quantity']); ?></p>
                                 <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>

@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_id = $_POST['product_id'];
 
     // Fetch existing product details from the database, including gender and color
-    $stmt = $conn->prepare("SELECT product_color, extra_small, small, medium, large, extra_large, gender FROM products WHERE id = ?");
+    $stmt = $conn->prepare("SELECT extra_small, small, medium, large, extra_large, gender FROM products WHERE id = ?");
     $stmt->bind_param('i', $product_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = $_POST['price'];
     $rent_price = $_POST['rent_price'];
     
-    // Collect product color and sizes
-    $product_color = $_POST['product_color']; // Getting the color from the form
+    // sizes
     $extra_small = $_POST['extra_small'];
     $small = $_POST['small'];
     $medium = $_POST['medium'];
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 previous_price = ?, 
                 price = ?, 
                 rent_price = ?, 
-                product_color = ?, 
+             
                 extra_small = ?, 
                 small = ?, 
                 medium = ?, 
@@ -51,13 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        'ssdddsssssssi', 
+        'ssdddssssssi', 
         $product_name, 
         $product_type, 
         $previous_price, 
         $price, 
         $rent_price,
-        $product_color, 
         $extra_small, 
         $small, 
         $medium, 

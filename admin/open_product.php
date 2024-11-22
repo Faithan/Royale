@@ -246,13 +246,7 @@ if ($result->num_rows > 0) {
 
 
 
-                            <div style="display:flex; flex-direction:column; align-items: center; width:100%">
-                                <label for="" style="color:var(--text-color)">Product Color
-                                </label>
-                                <input type="color" name="product_color"
-                                    style="height:50px; width:50px; padding:0; border:0; "
-                                    value="<?php echo htmlspecialchars($product['product_color']); ?>">
-                            </div>
+                           
 
 
                             <div class="info-container2">
@@ -397,8 +391,8 @@ if ($result->num_rows > 0) {
         font-size: 1.5rem;
         transition: background-color 0.3s ease;
         text-align: center;
-        border: 0;
-        border-bottom: 1px solid var(---box-shadow);
+   
+        border: 1px solid var(---box-shadow);
     }
 
     .custom-file-upload:hover {
@@ -450,8 +444,8 @@ if ($result->num_rows > 0) {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+      
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.7rem;
         background-color: var(--second-bgcolor);
@@ -494,8 +488,8 @@ if ($result->num_rows > 0) {
         padding: 10px 20px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+        
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
@@ -598,9 +592,10 @@ if ($result->num_rows > 0) {
         align-items: center;
         margin-top: 10px;
         background-color: var(--second-bgcolor);
-        padding: 10px;
-        border: 1px solid var(--box-shadow);
+        border: 1px dashed var(--box-shadow);
         border-radius: 5px;
+        padding: 10px;
+      
     }
 
     .edit-product-container .new-image-preview img {
@@ -626,8 +621,8 @@ if ($result->num_rows > 0) {
     .delete-container a {
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+ 
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
@@ -645,8 +640,8 @@ if ($result->num_rows > 0) {
     .delete-container .delete-btn {
         background-color: var(--second-bgcolor);
         color: var(--cancel-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         cursor: pointer;
         font-size: 1.6rem;
