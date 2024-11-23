@@ -10,8 +10,9 @@ $gender = isset($_POST['gender']) ? $_POST['gender'] : 'all';
 $productsPerPage = 8;
 $start = ($page - 1) * $productsPerPage;
 
-// Base SQL query
-$sql = "SELECT *
+// Base SQL query with total quantity calculation
+$sql = "SELECT *, 
+            (extra_small + small + medium + large + extra_large) AS total_quantity 
         FROM products 
         WHERE product_status='active'";
 
@@ -46,14 +47,15 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Split the comma-separated images into an array
         $images = explode(',', $row['photo']);
-        ?>
+?>
         <div class="readymade-box">
             <div class="main-image">
                 <img src="admin/products/<?php echo $images[0]; ?>" alt="<?php echo $row['product_name']; ?>">
             </div>
             <div class="thumbnail-container">
                 <?php foreach ($images as $index => $image): ?>
-                    <?php if ($index > 0): // Skip the first image ?>
+                    <?php if ($index > 0): // Skip the first image 
+                    ?>
                         <div class="thumbnail">
                             <img src="admin/products/<?php echo $image; ?>" alt="<?php echo $row['product_name']; ?>">
                         </div>
@@ -73,7 +75,15 @@ if ($result->num_rows > 0) {
             <div class="info-label"><label for="">Gender:</label>
                 <p><?php echo $row['gender']; ?></p>
             </div>
-          
+
+            <!-- New Quantity Info Section -->
+            <div class="info-label"><label for="">Stocks:</label>
+                <p style="color: <?php echo $row['total_quantity'] == 0 ? 'red' : 'black'; ?>;">
+                    <?php echo $row['total_quantity'] == 0 ? 'Out of Stock' : $row['total_quantity']; ?>
+                </p>
+
+            </div>
+
             <p class="description"><?php echo $row['product_description']; ?></p>
 
             <a href="productView.php?view_id=<?php echo $row['id']; ?>">
@@ -97,7 +107,7 @@ if ($result->num_rows > 0) {
                 </div>
             </a>
         </div>
-        <?php
+<?php
     }
 } else {
     echo "No products found.";
@@ -107,7 +117,8 @@ if ($result->num_rows > 0) {
 <style>
     .main-image {
         width: 100%;
-        max-width: 300px; /* Set a max width for the main image */
+        max-width: 300px;
+        /* Set a max width for the main image */
         margin: auto;
         display: flex;
         align-items: center;
@@ -115,30 +126,36 @@ if ($result->num_rows > 0) {
     }
 
     .main-image img {
-        max-width: 150px; /* Ensure the main image fits the container */
+        max-width: 150px;
+        /* Ensure the main image fits the container */
         height: auto;
     }
 
     .thumbnail-container {
         display: flex;
-        justify-content: center; /* Center the thumbnails */
+        justify-content: center;
+        /* Center the thumbnails */
         margin-top: 10px;
         flex-wrap: wrap;
     }
 
     .thumbnail {
-        margin: 5px;/* Spacing between thumbnails */
+        margin: 5px;
+        /* Spacing between thumbnails */
     }
 
     .thumbnail img {
-        max-width: 50px; 
-        max-height: 50px;  /* Set a fixed width for the thumbnails */
+        max-width: 50px;
+        max-height: 50px;
+        /* Set a fixed width for the thumbnails */
         height: auto;
-        cursor: pointer; /* Change cursor to pointer for interactivity */
+        cursor: pointer;
+        /* Change cursor to pointer for interactivity */
         transition: transform 0.2s;
     }
 
     .thumbnail img:hover {
-        transform: scale(1.1); /* Scale up on hover */
+        transform: scale(1.1);
+        /* Scale up on hover */
     }
 </style>

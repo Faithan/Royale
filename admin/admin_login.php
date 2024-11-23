@@ -81,10 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <button type="submit" class="login-btn hidden">Log in</button>
 
-                <div class="remember-me hidden">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
+             
             </form>
         </div>
     </div>

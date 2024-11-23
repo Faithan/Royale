@@ -212,18 +212,16 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
     <!-- mobile nav -->
     <div class="burger-menu-container">
 
-        <i class="fa-solid fa-bars" id="burgerMenuIcon"></i>
-        <?php if ($hasPendingItems): ?>
+        <i class="fa-solid fa-bars" id="burgerMenuIcon" >  <?php if ($hasPendingItems): ?>
             <span class="red-dot"></span>
         <?php endif; ?>
-
+</i>
+      
         <style>
           
 
             .red-dot {
                 position: absolute;
-                top: 15px;
-                right: 15px;
                 width: 8px;
                 height: 8px;
                 background-color: red;
@@ -267,7 +265,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
             border-radius: 50%;
             padding: 3px 8px;
             font-size: 1.2rem;
-            margin-left: 5px;
+            margin-left: 10px;
             vertical-align: top;
         }
     </style>

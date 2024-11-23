@@ -159,33 +159,17 @@ if (isset($_GET['view_id'])) {
                     </label>
 
 
-    
-
-                    <style>
-                        .color-container {
-                            display: flex;
-                            align-items: center;
-                            /* Center-aligns the circle vertically */
-                            gap: 10px;
-                            /* Space between the circle and any text */
-                        }
-
-                        .color-circle {
-                            width: 35px;
-                            /* Adjust the size of the circle */
-                            height: 35px;
-                            /* Adjust the size of the circle */
-                            border-radius: 50%;
-                            /* Makes the div a circle */
-                            border: 1px solid var(--box-shadow);
-                            /* Optional: adds a border to the circle */
-                        }
-                    </style>
 
 
 
 
-                    <label for="">Available Sizes:</label>
+
+
+
+
+
+
+                    <label for="product_size">Available Sizes:</label>
                     <div class="size-container">
                         <?php
                         // Fetch product details
@@ -202,29 +186,22 @@ if (isset($_GET['view_id'])) {
                             exit;
                         }
 
-                        // Map column names to human-readable size labels
-                        $sizes = [
-                            'extra_small' => 'Extra Small',
-                            'small' => 'Small',
-                            'medium' => 'Medium',
-                            'large' => 'Large',
-                            'extra_large' => 'Extra Large',
+                        // Fetch quantities for each size
+                        $quantities = [
+                            'extra_small' => intval($view_data['extra_small']),
+                            'small' => intval($view_data['small']),
+                            'medium' => intval($view_data['medium']),
+                            'large' => intval($view_data['large']),
+                            'extra_large' => intval($view_data['extra_large']),
                         ];
-
-                        // Fetch size quantities
-                        foreach ($sizes as $size_col => $size_name) {
-                            $quantities[$size_col] = intval($view_data[$size_col]);
-                        }
                         ?>
 
                         <div class="size-container">
                             <?php if (!empty($quantities)): ?>
                                 <?php foreach ($quantities as $size_col => $quantity): ?>
                                     <label class="size-box <?php echo $quantity == 0 ? 'disabled' : ''; ?>">
-                                        <!-- Value now set to column name -->
-                                        <input type="radio" name="product_size" value="<?php echo $size_col; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
-                                        <!-- Display human-readable size and quantity -->
-                                        <span><?php echo $sizes[$size_col] . ' (' . $quantity . ')'; ?></span>
+                                        <input type="radio" name="product_size" value="<?php echo $size_col; ?>" data-quantity="<?php echo $quantity; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
+                                        <span><?php echo ucfirst(str_replace('_', ' ', $size_col)) . ' (' . $quantity . ')'; ?></span>
                                     </label>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -239,7 +216,6 @@ if (isset($_GET['view_id'])) {
                             flex-wrap: wrap;
                             gap: 10px;
                             /* Space between boxes */
-
                         }
 
                         .size-box {
@@ -256,16 +232,13 @@ if (isset($_GET['view_id'])) {
                             background-color: var(--second-bgcolor);
                             /* Light background color */
                             position: relative;
-                            transition: background-color 0.3s;
-
-
-                            /* Smooth transition for background color */
+                            transition: background-color 0.3s, border 0.3s;
+                            /* Smooth transition for background color and border */
                         }
 
                         .size-box span {
                             font-size: 1.5rem;
                             font-weight: bold;
-
                         }
 
                         .size-box:hover {
@@ -295,71 +268,48 @@ if (isset($_GET['view_id'])) {
                         }
 
                         .size-box.checked {
-                            border: 2px solid var(--text-color);
+                          
                             /* Change to your desired checked color */
+                            color: white;
+                            background-color: #007bff;
+                            /* You can define your checked background color */
                         }
                     </style>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const sizeBoxes = document.querySelectorAll('.size-box');
-
-                            sizeBoxes.forEach(box => {
-                                box.addEventListener('click', function() {
-                                    // Uncheck all boxes and remove checked class
-                                    sizeBoxes.forEach(b => {
-                                        b.classList.remove('checked');
-                                        b.querySelector('input[type="radio"]').checked = false;
-                                    });
-
-                                    // Check the clicked box's radio input and add checked class
-                                    const radioInput = box.querySelector('input[type="radio"]');
-                                    if (radioInput && !box.classList.contains('disabled')) {
-                                        radioInput.checked = true;
-                                        box.classList.add('checked');
-                                    }
-                                });
-                            });
-                        });
-                    </script>
-
-
-
-
-
-
-
-                    <?php
-                    // Example PHP logic to sum up sizes (Make sure this runs correctly)
-                    $total_quantity = 0;
-                    $total_quantity += intval($view_data['extra_small']);
-                    $total_quantity += intval($view_data['small']);
-                    $total_quantity += intval($view_data['medium']);
-                    $total_quantity += intval($view_data['large']);
-                    $total_quantity += intval($view_data['extra_large']);
-                    ?>
-
-
-                    <label for="quantity">Quantity:</label>
-                    <div class="quantity-input-container">
-                        <button type="button" id="decrease-quantity" class="quantity-button">-</button>
-                        <input type="number" name="quantity" id="quantity" value="1" min="1" class="quantity-input">
-                        <button type="button" id="increase-quantity" class="quantity-button">+</button>
-                    </div>
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const quantityInput = document.getElementById('quantity');
                             const increaseButton = document.getElementById('increase-quantity');
                             const decreaseButton = document.getElementById('decrease-quantity');
+                            const sizeInputs = document.querySelectorAll('input[name="product_size"]');
+                            const sizeBoxes = document.querySelectorAll('.size-box');
 
-                            // Set the available quantity (This should come from your PHP logic)
-                            const availableQuantity = <?php echo $total_quantity; ?>; // Ensure this outputs the correct total
+                            let selectedSizeQuantity = 0; // Default to no size selected
 
-                            // Update the quantity input value based on available quantity
+                            // Handle size selection
+                            sizeInputs.forEach(input => {
+                                input.addEventListener('change', function() {
+                                    selectedSizeQuantity = parseInt(input.getAttribute('data-quantity')); // Get the quantity of the selected size
+                                    quantityInput.max = selectedSizeQuantity; // Update the max quantity based on the selected size
+                                    quantityInput.value = 1; // Reset to 1 when changing size
+
+                                    // Remove checked class from all size boxes
+                                    sizeBoxes.forEach(box => {
+                                        box.classList.remove('checked');
+                                    });
+
+                                    // Add checked class to the selected size box
+                                    const selectedBox = input.closest('.size-box');
+                                    if (selectedBox) {
+                                        selectedBox.classList.add('checked');
+                                    }
+                                });
+                            });
+
+                            // Increase quantity
                             increaseButton.addEventListener('click', function() {
                                 const currentQuantity = parseInt(quantityInput.value);
-                                if (currentQuantity < availableQuantity) { // Check if the current quantity is less than available
+                                if (currentQuantity < selectedSizeQuantity) { // Ensure quantity doesn't exceed available stock for selected size
                                     quantityInput.value = currentQuantity + 1;
                                 }
                             });
@@ -373,6 +323,32 @@ if (isset($_GET['view_id'])) {
                             });
                         });
                     </script>
+
+                    <!-- Quantity input section -->
+                    <label for="quantity">Quantity:</label>
+                    <div class="quantity-input-container">
+                        <button type="button" id="decrease-quantity" class="quantity-button">-</button>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" class="quantity-input" max="1">
+                        <button type="button" id="increase-quantity" class="quantity-button">+</button>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -445,20 +421,105 @@ if (isset($_GET['view_id'])) {
                                 title="Select the time for pickup" required>
                         </div>
 
-                        <h1>Number of days <em style="font-size:1.5rem">(for rent only)</em></h1>
-
-                        <div class="customer-input-container hidden">
-                            <input type="number" name="days_of_rent" placeholder="Enter number of days"
-                                title="enter number of days">
-
-                        </div>
-
 
 
 
 
 
                     </div>
+
+
+
+
+
+                    <!-- Order Selection -->
+                    <div class="custom-order-selection-container">
+                        <label class="custom-radio-box" for="buy-option">
+                            <input type="radio" name="order_variation" id="buy-option" checked>
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Buy</span>
+                        </label>
+
+                        <label class="custom-radio-box" for="rent-option">
+                            <input type="radio" name="order_variation" id="rent-option">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                            <span>Rent</span>
+                        </label>
+                    </div>
+
+                    <style>
+                        /* Unique class for styling without changing IDs */
+                        .custom-order-selection-container {
+                            display: flex;
+                            gap: 20px;
+                            justify-content: center;
+                            margin-top: 20px;
+                        }
+
+                        .custom-radio-box {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            width: 120px;
+                            height: 120px;
+                            padding: 20px;
+                            border: 2px dashed var(--box-shadow);
+                            border-radius: 8px;
+                            cursor: pointer;
+                            transition: border-color 0.3s, background-color 0.3s;
+                            text-align: center;
+                            font-size: 1.2rem;
+                            font-weight: bold;
+                            position: relative;
+                        }
+
+                        .custom-radio-box i {
+                            font-size: 2rem;
+                            margin-bottom: 10px;
+                            color: #666;
+                        }
+
+                        .custom-radio-box span {
+                            color: #666;
+                        }
+
+                        .custom-radio-box input {
+                            display: none;
+                            /* Hide default radio button */
+                        }
+
+                        /* Style when hovering over a box */
+                        .custom-radio-box:hover {
+                            border-color: #999;
+                        }
+
+                        /* Style when the radio button is checked (selected) */
+                        .custom-radio-box input:checked+i,
+                        .custom-radio-box input:checked~span {
+                            color: #007bff;
+
+                            /* Change icon and text color */
+                        }
+
+                        .custom-radio-box input:checked {
+                            border: 1px dashed #007bff;
+
+                            /* Change border color when selected */
+                        }
+                    </style>
+
+
+                    <!-- Rent Only Section -->
+                    <h1 id="rent-days-header" class="visibility-hidden">
+                        Number of days <em style="font-size:1.5rem">(for rent only)</em>
+                    </h1>
+
+                    <div class="customer-input-container visibility-hidden" id="days-container">
+                        <input type="number" name="days_of_rent" placeholder="Enter number of days" title="Enter number of days">
+                    </div>
+
+
 
                     <div class="terms-and-conditions-container hidden">
                         <input type="checkbox" id="termsCheckbox" name="terms" required>
@@ -505,21 +566,98 @@ if (isset($_GET['view_id'])) {
                         });
                     </script>
 
-
-                    <div class="product-buttons-container hidden">
-
-                        <div>
+                    <!-- Product Buttons -->
+                    <div class="product-buttons-container">
+                        <div id="buy-button">
                             <button class="action-button" type="submit" name="action" value="buy">
-                                <i class="fa-solid fa-cart-shopping"></i> ORDER ₱<?php echo $view_data['price'] ?>
+                                <i class="fa-solid fa-cart-shopping"></i> BUY ₱<?php echo $view_data['price']; ?>
                             </button>
                         </div>
-                        <div>
+
+                        <div id="rent-button" class="visibility-hidden">
                             <button class="action-button" type="submit" name="action" value="rent">
-                                <i class="fa-solid fa-hand-holding-heart"></i> RENT
-                                ₱<?php echo $view_data['rent_price'] ?>/day
+                                <i class="fa-solid fa-hand-holding-heart"></i> RENT ₱<?php echo $view_data['rent_price']; ?>/day
                             </button>
                         </div>
                     </div>
+
+                    <!-- JavaScript -->
+                    <script>
+                        // Get references to DOM elements
+                        const buyOption = document.getElementById('buy-option');
+                        const rentOption = document.getElementById('rent-option');
+                        const rentDaysHeader = document.getElementById('rent-days-header');
+                        const daysContainer = document.getElementById('days-container');
+                        const buyButton = document.getElementById('buy-button');
+                        const rentButton = document.getElementById('rent-button');
+                        const rentDaysInput = daysContainer.querySelector('input[name="days_of_rent"]');
+
+
+                        // Function to update required attribute of days input
+                        const updateDaysInputRequired = () => {
+                            if (rentOption.checked) {
+                                rentDaysInput.setAttribute('required', 'required');
+                            } else {
+                                rentDaysInput.removeAttribute('required');
+                            }
+                        };
+
+                        // Event listeners for radio buttons
+                        buyOption.addEventListener('change', () => {
+                            if (buyOption.checked) {
+                                // Hide rent-specific elements
+                                rentDaysHeader.classList.add('visibility-hidden');
+                                daysContainer.classList.add('visibility-hidden');
+                                rentButton.classList.add('visibility-hidden');
+
+                                // Show buy-specific elements
+                                buyButton.classList.remove('visibility-hidden');
+
+                                // Add the required attribute
+                                updateDaysInputRequired();
+                            }
+                        });
+
+                        rentOption.addEventListener('change', () => {
+                            if (rentOption.checked) {
+                                // Show rent-specific elements
+                                rentDaysHeader.classList.remove('visibility-hidden');
+                                daysContainer.classList.remove('visibility-hidden');
+                                rentButton.classList.remove('visibility-hidden');
+
+                                // Hide buy-specific elements
+                                buyButton.classList.add('visibility-hidden');
+
+                                // Add the required attribute
+                                updateDaysInputRequired();
+                            }
+                        });
+
+
+                        // Initialize the "Buy" option on page load
+                        updateDaysInputRequired();
+                    </script>
+
+                    <!-- CSS -->
+                    <style>
+                        .visibility-hidden {
+                            display: none;
+                        }
+
+                        .action-button {
+                            padding: 10px 20px;
+                            font-size: 1rem;
+                            cursor: pointer;
+                        }
+
+                        .action-button:hover {
+                            background-color: #f0f0f0;
+                        }
+                    </style>
+
+
+
+
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -598,11 +736,6 @@ if (isset($_GET['view_id'])) {
 
 
     </main>
-
-
-
-
-
 
 
 </body>
