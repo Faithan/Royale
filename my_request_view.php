@@ -190,7 +190,7 @@ if (isset($_GET['request_id'])) {
 
             <div class="invoice-container" id="invoice-container">
                 <div class="invoice-header">
-                    <h2>INVOICE</h2>
+                    <h2><i class="fa-solid fa-receipt"></i> Invoice</h2>
                     <p>Request ID: #<?php echo htmlspecialchars($row['request_id']); ?></p>
                     <p class="invoice-date">Generated on: <?php echo date('Y-m-d H:i:s'); ?></p>
                 </div>
@@ -321,10 +321,12 @@ if (isset($_GET['request_id'])) {
                 }
 
                 .invoice-header h2 {
-                    font-size: 3rem;
+                    font-size: 2.5rem;
                     color: var(--first-bgcolor);
                     background-color: var(--text-color);
                     margin-bottom: 10px;
+                    padding: 5px;
+                    
                 }
 
                 .invoice-header p {

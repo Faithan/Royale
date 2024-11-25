@@ -147,7 +147,7 @@
 
 
                 <div class="invoice-container" id="order-invoice-container">
-                    <h1>Invoice</h1>
+                    <h1><i class="fa-solid fa-receipt"></i> Invoice</h1>
 
                     <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right;">
                         <h2 style=" font-weight: bold; font-size: 2rem;"><i class="fa-brands fa-web-awesome"></i> ROYALE</h2>
