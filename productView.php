@@ -142,12 +142,15 @@ if (isset($_GET['view_id'])) {
 
                     <label for="product-name"> <?php echo $view_data['product_name']; ?></label>
 
+
                     <div style="display: flex; gap: 5px; align-items:center; justify-content:center;">
+
                         <label for="product-type"> <?php echo $view_data['product_type']; ?></label>
                         <label for="price">₱ <?php echo $view_data['price']; ?></label>
+
                     </div>
 
-                    <label for="gender">
+                    <label for="gender" style="margin-bottom: 20px;">
                         <?php
                         if ($view_data['gender'] == 'male') {
                             echo '<i class="fas fa-mars"></i>'; // Male icon
@@ -157,6 +160,8 @@ if (isset($_GET['view_id'])) {
                         echo $view_data['gender'];
                         ?>
                     </label>
+
+
 
 
 
@@ -268,7 +273,7 @@ if (isset($_GET['view_id'])) {
                         }
 
                         .size-box.checked {
-                          
+
                             /* Change to your desired checked color */
                             color: white;
                             background-color: #007bff;
@@ -390,7 +395,7 @@ if (isset($_GET['view_id'])) {
                     <p><?php echo $view_data['product_description']; ?></p>
 
                     <div class="customer-info-container hidden">
-                        <h1>Customer's Information</h1>
+                        <h1 style="position:static;">Customer's Information</h1>
 
                         <div class="customer-input-container hidden">
                             <input type="text" placeholder="Enter your name" name="user_name" required>

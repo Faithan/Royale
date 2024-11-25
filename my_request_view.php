@@ -190,12 +190,21 @@ if (isset($_GET['request_id'])) {
 
             <div class="invoice-container" id="invoice-container">
                 <div class="invoice-header">
-                    <h2>Invoice</h2>
+                    <h2>INVOICE</h2>
                     <p>Request ID: #<?php echo htmlspecialchars($row['request_id']); ?></p>
                     <p class="invoice-date">Generated on: <?php echo date('Y-m-d H:i:s'); ?></p>
                 </div>
 
                 <div class="invoice-body">
+
+
+                    <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right;">
+                        <h2 style=" font-weight: bold; font-size: 2rem;"><i class="fa-brands fa-web-awesome"></i> ROYALE</h2>
+                        <label for="address"> Tenazas, Lala, Lanao Del
+                            Norte. <i class="fa-solid fa-location-dot"></i></label>
+                        <label for="contact-number">+63 926-201-3081 <i class="fa-solid fa-phone"></i> </label>
+                    </div>
+
                     <div class="section customer-info">
                         <h3>Customer Information</h3>
                         <p><strong>Name:</strong> <?php echo htmlspecialchars($row['name']); ?></p>
@@ -204,21 +213,28 @@ if (isset($_GET['request_id'])) {
                         <p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
                     </div>
 
-                    <div class="request-info service-info">
-                        <h3 style="font-size: 1.6rem; text-decoration:underline;">Service Information</h3>
+                    <div class="section customer-info">
+                        <h3>Service Information</h3>
                         <p><strong>Service Name:</strong> <?php echo htmlspecialchars($row['service_name']); ?></p>
                         <p><strong>Request Type:</strong> <?php echo htmlspecialchars($row['request_type']); ?></p>
                         <p><strong>Fitting Date:</strong> <?php echo htmlspecialchars($row['fitting_date']); ?></p>
                         <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
+
+                        <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
+                        <p><strong>Special Group:</strong>
+                            <?php echo !empty($row['special_group']) ? htmlspecialchars($row['special_group']) : 'N/A'; ?>
+                        </p>
+
                     </div>
 
-                    <div class="section employee-info" style="margin-top: 10px;">
-                        <h3>Assigned Employees</h3>
-                        <p><strong>Assigned Pattern Cutter:</strong> <?php echo htmlspecialchars($row['assigned_pattern_cutter']); ?></p>
-                        <p><strong>Assigned Tailor:</strong> <?php echo htmlspecialchars($row['assigned_tailor']); ?></p>
+                    <div class="section status-info">
+                        <h3>Request Status</h3>
+                        <p><strong>Status:</strong> <?php echo htmlspecialchars($row['request_status']); ?></p>
                     </div>
 
-                    <div class="section payment-info">
+
+
+                    <div class="section payment-info" style="margin-top:20px; ">
                         <h3>Payment Details</h3>
                         <p><strong>Fee:</strong> ₱<?php echo number_format($row['fee'], 2); ?></p>
                         <p><strong>Balance:</strong> ₱<?php echo number_format($row['balance'], 2); ?></p>
@@ -229,32 +245,27 @@ if (isset($_GET['request_id'])) {
                     <div class="section refund-info">
                         <h3>Refund Details</h3>
                         <p><strong>Refund:</strong> ₱<?php echo number_format($row['refund'], 2); ?></p>
-                        <p><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
+                        <p><strong>Refund Reason:</strong>
+                            <?php echo !empty($row['refund_reason']) ? htmlspecialchars($row['refund_reason']) : 'N/A'; ?>
+                        </p>
+
                     </div>
 
-                    <div class="section status-info">
-                        <h3>Request Status</h3>
-                        <p><strong>Status:</strong> <?php echo htmlspecialchars($row['request_status']); ?></p>
-                        <p><strong>Work Status:</strong> <?php echo htmlspecialchars($row['work_status']); ?></p>
-                        <p><strong>Pattern Status:</strong> <?php echo htmlspecialchars($row['pattern_status']); ?></p>
-                    </div>
 
-                    <div class="section additional-info">
-                        <h3>Additional Information</h3>
-                        <p><strong>Message:</strong> <?php echo htmlspecialchars($row['message']); ?></p>
-                        <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
-                        <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
-                    </div>
+
                 </div>
 
                 <div class="invoice-footer">
-                    <p>Thank you for choosing our service!</p>
+                    <p><i class="fa-solid fa-award"></i> Thank you for choosing our service! <i class="fa-solid fa-award"></i></p>
                 </div>
 
-                <!-- Download Button -->
-                <div style="text-align: center; margin-top: 20px; padding:10px;">
-                    <button id="download-button" style="padding:5px;"><i class="fa-solid fa-download"></i> Download Invoice</button>
-                </div>
+
+            </div>
+
+
+            <!-- Download Button -->
+            <div style="text-align: center; margin-bottom: 20px; padding:10px;">
+                <button id="download-button" style="padding:5px;"><i class="fa-solid fa-download"></i> Download Invoice</button>
             </div>
 
 
@@ -299,8 +310,8 @@ if (isset($_GET['request_id'])) {
                     margin: 30px auto;
                     padding: 20px;
                     background-color: var(--second-bgcolor);
-                    border-radius: 10px;
-                    border: 1px solid var(--box-shadow);
+
+                    border: 2px dashed var(--box-shadow);
                     font-family: 'Anton', Arial, sans-serif;
                 }
 
@@ -321,29 +332,33 @@ if (isset($_GET['request_id'])) {
                     color: #777;
                 }
 
+
+
                 .invoice-date {
                     font-weight: bold;
                     color: #001C31;
                 }
+
+
+
+
 
                 .section {
                     margin-bottom: 25px;
                 }
 
                 .section h3 {
-
                     color: var(--text-color);
-                    text-decoration: underline;
 
-                    margin: 0;
+                    margin-bottom: 5px;
                     border-radius: 5px;
                     font-size: 1.6rem;
                     text-transform: uppercase;
                 }
 
                 .section p {
-                    font-size: 1.6rem;
-                    margin: 5px 0;
+                    font-size: 1.4rem;
+
                     line-height: 1.6;
                 }
 
@@ -351,12 +366,10 @@ if (isset($_GET['request_id'])) {
                     width: 200px;
                     display: inline-block;
                     color: var(--text-color);
+                    text-transform: uppercase;
+
                 }
 
-                .payment-info p,
-                .refund-info p {
-                    font-weight: bold;
-                }
 
                 .payment-info p span,
                 .refund-info p span {
@@ -367,13 +380,13 @@ if (isset($_GET['request_id'])) {
                     text-align: center;
                     margin-top: 40px;
                     font-size: 14px;
-                    color: #777;
+
                 }
 
                 .invoice-footer p {
                     font-size: 16px;
                     font-weight: bold;
-                    color: #007BFF;
+
                 }
 
                 @media only screen and (max-width: 575.98px) {

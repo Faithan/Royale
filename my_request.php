@@ -16,7 +16,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id); // Bind the user_id as an integer
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +30,6 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/my_request.css?v=<?php echo time(); ?>">
     <link rel="shortcut icon" href="system_images/whitelogo.png" type="image/png">
-
 </head>
 
 <body>
@@ -41,16 +39,33 @@ $result = $stmt->get_result();
     <main>
         <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> My Request</h1>
 
+        <div class="toggle-container hidden" style="display:flex; justify-content:flex-end">
+            <button id="toggle-completed" data-showing="false">Show Completed Requests</button>
+            <button id="toggle-cancelled" data-showing="false" style="color:red">Show Cancelled Requests</button>
+        </div>
+
         <div class="request-list">
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $photo_array = explode(',', $row['photo']);
-                    $status_class = ($row['request_status'] === 'cancelled') ? 'cancelled' : ''; // Check if status is cancelled
-            ?>
-                    <div class="request-container" data-request-id="<?php echo htmlspecialchars($row['request_id']); ?>">
+                    $is_completed = $row['request_status'] === 'completed' ? 'true' : 'false';
+                    $is_cancelled = $row['request_status'] === 'cancelled' ? 'true' : 'false';
 
-                        <!-- Photo gallery on the left -->
+                    // Determine the class based on request status
+                    $status_class = '';
+                    if ($row['request_status'] == 'pending') {
+                        $status_class = 'text-gray';
+                    } elseif ($row['request_status'] == 'ongoing') {
+                        $status_class = 'text-blue';
+                    } elseif ($row['request_status'] == 'completed') {
+                        $status_class = 'text-green';
+                    } elseif ($row['request_status'] == 'cancelled') {
+                        $status_class = 'text-red';
+                    }
+            ?>
+                    <div class="request-container hidden" data-completed="<?php echo $is_completed; ?>" data-cancelled="<?php echo $is_cancelled; ?>" data-request-id="<?php echo htmlspecialchars($row['request_id']); ?>">
+                        <!-- Photo gallery -->
                         <div class="photo-gallery">
                             <?php
                             foreach ($photo_array as $photo) {
@@ -61,48 +76,11 @@ $result = $stmt->get_result();
                             ?>
                         </div>
 
-                        <!-- Request details on the right -->
+                        <!-- Request details -->
                         <div class="details">
-                            <?php
-                            // Determine the class based on request status
-                            $status_class = ''; // Default class
-
-                            if ($row['request_status'] == 'pending') {
-                                $status_class = 'text-gray';
-                            } elseif ($row['request_status'] == 'ongoing') {
-                                $status_class = 'text-blue';
-                            } elseif ($row['request_status'] == 'completed') {
-                                $status_class = 'text-green';
-                            } elseif ($row['request_status'] == 'cancelled') {
-                                $status_class = 'text-red';
-                            }
-                            ?>
-
                             <h3 class="<?php echo $status_class; ?>">
                                 <?php echo htmlspecialchars($row['request_status']); ?>
-                               
-                               
                             </h3>
-                       
-
-                            <style>
-                                .text-gray {
-                                    color: gray;
-                                }
-
-                                .text-blue {
-                                    color: blue;
-                                }
-
-                                .text-green {
-                                    color: green;
-                                }
-
-                                .text-red {
-                                    color: red;
-                                }
-                            </style>
-
                             <p style="text-align:center; font-size: 2rem; color:var(--text-color);"><strong>Paid ₱<?php echo htmlspecialchars($row['down_payment'] + $row['final_payment']); ?></strong></p>
                             <?php if ($row['balance'] != 0): ?>
                                 <p style="text-align:center; font-size: 2rem; color:var(--text-color);"><strong>Balance ₱<?php echo htmlspecialchars($row['balance']); ?></strong></p>
@@ -116,10 +94,9 @@ $result = $stmt->get_result();
                                 <p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
                                 <p><strong>Fitting Date:</strong> <?php echo htmlspecialchars($row['fitting_date']); ?></p>
                                 <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
-                              
                             </div>
                             <div style="text-align: center;">
-                            <b style="font-size: 1.6rem; font-style: italic; color: gray;"><i class="fa-solid fa-eye"></i> Click to view</b> 
+                                <b style="font-size: 1.6rem; font-style: italic; color: gray;"><i class="fa-solid fa-eye"></i> Click to view</b>
                             </div>
                         </div>
                     </div>
@@ -136,10 +113,72 @@ $result = $stmt->get_result();
         <div class="anchor-container">
             <a href="index.php?#home">Return</a>
         </div>
-
     </main>
 
     <script>
+        // Toggle completed requests
+        document.getElementById('toggle-completed').addEventListener('click', function() {
+            const button = this;
+            const isShowingCompleted = button.getAttribute('data-showing') === 'true';
+            const requestContainers = document.querySelectorAll('.request-container');
+
+            requestContainers.forEach(container => {
+                const isCompleted = container.getAttribute('data-completed') === 'true';
+                const isCancelled = container.getAttribute('data-cancelled') === 'true';
+
+                if (isShowingCompleted) {
+                    // Hide completed requests
+                    if (isCompleted) container.style.display = 'none';
+                    else if (!isCancelled) container.style.display = 'flex'; // Show non-canceled requests
+                } else {
+                    // Show only completed requests
+                    if (isCompleted) container.style.display = 'flex';
+                    else container.style.display = 'none';
+                }
+            });
+
+            button.setAttribute('data-showing', !isShowingCompleted);
+            button.textContent = isShowingCompleted ? 'Show Completed Requests' : 'Show Non-Completed Requests';
+        });
+
+        // Toggle cancelled requests
+        document.getElementById('toggle-cancelled').addEventListener('click', function() {
+            const button = this;
+            const isShowingCancelled = button.getAttribute('data-showing') === 'true';
+            const requestContainers = document.querySelectorAll('.request-container');
+
+            requestContainers.forEach(container => {
+                const isCancelled = container.getAttribute('data-cancelled') === 'true';
+                const isCompleted = container.getAttribute('data-completed') === 'true';
+
+                if (isShowingCancelled) {
+                    // Hide cancelled requests
+                    if (isCancelled) container.style.display = 'none';
+                    else if (!isCompleted) container.style.display = 'flex'; // Show non-completed requests
+                } else {
+                    // Show only cancelled requests
+                    if (isCancelled) container.style.display = 'flex';
+                    else container.style.display = 'none';
+                }
+            });
+
+            button.setAttribute('data-showing', !isShowingCancelled);
+            button.textContent = isShowingCancelled ? 'Show Cancelled Requests' : 'Show Non-Cancelled Requests';
+        });
+
+        // Initial setup: show only pending and ongoing requests
+        document.querySelectorAll('.request-container').forEach(container => {
+            const isCompleted = container.getAttribute('data-completed') === 'true';
+            const isCancelled = container.getAttribute('data-cancelled') === 'true';
+
+            if (isCompleted || isCancelled) {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'flex';
+            }
+        });
+
+        // Click event to view request details
         document.querySelectorAll('.request-container').forEach(container => {
             container.addEventListener('click', function() {
                 const requestId = this.getAttribute('data-request-id');
@@ -147,7 +186,53 @@ $result = $stmt->get_result();
             });
         });
     </script>
-
 </body>
 
+</html>
+
+
+
+
+<style>
+    .toggle-container {
+        margin: 0 20px 10px 0;
+        text-align: right;
+    }
+
+    #toggle-completed,
+    #toggle-cancelled {
+        padding: 10px 20px;
+        font-size: 1.4rem;
+        border: 1px solid var(--box-shadow);
+        color: var(--text-color);
+        background-color: var(--second-bgcolor);
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    #toggle-completed:hover,
+    #toggle-cancelled:hover {
+        background-color: var(--hover-color);
+    }
+
+    .text-gray {
+        color: gray;
+    }
+
+    .text-blue {
+        color: blue;
+    }
+
+    .text-green {
+        color: green;
+    }
+
+    .text-red {
+        color: red;
+    }
+</style>
+</body>
 </html>

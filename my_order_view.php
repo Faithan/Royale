@@ -69,7 +69,7 @@
 
         <main>
 
-
+        <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> Order Viewer</h1>
 
 
             <div class="image-container hidden">
@@ -149,6 +149,14 @@
                 <div class="invoice-container" id="order-invoice-container">
                     <h1>Invoice</h1>
 
+                    <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right;">
+                        <h2 style=" font-weight: bold; font-size: 2rem;"><i class="fa-brands fa-web-awesome"></i> ROYALE</h2>
+                        <label for="address"> Tenazas, Lala, Lanao Del
+                            Norte. <i class="fa-solid fa-location-dot"></i></label>
+                        <label for="contact-number">+63 926-201-3081 <i class="fa-solid fa-phone"></i> </label>
+                    </div>
+
+
                     <!-- User and Order Information -->
                     <div class="user-info">
                         <h2>Customer Details</h2>
@@ -163,7 +171,6 @@
                         <p><strong>Order ID:</strong> <?php echo htmlspecialchars($row['order_id']); ?></p>
                         <p><strong>Order Type:</strong> <?php echo htmlspecialchars($row['order_type']); ?></p>
                         <p><strong>Order Variation:</strong> <?php echo htmlspecialchars($row['order_variation']); ?></p>
-                        <p><strong>Status:</strong> <?php echo htmlspecialchars($row['order_status']); ?></p>
                         <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
                         <p><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
                         <p><strong>Date Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
@@ -175,26 +182,30 @@
                         <table>
                             <tr>
                                 <th>Product Name</th>
+                                <th>Order Variation</th>
                                 <th>Quantity</th>
+                                <?php if ($row['order_variation'] === 'rent') : ?>
+                                    <th>Rent Days</th>
+                                <?php endif; ?>
                                 <th>Price</th>
                                 <th>Total</th>
                             </tr>
                             <tr>
                                 <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['order_variation']); ?></td>
                                 <td><?php echo htmlspecialchars($row['product_quantity']); ?></td>
-                                <td>₱<?php echo htmlspecialchars($row['product_price']); ?></td>
-                                <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_price']); ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><strong>Total Price</strong></td>
-                                <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_price']); ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><strong>Rent Price</strong></td>
-                                <td>₱<?php echo htmlspecialchars($row['product_rent_price']); ?></td>
+                                <?php if ($row['order_variation'] === 'rent') : ?>
+                                    <td><?php echo htmlspecialchars($row['product_days_of_rent']); ?> days</td>
+                                    <td>₱<?php echo htmlspecialchars($row['product_rent_price']); ?></td>
+                                    <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_rent_price'] * $row['product_days_of_rent']); ?></td>
+                                <?php else : ?>
+                                    <td>₱<?php echo htmlspecialchars($row['product_price']); ?></td>
+                                    <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_price']); ?></td>
+                                <?php endif; ?>
                             </tr>
                         </table>
                     </div>
+
 
                     <!-- Payment Details -->
                     <div class="payment-info">
@@ -257,7 +268,7 @@
                         margin: 20px auto;
                         padding: 20px;
                         background-color: var(--second-bgcolor);
-                        border: 1px solid var(--box-shadow);
+                        border: 2px dashed var(--box-shadow);
                         border-radius: 10px;
                         font-family: 'Anton', Arial, sans-serif;
                     }
@@ -281,13 +292,13 @@
 
                     .invoice-container h2 {
                         color: var(--text-color);
-                        font-size: 1.6rem;
+                        font-size: 1.7rem;
                         margin-bottom: 10px;
-                        text-decoration: underline;
+
                     }
 
                     .invoice-container p {
-                        font-size: 1.5rem;
+                        font-size: 1.4rem;
                         color: var(--text-color2);
                         line-height: 1.5;
                     }
@@ -325,11 +336,6 @@
                         font-size: 1.5rem;
                     }
 
-                    /* Payment Info Section */
-                    .invoice-container .payment-info p {
-                        font-size: 1.5rem;
-                        font-weight: bold;
-                    }
 
                     /* Footer Section for Print & Download */
                     .invoice-container .invoice-footer {
@@ -375,7 +381,7 @@
             <div class="anchor-container">
                 <a href="my_order.php">Return</a>
                 <button id="cancel-order"
-                    class="<?php echo (in_array($row['order_status'], ['cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
+                    class="<?php echo (in_array($row['order_status'], ['accepted','cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
                     <i class="fa-solid fa-triangle-exclamation"></i> Cancel Order?
                 </button>
             </div>
