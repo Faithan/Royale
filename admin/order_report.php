@@ -214,6 +214,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
                                         <th>Size</th>
                                         <th>Type</th>
                                         <th>Variation</th>
+                                        <th>Photo</th>
                                         <th>Status</th>
                                         <th>Contact</th>
                                         <th>Pickup Date</th>
@@ -227,7 +228,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
                                 <tbody>
                                     <?php if (empty($dateFilteredOrders)): ?>
                                         <tr>
-                                            <td colspan="15" style="text-align: center;">No orders on the selected date</td>
+                                            <td colspan="16" style="text-align: center;">No orders on the selected date</td>
                                         </tr>
                                     <?php else: ?>
                                         <?php foreach ($dateFilteredOrders as $order): ?>
@@ -239,6 +240,18 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
                                                 <td><?php echo $order['product_size']; ?></td>
                                                 <td><?php echo $order['order_type']; ?></td>
                                                 <td><?php echo $order['order_variation']; ?></td>
+                                                <td style="display:flex; flex-direction: row;">
+                                                    <?php if (!empty($order['product_photo'])): ?>
+                                                        <?php
+                                                        $photos = explode(',', $order['product_photo']); // Split the comma-separated values
+                                                        foreach ($photos as $photo):
+                                                        ?>
+                                                            <img src="products/<?php echo trim($photo); ?>" alt="Photo" style="max-width: 40px; max-height: 40px; margin-right: 5px; border-radius: 5px;">
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        N/A
+                                                    <?php endif; ?>
+                                                </td> 
                                                 <td><?php echo $order['order_status']; ?></td>
                                                 <td><?php echo $order['user_contact_number']; ?></td>
                                                 <td><?php echo $order['pickup_date']; ?></td>

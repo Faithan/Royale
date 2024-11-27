@@ -256,34 +256,61 @@ if ($result->num_rows > 0) {
 
                             <div class="order-details-container2 hidden">
 
-                                <div class="order-details"
-                                    style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
+                                <div class="order-details" style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
                                     <label>Balance (₱):</label>
-                                    <input type="number" name="balance" value="<?php
-                                                                                if (isset($row['product_quantity'], $row['product_rent_price'], $row['payment'])) {
-                                                                                    if ($row['order_variation'] === 'rent') {
-                                                                                        // Calculate balance for rent
-                                                                                        $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
-                                                                                    } elseif ($row['order_variation'] === 'buy') {
-                                                                                        // Calculate balance for buy
-                                                                                        $balance = ($row['product_quantity'] * $row['product_rent_price']) - $row['payment'];
-                                                                                    } else {
-                                                                                        $balance = 0; // Default if order variation doesn't match
-                                                                                    }
-                                                                                    echo htmlspecialchars($balance);
-                                                                                } else {
-                                                                                    echo '';
-                                                                                }
-                                                                                ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    <input type="number" id="balance"  value="<?php
+                                                                                            if (isset($row['product_quantity'], $row['product_rent_price'])) {
+                                                                                                if ($row['order_variation'] === 'rent') {
+                                                                                                    // Calculate balance for rent
+                                                                                                    $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']);
+                                                                                                } elseif ($row['order_variation'] === 'buy') {
+                                                                                                    // Calculate balance for buy
+                                                                                                    $balance = ($row['product_quantity'] * $row['product_rent_price']);
+                                                                                                } else {
+                                                                                                    $balance = 0; // Default if order variation doesn't match
+                                                                                                }
+                                                                                                echo htmlspecialchars($balance);
+                                                                                            } else {
+                                                                                                echo '';
+                                                                                            }
+                                                                                            ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
-
 
                                 <div class="order-details">
                                     <label>Payment (₱):</label>
-                                    <input type="number" name="payment"
+                                    <input type="number" id="payment" name="payment"
                                         value="<?php echo isset($row['payment']) ? htmlspecialchars($row['payment']) : ''; ?>"
-                                        <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?> <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
+                                        <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>
+                                        <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
                                 </div>
+
+                                <div class="order-details">
+                                    <label>Remaining Balance (₱):</label>
+                                    <input type="number" id="remaining_balance" name="balance" value="0" readonly>
+                                </div>
+
+                                <script>
+                                    // Function to calculate remaining balance
+                                    function calculateRemainingBalance() {
+                                        var balance = parseFloat(document.getElementById('balance').value) || 0;
+                                        var payment = parseFloat(document.getElementById('payment').value) || 0;
+
+                                        // Calculate remaining balance
+                                        var remainingBalance = balance - payment;
+
+                                        // Update the remaining balance input field
+                                        document.getElementById('remaining_balance').value = remainingBalance.toFixed(2);
+                                    }
+
+                                    // Event listeners for real-time calculation
+                                    document.getElementById('balance').addEventListener('input', calculateRemainingBalance);
+                                    document.getElementById('payment').addEventListener('input', calculateRemainingBalance);
+
+                                    // Trigger calculation when page loads
+                                    window.addEventListener('load', calculateRemainingBalance);
+                                </script>
+
+
 
                                 <div class="order-details">
                                     <label>Payment's Date:</label>

@@ -224,7 +224,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
                                 <tbody>
                                     <?php if (empty($dateFilteredRequests)): ?>
                                         <tr>
-                                            <td colspan="16" style="text-align: center;">No requests on the selected date</td>
+                                            <td colspan="17" style="text-align: center;">No requests on the selected date</td>
                                         </tr>
                                     <?php else: ?>
                                         <?php foreach ($dateFilteredRequests as $request): ?>

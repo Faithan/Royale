@@ -73,7 +73,8 @@ if (isset($_POST['accept_order'])) {
 if (isset($_POST['complete_order'])) {
     $order_id = $_POST['order_id'];
     $payment = !empty($_POST['payment']) ? $_POST['payment'] : null;
-    $payment_date = !empty($_POST['payment_date']) ? $_POST['payment_date'] : null;
+    $payment_date = !empty($_POST['payment_date']) ? $_POST['payment_date'] : date('Y-m-d');
+
 
     // Prepare SQL query
     $stmt = $conn->prepare("

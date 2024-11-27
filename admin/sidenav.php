@@ -16,8 +16,9 @@
                 <ul class="submenu">
                     <li><a href="request_report.php"><i class="fa-solid fa-bell-concierge"></i> Request </a></li>
                     <li><a href="order_report.php"><i class="fa-solid fa-cart-shopping"></i> Order </a></li>
-                    <li><a href=""><i class="fa-solid fa-people-group"></i> User </a></li>
-                    <li><a href=""><i class="fa-solid fa-users"></i> Employee </a></li>
+                    <li><a href="user_report.php"><i class="fa-solid fa-people-group"></i> User </a></li>
+                    <li><a href="employee_report.php"><i class="fa-solid fa-users"></i> Employee </a></li>
+                    <li><a href="product_report.php"><i class="fa-solid fa-shirt"></i> Product </a></li>
                 </ul>
             </li>
 
