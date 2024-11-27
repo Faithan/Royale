@@ -85,10 +85,10 @@ if ($result->num_rows > 0) {
                                 style="display:<?php echo ($row['order_status'] === 'completed') || $row['order_status'] === 'cancelled' ? 'block' : 'none'; ?>">
                                 Customer and Request Recorded Information</h2>
 
-                                <div class="first-button-container"
+                            <div class="first-button-container"
                                 style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
-                                <button type="submit" name="cancel_order" class="cancel_button"  id="cancel_button">Reject</button>
-                                <button type="submit" name="accept_order"  class="accept_button" id="accept_button">Accept</button>
+                                <button type="submit" name="cancel_order" class="cancel_button" id="cancel_button">Reject</button>
+                                <button type="submit" name="accept_order" class="accept_button" id="accept_button">Accept</button>
                             </div>
 
 
@@ -133,7 +133,7 @@ if ($result->num_rows > 0) {
                                     <input type="text" name="user_email" value="<?php echo $row['user_email']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
-                             
+
 
                                 <div class="order-details">
                                     <label>Order Status:</label>
@@ -179,7 +179,7 @@ if ($result->num_rows > 0) {
                                         readonly>
                                 </div>
 
-                              
+
 
                                 <div class="order-details">
                                     <label>Product Size:</label>
@@ -246,7 +246,7 @@ if ($result->num_rows > 0) {
                                 conflicts and workload issues, please ensure you contact the client.
                             </p>
 
-                           
+
 
 
                             <h2 class="hidden"
@@ -257,16 +257,24 @@ if ($result->num_rows > 0) {
                             <div class="order-details-container2 hidden">
 
                                 <div class="order-details"
-                                    style="display:<?php echo ($row['order_variation'] === 'rent') ? 'flex' : 'none'; ?>">
+                                    style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
                                     <label>Balance (₱):</label>
                                     <input type="number" name="balance" value="<?php
-                                    if (isset($row['product_days_of_rent'], $row['product_rent_price'], $row['payment'])) {
-                                        $balance = ($row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
-                                        echo htmlspecialchars($balance);
-                                    } else {
-                                        echo '';
-                                    }
-                                    ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                                                                if (isset($row['product_quantity'], $row['product_rent_price'], $row['payment'])) {
+                                                                                    if ($row['order_variation'] === 'rent') {
+                                                                                        // Calculate balance for rent
+                                                                                        $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
+                                                                                    } elseif ($row['order_variation'] === 'buy') {
+                                                                                        // Calculate balance for buy
+                                                                                        $balance = ($row['product_quantity'] * $row['product_rent_price']) - $row['payment'];
+                                                                                    } else {
+                                                                                        $balance = 0; // Default if order variation doesn't match
+                                                                                    }
+                                                                                    echo htmlspecialchars($balance);
+                                                                                } else {
+                                                                                    echo '';
+                                                                                }
+                                                                                ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
 
@@ -276,12 +284,14 @@ if ($result->num_rows > 0) {
                                         value="<?php echo isset($row['payment']) ? htmlspecialchars($row['payment']) : ''; ?>"
                                         <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?> <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
                                 </div>
+
                                 <div class="order-details">
                                     <label>Payment's Date:</label>
                                     <input type="date" name="payment_date"
-                                        value="<?php echo isset($row['payment_date']) ? htmlspecialchars($row['payment_date']) : ''; ?>"
-                                        <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?> <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
+                                        value="<?php echo !empty($row['payment_date']) ? htmlspecialchars($row['payment_date']) : ''; ?>" readonly>
                                 </div>
+
+
                             </div>
                             <p class="note"
                                 style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
@@ -300,7 +310,7 @@ if ($result->num_rows > 0) {
                         </div>
 
 
-                         <div class="first-button-container"
+                        <div class="first-button-container"
                             style="align-self: center; display:<?php echo ($row['order_status'] === 'pending' || $row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === '') ? 'none' : 'block'; ?>">
                             <button type="submit" name="cancel_order" class="cancel_button" id="cancel_button">Cancel</button>
                             <button type="submit" name="complete_order" class="accept_button" id="complete_button">Complete Order</button>

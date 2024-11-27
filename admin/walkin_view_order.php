@@ -252,19 +252,27 @@ if ($result->num_rows > 0) {
 
 
                             <div class="order-details-container2 hidden">
-
                                 <div class="order-details"
-                                    style="display:<?php echo ($row['order_variation'] === 'rent') ? 'flex' : 'none'; ?>">
+                                    style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
                                     <label>Balance (₱):</label>
                                     <input type="number" name="balance" value="<?php
-                                                                                if (isset($row['product_days_of_rent'], $row['product_rent_price'], $row['payment'])) {
-                                                                                    $balance = ($row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
+                                                                                if (isset($row['product_quantity'], $row['product_rent_price'], $row['payment'])) {
+                                                                                    if ($row['order_variation'] === 'rent') {
+                                                                                        // Calculate balance for rent
+                                                                                        $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']) - $row['payment'];
+                                                                                    } elseif ($row['order_variation'] === 'buy') {
+                                                                                        // Calculate balance for buy
+                                                                                        $balance = ($row['product_quantity'] * $row['product_rent_price']) - $row['payment'];
+                                                                                    } else {
+                                                                                        $balance = 0; // Default if order variation doesn't match
+                                                                                    }
                                                                                     echo htmlspecialchars($balance);
                                                                                 } else {
                                                                                     echo '';
                                                                                 }
                                                                                 ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
+
 
 
                                 <div class="order-details">
@@ -276,9 +284,9 @@ if ($result->num_rows > 0) {
                                 <div class="order-details">
                                     <label>Payment's Date:</label>
                                     <input type="date" name="payment_date"
-                                        value="<?php echo isset($row['payment_date']) ? htmlspecialchars($row['payment_date']) : ''; ?>"
-                                        <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?> <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
+                                        value="<?php echo !empty($row['payment_date']) ? htmlspecialchars($row['payment_date']) : ''; ?>" readonly>
                                 </div>
+
                             </div>
                             <p class="note"
                                 style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">

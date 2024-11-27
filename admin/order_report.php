@@ -12,83 +12,87 @@ if (!isset($_SESSION['admin_id'])) {
 $fromDate = isset($_GET['from_date']) ? $_GET['from_date'] : null;
 $toDate = isset($_GET['to_date']) ? $_GET['to_date'] : null;
 
-
-$dateFilteredRequests = [];
+$dateFilteredOrders = [];
 $totalIncome = 0;
-$totalReservations = 0;
+$totalOrders = 0;
 
 if ($fromDate && $toDate) {
-    // Fetch filtered requests
-    $dateFilteredQuery = "SELECT * FROM royale_request_tbl WHERE DATE(datetime_request) BETWEEN ? AND ?";
+    // Fetch filtered orders
+    $dateFilteredQuery = "SELECT * FROM royale_product_order_tbl WHERE DATE(datetime_order) BETWEEN ? AND ?";
     $stmt = $conn->prepare($dateFilteredQuery);
     $stmt->bind_param("ss", $fromDate, $toDate);
     $stmt->execute();
     $dateFilteredResult = $stmt->get_result();
-    $dateFilteredRequests = $dateFilteredResult->fetch_all(MYSQLI_ASSOC);
+    $dateFilteredOrders = $dateFilteredResult->fetch_all(MYSQLI_ASSOC);
 
     // Calculate total income
-    $incomeQuery = "SELECT SUM(fee) AS total_income FROM royale_request_tbl WHERE DATE(datetime_request) BETWEEN ? AND ?";
+    $incomeQuery = "SELECT SUM(payment) AS total_income FROM royale_product_order_tbl WHERE DATE(payment_date) BETWEEN ? AND ?";
     $incomeStmt = $conn->prepare($incomeQuery);
     $incomeStmt->bind_param("ss", $fromDate, $toDate);
     $incomeStmt->execute();
     $incomeResult = $incomeStmt->get_result();
     $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
 
-    // Count total reservations
-    $reservationQuery = "SELECT COUNT(*) AS total_reservations FROM royale_request_tbl WHERE DATE(datetime_request) BETWEEN ? AND ?";
-    $reservationStmt = $conn->prepare($reservationQuery);
-    $reservationStmt->bind_param("ss", $fromDate, $toDate);
-    $reservationStmt->execute();
-    $reservationResult = $reservationStmt->get_result();
-    $totalReservations = $reservationResult->fetch_assoc()['total_reservations'] ?? 0;
+    // Count total orders
+    $orderCountQuery = "SELECT COUNT(*) AS total_orders FROM royale_product_order_tbl WHERE DATE(datetime_order) BETWEEN ? AND ?";
+    $orderCountStmt = $conn->prepare($orderCountQuery);
+    $orderCountStmt->bind_param("ss", $fromDate, $toDate);
+    $orderCountStmt->execute();
+    $orderCountResult = $orderCountStmt->get_result();
+    $totalOrders = $orderCountResult->fetch_assoc()['total_orders'] ?? 0;
 } else {
-    // Fetch all requests if no date filter is applied
-    $sql = "SELECT * FROM royale_request_tbl";
+    // Fetch all orders if no date filter is applied
+    $sql = "SELECT * FROM royale_product_order_tbl";
     $result = $conn->query($sql);
-    $dateFilteredRequests = $result->fetch_all(MYSQLI_ASSOC);
+    $dateFilteredOrders = $result->fetch_all(MYSQLI_ASSOC);
 
-    // Calculate total income and reservations for all data
-    $incomeQuery = "SELECT SUM(fee) AS total_income FROM royale_request_tbl";
+    // Calculate total income and orders for all data
+    $incomeQuery = "SELECT SUM(payment) AS total_income FROM royale_product_order_tbl";
     $incomeResult = $conn->query($incomeQuery);
     $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
 
-    $reservationQuery = "SELECT COUNT(*) AS total_reservations FROM royale_request_tbl";
-    $reservationResult = $conn->query($reservationQuery);
-    $totalReservations = $reservationResult->fetch_assoc()['total_reservations'] ?? 0;
+    $orderCountQuery = "SELECT COUNT(*) AS total_orders FROM royale_product_order_tbl";
+    $orderCountResult = $conn->query($orderCountQuery);
+    $totalOrders = $orderCountResult->fetch_assoc()['total_orders'] ?? 0;
 }
 
-// Fetch statistics affected by date filters (kept as in your original code)
+// Fetch statistics for product types and order statuses
 $stats = [];
 
-// Most picked request type and counts
-$requestTypeQuery = "SELECT request_type, COUNT(*) as count FROM royale_request_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_request) BETWEEN ? AND ?" : "") . " GROUP BY request_type ORDER BY count DESC";
-$requestTypeStmt = $conn->prepare($requestTypeQuery);
+// Most ordered product type and counts
+$productTypeQuery = "SELECT product_type, COUNT(*) as count FROM royale_product_order_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") . " GROUP BY product_type ORDER BY count DESC";
+$productTypeStmt = $conn->prepare($productTypeQuery);
 if ($fromDate && $toDate) {
-    $requestTypeStmt->bind_param("ss", $fromDate, $toDate);
+    $productTypeStmt->bind_param("ss", $fromDate, $toDate);
 }
-$requestTypeStmt->execute();
-$requestTypeResult = $requestTypeStmt->get_result();
-$stats['request_types'] = $requestTypeResult->fetch_all(MYSQLI_ASSOC);
+$productTypeStmt->execute();
+$productTypeResult = $productTypeStmt->get_result();
+$stats['product_types'] = $productTypeResult->fetch_all(MYSQLI_ASSOC);
 
-// Most picked service name and counts
-$serviceNameQuery = "SELECT service_name, COUNT(*) as count FROM royale_request_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_request) BETWEEN ? AND ?" : "") . " GROUP BY service_name ORDER BY count DESC";
-$serviceNameStmt = $conn->prepare($serviceNameQuery);
+// Order status counts
+$orderStatusQuery = "SELECT order_status, COUNT(*) as count FROM royale_product_order_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") . " GROUP BY order_status";
+$orderStatusStmt = $conn->prepare($orderStatusQuery);
 if ($fromDate && $toDate) {
-    $serviceNameStmt->bind_param("ss", $fromDate, $toDate);
+    $orderStatusStmt->bind_param("ss", $fromDate, $toDate);
 }
-$serviceNameStmt->execute();
-$serviceNameResult = $serviceNameStmt->get_result();
-$stats['service_names'] = $serviceNameResult->fetch_all(MYSQLI_ASSOC);
+$orderStatusStmt->execute();
+$orderStatusResult = $orderStatusStmt->get_result();
+$stats['order_statuses'] = $orderStatusResult->fetch_all(MYSQLI_ASSOC);
 
-// Request status counts
-$requestStatusQuery = "SELECT request_status, COUNT(*) as count FROM royale_request_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_request) BETWEEN ? AND ?" : "") . " GROUP BY request_status";
-$requestStatusStmt = $conn->prepare($requestStatusQuery);
+
+// Most ordered product ID
+$mostOrderedProductQuery = "SELECT product_id, COUNT(*) as count FROM royale_product_order_tbl " .
+    ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") .
+    " GROUP BY product_id ORDER BY count DESC LIMIT 1";
+$mostOrderedProductStmt = $conn->prepare($mostOrderedProductQuery);
 if ($fromDate && $toDate) {
-    $requestStatusStmt->bind_param("ss", $fromDate, $toDate);
+    $mostOrderedProductStmt->bind_param("ss", $fromDate, $toDate);
 }
-$requestStatusStmt->execute();
-$requestStatusResult = $requestStatusStmt->get_result();
-$stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
+$mostOrderedProductStmt->execute();
+$mostOrderedProductResult = $mostOrderedProductStmt->get_result();
+$mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
+
+
 
 ?>
 <!DOCTYPE html>
@@ -97,7 +101,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Reports</title>
+    <title>Order Reports</title>
 
     <!-- important file -->
     <?php include 'important.php'; ?>
@@ -117,8 +121,8 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
         <main>
             <div class="header-container">
                 <div class="header-label-container">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                    <label for="">Request Reports</label>
+                    <i class="fa-solid fa-box"></i>
+                    <label for="">Order Reports</label>
                 </div>
 
                 <?php include 'header_icons_container.php'; ?>
@@ -129,7 +133,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
                     <div id="download-container">
                         <!-- Statistics Section -->
                         <div class="statistics-section">
-                            <h3>Royale Request Statistics</h3>
+                            <h3>Royale Order Statistics</h3>
                             <div class="stats-container">
                                 <!-- Total Income -->
                                 <div class="stat-box">
@@ -137,42 +141,43 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
                                     <p><strong>₱<?php echo number_format($totalIncome, 2); ?></strong></p>
                                 </div>
 
-                                <!-- Total Reservations -->
+                                <!-- Total Orders -->
                                 <div class="stat-box">
-                                    <h4>Total Reservations</h4>
-                                    <p><strong><?php echo $totalReservations; ?></strong></p>
+                                    <h4>Total Orders</h4>
+                                    <p><strong><?php echo $totalOrders; ?></strong></p>
                                 </div>
 
                                 <div class="stat-box">
-                                    <h4>Picked Request Type</h4>
-                                    <?php if (empty($stats['request_types'])): ?>
+                                    <h4>Picked Order Product Type:</h4>
+                                    <?php if (empty($stats['product_types'])): ?>
                                         <p><strong>N/A</strong></p>
                                     <?php else: ?>
-                                        <?php foreach ($stats['request_types'] as $type): ?>
-                                            <p><?php echo $type['request_type']; ?>: <strong><?php echo $type['count']; ?></strong></p>
+                                        <?php foreach ($stats['product_types'] as $type): ?>
+                                            <p><?php echo $type['product_type']; ?>: <strong><?php echo $type['count']; ?></strong></p>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
 
+                                <!-- Most Ordered Product ID -->
                                 <div class="stat-box">
-                                    <h4>Picked Service </h4>
-                                    <?php if (empty($stats['service_names'])): ?>
+                                    <h4>Most Ordered Product</h4>
+                                    <?php if (empty($mostOrderedProduct)): ?>
                                         <p><strong>N/A</strong></p>
                                     <?php else: ?>
-                                        <?php foreach ($stats['service_names'] as $service): ?>
-                                            <p><?php echo $service['service_name']; ?>: <strong><?php echo $service['count']; ?></strong></p>
-                                        <?php endforeach; ?>
+                                        <p>Product ID: <strong><?php echo $mostOrderedProduct['product_id']; ?></strong></p>
+                                        <p>Orders: <strong><?php echo $mostOrderedProduct['count']; ?></strong></p>
                                     <?php endif; ?>
                                 </div>
+
 
                                 <div class="status-stats">
                                     <ul>
-                                        <h4>Request Status Counts:</h4>
-                                        <?php if (empty($stats['request_statuses'])): ?>
+                                        <h4>Order Status Counts:</h4>
+                                        <?php if (empty($stats['order_statuses'])): ?>
                                             <li><strong>N/A</strong></li>
                                         <?php else: ?>
-                                            <?php foreach ($stats['request_statuses'] as $status): ?>
-                                                <li><strong><?php echo ucfirst($status['request_status']); ?>:</strong> <?php echo $status['count']; ?></li>
+                                            <?php foreach ($stats['order_statuses'] as $status): ?>
+                                                <li><strong><?php echo ucfirst($status['order_status']); ?>:</strong> <?php echo $status['count']; ?></li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
                                     </ul>
@@ -199,89 +204,76 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
 
                         <!-- Table Section -->
                         <div class="report-table-container">
-                            <table id="requestTable">
+                            <table id="orderTable">
                                 <thead>
                                     <tr>
-                                        <th>Request ID</th>
+                                        <th>Order ID</th>
                                         <th>User ID</th>
-                                        <th>Name</th>
-                                        <th>Service</th>
+                                        <th>Customer Name</th>
+                                        <th>Product</th>
+                                        <th>Size</th>
                                         <th>Type</th>
+                                        <th>Variation</th>
                                         <th>Status</th>
                                         <th>Contact</th>
-                                        <th>Address</th>
-                                        <th>Fitting</th>
-                                        <th>Photo</th>
-                                        <th>Deadline</th>
-                                        <th>Fee</th>
-                                        <th>Balance</th>
-                                        <th>Tailor</th>
-                                        <th>Cutter</th>
+                                        <th>Pickup Date</th>
+                                        <th>Pickup Time</th>
+                                        <th>Rent Days</th>
                                         <th>Payment</th>
-                                        <th>Request Date</th>
+                                        <th>Payment Date</th>
+                                        <th>Order Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if (empty($dateFilteredRequests)): ?>
+                                    <?php if (empty($dateFilteredOrders)): ?>
                                         <tr>
-                                            <td colspan="16" style="text-align: center;">No requests on the selected date</td>
+                                            <td colspan="15" style="text-align: center;">No orders on the selected date</td>
                                         </tr>
                                     <?php else: ?>
-                                        <?php foreach ($dateFilteredRequests as $request): ?>
+                                        <?php foreach ($dateFilteredOrders as $order): ?>
                                             <tr>
-                                                <td><?php echo $request['request_id']; ?></td>
-                                                <td><?php echo $request['user_id']; ?></td>
-                                                <td><?php echo $request['name']; ?></td>
-                                                <td><?php echo $request['service_name']; ?></td>
-                                                <td><?php echo $request['request_type']; ?></td>
-                                                <td><?php echo $request['request_status']; ?></td>
-                                                <td><?php echo $request['contact_number']; ?></td>
-                                                <td><?php echo $request['address']; ?></td>
-                                                <td>
-                                                    <?php echo $request['fitting_date']; ?>
-                                                    <?php echo $request['fitting_time']; ?>
-                                                </td>
-                                                <td style="display:flex; flex-direction: row;">
-                                                    <?php if (!empty($request['photo'])): ?>
-                                                        <?php
-                                                        $photos = explode(',', $request['photo']); // Split the comma-separated values
-                                                        foreach ($photos as $photo):
-                                                        ?>
-                                                            <img src="../uploads/<?php echo trim($photo); ?>" alt="Photo" style="max-width: 40px; max-height: 40px; margin-right: 5px; border-radius: 5px;">
-                                                        <?php endforeach; ?>
-                                                    <?php else: ?>
-                                                        N/A
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td><?php echo $request['deadline']; ?></td>
-                                                <td><?php echo $request['fee']; ?></td>
-                                                <td><?php echo $request['balance']; ?></td>
-                                                <td><?php echo $request['assigned_tailor']; ?></td>
-                                                <td><?php echo $request['assigned_pattern_cutter']; ?></td>
-                                                <td>
-                                                    DP: <?php echo $request['down_payment']; ?><br>
-                                                    FP: <?php echo $request['final_payment']; ?>
-                                                </td>
-                                                <td><?php echo $request['datetime_request']; ?></td>
+                                                <td><?php echo $order['order_id']; ?></td>
+                                                <td><?php echo $order['user_id']; ?></td>
+                                                <td><?php echo $order['user_name']; ?></td>
+                                                <td><?php echo $order['product_name']; ?></td>
+                                                <td><?php echo $order['product_size']; ?></td>
+                                                <td><?php echo $order['order_type']; ?></td>
+                                                <td><?php echo $order['order_variation']; ?></td>
+                                                <td><?php echo $order['order_status']; ?></td>
+                                                <td><?php echo $order['user_contact_number']; ?></td>
+                                                <td><?php echo $order['pickup_date']; ?></td>
+                                                <td><?php echo $order['pickup_time']; ?></td>
+                                                <td><?php echo $order['product_days_of_rent']; ?></td>
+                                                <td>₱<?php echo number_format($order['payment'], 2); ?></td>
+                                                <td><?php echo $order['payment_date']; ?></td>
+                                                <td><?php echo $order['datetime_order']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </tbody>
-
                             </table>
                         </div>
-                        <!-- download container -->
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- statistics -->
@@ -473,7 +465,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
 
     table {
         width: 100%;
-      
+
         border-collapse: collapse;
         text-align: left;
     }

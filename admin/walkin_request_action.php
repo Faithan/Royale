@@ -14,6 +14,10 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 
+
+
+
+
 // Check if form was submitted
 if (isset($_POST['accept_request'])) {
     $request_id = $_POST['request_id'];
@@ -55,7 +59,8 @@ if (isset($_POST['update_request'])) {
     $assigned_pattern_cutter = !empty($_POST['assigned_pattern_cutter']) ? $_POST['assigned_pattern_cutter'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
     $down_payment = !empty($_POST['down_payment']) ? $_POST['down_payment'] : null;
-    $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : null;
+    // Set down_payment_date to today's date if not provided
+    $down_payment_date = !empty($_POST['down_payment_date']) ? $_POST['down_payment_date'] : date('Y-m-d');
     $assigned_tailor = !empty($_POST['assigned_tailor']) ? $_POST['assigned_tailor'] : null;
     $balance = !empty($_POST['balance']) && is_numeric($_POST['balance']) ? $_POST['balance'] : null;
 
@@ -132,11 +137,16 @@ if (isset($_POST['update_request'])) {
 
 
 
+
+
+
+
 if (isset($_POST['complete_request'])) {
     $request_id = $_POST['request_id'];
   
     $final_payment = !empty($_POST['final_payment']) ? $_POST['final_payment'] : null;
-    $final_payment_date = !empty($_POST['final_payment_date']) ? $_POST['final_payment_date'] : null;
+    // Set final_payment_date to today's date if not provided
+    $final_payment_date = !empty($_POST['final_payment_date']) ? $_POST['final_payment_date'] : date('Y-m-d');
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
     $refund = !empty($_POST['refund']) ? $_POST['refund'] : null;
 

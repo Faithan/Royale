@@ -236,8 +236,7 @@
 .customer-input-container input {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -247,8 +246,7 @@
 .customer-input-container select {
     color: var(--text-color);
     background-color: var(--second-bgcolor);
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     border-radius: 5px;
     padding: 5px;
     font-size: 2rem;
@@ -293,8 +291,7 @@
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    border: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 
@@ -306,8 +303,8 @@
     padding: 8px 10px;
     border-radius: 5px;
     font-weight: bold;
-    border: 0;
-    border-bottom: 1px solid var(--box-shadow);
+    
+    border: 1px solid var(--box-shadow);
     font-size: 1.4rem;
 }
 

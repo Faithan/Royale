@@ -152,7 +152,7 @@ GROUP BY down_payment_date";
                         <div class="report-container">
                             <!-- Request Report Cards -->
                             <div class="report-container2">
-                                <h1><i class="fa-solid fa-bell-concierge"></i> REQUESTS SHORT SUMMARY</h1>
+                                <h1><i class="fa-solid fa-bell-concierge"></i> SHORT REQUESTS SUMMARY</h1>
 
                                 <?php
                                 // Query to calculate the daily income from requests (based on down_payment_date and final_payment_date)
@@ -195,15 +195,15 @@ GROUP BY down_payment_date";
                                 <!-- Income Section for Requests -->
                                 <div class="income-container">
                                     <div class="income-box">
-                                        <h2>Daily Income</h2>
+                                        <h2>Today's Income</h2>
                                         <p>₱<?php echo number_format($dailyIncome, 2); ?></p>
                                     </div>
                                     <div class="income-box">
-                                        <h2>Monthly Income</h2>
+                                        <h2>This Month's Income</h2>
                                         <p>₱<?php echo number_format($monthlyIncome, 2); ?></p>
                                     </div>
                                     <div class="income-box">
-                                        <h2>Annual Income</h2>
+                                        <h2>This Year's Income</h2>
                                         <p>₱<?php echo number_format($annualIncome, 2); ?></p>
                                     </div>
                                     <!-- New Total Income Box -->
@@ -213,7 +213,7 @@ GROUP BY down_payment_date";
                                     </div>
 
                                     <div class="income-box">
-                                        <h2>Daily Request</h2>
+                                        <h2>Today's Request</h2>
                                         <p>
                                             <?php
                                             // Count the number of requests made today
@@ -229,7 +229,7 @@ GROUP BY down_payment_date";
 
 
                                     <div class="income-box">
-                                        <h2>Monthly Request</h2>
+                                        <h2>This Month's Request</h2>
                                         <p>
                                             <?php
                                             // Count the number of requests made this month
@@ -245,7 +245,7 @@ GROUP BY down_payment_date";
 
 
                                     <div class="income-box">
-                                        <h2>Annual Request</h2>
+                                        <h2>This Year's Request</h2>
                                         <p>
                                             <?php
                                             // Count the number of requests made this year
@@ -300,12 +300,12 @@ GROUP BY down_payment_date";
 
                             <!-- Order Report Cards -->
                             <div class="report-container2">
-                                <h1><i class="fa-solid fa-cart-shopping"></i> ORDERS SHORT SUMMARY</h1>
+                                <h1><i class="fa-solid fa-cart-shopping"></i> SHORT ORDERS SUMMARY</h1>
                                 <!-- Income Section for Requests -->
                                 <!-- Income Section for Orders -->
                                 <div class="income-container">
                                     <div class="income-box">
-                                        <h2>Daily Income</h2>
+                                        <h2>Today's Income</h2>
                                         <p>₱
                                             <?php
                                             // Daily Income for Orders
@@ -317,7 +317,7 @@ GROUP BY down_payment_date";
                                         </p>
                                     </div>
                                     <div class="income-box">
-                                        <h2>Monthly Income</h2>
+                                        <h2>This Month's Income</h2>
                                         <p>₱
                                             <?php
                                             // Monthly Income for Orders
@@ -329,7 +329,7 @@ GROUP BY down_payment_date";
                                         </p>
                                     </div>
                                     <div class="income-box">
-                                        <h2>Annually Income</h2>
+                                        <h2>This Year's Income</h2>
                                         <p>₱
                                             <?php
                                             // Annual Income for Orders
@@ -357,7 +357,7 @@ GROUP BY down_payment_date";
 
 
                                     <div class="income-box">
-                                        <h2>Daily Orders</h2>
+                                        <h2>Today's Orders</h2>
                                         <p>
                                             <?php
                                             // Count the number of orders placed today
@@ -372,7 +372,7 @@ GROUP BY down_payment_date";
                                     </div>
 
                                     <div class="income-box">
-                                        <h2>Monthly Orders</h2>
+                                        <h2>This Month's Orders</h2>
                                         <p>
                                             <?php
                                             // Count the number of orders placed this month
@@ -388,7 +388,7 @@ GROUP BY down_payment_date";
 
 
                                     <div class="income-box">
-                                        <h2>Annual Order</h2>
+                                        <h2>This Year's Order</h2>
                                         <p>
                                             <?php
                                             // Count the number of orders placed this year

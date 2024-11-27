@@ -115,6 +115,14 @@ if ($result->num_rows > 0) {
 
                             <div class="request-details-container2 hidden">
 
+
+                                <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending') ? '' : 'none'; ?>">
+                                    <button type="submit" name="cancel_request" id="cancel_button"
+                                        class="cancel_button">Reject</button>
+                                    <button type="submit" name="accept_request" id="accept_button"
+                                        class="accept_button">Accept</button>
+                                </div>
+
                                 <div class="request-details">
                                     <label>User ID:</label>
                                     <input type="text" name="user_id" id="" value="<?php echo $row['user_id']; ?>"
@@ -232,12 +240,7 @@ if ($result->num_rows > 0) {
                             </div>
 
 
-                            <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending') ? '' : 'none'; ?>">
-                                <button type="submit" name="cancel_request" id="cancel_button"
-                                    class="cancel_button">Reject</button>
-                                <button type="submit" name="accept_request" id="accept_button"
-                                    class="accept_button">Accept</button>
-                            </div>
+
 
 
                     </form>
@@ -427,8 +430,10 @@ if ($result->num_rows > 0) {
                             <div class="request-details">
                                 <label>Down Payment Date:</label>
                                 <input type="date" name="down_payment_date" id=""
-                                    value="<?php echo $row['down_payment_date']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    value="<?php echo !empty($row['down_payment_date']) ? htmlspecialchars($row['down_payment_date']) : ''; ?>"
+                                    readonly>
                             </div>
+
 
 
                             <?php
@@ -624,7 +629,8 @@ if ($result->num_rows > 0) {
                             <div class="request-details">
                                 <label>Final Payment Date:</label>
                                 <input type="date" name="final_payment_date" id=""
-                                    value="<?php echo $row['final_payment_date']; ?>" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    value="<?php echo !empty($row['final_payment_date']) ? htmlspecialchars($row['final_payment_date']) : ''; ?>"
+                                    readonly>
                             </div>
 
                             <div class="request-details">
@@ -645,7 +651,7 @@ if ($result->num_rows > 0) {
                             </div>
 
                         </div>
-                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <button type="submit" name="complete_request" id="complete_button"
                                 class="accept_button">Complete</button>
                         </div>

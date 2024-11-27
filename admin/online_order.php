@@ -57,7 +57,7 @@ if (!$result) {
                         <!-- Search and Filter Form -->
                         <input type="search" name="search_query" placeholder="Search...">
                         <select name="order_status" id="order_status">
-                            <option value="all" selected disabled>Select Status</option>
+                            <option value="all" selected disabled>Sort by: Status</option>
                             <option value="all">All</option>
                             <?php
                             while ($row = $result->fetch_assoc()) {
@@ -66,7 +66,7 @@ if (!$result) {
                             ?>
                         </select>
                         <select name="user_gender" id="user_gender">
-                            <option value="all" selected>Select Gender</option>
+                            <option value="all" selected>Sort by: Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>

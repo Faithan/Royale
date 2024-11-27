@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_name = $_POST['product_name'] ?? '';
     $product_type = $_POST['product_type'] ?? '';
     $product_gender = $_POST['product_gender'] ?? '';
-    $product_color = $_POST['product_color'] ?? '';
     $product_size = $_POST['product_size'] ?? '';
     $product_quantity = $_POST['quantity'] ?? '';
     $product_price = $_POST['price'] ?? '';
@@ -40,12 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Prepare the SQL statement
     $insert_query = "INSERT INTO royale_product_order_tbl 
-        (user_id, order_type, order_variation, order_status, user_name, user_contact_number, user_gender, user_email, user_address, pickup_date, pickup_time, product_days_of_rent, product_id, product_name, product_type, product_gender, product_color, product_size, product_quantity, product_price, product_rent_price, product_photo, datetime_order) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        (user_id, order_type, order_variation, order_status, user_name, user_contact_number, user_gender, user_email, user_address, pickup_date, pickup_time, product_days_of_rent, product_id, product_name, product_type, product_gender, product_size, product_quantity, product_price, product_rent_price, product_photo, datetime_order) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($insert_query)) {
         $stmt->bind_param(
-            'issssssssssssssssssssss',
+            'isssssssssssssssssssss',
             $user_id,
             $order_type,
             $order_variation,
@@ -62,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product_name,
             $product_type,
             $product_gender,
-            $product_color,
             $product_size,
             $product_quantity,
             $product_price,
