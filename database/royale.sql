@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 02:52 AM
+-- Generation Time: Nov 28, 2024 at 05:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,17 +55,15 @@ INSERT INTO `add_custom_photo_tbl` (`id`, `custom_name`, `custom_img`) VALUES
 CREATE TABLE `admin_tbl` (
   `admin_id` int(11) NOT NULL,
   `admin_username` varchar(255) NOT NULL,
-  `admin_password` varchar(255) NOT NULL,
-  `admin_status` varchar(255) NOT NULL,
-  `admin_type` varchar(255) NOT NULL
+  `admin_password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_tbl`
 --
 
-INSERT INTO `admin_tbl` (`admin_id`, `admin_username`, `admin_password`, `admin_status`, `admin_type`) VALUES
-(1, 'admin', 'admin', 'active', 'super admin');
+INSERT INTO `admin_tbl` (`admin_id`, `admin_username`, `admin_password`) VALUES
+(1, 'admin_khemark', '09263360660');
 
 -- --------------------------------------------------------
 
@@ -320,7 +318,9 @@ CREATE TABLE `royale_product_order_tbl` (
 
 INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order`) VALUES
 (47, 15, 'online', 'buy', 'completed', 'Khemark', '091231151242', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:33:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 800, '2024-11-27', '2024-11-27 18:33:39'),
-(48, 15, 'walkin', 'rent', 'completed', 'Khemark', '0923423523', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:05:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', '', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-27', '2024-11-27 19:06:00');
+(48, 15, 'walkin', 'rent', 'completed', 'Khemark', '0923423523', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:05:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', '', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-27', '2024-11-27 19:06:00'),
+(49, 15, 'online', 'buy', 'completed', 'Khemark2', '092131214', 'Unknown', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-28', '22:13:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', 'extra_small', 2, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 2400, '2024-11-28', '2024-11-28 14:13:54'),
+(50, 15, 'walkin', 'rent', 'completed', 'Khemark', '0912341241', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '22:34:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'medium', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-28', '2024-11-28 15:34:32');
 
 -- --------------------------------------------------------
 
@@ -368,7 +368,9 @@ CREATE TABLE `royale_request_tbl` (
 --
 
 INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_pattern_cutter`, `assigned_tailor`, `balance`, `down_payment`, `down_payment_date`, `pattern_status`, `pattern_completed_datetime`, `work_status`, `work_completed_datetime`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
-(62, 'completed', 'online', 15, 'Making', 'Khemark', 9342325235, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '10:26:00', 'gsdfa - Copy.jpg', '', 2000, 'neck: 25\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 26\r\nshoulder: 15\r\narm length: 18\r\nbust height: 10', '2024-12-07', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-27', 'completed', '2024-11-28 01:29:30', 'completed', '2024-11-28 01:30:31', 1500, '2024-11-27', 0, '', '2024-11-28 01:26:56');
+(62, 'completed', 'online', 15, 'Making', 'Khemark', 9342325235, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '10:26:00', 'gsdfa - Copy.jpg', '', 2000, 'neck: 25\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 26\r\nshoulder: 15\r\narm length: 18\r\nbust height: 10', '2024-12-07', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-27', 'completed', '2024-11-28 01:29:30', 'completed', '2024-11-28 01:30:31', 1500, '2024-11-27', 0, '', '2024-11-28 01:26:56'),
+(63, 'accepted', 'walk-in', 0, 'Making', 'Khemark', 9345354353, 'Male', '', 'marandi,lala, ldn', '2024-11-29', '22:11:00', 'afas.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-28 22:11:40'),
+(64, 'pending', 'walk-in', 0, 'Making', 'khemark', 923424234, 'male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '22:30:00', 'r1.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-28 22:30:32');
 
 -- --------------------------------------------------------
 
@@ -419,7 +421,7 @@ INSERT INTO `services` (`service_id`, `service_status`, `service_name`, `service
 (8, 'deleted', 'repair', 'Repair in the context of dressmaking refers to the process of fixing or restoring garments that have been damaged or worn out. Dressmakers who offer repair services can mend tears, replace missing buttons or zippers, fix loose seams, and address other issues to extend the lifespan of a garment. They may also provide alterations to modify the fit or style of a garment to better suit the wearer\'s needs. Dress repair services are a great option for those who want to breathe new life into their favorite pieces or preserve sentimental clothing items.', 'services/3372785.png'),
 (9, 'deleted', 'rent', 'asdad', 'services/12415.png'),
 (12, 'deleted', 'repair', 'Formal attire is a Western dress code category that is designated for the most formal occasions. It denotes a high standard of dressing that is considered appropriate for settings such as weddings, state dinners, balls, and certain social events. ', 'services/3372785.png'),
-(16, 'active', 'Making', 'Dressmaking is the art and craft of creating garments, specifically dresses, from scratch or by altering existing patterns. It involves various techniques such as measuring, cutting, sewing, and fitting to create a garment that fits the wearer perfectly. Dressmakers work with different types of fabrics, trims, and embellishments to bring their designs to life. They can create a wide range of dresses, including formal gowns, wedding dresses, casual wear, and uniforms. Dressmaking allows individuals to have unique and custom-made garments that reflect their personal style and preferences. It combines creativity, skill, and attention to detail to produce beautifully tailored outfits.\r\n', 'sewing-machine (1).png'),
+(16, 'active', 'Making', 'Dressmaking is the art and craft of creating garments, specifically dresses, from scratch or by altering existing patterns. It involves various techniques such as measuring, cutting, sewing, and fitting to create a garment that fits the wearer perfectly. Dressmakers work with different types of fabrics, trims, and embellishments to bring their designs to life. They can create a wide range of dresses, including formal gowns, wedding dresses, casual wear, and uniforms. Dressmaking allows individuals to have unique and custom-made garments that reflect their personal style and preferences. It combines creativity, skill, and attention to detail to produce beautifully tailored outfits. ', 'sewing-machine (1).png'),
 (17, 'active', 'Dress and Cloth Repair', 'Extend the life of your favorite garments with our professional dress and cloth repairing services! We specialize in a wide range of repairs, from simple hems and seams to intricate alterations and restorations. Whether you need to fix a tear, adjust the fit, or refresh an old favorite, our skilled tailors provide meticulous attention to detail to ensure your clothing looks and feels its best. We work with all types of fabrics and styles, guaranteeing quality repairs that are both affordable and timely. Trust us to breathe new life into your wardrobe!', 'clothing (1).png'),
 (18, 'active', 'T-Shirt Resizing', 'Transform your favorite T-shirts into the perfect fit with our professional resizing service! Whether you\'ve experienced changes in size or simply want to customize your look, our skilled team can alter your T-shirts to ensure comfort and style. We offer adjustments for length, width, and sleeve size, allowing you to wear your favorite designs with confidence.', 'clothes.png'),
 (19, 'deleted', 'random making', 'Bring your ideas to life with our high-quality t-shirt printing services! Whether you\'re looking to design custom shirts for events, businesses, or personal use, we offer a variety of printing options to suit your needs. Our services include screen printing, digital printing, and heat transfer, all ensuring vibrant, durable designs that last. From small batch orders to bulk printing, we handle it all with precision and care. Choose from a range of t-shirt styles, colors, and sizes, and let us help you create the perfect wearable statement.', 't-shirt.png'),
@@ -594,13 +596,13 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `royale_product_order_tbl`
 --
 ALTER TABLE `royale_product_order_tbl`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `royale_request_tbl`
 --
 ALTER TABLE `royale_request_tbl`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `royale_user_tbl`

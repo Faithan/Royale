@@ -79,7 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="password">Password</label>
                 </div>
 
+              
                 <button type="submit" class="login-btn hidden">Log in</button>
+                <em style="font-size:1.3rem; color:gray; ">*not suitable for mobile view, Laptop or PC is recommend*</em>
 
              
             </form>
