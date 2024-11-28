@@ -69,7 +69,7 @@
 
         <main>
 
-        <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> Order Viewer</h1>
+            <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> Order Viewer</h1>
 
 
             <div class="image-container hidden">
@@ -267,8 +267,8 @@
                         width: 80%;
                         margin: 20px auto;
                         padding: 20px;
-                        background-color:  #F4F4F4;
-                        border: 2px dashed  #A4ADB4;
+                        background-color: #F4F4F4;
+                        border: 2px dashed #A4ADB4;
                         border-radius: 10px;
                         font-family: 'Anton', Arial, sans-serif;
                     }
@@ -276,7 +276,7 @@
                     /* Header Styles */
                     .invoice-container h1 {
                         text-align: center;
-                        color:white;
+                        color: white;
                         background-color: #001C31;
                         font-size: 2rem;
                         margin-bottom: 20px;
@@ -314,7 +314,7 @@
                     .invoice-container .product-info th,
                     .invoice-container .product-info td {
                         padding: 10px;
-                        border: 1px solid  #A4ADB4;
+                        border: 1px solid #A4ADB4;
                         text-align: left;
                     }
 
@@ -325,7 +325,7 @@
                     }
 
                     .invoice-container .product-info td {
-                        background-color:  #F4F4F4;
+                        background-color: #F4F4F4;
                     }
 
                     .invoice-container .product-info tr:nth-child(even) td {
@@ -361,19 +361,26 @@
                         background-color: #45a049;
                     }
 
-                    /* Print Styles */
-                    @media print {
-                        .invoice-container {
+                    /* Extra small devices (portrait phones, less than 576px) */
+                    @media only screen and (max-width: 575.98px) {
+
+                        /* Your styles here */
+                        /* Product Table Styling */
+                        .invoice-container .product-info table {
                             width: 100%;
-                            margin: 0;
-                            border: none;
-                            padding: 0;
-                            font-size: 12px;
+                            border-collapse: collapse;
+                            margin-top: 10px;
+                            font-size: 1rem;
                         }
 
-                        .invoice-footer {
-                            display: none;
+                        .invoice-container .product-info th,
+                        .invoice-container .product-info td {
+                            padding: 5px;
+                            border: 1px solid #A4ADB4;
+                            text-align: left;
                         }
+
+
                     }
                 </style>
             </div>
@@ -381,7 +388,7 @@
             <div class="anchor-container">
                 <a href="my_order.php">Return</a>
                 <button id="cancel-order"
-                    class="<?php echo (in_array($row['order_status'], ['accepted','cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
+                    class="<?php echo (in_array($row['order_status'], ['accepted', 'cancelled', 'ongoing', 'completed'])) ? 'temp-hidden' : ''; ?>">
                     <i class="fa-solid fa-triangle-exclamation"></i> Cancel Order?
                 </button>
             </div>

@@ -612,12 +612,12 @@ main .return-button:hover {
 
 
     .customer-input-container input {
-        font-size: 1.5rem;
+        font-size: 2rem;
         width: 100%;
     }
 
     .customer-input-container select {
-        font-size: 1.5rem;
+        font-size: 2rem;
         width: 100%;
     }
 

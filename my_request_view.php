@@ -362,11 +362,11 @@ if (isset($_GET['request_id'])) {
                     font-size: 1.4rem;
                     color: #555555;
                     line-height: 1.6;
+                    
                 }
 
                 .section p strong {
-                    width: 200px;
-                    display: inline-block;
+                 
                     color: #001C31;
                     text-transform: uppercase;
 
@@ -394,6 +394,25 @@ if (isset($_GET['request_id'])) {
                 @media only screen and (max-width: 575.98px) {
                     .invoice-container {
                         width: 80%;
+                    }
+
+
+
+                    .invoice-header h2 {
+                        font-size: 1.8rem;
+                        color: white;
+                        background-color: #001C31;
+                        margin-bottom: 10px;
+                        padding: 5px;
+
+                    }
+
+                    .section p {
+                        font-size: 1.4rem;
+                        color: #555555;
+                        line-height: 1.6;
+                     
+                      
                     }
                 }
             </style>
