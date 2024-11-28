@@ -258,14 +258,14 @@ if ($result->num_rows > 0) {
 
                                 <div class="order-details" style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
                                     <label>Balance (₱):</label>
-                                    <input type="number" id="balance"  value="<?php
+                                    <input type="number" id="balance" readonly  value="<?php
                                                                                             if (isset($row['product_quantity'], $row['product_rent_price'])) {
                                                                                                 if ($row['order_variation'] === 'rent') {
                                                                                                     // Calculate balance for rent
                                                                                                     $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']);
                                                                                                 } elseif ($row['order_variation'] === 'buy') {
                                                                                                     // Calculate balance for buy
-                                                                                                    $balance = ($row['product_quantity'] * $row['product_rent_price']);
+                                                                                                    $balance = ($row['product_quantity'] * $row['product_price']);
                                                                                                 } else {
                                                                                                     $balance = 0; // Default if order variation doesn't match
                                                                                                 }

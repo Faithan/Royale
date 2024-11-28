@@ -198,7 +198,7 @@ if (isset($_GET['request_id'])) {
                 <div class="invoice-body">
 
 
-                    <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right;">
+                    <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right; color: #001C31;">
                         <h2 style=" font-weight: bold; font-size: 2rem;"><i class="fa-brands fa-web-awesome"></i> ROYALE</h2>
                         <label for="address"> Tenazas, Lala, Lanao Del
                             Norte. <i class="fa-solid fa-location-dot"></i></label>
@@ -256,7 +256,7 @@ if (isset($_GET['request_id'])) {
                 </div>
 
                 <div class="invoice-footer">
-                    <p><i class="fa-solid fa-award"></i> Thank you for choosing our service! <i class="fa-solid fa-award"></i></p>
+                    <p style="color: #001C31;"><i class="fa-solid fa-award"></i> Thank you for choosing our service! <i class="fa-solid fa-award"></i></p>
                 </div>
 
 
@@ -278,14 +278,14 @@ if (isset($_GET['request_id'])) {
 
                     // Set options for html2pdf
                     const options = {
-                        margin: [0.5, 0.5, 0.5, 0.5], // Smaller margins for more content space
+                        margin: [0.5, 2, 0.5, 2], // Smaller margins for more content space
                         filename: 'Invoice_<?php echo htmlspecialchars($row['request_id']); ?>.pdf',
                         image: {
                             type: 'jpeg',
-                            quality: 1 // High-quality images
+                            quality: 10 // High-quality images
                         },
                         html2canvas: {
-                            scale: 2, // Higher scaling for better rendering
+                            scale: 10, // Higher scaling for better rendering
                             scrollX: 0,
                             scrollY: 0
                         },
@@ -309,9 +309,9 @@ if (isset($_GET['request_id'])) {
                     max-width: 900px;
                     margin: 30px auto;
                     padding: 20px;
-                    background-color: var(--second-bgcolor);
+                    background-color: #F4F4F4;
 
-                    border: 2px dashed var(--box-shadow);
+                    border: 2px dashed #A4ADB4;
                     font-family: 'Anton', Arial, sans-serif;
                 }
 
@@ -322,11 +322,11 @@ if (isset($_GET['request_id'])) {
 
                 .invoice-header h2 {
                     font-size: 2.5rem;
-                    color: var(--first-bgcolor);
-                    background-color: var(--text-color);
+                    color: white;
+                    background-color: #001C31;
                     margin-bottom: 10px;
                     padding: 5px;
-                    
+
                 }
 
                 .invoice-header p {
@@ -350,7 +350,7 @@ if (isset($_GET['request_id'])) {
                 }
 
                 .section h3 {
-                    color: var(--text-color);
+                    color: #001C31;
 
                     margin-bottom: 5px;
                     border-radius: 5px;
@@ -360,14 +360,14 @@ if (isset($_GET['request_id'])) {
 
                 .section p {
                     font-size: 1.4rem;
-
+                    color: #555555;
                     line-height: 1.6;
                 }
 
                 .section p strong {
                     width: 200px;
                     display: inline-block;
-                    color: var(--text-color);
+                    color: #001C31;
                     text-transform: uppercase;
 
                 }

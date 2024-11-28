@@ -43,38 +43,59 @@ $result_orders = $conn->query($query_orders);
 if ($result_orders->num_rows > 0) {
     while ($row_order = $result_orders->fetch_assoc()) {
         // Start the table row and make it clickable using a hyperlink
-        echo "<tr onclick=\"window.location='walkin_view_order.php?order_id=" . $row_order['order_id'] . "'\">";
-        echo "<td>" . $row_order['order_id'] . "</td>";
-          // For pattern_status
-          $order_status_color = match (strtolower($row_order['order_status'])) {
+        echo "<tr onclick=\"window.location='walkin_view_order.php?order_id=" . htmlspecialchars($row_order['order_id']) . "'\">";
+
+        // Order ID
+        echo "<td>" . htmlspecialchars($row_order['order_id']) . "</td>";
+
+        // Order Status with Color Coding
+        $order_status_color = match (strtolower($row_order['order_status'])) {
             'pending' => 'gray',
             'cancelled' => 'red',
             'accepted', 'ongoing' => 'blue',
             'completed' => 'green',
             default => 'black'
         };
-
         echo "<td style='color: $order_status_color; font-weight: bold;'>" . ucfirst($row_order['order_status']) . "</td>";
 
-        echo "<td>" . $row_order['order_variation'] . "</td>";
-        echo "<td>" . $row_order['user_name'] . "</td>";
-        echo "<td>" . $row_order['product_name'] . "</td>";
-        echo "<td>" . $row_order['product_quantity'] . "</td>";
-        echo "<td>" . $row_order['product_price'] . "</td>";
-        echo "<td>" . $row_order['product_rent_price'] . "</td>";
-        echo "<td>" . $row_order['pickup_date'] . "</td>";
-        echo "<td>" . $row_order['pickup_time'] . "</td>";
+        // Order Variation
+        echo "<td>" . htmlspecialchars($row_order['order_variation']) . "</td>";
+
+        // User Name
+        echo "<td>" . htmlspecialchars($row_order['user_name']) . "</td>";
+
+        // Product Name
+        echo "<td>" . htmlspecialchars($row_order['product_name']) . "</td>";
+
+        // Product Quantity
+        echo "<td>" . htmlspecialchars($row_order['product_quantity']) . "</td>";
+
+        // Product Price or N/A based on Order Variation
+        $product_price_display = strtolower($row_order['order_variation']) === 'buy' ? $row_order['product_price'] : 'N/A';
+        echo "<td>" . htmlspecialchars($product_price_display) . "</td>";
+
+        // Product Rent Price or N/A based on Order Variation
+        $product_rent_price_display = strtolower($row_order['order_variation']) === 'rent' ? $row_order['product_rent_price'] : 'N/A';
+        echo "<td>" . htmlspecialchars($product_rent_price_display) . "</td>";
+
+        // Pickup Date
+        echo "<td>" . htmlspecialchars($row_order['pickup_date']) . "</td>";
+
+        // Pickup Time
+        echo "<td>" . htmlspecialchars($row_order['pickup_time']) . "</td>";
 
         // Display multiple photos if they are comma-separated
         $photos = explode(',', $row_order['product_photo']);
         echo "<td>";
         foreach ($photos as $photo) {
-            echo "<img src='products/$photo' alt='Product Photo' >";
+            echo "<img src='products/" . htmlspecialchars($photo) . "' alt='Product Photo'>";
         }
         echo "</td>";
+
         echo "</tr>";
     }
 } else {
     echo "<tr><td colspan='11'>No records found.</td></tr>";
 }
+
 ?>

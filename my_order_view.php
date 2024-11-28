@@ -151,9 +151,9 @@
 
                     <div style="display: flex; flex-direction: column;margin-bottom: 10px;font-size: 1.4rem;gap: 5px; text-align:right;">
                         <h2 style=" font-weight: bold; font-size: 2rem;"><i class="fa-brands fa-web-awesome"></i> ROYALE</h2>
-                        <label for="address"> Tenazas, Lala, Lanao Del
+                        <label for="address" style="color: #001C31 ;"> Tenazas, Lala, Lanao Del
                             Norte. <i class="fa-solid fa-location-dot"></i></label>
-                        <label for="contact-number">+63 926-201-3081 <i class="fa-solid fa-phone"></i> </label>
+                        <label for="contact-number" style="color: #001C31 ;"> +63 926-201-3081 <i class="fa-solid fa-phone"></i> </label>
                     </div>
 
 
@@ -166,14 +166,14 @@
                         <p><strong>Address:</strong> <?php echo htmlspecialchars($row['user_address']); ?></p>
                     </div>
 
-                    <div class="order-info">
-                        <h2>Order Details</h2>
-                        <p><strong>Order ID:</strong> <?php echo htmlspecialchars($row['order_id']); ?></p>
-                        <p><strong>Order Type:</strong> <?php echo htmlspecialchars($row['order_type']); ?></p>
-                        <p><strong>Order Variation:</strong> <?php echo htmlspecialchars($row['order_variation']); ?></p>
-                        <p><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
-                        <p><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
-                        <p><strong>Date Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
+                    <div class="order-info" style="background-color:white;">
+                        <h2 style="color:#001C31;">Order Details</h2>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Order ID:</strong> <?php echo htmlspecialchars($row['order_id']); ?></p>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Order Type:</strong> <?php echo htmlspecialchars($row['order_type']); ?></p>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Order Variation:</strong> <?php echo htmlspecialchars($row['order_variation']); ?></p>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
+                        <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Date Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
                     </div>
 
                     <!-- Products in the Order -->
@@ -191,16 +191,16 @@
                                 <th>Total</th>
                             </tr>
                             <tr>
-                                <td><?php echo htmlspecialchars($row['product_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['order_variation']); ?></td>
-                                <td><?php echo htmlspecialchars($row['product_quantity']); ?></td>
+                                <td style="color: #001C31;"><?php echo htmlspecialchars($row['product_name']); ?></td>
+                                <td style="color: #001C31;"><?php echo htmlspecialchars($row['order_variation']); ?></td>
+                                <td style="color: #001C31;"><?php echo htmlspecialchars($row['product_quantity']); ?></td>
                                 <?php if ($row['order_variation'] === 'rent') : ?>
-                                    <td><?php echo htmlspecialchars($row['product_days_of_rent']); ?> days</td>
-                                    <td>₱<?php echo htmlspecialchars($row['product_rent_price']); ?></td>
-                                    <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_rent_price'] * $row['product_days_of_rent']); ?></td>
+                                    <td style="color: #001C31;"><?php echo htmlspecialchars($row['product_days_of_rent']); ?> days</td>
+                                    <td style="color: #001C31;">₱<?php echo htmlspecialchars($row['product_rent_price']); ?></td>
+                                    <td style="color: #001C31;">₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_rent_price'] * $row['product_days_of_rent']); ?></td>
                                 <?php else : ?>
-                                    <td>₱<?php echo htmlspecialchars($row['product_price']); ?></td>
-                                    <td>₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_price']); ?></td>
+                                    <td style="color: #001C31;">₱<?php echo htmlspecialchars($row['product_price']); ?></td>
+                                    <td style="color: #001C31;">₱<?php echo htmlspecialchars($row['product_quantity'] * $row['product_price']); ?></td>
                                 <?php endif; ?>
                             </tr>
                         </table>
@@ -267,8 +267,8 @@
                         width: 80%;
                         margin: 20px auto;
                         padding: 20px;
-                        background-color: var(--second-bgcolor);
-                        border: 2px dashed var(--box-shadow);
+                        background-color:  #F4F4F4;
+                        border: 2px dashed  #A4ADB4;
                         border-radius: 10px;
                         font-family: 'Anton', Arial, sans-serif;
                     }
@@ -276,8 +276,8 @@
                     /* Header Styles */
                     .invoice-container h1 {
                         text-align: center;
-                        color: var(--first-bgcolor);
-                        background-color: var(--text-color);
+                        color:white;
+                        background-color: #001C31;
                         font-size: 2rem;
                         margin-bottom: 20px;
                     }
@@ -291,7 +291,7 @@
                     }
 
                     .invoice-container h2 {
-                        color: var(--text-color);
+                        color: #001C31;
                         font-size: 1.7rem;
                         margin-bottom: 10px;
 
@@ -299,7 +299,7 @@
 
                     .invoice-container p {
                         font-size: 1.4rem;
-                        color: var(--text-color2);
+                        color: #555555;
                         line-height: 1.5;
                     }
 
@@ -314,22 +314,22 @@
                     .invoice-container .product-info th,
                     .invoice-container .product-info td {
                         padding: 10px;
-                        border: 1px solid var(--box-shadow);
+                        border: 1px solid  #A4ADB4;
                         text-align: left;
                     }
 
                     .invoice-container .product-info th {
-                        background-color: var(--text-color);
+                        background-color: #001C31;
                         font-weight: bold;
-                        color: var(--first-bgcolor);
+                        color: white;
                     }
 
                     .invoice-container .product-info td {
-                        background-color: var(--second-bgcolor);
+                        background-color:  #F4F4F4;
                     }
 
                     .invoice-container .product-info tr:nth-child(even) td {
-                        background-color: var(--first-bgcolor);
+                        background-color: white;
                     }
 
                     .invoice-container .product-info td strong {

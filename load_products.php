@@ -78,7 +78,7 @@ if ($result->num_rows > 0) {
 
             <!-- New Quantity Info Section -->
             <div class="info-label"><label for="">Stocks:</label>
-                <p style="color: <?php echo $row['total_quantity'] == 0 ? 'red' : 'black'; ?>;">
+                <p style="color: <?php echo $row['total_quantity'] == 0 ? 'red' : 'var(--text-color)'; ?>;">
                     <?php echo $row['total_quantity'] == 0 ? 'Out of Stock' : $row['total_quantity']; ?>
                 </p>
 

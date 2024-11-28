@@ -23,25 +23,70 @@
             </li>
 
             <hr>
+
+            <?php
+            // Query to count pending requests
+            $pendingRequestsQuery = "SELECT COUNT(*) as count FROM royale_request_tbl WHERE request_status = 'pending'";
+            $pendingRequestsResult = mysqli_query($conn, $pendingRequestsQuery);
+            $pendingCount = mysqli_fetch_assoc($pendingRequestsResult)['count'];
+            ?>
+
+            <!-- Sidebar Menu -->
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-bell-concierge"></i> Request <i
-                        class="fa-solid fa-chevron-down"></i></a>
+                <a href="#" class="menu-toggle">
+                    <i class="fa-solid fa-bell-concierge"></i> Request
+                    <!-- Only show the red dot on the main 'Request' if there are pending requests -->
+                    <span class="notification-dot" style="display: <?= $pendingCount > 0 ? 'inline' : 'none'; ?>;"></span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
                 <ul class="submenu">
-                    <li><a href="online_request.php"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
-                    <li><a href="walkin_request.php"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
+                    <li>
+                        <a href="online_request.php">
+                            <i class="fa-solid fa-earth-asia"></i> Online
+                            <!-- No red dot for Online request -->
+                        </a>
+                    </li>
+                    <li>
+                        <a href="walkin_request.php">
+                            <i class="fa-solid fa-person-walking"></i> Walkin
+                            <!-- No red dot for Walkin request -->
+                        </a>
+                    </li>
                 </ul>
             </li>
+
+
+
+
+
+
+            <?php
+          
+
+            // Query to count pending orders
+            $pendingOrdersQuery = "SELECT COUNT(*) as count FROM royale_product_order_tbl WHERE order_status = 'pending'";
+            $pendingOrdersResult = mysqli_query($conn, $pendingOrdersQuery);
+            $pendingOrdersCount = mysqli_fetch_assoc($pendingOrdersResult)['count'];
+            ?>
+
+            <!-- Sidebar Menu -->
             <li>
-                <a href="#" class="menu-toggle"><i class="fa-solid fa-cart-shopping"></i> Orders <i
-                        class="fa-solid fa-chevron-down"></i></a>
+                <a href="#" class="menu-toggle">
+                    <i class="fa-solid fa-cart-shopping"></i> Orders
+                    <!-- Only show the red dot if there are pending orders -->
+                    <span class="notification-dot" style="display: <?= $pendingOrdersCount > 0 ? 'inline' : 'none'; ?>;"></span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
                 <ul class="submenu">
                     <li><a href="online_order.php"><i class="fa-solid fa-earth-asia"></i> Online</a></li>
                     <li><a href="walkin_order.php"><i class="fa-solid fa-person-walking"></i> Walkin</a></li>
-
                 </ul>
             </li>
+
+
+
             <li>
-            <a href="calendar.php" class="menu-toggle"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
+                <a href="calendar.php" class="menu-toggle"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
             </li>
             <hr>
 
@@ -77,38 +122,35 @@
 
     </div>
 
-   
+
 </section>
 
 
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    const menuToggles = document.querySelectorAll('.menu-toggle');
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggles = document.querySelectorAll('.menu-toggle');
 
-    menuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function (e) {
-            const submenu = this.nextElementSibling;
+        menuToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                const submenu = this.nextElementSibling;
 
-            if (submenu && submenu.classList.contains('submenu')) {
-                // Prevent the default action if there's a submenu
-                e.preventDefault();
+                if (submenu && submenu.classList.contains('submenu')) {
+                    // Prevent the default action if there's a submenu
+                    e.preventDefault();
 
-                // Close other open submenus
-                document.querySelectorAll('.submenu.show').forEach(openSubmenu => {
-                    if (openSubmenu !== submenu) {
-                        openSubmenu.classList.remove('show');
-                    }
-                });
+                    // Close other open submenus
+                    document.querySelectorAll('.submenu.show').forEach(openSubmenu => {
+                        if (openSubmenu !== submenu) {
+                            openSubmenu.classList.remove('show');
+                        }
+                    });
 
-                // Toggle the clicked submenu
-                submenu.classList.toggle('show');
-            }
+                    // Toggle the clicked submenu
+                    submenu.classList.toggle('show');
+                }
+            });
         });
     });
-});
-
-
-
 </script>
 
 
@@ -116,7 +158,7 @@
 
 <!-- same height logo container and header container -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         function matchHeights() {
             const logoContainer = document.querySelector('.logo-container');
             const headerContainer = document.querySelector('.header-container');
@@ -148,7 +190,7 @@
 
 <!-- dark mode -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const themeToggle = document.getElementById('theme-toggle');
         const isAdmin = document.body.classList.contains('admin-mode');
 
@@ -158,7 +200,7 @@
                 document.body.classList.add('admin-dark-mode');
             }
 
-            themeToggle.addEventListener('click', function () {
+            themeToggle.addEventListener('click', function() {
                 if (document.body.classList.contains('admin-dark-mode')) {
                     document.body.classList.remove('admin-dark-mode');
                     localStorage.removeItem('theme');
@@ -173,5 +215,17 @@
     });
 </script>
 
-
-
+<style>
+    .notification-dot {
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        /* Position it absolutely to the right of the anchor */
+        top: 10px;
+        /* Adjust top position */
+        right: 10px;
+        /* Adjust right position */
+    }
+</style>

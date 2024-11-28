@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2024 at 01:59 AM
+-- Generation Time: Nov 28, 2024 at 02:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -123,7 +123,8 @@ INSERT INTO `chat_messages` (`id`, `user_id`, `admin_reply`, `message`, `timesta
 (62, 15, 'im fine', 'im fine', '2024-11-21 21:25:13', 1),
 (63, 15, 'hbu?', 'hbu?', '2024-11-21 21:27:19', 1),
 (64, 15, NULL, 'same', '2024-11-21 21:27:29', 0),
-(65, 1, NULL, 'sup', '2024-11-21 21:28:09', 0);
+(65, 1, NULL, 'sup', '2024-11-21 21:28:09', 0),
+(66, 1, 'wasssup', 'wasssup', '2024-11-25 20:32:20', 1);
 
 -- --------------------------------------------------------
 
@@ -211,7 +212,6 @@ CREATE TABLE `products` (
   `product_status` varchar(255) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_type` varchar(255) NOT NULL,
-  `product_color` varchar(255) NOT NULL,
   `extra_small` int(255) NOT NULL,
   `small` int(255) NOT NULL,
   `medium` int(255) NOT NULL,
@@ -229,28 +229,28 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_status`, `product_name`, `product_type`, `product_color`, `extra_small`, `small`, `medium`, `large`, `extra_large`, `gender`, `previous_price`, `price`, `rent_price`, `product_description`, `photo`) VALUES
-(12, 'active', 'Tuxedo', 'Formal', '#140a61', 0, 1, 3, 4, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1.jpg'),
-(13, 'active', 'gown', 'gown', '', 0, 0, 0, 0, 0, 'female', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'dress.jpg'),
-(16, 'active', 'Gown deluxe', 'school uniform', '', 0, 0, 0, 0, 0, 'female', 0, 21412, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', '21414.png'),
-(19, 'deleted', 'Tuxedo', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
-(20, 'active', 'Tuxedo', 'formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1 - Copy.jpg'),
-(21, 'active', 'Tuxedo', 'formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
-(41, 'deleted', 'product', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'none so far', 'afas - Copy.jpg,dress - Copy.jpg,dress2.jpg,gsada.jpg'),
-(42, 'deleted', 'product 2', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'He stepped away from the mic. This was the best take he had done so far, but something seemed missing. Then it struck him all at once. Visuals ran in front of his eyes and music rang in his ears. His eager fingers went to work in an attempt to capture his', '66ef13014ac48-dress.jpg,66ef13014b1ab-gsdfa - Copy.jpg'),
-(43, 'deleted', 'product 3', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66ef1440ca0aa-dress - Copy.jpg,66ef1440ca742-dress2.jpg,66ef1440cacaa-gsdfa - Copy.jpg'),
-(44, 'deleted', 'product 4', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Wandering down the path to the pond had become a daily routine. Even when the weather wasn\'t cooperating like today with the wind and rain, Jerry still took the morning stroll down the path until he reached the pond. Although there didn\'t seem to be a par', '66ef15275663f-dress2.jpg,66ef152756b0f-gsdfa - Copy.jpg'),
-(45, 'deleted', 'test 5', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66ef837da511c-afas - Copy.jpg,66ef837da5a58-dress2.jpg,66ef837da5fb4-gsdfa - Copy.jpg'),
-(46, 'deleted', 'test', 'School Uniform', '', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'Patrick didn\'t want to go. The fact that she was insisting they must go made him want to go even less. He had no desire to make small talk with strangers he would never again see just to be polite. But she insisted that Patrick go, and she would soon find', '66f29574c700a-dress - Copy.jpg,66f29574c7c37-dress2.jpg,66f29574c833a-gsdfa - Copy.jpg'),
-(47, 'deleted', 'tuxedo 2', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund.', '66fbb55185de5-Tuxedo-Black-PNG.png'),
-(48, 'active', 'texudo 3', 'Formal', '', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund', '66fbb60dc452a-Tuxedo-Black-PNG.png'),
-(49, '', 'new tuxedo', 'Formal', '#1c2537', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
-(50, '', 'new tuxedo', 'Formal', '#1c2537', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
-(51, 'deleted', 'new tuxedo', 'Formal', '0', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, '0', '66fd54362c384-Tuxedo-Black-PNG.png'),
-(52, 'active', 'red gown', 'Gown', '0', 1, 1, 1, 0, 0, 'female', 0, 3000, 300, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66fd54f444cfd-66ef0e6d3d35e-dress2.jpg'),
-(53, 'deleted', 'blue dress', 'Gown', '#4444e4', 4, 2, 2, 0, 0, 'female', 0, 2000, 200, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66fd5600e35ea-66ef1440ca0aa-dress - Copy.jpg'),
-(54, 'deleted', 'Barbie couture', 'Gown', '#860688', 3, 1, 1, 1, 0, 'female', 0, 2500, 1000, 'jajdhkjsfhajfksjfjks', '6716019aea36f-fashion-design - Copy.png,6716019aea8f3-fashion-design.png,6716019aeae63-Tuxedo-Black-PNG.png'),
-(55, 'active', 'japan uniform', 'School Uniform', '#ffffff', 2, 2, 1, 0, 0, 'female', 0, 1200, 500, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png');
+INSERT INTO `products` (`id`, `product_status`, `product_name`, `product_type`, `extra_small`, `small`, `medium`, `large`, `extra_large`, `gender`, `previous_price`, `price`, `rent_price`, `product_description`, `photo`) VALUES
+(12, 'active', 'Tuxedo', 'Formal', 2, 1, 3, 4, 0, 'male', 4000, 3000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,gsdfa - Copy.jpg'),
+(13, 'active', 'gown', 'gown', 0, 0, 0, 0, 0, 'female', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'dress.jpg'),
+(16, 'active', 'Gown deluxe', 'school uniform', 0, 0, 0, 0, 0, 'female', 0, 21412, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', '21414.png'),
+(19, 'deleted', 'Tuxedo', 'School Uniform', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
+(20, 'active', 'Tuxedo', 'formal', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg,r1 - Copy.jpg'),
+(21, 'active', 'Tuxedo', 'formal', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', 'tux.jpg'),
+(41, 'deleted', 'product', 'Formal', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'none so far', 'afas - Copy.jpg,dress - Copy.jpg,dress2.jpg,gsada.jpg'),
+(42, 'deleted', 'product 2', 'School Uniform', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'He stepped away from the mic. This was the best take he had done so far, but something seemed missing. Then it struck him all at once. Visuals ran in front of his eyes and music rang in his ears. His eager fingers went to work in an attempt to capture his', '66ef13014ac48-dress.jpg,66ef13014b1ab-gsdfa - Copy.jpg'),
+(43, 'deleted', 'product 3', 'Formal', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66ef1440ca0aa-dress - Copy.jpg,66ef1440ca742-dress2.jpg,66ef1440cacaa-gsdfa - Copy.jpg'),
+(44, 'deleted', 'product 4', 'School Uniform', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Wandering down the path to the pond had become a daily routine. Even when the weather wasn\'t cooperating like today with the wind and rain, Jerry still took the morning stroll down the path until he reached the pond. Although there didn\'t seem to be a par', '66ef15275663f-dress2.jpg,66ef152756b0f-gsdfa - Copy.jpg'),
+(45, 'deleted', 'test 5', 'Formal', 0, 0, 0, 0, 0, 'male', 0, 3000, 0, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66ef837da511c-afas - Copy.jpg,66ef837da5a58-dress2.jpg,66ef837da5fb4-gsdfa - Copy.jpg'),
+(46, 'deleted', 'test', 'School Uniform', 0, 0, 0, 0, 0, 'male', 0, 2000, 0, 'Patrick didn\'t want to go. The fact that she was insisting they must go made him want to go even less. He had no desire to make small talk with strangers he would never again see just to be polite. But she insisted that Patrick go, and she would soon find', '66f29574c700a-dress - Copy.jpg,66f29574c7c37-dress2.jpg,66f29574c833a-gsdfa - Copy.jpg'),
+(47, 'deleted', 'tuxedo 2', 'Formal', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund.', '66fbb55185de5-Tuxedo-Black-PNG.png'),
+(48, 'active', 'texudo 3', 'Formal', 0, 0, 0, 0, 0, 'male', 0, 5000, 800, 'A complete outfit including this jacket, trousers usually with a silken stripe down the side, a bow tie, and often a cummerbund', '66fbb60dc452a-Tuxedo-Black-PNG.png'),
+(49, '', 'new tuxedo', 'Formal', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
+(50, '', 'new tuxedo', 'Formal', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, 'A nook of light hums, where wood whispers in amber glow, and the air thickens with the ghost of beans and dough. Notes drift like soft echoes in a stillness that cradles time, where shadows sip warmth from the edges of the calm.', ''),
+(51, 'deleted', 'new tuxedo', 'Formal', 0, 2, 3, 2, 0, 'male', 0, 5000, 800, '0', '66fd54362c384-Tuxedo-Black-PNG.png'),
+(52, 'active', 'red gown', 'Gown', 1, 1, 1, 0, 0, 'female', 0, 3000, 300, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66fd54f444cfd-66ef0e6d3d35e-dress2.jpg'),
+(53, 'deleted', 'blue dress', 'Gown', 4, 2, 2, 0, 0, 'female', 0, 2000, 200, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66fd5600e35ea-66ef1440ca0aa-dress - Copy.jpg'),
+(54, 'deleted', 'Barbie couture', 'Gown', 3, 1, 1, 1, 0, 'female', 0, 2500, 1000, 'jajdhkjsfhajfksjfjks', '6716019aea36f-fashion-design - Copy.png,6716019aea8f3-fashion-design.png,6716019aeae63-Tuxedo-Black-PNG.png'),
+(55, 'active', 'japan uniform', 'School Uniform', 2, 2, 1, 0, 0, 'female', 0, 1200, 500, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png');
 
 -- --------------------------------------------------------
 
@@ -304,7 +304,6 @@ CREATE TABLE `royale_product_order_tbl` (
   `product_name` varchar(255) NOT NULL,
   `product_type` varchar(255) NOT NULL,
   `product_gender` varchar(255) NOT NULL,
-  `product_color` varchar(255) NOT NULL,
   `product_size` varchar(255) NOT NULL,
   `product_quantity` bigint(255) NOT NULL,
   `product_price` bigint(255) NOT NULL,
@@ -319,20 +318,9 @@ CREATE TABLE `royale_product_order_tbl` (
 -- Dumping data for table `royale_product_order_tbl`
 --
 
-INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_color`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order`) VALUES
-(9, 1, 'online', 'rent', 'completed', 'Khemark', '092356262', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-09-29', '16:28:00', 0, 12, 'Tuxedo ', 'School Uniform ', 'male ', 'black', 'medium', 3, 3000, 0, 'tux.jpg,r1.jpg ', 0, '2024-10-02', '2024-09-28 00:00:00'),
-(24, 1, 'walkin', 'buy', 'cancelled', 'khemark ', '091241515', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-06', '16:35:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:36:01'),
-(25, 1, 'online', 'buy', 'cancelled', 'blue dress buyer', '09124151', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '15:45:00', 0, 13, 'gown ', 'gown ', 'female ', ' ', '', 1, 3000, 0, 'dress.jpg ', 0, '0000-00-00', '2024-10-03 08:45:18'),
-(26, 1, 'online', 'buy', 'completed', 'Khemark product size testing', '09121515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-04', '16:38:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'medium', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:38:57'),
-(27, 1, 'online', 'buy', 'completed', 'Khemark buy 2', '09121415515', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '16:48:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 2, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-04', '2024-10-03 09:48:33'),
-(28, 0, 'walkin', 'buy', 'completed', 'Khemark', '0953634272', 'Male', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-13', '21:46:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-13', '2024-10-12 14:46:28'),
-(29, 1, 'online', 'buy', 'completed', 'Dogde', '091251661', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-15', '16:52:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-15', '2024-10-14 08:53:01'),
-(30, 1, 'online', 'buy', 'completed', 'John', '123456789', 'Others', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-10-22', '06:17:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-10-22', '2024-10-21 09:17:33'),
-(31, 1, 'online', 'buy', 'completed', 'Khemark', '0912541', 'Male', '', 'tenazas,lala,lanao del norte', '2024-11-13', '22:37:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'large', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-11-13', '2024-11-12 14:37:06'),
-(32, 0, 'walkin', 'buy', 'pending', 'khemark', '0967363634', 'others', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-17', '16:39:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 0, '0000-00-00', '2024-11-17 09:39:09'),
-(33, 1, 'online', 'buy', 'completed', 'Khemark', '09567567567', 'Male', '', 'tenazas,lala,lanao del norte', '2024-11-20', '19:58:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', '#140a61 ', 'small', 1, 3000, 800, 'tux.jpg,r1.jpg ', 3000, '2024-11-23', '2024-11-20 11:59:12'),
-(34, 1, 'online', 'buy', 'accepted', 'Khemark', '093453535', 'Female', '', 'tenazas,lala,lanao del norte', '2024-11-23', '10:33:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', '#ffffff ', 'small', 1, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 0, '0000-00-00', '2024-11-22 01:33:41'),
-(35, 1, 'walkin', 'rent', 'completed', 'Khemark', '094564645646', 'Female', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-22', '10:35:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', '#ffffff ', 'extra_small', 1, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 0, '2024-11-22', '2024-11-22 01:36:00');
+INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order`) VALUES
+(47, 15, 'online', 'buy', 'completed', 'Khemark', '091231151242', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:33:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 800, '2024-11-27', '2024-11-27 18:33:39'),
+(48, 15, 'walkin', 'rent', 'completed', 'Khemark', '0923423523', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:05:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', '', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-27', '2024-11-27 19:06:00');
 
 -- --------------------------------------------------------
 
@@ -380,17 +368,7 @@ CREATE TABLE `royale_request_tbl` (
 --
 
 INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_pattern_cutter`, `assigned_tailor`, `balance`, `down_payment`, `down_payment_date`, `pattern_status`, `pattern_completed_datetime`, `work_status`, `work_completed_datetime`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
-(51, 'ongoing', 'online', 1, 'Making', 'Khemark', 95854683737, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-26', '10:48:00', 'Tuxedo-Black-PNG.png', 'asap', 1000, 'neck: 25\r\nbust: 12\r\nunder bust: 32\r\nwaist: 23\r\nhips: 23\r\nshoulder: 14\r\narm length: 13\r\nbust height: 23', '2024-10-30', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 500, 500, '2024-10-29', 'completed', '2024-11-02 19:16:24', 'accepted', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-10-25 09:49:01'),
-(52, 'cancelled', 'online', 1, 'Making', 'khemarhjasdgah', 90812151, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-10-26', '16:05:00', 'gsdfa - Copy.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-10-25 14:05:38'),
-(53, 'ongoing', 'online', 1, 'Making', 'Khemark', 912151, 'Male', '', 'marandi,lala, ldn', '0000-00-00', '00:00:00', 'gsdfa - Copy.jpg', '', 1000, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-10-30', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-10-30', 'completed', '0000-00-00 00:00:00', 'completed', '2024-11-02 19:16:21', 500, '0000-00-00', 0, '', '2024-10-29 14:13:40'),
-(54, 'completed', 'walk-in', 0, 'Making', 'Khemark', 912151516, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-02', '11:33:00', 'gsdfa.jpg,r1.jpg', '', 1000, 'neck: 14\r\nbust: 25\r\nunder bust: 23\r\nwaist: 24\r\nhips: 27\r\nshoulder: 14\r\narm length: 20\r\n', '2024-11-05', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-02', 'completed', '2024-11-02 12:46:42', 'completed', '2024-11-02 12:48:04', 500, '2024-11-03', 0, '', '2024-11-02 10:33:25'),
-(55, 'pending', 'walk-in', 0, 'Making', 'asdasd', 907989, 'male', '', 'marandi,lala, ldn', '2024-11-08', '11:27:00', '', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-08 10:27:50'),
-(56, 'completed', 'online', 1, 'Dress and Cloth Repair', 'Khemark', 95743752, 'Unknown', '', 'marandi,lala, ldn', '2024-11-10', '00:21:00', 'gsdfa - Copy.jpg', '', 500, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-11-11', '', 'not applicable', 'Roy M. Ocariza', 0, 250, '2024-11-10', 'not applicable', '0000-00-00 00:00:00', 'completed', '2024-11-10 10:37:04', 250, '2024-11-11', 0, '', '2024-11-10 10:21:49'),
-(57, 'completed', 'walk-in', 0, 'Dress and Cloth Repair', 'Khemark', 9325336236, 'Unknown', '', 'marandi,lala, ldn', '2024-11-11', '01:00:00', 'afas.jpg', '', 500, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '2024-11-12', '', 'not applicable', 'Roy M. Ocariza', 0, 250, '2024-11-11', 'not applicable', '0000-00-00 00:00:00', 'completed', '2024-11-10 11:05:28', 250, '2024-11-12', 0, '', '2024-11-10 11:00:13'),
-(58, 'pending', 'walk-in', 0, 'Making', 'khemark', 95636346, 'unknown', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-17', '17:36:00', 'gsdfa - Copy.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-17 16:37:07'),
-(59, 'pending', 'online', 1, 'Making', 'khemark', 94324242, 'male', 'khemark.ocariza@gmail.com', 'marandi,lala, ldn', '2024-11-23', '10:38:00', 'gsdfa - Copy.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-22 08:38:49'),
-(60, 'completed', 'online', 1, 'Making', 'Khemark', 9654645646, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-23', '10:44:00', 'afas.jpg', 'asap', 500, 'neck: 21\r\nbust: 12\r\nunder bust: 32\r\nwaist: 21\r\n', '2024-11-26', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 250, '2024-11-22', 'completed', '2024-11-22 08:52:37', 'completed', '2024-11-22 08:53:30', 250, '2024-11-23', 0, '', '2024-11-22 08:44:51'),
-(61, 'cancelled', 'online', 1, 'Making', 'khemark', 945646456, 'male', 'khemark_ocariza@yahoo.com', 'marandi,lala, ldn', '2024-11-22', '10:45:00', 'afas.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-22 08:45:58');
+(62, 'completed', 'online', 15, 'Making', 'Khemark', 9342325235, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '10:26:00', 'gsdfa - Copy.jpg', '', 2000, 'neck: 25\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 26\r\nshoulder: 15\r\narm length: 18\r\nbust height: 10', '2024-12-07', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-27', 'completed', '2024-11-28 01:29:30', 'completed', '2024-11-28 01:30:31', 1500, '2024-11-27', 0, '', '2024-11-28 01:26:56');
 
 -- --------------------------------------------------------
 
@@ -580,7 +558,7 @@ ALTER TABLE `admin_tbl`
 -- AUTO_INCREMENT for table `chat_messages`
 --
 ALTER TABLE `chat_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `default_measurement_tbl`
@@ -616,13 +594,13 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `royale_product_order_tbl`
 --
 ALTER TABLE `royale_product_order_tbl`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `royale_request_tbl`
 --
 ALTER TABLE `royale_request_tbl`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `royale_user_tbl`

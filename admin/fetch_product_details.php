@@ -18,7 +18,7 @@ $productId = $_GET['product_id'];
 
 // Fetch buy orders for the given product
 $buyOrdersQuery = "
-    SELECT o.order_id, o.user_name, o.user_contact_number, o.user_gender, o.user_email, o.user_address, 
+    SELECT o.order_id,  o.user_id, o.user_name, o.user_contact_number, o.user_gender, o.user_email, o.user_address, 
            o.pickup_date, o.pickup_time, o.product_quantity, o.product_price, o.payment, o.payment_date, 
            o.datetime_order
     FROM royale_product_order_tbl o
@@ -32,7 +32,7 @@ $buyOrders = $buyOrdersResult->fetch_all(MYSQLI_ASSOC);
 
 // Fetch rent orders for the given product
 $rentOrdersQuery = "
-    SELECT o.order_id, o.user_name, o.user_contact_number, o.user_gender, o.user_email, o.user_address, 
+    SELECT o.order_id, o.user_id, o.user_name, o.user_contact_number, o.user_gender, o.user_email, o.user_address, 
            o.pickup_date, o.pickup_time, o.product_days_of_rent, o.product_rent_price, o.payment, o.payment_date, 
            o.datetime_order
     FROM royale_product_order_tbl o
@@ -71,6 +71,7 @@ $product = $productResult->fetch_assoc();
             <thead>
                 <tr>
                     <th>Order ID</th>
+                    <th>User ID</th>
                     <th>User Name</th>
                     <th>Contact Number</th>
                     <th>Gender</th>
@@ -89,6 +90,7 @@ $product = $productResult->fetch_assoc();
                 <?php foreach ($buyOrders as $order): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($order['order_id']); ?></td>
+                        <td><?php echo htmlspecialchars($order['user_id']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_name']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_contact_number']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_gender']); ?></td>
@@ -115,6 +117,7 @@ $product = $productResult->fetch_assoc();
             <thead>
                 <tr>
                     <th>Order ID</th>
+                    <th>User ID</th>
                     <th>User Name</th>
                     <th>Contact Number</th>
                     <th>Gender</th>
@@ -133,6 +136,7 @@ $product = $productResult->fetch_assoc();
                 <?php foreach ($rentOrders as $order): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($order['order_id']); ?></td>
+                        <td><?php echo htmlspecialchars($order['user_id']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_name']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_contact_number']); ?></td>
                         <td><?php echo htmlspecialchars($order['user_gender']); ?></td>

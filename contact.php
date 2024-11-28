@@ -14,36 +14,6 @@
     </div>
 
 
-    <div class="right hidden">
-            <h2>Please note: all fields are required.</h2>
-
-            <div class="contact-input-container">
-                <label for="">First Name *</label>
-                <input type="text" name="" id="">
-            </div>
-
-            <div class="contact-input-container">
-                <label for="">Last Name *</label>
-                <input type="text" name="" id="">
-            </div>
-
-            <div class="contact-input-container">
-                <label for="">Work Email *</label>
-                <input type="email" name="" id="">
-            </div>
-
-            <div class="contact-input-container">
-                <label for="">Subject *</label>
-                <input type="text" name="" id="">
-            </div>
-
-            <div class="contact-input-container">
-                <label for="">Comments *</label>
-                <textarea name="" id=""></textarea>
-            </div>
-
-            <button>Submit</button>
-           
-    </div>
+  
 
 </div>

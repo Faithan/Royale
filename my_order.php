@@ -40,7 +40,7 @@ $result = $stmt->get_result();
         <h1 class="hidden"><i class="fa-solid fa-cart-shopping"></i> My Orders</h1>
 
         <div class="toggle-container hidden" style="display:flex; justify-content:flex-end">
-            <button id="toggle-completed" data-showing="false">Show Completed Orders</button>
+            <button id="toggle-completed" data-showing="false" style="color:green">Show Completed Orders</button>
             <button id="toggle-cancelled" data-showing="false" style="color:red">Show Cancelled Orders</button>
         </div>
 
@@ -98,7 +98,7 @@ $result = $stmt->get_result();
             <?php
                 }
             } else {
-                echo "<p>No orders found.</p>";
+                echo "<p style='color: var(--text-color);'>No orders found.</p>";
             }
 
             $conn->close();

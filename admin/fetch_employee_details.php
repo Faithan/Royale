@@ -53,7 +53,7 @@ if (isset($_GET['employee_name'])) {
     }
 
     // Fetch and display requests where the employee is the assigned pattern cutter
-    echo "<h3 style='margin-top: 10px;'>Assigned Pattern Cutter Requests</h3>";
+    echo "<h3 style='margin-top: 10px;'>Assigned Request for Pattern Making</h3>";
     $patternCutterStmt = $conn->prepare("SELECT * FROM royale_request_tbl WHERE assigned_pattern_cutter = ?");
     $patternCutterStmt->bind_param("s", $employeeName); // Match by employee_name
     $patternCutterStmt->execute();
@@ -92,7 +92,7 @@ if (isset($_GET['employee_name'])) {
     }
 
     // Fetch and display requests where the employee is the assigned tailor
-    echo "<h3 style='margin-top: 10px;'>Assigned Tailor Requests</h3>";
+    echo "<h3 style='margin-top: 10px;'>Assigned Request For Sewing</h3>";
     $tailorStmt = $conn->prepare("SELECT * FROM royale_request_tbl WHERE assigned_tailor = ?");
     $tailorStmt->bind_param("s", $employeeName); // Match by employee_name
     $tailorStmt->execute();

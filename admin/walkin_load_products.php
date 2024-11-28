@@ -11,7 +11,8 @@ $productsPerPage = 8;
 $start = ($page - 1) * $productsPerPage;
 
 // Base SQL query
-$sql = "SELECT *
+$sql = "SELECT *, 
+            (extra_small + small + medium + large + extra_large) AS total_quantity 
         FROM products 
         WHERE product_status='active'";
 
@@ -63,7 +64,7 @@ if ($result->num_rows > 0) {
             <h2><?php echo $row['product_name']; ?></h2>
 
             <div style="display:flex; flex-direction: row; justify-content:center; align-items:center; font-size:1.5rem;">
-                <h3><del>₱<?php echo $row['previous_price']; ?></del></h3>
+                <h3 style="font-size: 1.5rem; color: var(--text-color2);"><del>₱<?php echo $row['previous_price']; ?></del></h3>
                 <h3>₱<?php echo $row['price']; ?></h3>
             </div>
 
@@ -72,6 +73,13 @@ if ($result->num_rows > 0) {
             </div>
             <div class="info-label"><label for="">Gender:</label>
                 <p><?php echo $row['gender']; ?></p>
+            </div>
+
+             <!-- New Quantity Info Section -->
+             <div class="info-label"><label for="">Stocks:</label>
+                <p style="color: <?php echo $row['total_quantity'] == 0 ? 'red' : 'var(--text-color)'; ?>;">
+                    <?php echo $row['total_quantity'] == 0 ? 'Out of Stock' : $row['total_quantity']; ?>
+                </p>
             </div>
         
         

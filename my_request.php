@@ -40,7 +40,7 @@ $result = $stmt->get_result();
         <h1 class="hidden"><i class="fa-solid fa-bell-concierge"></i> My Request</h1>
 
         <div class="toggle-container hidden" style="display:flex; justify-content:flex-end">
-            <button id="toggle-completed" data-showing="false">Show Completed Requests</button>
+            <button id="toggle-completed" data-showing="false" style="color:green">Show Completed Requests</button>
             <button id="toggle-cancelled" data-showing="false" style="color:red">Show Cancelled Requests</button>
         </div>
 
@@ -103,7 +103,7 @@ $result = $stmt->get_result();
             <?php
                 }
             } else {
-                echo "<p>No requests found.</p>";
+                echo "<p style='color: var(--text-color);'>No requests found.</p>";
             }
 
             $conn->close();
