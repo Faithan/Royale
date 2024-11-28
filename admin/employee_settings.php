@@ -185,8 +185,8 @@ if (!isset($_SESSION['admin_id'])) {
             <form action="update_employee.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="employee_id" id="editEmployeeId">
 
-                <label for="editEmployeeName">Name:</label>
-                <input type="text" id="editEmployeeName" name="employee_name" required>
+                <label for="editEmployeeName">Name: <em style="font-size:1.2rem; color:gray;">*cannot be altered*</em></label>
+                <input type="text" id="editEmployeeName" name="employee_name" readonly style="border:0">
 
                 <label for="editEmployeeUsername">Username:</label>
                 <input type="text" id="editEmployeeUsername" name="employee_username" required>
@@ -372,6 +372,24 @@ if (!isset($_SESSION['admin_id'])) {
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
     .content {
         overflow: scroll;
@@ -519,6 +537,7 @@ if (!isset($_SESSION['admin_id'])) {
         font-size: 1.5rem;
         color: var(--text-color);
         display: block;
+        margin-top: 5px;
     }
 
     /* Input Fields */

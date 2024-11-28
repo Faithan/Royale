@@ -118,8 +118,7 @@ if (!isset($_SESSION['admin_id'])) {
                                 <input type="hidden" name="service_id" id="serviceId">
                                 <input type="hidden" name="old_photo" id="oldPhoto">
                                 <!-- Added hidden input for old photo -->
-                                <input type="text" name="service_name" id="serviceName"
-                                    placeholder="Enter new service name">
+                               
                                 <textarea name="service_description" id="serviceDescription"
                                     placeholder="Enter new service description"></textarea>
                                 <input type="file" name="service_photo" accept="image/*">

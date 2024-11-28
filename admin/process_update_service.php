@@ -11,7 +11,6 @@ if (!isset($_SESSION['admin_id'])) {
 // Check if form is submitted
 if (isset($_POST['service_id'])) {
     $service_id = $_POST['service_id'];
-    $service_name = $_POST['service_name'];
     $service_description = $_POST['service_description'];
     $old_photo = $_POST['old_photo'];
     $service_photo = $old_photo;
@@ -44,11 +43,6 @@ if (isset($_POST['service_id'])) {
     $params = [];
     $types = "";
 
-    if (!empty($service_name)) {
-        $updates[] = "service_name = ?";
-        $params[] = $service_name;
-        $types .= "s";
-    }
 
     if (!empty($service_description)) {
         $updates[] = "service_description = ?";
