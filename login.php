@@ -51,6 +51,58 @@ if (isset($_SESSION['user_id'])) {
                 <input type="text" name="user_name" placeholder="Name" required>
                 <input type="email" name="user_email" placeholder="Email" required>
                 <input type="password" name="user_password" placeholder="Password" required>
+
+
+                <div class="terms-and-conditions-container hidden">
+                        
+                        <label for="termsCheckbox"><input type="checkbox" id="termsCheckbox" name="terms" style="padding: 0; color:var(--second-bgcolor);" required> I agree to the <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
+                        </label>
+
+                        <style>
+                            .terms-and-conditions-container {
+                             
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1.4rem;
+                                background-color: var(--first-bgcolor);
+                            }
+
+                            .terms-and-conditions-container label {
+                                text-align: center;
+                                flex-wrap: nowrap;
+                             
+                                text-transform: uppercase;
+                                color: var(--text-color);
+                            }
+                            .terms-and-conditions-container label a{
+                                font-size: 1.4rem;
+                            }
+                        </style>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.querySelector('form.product-info-container');
+                            const termsCheckbox = document.getElementById('termsCheckbox');
+
+                            form.addEventListener('submit', function(event) {
+                                // Check if the terms checkbox is checked
+                                if (!termsCheckbox.checked) {
+                                    event.preventDefault(); // Prevent form submission
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Terms and Conditions',
+                                        text: 'You must agree to the Terms and Conditions before submitting.',
+                                        confirmButtonText: 'Okay',
+                                    });
+                                }
+                            });
+                        });
+                    </script>
+
+
                 <button type="submit" name="signup">Sign Up</button>
             </form>
         </div>

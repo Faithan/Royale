@@ -56,7 +56,7 @@ session_start(); // Start session if required for user interactions
                 <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website.</p>
 
                 <h2>9. Contact Us</h2>
-                <p>If you have any questions about these terms, please contact us at <a href="#contact">our contact page</a>.</p>
+                <p>If you have any questions about these terms, please contact us at <a href="index.php#contact">our contact page</a>.</p>
             </div>
         </section>
     </main>
@@ -73,14 +73,13 @@ session_start(); // Start session if required for user interactions
 
 <style>
     .terms-container {
+        margin-top: 60px;
         padding: 40px 20px;
-        max-width: 1200px;
-        margin: auto;
-        font-family: Arial, sans-serif;
+        background:var(--second-bgcolor);
     }
 
     .terms-content {
-        background: #f9f9f9;
+        background:var(--first-bgcolor);
         padding: 20px 30px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -88,20 +87,20 @@ session_start(); // Start session if required for user interactions
 
     .terms-content h1 {
         text-align: center;
-        font-size: 2.5rem;
-        color: #333;
+        font-size: 3rem;
+        color: var(--text-color);
         margin-bottom: 20px;
     }
 
     .terms-content h2 {
-        font-size: 1.5rem;
-        color: #444;
+        font-size: 2rem;
+        color: var(--text-color);
         margin-top: 20px;
     }
 
     .terms-content p {
-        font-size: 1rem;
-        color: #555;
+        font-size: 1.5rem;
+        color: var(--text-color2);
         line-height: 1.6;
         margin: 10px 0;
     }
