@@ -112,13 +112,7 @@ if (!isset($_SESSION['admin_id'])) {
                                 <input type="number" name="price" placeholder="Enter product price" required>
                                 <input type="number" name="rent_price" placeholder="Enter product rent price" required>
 
-                                <div style="display:flex; flex-direction:column; align-items: center; width:100%">
-                                    <label for="" style="font-size:1.5rem; color:var(--text-color)">Product Color
-                                    </label>
-                                    <input type="color" name="product_color"
-                                        style="height:50px; width:50px; padding:0; border:0; ">
-                                </div>
-
+                        
 
                                 <div class="info-container2"
                                     style="display:flex; flex-direction:row; gap:10px;  flex-wrap: wrap; justify-content: center;justify-content: center; ">
@@ -311,9 +305,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 <style>
-    .content h1 {
-
-    }
+ 
 
     .add-services-container {
         display: flex;
@@ -420,8 +412,8 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
 
@@ -432,8 +424,7 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         text-transform: capitalize;
@@ -445,8 +436,7 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 10px;
         background-color: var(--second-bgcolor);
         color: var(--text-color);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         text-transform: capitalize;
@@ -485,8 +475,8 @@ if (!isset($_SESSION['admin_id'])) {
     .button-container a {
         padding: 10px 20px;
         background-color: var(--second-bgcolor);
-        border: 0;
-        border-bottom: 1px solid var(--box-shadow);
+      
+        border: 1px solid var(--box-shadow);
         border-radius: 5px;
         font-size: 1.5rem;
         font-weight: bold;

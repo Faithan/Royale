@@ -34,7 +34,6 @@ if (isset($_POST['add_product'])) {
     $gender = $_POST['gender'];
     $price = $_POST['price'];
     $rent_price = $_POST['rent_price'];
-    $product_color = $_POST['product_color'];
     $description = $_POST['product_description'];
 
     // Sizess
@@ -57,20 +56,20 @@ if (isset($_POST['add_product'])) {
     $product_images = implode(",", $image_names);
 
     // Insert the data into the 'products' table
-    $sql = "INSERT INTO products (product_status, product_name, product_type, gender, price, rent_price, product_color, extra_small, small, medium, large, extra_large, product_description, photo) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (product_status, product_name, product_type, gender, price, rent_price, extra_small, small, medium, large, extra_large, product_description, photo) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
         $product_status = 'active'; // Default status is 'active'
         $stmt->bind_param(
-            'ssssdssiiiiiss',
+            'ssssdsiiiiiss',
             $product_status,
             $product_name,
             $product_type,
             $gender,
             $price,
             $rent_price,
-            $product_color,
+          
             $extra_small,
             $small,
             $medium,
