@@ -9,7 +9,7 @@
         <ul class="nav-links">
             <li><a href="employee_dashboard.php"><i class="fa-regular fa-clipboard"></i> Dashboard</a></li>
             <li><a href="accepted_request.php"><i class="fa-solid fa-list-check"></i> Tasks</a></li>
-            <li><a href="History.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+            <li><a href="history.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
             <li><a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </nav>

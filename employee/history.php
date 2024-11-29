@@ -68,7 +68,7 @@ $tasks_results = $stmt->get_result();
                         <!-- Debugging line to check the task type -->
                         <p style="color: green; font-weight: bold; text-transform:uppercase;">Task Type: <?php echo $task_type; ?></p>
                         <h4 style="text-transform:uppercase; color:green">Request ID: <?php echo $row['request_id']; ?></h4>
-                        <div class="description"><strong style="text-decoration:none">Assigned <?php echo $task_type === 'pattern' || $task_type === 'repair or resize' ? 'Pattern Cutter' : 'Tailor'; ?>:</strong> <p style="text-decoration:underline"><?php echo $task_type === 'pattern' || $task_type === 'repair or resize' ? $row['assigned_pattern_cutter'] : $row['assigned_tailor']; ?></p></div>
+                
                         <div class="description"><strong>For: </strong><p><?php echo $row['service_name']; ?></p></div>
                         <div class="photos">
                             <?php 
