@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 05:03 PM
+-- Generation Time: Dec 04, 2024 at 12:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -248,7 +248,8 @@ INSERT INTO `products` (`id`, `product_status`, `product_name`, `product_type`, 
 (52, 'active', 'red gown', 'Gown', 1, 1, 1, 0, 0, 'female', 0, 3000, 300, 'She counted. One. She could hear the steps coming closer. Two. Puffs of breath could be seen coming from his mouth. Three. He stopped beside her. Four. She pulled the trigger of the gun.', '66fd54f444cfd-66ef0e6d3d35e-dress2.jpg'),
 (53, 'deleted', 'blue dress', 'Gown', 4, 2, 2, 0, 0, 'female', 0, 2000, 200, 'Brock would have never dared to do it on his own he thought to himself. That is why Kenneth and he had become such good friends. Kenneth forced Brock out of his comfort zone and made him try new things he\'d never imagine doing otherwise. Up to this point,', '66fd5600e35ea-66ef1440ca0aa-dress - Copy.jpg'),
 (54, 'deleted', 'Barbie couture', 'Gown', 3, 1, 1, 1, 0, 'female', 0, 2500, 1000, 'jajdhkjsfhajfksjfjks', '6716019aea36f-fashion-design - Copy.png,6716019aea8f3-fashion-design.png,6716019aeae63-Tuxedo-Black-PNG.png'),
-(55, 'active', 'japan uniform', 'School Uniform', 2, 2, 1, 0, 0, 'female', 0, 1200, 500, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png');
+(55, 'deleted', 'japan uniform', 'School Uniform', 2, 2, 1, 0, 0, 'female', 0, 1200, 500, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', ',—Pngtree—japan school uniform_7964458.png'),
+(56, 'active', 'japan uniform', 'School Uniform', 2, 2, 2, 2, 2, 'female', 0, 1200, 200, 'clothes are garments specifically designed to be worn by individuals in a particular profession, organization, or group. They serve several purposes, including creating a sense of unity, promoting professionalism, and easily identifying members of a team or organization. Uniforms are commonly used in various industries such as healthcare, hospitality, military, sports, and many more. They typically feature specific colors, logos, or insignias that represent the organization or profession. Uniform clothes are designed to be functional, comfortable, and durable, taking into consideration the specific needs and requirements of the wearer\'s role or job. They play a vital role in establishing a cohesive and professional image for businesses and organizations.', '67491e597695f-—Pngtree—japan school uniform_7964458.png');
 
 -- --------------------------------------------------------
 
@@ -309,6 +310,7 @@ CREATE TABLE `royale_product_order_tbl` (
   `product_photo` varchar(255) NOT NULL,
   `payment` bigint(255) NOT NULL,
   `payment_date` date NOT NULL,
+  `cancellation_reason` text NOT NULL,
   `datetime_order` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -316,11 +318,20 @@ CREATE TABLE `royale_product_order_tbl` (
 -- Dumping data for table `royale_product_order_tbl`
 --
 
-INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order`) VALUES
-(47, 15, 'online', 'buy', 'completed', 'Khemark', '091231151242', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:33:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 800, '2024-11-27', '2024-11-27 18:33:39'),
-(48, 15, 'walkin', 'rent', 'completed', 'Khemark', '0923423523', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:05:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', '', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-27', '2024-11-27 19:06:00'),
-(49, 15, 'online', 'buy', 'completed', 'Khemark2', '092131214', 'Unknown', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-28', '22:13:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', 'extra_small', 2, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 2400, '2024-11-28', '2024-11-28 14:13:54'),
-(50, 15, 'walkin', 'rent', 'completed', 'Khemark', '0912341241', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '22:34:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'medium', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-28', '2024-11-28 15:34:32');
+INSERT INTO `royale_product_order_tbl` (`order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `cancellation_reason`, `datetime_order`) VALUES
+(47, 15, 'online', 'buy', 'completed', 'Khemark', '091231151242', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:33:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 800, '2024-11-27', '', '2024-11-27 18:33:39'),
+(48, 15, 'walkin', 'rent', 'completed', 'Khemark', '0923423523', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '10:05:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', '', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-27', '', '2024-11-27 19:06:00'),
+(49, 15, 'online', 'buy', 'completed', 'Khemark2', '092131214', 'Unknown', 'khemark2@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-28', '22:13:00', 0, 55, 'japan uniform ', 'School Uniform ', 'female ', 'extra_small', 2, 1200, 500, '673f5dafca4e8-—Pngtree—japan school uniform_7964458.png ', 2400, '2024-11-28', '', '2024-11-28 14:13:54'),
+(50, 15, 'walkin', 'rent', 'completed', 'Khemark', '0912341241', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-11-29', '22:34:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'medium', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 1600, '2024-11-28', '', '2024-11-28 15:34:32'),
+(51, 1, 'online', 'buy', 'cancelled', 'khemark', '092423425', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-03', '13:37:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'unavailable na', '2024-12-03 11:37:55'),
+(52, 1, 'online', 'rent', 'cancelled', 'asdasdasd', '90456754646', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-04', '18:48:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'large', 2, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'sunod nalang mi mupalit', '2024-12-03 11:49:10'),
+(53, 0, 'walkin', 'buy', 'cancelled', 'khemark', '09213115112', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-04', '12:02:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'unavailable na', '2024-12-04 05:02:18'),
+(54, 0, 'walkin', 'buy', 'cancelled', 'asdasdasd', '0980878979', 'male', 'khemark6@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '13:08:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'adasda', '2024-12-04 05:09:01'),
+(55, 0, 'walkin', 'buy', 'completed', 'Asdasdads', '095646456456', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '13:10:00', 0, 12, 'Tuxedo ', 'Formal ', 'male ', 'medium', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 3000, '2024-12-04', '', '2024-12-04 05:10:34'),
+(56, 0, 'walkin', 'rent', 'cancelled', 'Khemark', '09345345', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '17:12:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 1, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'unavailable na', '2024-12-04 05:12:18'),
+(57, 1, 'online', 'rent', 'cancelled', 'khemark', '09453453453', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '14:18:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 2, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'unavailable na', '2024-12-04 06:18:22'),
+(58, 1, 'online', 'rent', 'completed', '31321313', '09345353453', 'Male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '22:22:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'medium', 3, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 4800, '2024-12-04', '', '2024-12-04 06:23:04'),
+(59, 1, 'online', 'rent', 'cancelled', 'khemark', '0954645646456', 'male', 'khemark@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-05', '18:46:00', 2, 12, 'Tuxedo ', 'Formal ', 'male ', 'extra_small', 2, 3000, 800, 'tux.jpg,gsdfa - Copy.jpg ', 0, '0000-00-00', 'asdadasd', '2024-12-04 10:46:58');
 
 -- --------------------------------------------------------
 
@@ -358,8 +369,7 @@ CREATE TABLE `royale_request_tbl` (
   `work_completed_datetime` datetime NOT NULL,
   `final_payment` bigint(255) NOT NULL,
   `final_payment_date` date NOT NULL,
-  `refund` bigint(255) NOT NULL,
-  `refund_reason` text NOT NULL,
+  `cancellation_reason` text NOT NULL,
   `datetime_request` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -367,10 +377,19 @@ CREATE TABLE `royale_request_tbl` (
 -- Dumping data for table `royale_request_tbl`
 --
 
-INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_pattern_cutter`, `assigned_tailor`, `balance`, `down_payment`, `down_payment_date`, `pattern_status`, `pattern_completed_datetime`, `work_status`, `work_completed_datetime`, `final_payment`, `final_payment_date`, `refund`, `refund_reason`, `datetime_request`) VALUES
-(62, 'completed', 'online', 15, 'Making', 'Khemark', 9342325235, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '10:26:00', 'gsdfa - Copy.jpg', '', 2000, 'neck: 25\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 26\r\nshoulder: 15\r\narm length: 18\r\nbust height: 10', '2024-12-07', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-27', 'completed', '2024-11-28 01:29:30', 'completed', '2024-11-28 01:30:31', 1500, '2024-11-27', 0, '', '2024-11-28 01:26:56'),
-(63, 'accepted', 'walk-in', 0, 'Making', 'Khemark', 9345354353, 'Male', '', 'marandi,lala, ldn', '2024-11-29', '22:11:00', 'afas.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-28 22:11:40'),
-(64, 'pending', 'walk-in', 0, 'Making', 'khemark', 923424234, 'male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '22:30:00', 'r1.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 0, '', '2024-11-28 22:30:32');
+INSERT INTO `royale_request_tbl` (`request_id`, `request_status`, `request_type`, `user_id`, `service_name`, `name`, `contact_number`, `gender`, `email`, `address`, `fitting_date`, `fitting_time`, `photo`, `message`, `fee`, `measurement`, `deadline`, `special_group`, `assigned_pattern_cutter`, `assigned_tailor`, `balance`, `down_payment`, `down_payment_date`, `pattern_status`, `pattern_completed_datetime`, `work_status`, `work_completed_datetime`, `final_payment`, `final_payment_date`, `cancellation_reason`, `datetime_request`) VALUES
+(62, 'completed', 'online', 15, 'Making', 'Khemark', 9342325235, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '10:26:00', 'gsdfa - Copy.jpg', '', 2000, 'neck: 25\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 26\r\nshoulder: 15\r\narm length: 18\r\nbust height: 10', '2024-12-07', '', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-11-27', 'completed', '2024-11-28 01:29:30', 'completed', '2024-11-28 01:30:31', 1500, '2024-11-27', '', '2024-11-28 01:26:56'),
+(63, 'accepted', 'walk-in', 0, 'Making', 'Khemark', 9345354353, 'Male', '', 'marandi,lala, ldn', '2024-11-29', '22:11:00', 'afas.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', '', '2024-11-28 22:11:40'),
+(64, 'cancelled', 'walk-in', 0, 'Making', 'khemark', 923424234, 'male', 'user@gmail.com', 'marandi,lala, ldn', '2024-11-29', '22:30:00', 'r1.jpg', '', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 'busy pa', '2024-11-28 22:30:32'),
+(65, 'cancelled', 'online', 1, 'Making', 'khemark', 934234234, 'male', 'user@gmail.com', 'tenazas,lala,lanao del norte', '2024-12-03', '18:39:00', 'dress2 - Copy.jpg', 'asap', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 'busy na', '2024-12-03 18:39:27'),
+(66, 'cancelled', 'online', 1, 'Making', 'asdads', 94324234, 'male', 'user@gmail.com', 'asdasda', '2024-12-03', '19:48:00', 'dress2.jpg', 'asdsdasd', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 'dili lang mu mudayum kay ulan', '2024-12-03 18:48:22'),
+(67, 'cancelled', 'walk-in', 0, 'Making', 'aadasdsa', 94545353, 'male', 'user@gmail.com', 'rsdadasdasd', '2024-12-04', '15:51:00', 'afas.jpg', 'asdasdasda', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', 'aadasd', '2024-12-04 14:52:06'),
+(68, 'completed', 'walk-in', 0, 'Making', 'Asdasdasd', 9567567567, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '13:57:00', 'dress2.jpg', 'sadasdad', 5000, 'neck: 23\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 23\r\nshoulder: 23\r\narm length: 23\r\nbust height: 23', '2024-12-07', 'ckcm', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 500, '2024-12-04', 'completed', '2024-12-04 15:54:07', 'completed', '2024-12-04 15:54:42', 4500, '2024-12-04', '', '2024-12-04 14:57:19'),
+(69, 'completed', 'walk-in', 0, 'Making', 'Asdasdasd', 9567567567, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '13:57:00', 'dress2.jpg', 'sadasdad', 10000, 'neck: 23\r\nbust: 23\r\nunder bust: 23\r\nwaist: 23\r\nhips: 23\r\nshoulder: 23\r\narm length: 23\r\nbust height: 23', '2024-12-08', 'ckcm', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 5000, '2024-12-04', 'completed', '2024-12-04 16:37:36', 'completed', '2024-12-04 16:38:43', 5000, '2024-12-04', '', '2024-12-04 14:57:20'),
+(70, 'ongoing', 'walk-in', 0, 'Making', 'Asdasdasd', 9567567567, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '13:57:00', 'dress2.jpg', 'sadasdad', 0, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '0000-00-00', '', 'Roy M. Ocariza', '', 0, 0, '2024-12-04', 'accepted', '0000-00-00 00:00:00', 'pending', '0000-00-00 00:00:00', 0, '0000-00-00', '', '2024-12-04 14:57:21'),
+(71, 'ongoing', 'walk-in', 0, 'Making', 'Asdasdasd', 9567567567, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '13:57:00', 'dress2.jpg', 'sadasdad', 0, 'neck: \r\nbust: \r\nunder bust: \r\nwaist: \r\nhips: \r\nshoulder: \r\narm length: \r\nbust height: ', '0000-00-00', '', 'Roy M. Ocariza', '', 0, 0, '2024-12-04', 'pending', '0000-00-00 00:00:00', 'pending', '0000-00-00 00:00:00', 0, '0000-00-00', '', '2024-12-04 14:57:22'),
+(72, 'pending', 'walk-in', 0, 'Making', 'asdasdasd', 9567567567, 'male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '13:57:00', 'dress2.jpg', 'sadasdad', 0, '', '0000-00-00', '', '', '', 0, 0, '0000-00-00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00', '', '2024-12-04 14:58:25'),
+(73, 'completed', 'online', 1, 'Making', 'Asdasdasd', 9456456456, 'Male', 'user@gmail.com', 'marandi,lala, ldn', '2024-12-05', '17:45:00', 'gsdfa - Copy.jpg', '', 5000, 'neck: 323\r\nbust: 32\r\nunder bust: 232\r\nwaist: 23\r\nhips: 2323\r\nshoulder: 23\r\narm length: 23\r\nbust height: 23', '2024-12-06', 'ckcm', 'Roy M. Ocariza', 'Roy M. Ocariza', 0, 1000, '2024-12-04', 'completed', '2024-12-04 16:47:17', 'completed', '2024-12-04 16:47:59', 4000, '2024-12-04', '', '2024-12-04 16:46:04');
 
 -- --------------------------------------------------------
 
@@ -395,7 +414,8 @@ CREATE TABLE `royale_user_tbl` (
 INSERT INTO `royale_user_tbl` (`user_id`, `user_name`, `user_email`, `user_password`, `user_status`, `user_bio`, `date_created`) VALUES
 (1, 'khemark', 'khemark@gmail.com', '$2y$10$nq1NR0BTJDj3Yko8ZpEaxeTtgOA9kN7ymu7LlkTLNQqDgAiyONAmu', 'active', 'hi IM first user', '2024-09-08 04:50:11'),
 (15, 'khemark2', 'khemark2@gmail.com', '$2y$10$jEVVtrAKOtpjRWlaKbd9U.5vqoUKSqxUCKwqGTEV13J11QsqusXX.', 'active', '', '2024-09-08 05:45:20'),
-(16, 'ads', 'akagami@gmail.com', '$2y$10$54ZdK7TjtNEMBN8k4ko5/OXkU7UIsHQ7YZApmX8v.FFp7znzK6irW', 'active', '', '2024-10-02 13:23:16');
+(16, 'ads', 'akagami@gmail.com', '$2y$10$54ZdK7TjtNEMBN8k4ko5/OXkU7UIsHQ7YZApmX8v.FFp7znzK6irW', 'active', '', '2024-10-02 13:23:16'),
+(18, 'customer2', 'customer2@gmail.com', '$2y$10$9Q.sFTsjEyGfJOY8V/SYluhhgY.BJUNW7/OiFTdXm1Tc8I7URYi7a', 'active', '', '2024-11-28 17:45:37');
 
 -- --------------------------------------------------------
 
@@ -584,7 +604,7 @@ ALTER TABLE `pattern_status_tbl`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `producttype`
@@ -596,19 +616,19 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `royale_product_order_tbl`
 --
 ALTER TABLE `royale_product_order_tbl`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `royale_request_tbl`
 --
 ALTER TABLE `royale_request_tbl`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `royale_user_tbl`
 --
 ALTER TABLE `royale_user_tbl`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `services`
