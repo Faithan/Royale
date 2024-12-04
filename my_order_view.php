@@ -142,6 +142,12 @@
                     <p><strong>Payment:</strong> <?php echo htmlspecialchars($row['payment']); ?></p>
                     <p><strong>Payment Date:</strong> <?php echo htmlspecialchars($row['payment_date']); ?></p>
                     <p><strong>Date and Time Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
+
+
+                    <?php if ($row['order_status'] == 'cancelled'): ?>
+                        <p style="color:red;"><strong>Cancellation Reason:</strong> <?php echo htmlspecialchars($row['cancellation_reason']); ?></p>
+                    <?php endif; ?>
+
                 </div>
 
 
@@ -174,6 +180,9 @@
                         <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Pickup Date:</strong> <?php echo htmlspecialchars($row['pickup_date']); ?></p>
                         <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Pickup Time:</strong> <?php echo htmlspecialchars($row['pickup_time']); ?></p>
                         <p style="background-color:#F4F4F4; color: #001C31 ;"><strong>Date Ordered:</strong> <?php echo htmlspecialchars($row['datetime_order']); ?></p>
+
+
+
                     </div>
 
                     <!-- Products in the Order -->
@@ -411,29 +420,39 @@
 
 
 
-
     <script>
         document.getElementById('cancel-order').addEventListener('click', function() {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
+                title: 'Are you sure you want to cancel this order?',
+                input: 'textarea',
+                inputPlaceholder: 'Enter your cancellation reason here...',
+                inputAttributes: {
+                    'aria-label': 'Enter your cancellation reason here'
+                },
                 showCancelButton: true,
                 confirmButtonColor: '#001C31',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, cancel it!'
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, keep it',
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Please provide a reason for cancellation');
+                    }
+                    return reason;
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Send AJAX request to cancel the order
                     const orderId = <?php echo json_encode($row['order_id']); ?>; // Get order_id
 
+                    // Send AJAX request to cancel the order with the cancellation reason
                     fetch('cancel_order.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                order_id: orderId
+                                order_id: orderId,
+                                cancellation_reason: result.value // Pass the entered reason
                             })
                         })
                         .then(response => response.json())

@@ -63,6 +63,7 @@ $tasks_results = $stmt->get_result();
                         $task_type = $row['task_type'];
                     }
                     ?>
+                    
                     <!-- Add debug info to check class being applied -->
                     <div class="request-card history-card <?php echo $task_type === 'pattern' ? 'pattern-card' : ($task_type === 'repair or resize' ? 'repair-card' : 'sewing-card'); ?>">
                         <!-- Debugging line to check the task type -->
@@ -103,9 +104,9 @@ $tasks_results = $stmt->get_result();
     }
 
    
-    .history-container .repair-card {
+    .history-container .repair-card {   
         border-left: 5px solid orange;
-        background-color: #ffedcc; /* Light orange color for repair/resizing tasks */
+        background-color: #ffedcc; /* Light orange color for repair/re  sizing tasks */
     }
 
     .dashboard-card {
@@ -148,7 +149,7 @@ $tasks_results = $stmt->get_result();
         border-radius: 0;
         box-shadow: none;
         text-align: left;
-        border: 1px dashed black;
+      
         transition: transform 0.3s, box-shadow 0.3s;
         margin-bottom: 20px;
         display: flex;

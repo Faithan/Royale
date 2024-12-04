@@ -171,7 +171,6 @@ if (isset($_GET['request_id'])) {
 
                 <p style="text-transform:uppercase"><strong>Measurement:</strong> <?php echo htmlspecialchars($row['measurement']); ?></p>
 
-
                 <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
                 <p><strong>Special Group:</strong> <?php echo htmlspecialchars($row['special_group']); ?></p>
                 <p><strong>Balance:</strong> ₱<?php echo htmlspecialchars($row['balance']); ?></p>
@@ -182,8 +181,11 @@ if (isset($_GET['request_id'])) {
                 <p><strong>Final Payment Date:</strong> <?php echo htmlspecialchars($row['final_payment_date']); ?>
                 </p>
 
-                <p style="color:red"><strong>Refund:</strong> ₱<?php echo htmlspecialchars($row['refund']); ?></p>
-                <p style="color:red"><strong>Refund Reason:</strong> <?php echo htmlspecialchars($row['refund_reason']); ?></p>
+
+                
+                <?php if ($row['request_status'] == 'cancelled'): ?>
+                        <p style="color:red;"><strong>Cancellation Reason:</strong> <?php echo htmlspecialchars($row['cancellation_reason']); ?></p>
+                    <?php endif; ?>
             </div>
 
 
@@ -242,14 +244,9 @@ if (isset($_GET['request_id'])) {
                         <p><strong>Final Payment:</strong> ₱<?php echo number_format($row['final_payment'], 2); ?> (Paid on: <?php echo htmlspecialchars($row['final_payment_date']); ?>)</p>
                     </div>
 
-                    <div class="section refund-info">
-                        <h3>Refund Details</h3>
-                        <p><strong>Refund:</strong> ₱<?php echo number_format($row['refund'], 2); ?></p>
-                        <p><strong>Refund Reason:</strong>
-                            <?php echo !empty($row['refund_reason']) ? htmlspecialchars($row['refund_reason']) : 'N/A'; ?>
-                        </p>
+                    
 
-                    </div>
+
 
 
 
@@ -445,30 +442,38 @@ if (isset($_GET['request_id'])) {
 
 
 
-
-
 <script>
-    document.getElementById('cancel-request').addEventListener('click', function() {
+    document.getElementById('cancel-request').addEventListener('click', function () {
+        const requestId = <?php echo json_encode($row['request_id']); ?>; // Get request_id
+        
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "Please provide a reason for cancellation.",
             icon: 'warning',
+            input: 'textarea',
+            inputPlaceholder: 'Enter your reason here...',
             showCancelButton: true,
             confirmButtonColor: '#001C31',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, cancel it!'
+            confirmButtonText: 'Yes, cancel it!',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to write a cancellation reason!';
+                }
+            }
         }).then((result) => {
             if (result.isConfirmed) {
+                const reason = result.value; // Get the cancellation reason
+                
                 // Send AJAX request to cancel the request
-                const requestId = <?php echo json_encode($row['request_id']); ?>; // Get request_id
-
                 fetch('cancel_request.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            request_id: requestId
+                            request_id: requestId,
+                            cancellation_reason: reason
                         })
                     })
                     .then(response => response.json())

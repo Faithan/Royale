@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
 
 
 
-                <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
+            <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
                     <h1 class="hidden">View Request</h1>
 
                     <!-- accept or cancel -->
@@ -115,13 +115,58 @@ if ($result->num_rows > 0) {
 
                             <div class="request-details-container2 hidden">
 
-
                                 <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending') ? '' : 'none'; ?>">
-                                    <button type="submit" name="cancel_request" id="cancel_button"
-                                        class="cancel_button">Reject</button>
+                                    <button type="button" name="cancel_request" id="cancel_button" class="cancel_button" onclick="cancelRequest()">Cancel</button>
                                     <button type="submit" name="accept_request" id="accept_button"
                                         class="accept_button">Accept</button>
                                 </div>
+
+                                <script>
+                                    function cancelRequest() {
+                                        Swal.fire({
+                                            title: 'Reason for Cancellation',
+                                            input: 'text',
+                                            inputPlaceholder: 'Type your reason here...',
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Submit',
+                                            cancelButtonText: 'Dismiss',
+                                            inputValidator: (value) => {
+                                                if (!value) {
+                                                    return 'You need to provide a reason!';
+                                                }
+                                            }
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                // Submit the form with the cancellation reason
+                                                const form = document.createElement('form');
+                                                form.method = 'POST';
+                                                form.action = 'online_request_action.php';
+
+                                                // Add the hidden input fields for request ID and cancellation reason
+                                                const reasonInput = document.createElement('input');
+                                                reasonInput.type = 'hidden';
+                                                reasonInput.name = 'cancellation_reason';
+                                                reasonInput.value = result.value; // The text entered by the user
+                                                form.appendChild(reasonInput);
+
+                                                const requestIdInput = document.createElement('input');
+                                                requestIdInput.type = 'hidden';
+                                                requestIdInput.name = 'request_id';
+                                                requestIdInput.value = '<?php echo $request_id; ?>';
+                                                form.appendChild(requestIdInput);
+
+                                                const cancelActionInput = document.createElement('input');
+                                                cancelActionInput.type = 'hidden';
+                                                cancelActionInput.name = 'cancel_request';
+                                                cancelActionInput.value = true;
+                                                form.appendChild(cancelActionInput);
+
+                                                document.body.appendChild(form);
+                                                form.submit();
+                                            }
+                                        });
+                                    }
+                                </script>
 
                                 <div class="request-details">
                                     <label>User ID:</label>
@@ -131,37 +176,36 @@ if ($result->num_rows > 0) {
 
                                 <div class="request-details">
                                     <label>Customer's Name:</label>
-                                    <input type="text" name="name" id="" value="<?php echo ucfirst($row['name']); ?>"
+                                    <input readonly type="text" name="name" id="" value="<?php echo ucfirst($row['name']); ?>"
                                         <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Contact Number:</label>
-                                    <input type="number" name="contact_number" id=""
+                                    <input readonly type="number" name="contact_number" id=""
                                         value="<?php echo $row['contact_number']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Gender:</label>
-                                    <input type="text" name="gender" id=""
+                                    <input readonly type="text" name="gender" id=""
                                         value="<?php echo ucfirst($row['gender']); ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Address:</label>
-                                    <input type="text" name="address" id="" value="<?php echo $row['address']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    <input readonly type="text" name="address" id="" value="<?php echo $row['address']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Email:</label>
-                                    <input type="text" name="email" id="" value="<?php echo $row['email']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    <input readonly type="text" name="email" id="" value="<?php echo $row['email']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="request-details">
                                     <label>Message:</label>
-                                    <textarea name="message" id="message" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['message']; ?></textarea>
+                                    <textarea readonly name="message" id="message" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['message']; ?></textarea>
                                 </div>
-
 
 
                                 <div class="request-details">
@@ -199,6 +243,7 @@ if ($result->num_rows > 0) {
                                 </div>
 
 
+
                                 <div class="request-details">
                                     <label>Request Id:</label>
                                     <input type="number" name="request_id" id=""
@@ -228,13 +273,22 @@ if ($result->num_rows > 0) {
                                 </div>
                                 <div class="request-details">
                                     <label>Fitting Date:</label>
-                                    <input type="date" name="fitting_date" id=""
-                                        value="<?php echo $row['fitting_date']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                    <input type="date" name="fitting_date" id="fitting_date"
+                                        value="<?php echo $row['fitting_date']; ?>"
+                                        <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>
+                                        min="<?php echo date('Y-m-d'); ?>"> <!-- Disable previous dates -->
                                 </div>
+
                                 <div class="request-details">
                                     <label>Fitting Time:</label>
                                     <input type="time" name="fitting_time" id=""
                                         value="<?php echo $row['fitting_time']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
+                                </div>
+
+                                <div class="request-details" style="display: <?php echo ($row['request_status'] === 'cancelled') ? '' : 'none'; ?>">
+                                    <label>Cancellation Reason:</label>
+                                    <input readonly type="text" id=""
+                                        value="<?php echo $row['cancellation_reason']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                 </div>
 
                             </div>
@@ -264,7 +318,7 @@ if ($result->num_rows > 0) {
 
 
                     <!-- update and ongoing  -->
-                    <form action="online_request_action.php" method="POST" class="additional-info-container">
+                    <form action="online_request_action.php" method="POST" class="additional-info-container" style="display: <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'cancelled') ? 'none' : ''; ?>">
                         <h2 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
                             Additional Information</h2>
 
@@ -404,35 +458,40 @@ if ($result->num_rows > 0) {
                             </div>
 
                             <div class="request-details">
-                                <label>Special Group <em>*if applicable*</em>:</label>
-                                <input type="text" name="special_group" id="" placeholder="Enter group name"
+                                <label>Organization <em>*if applicable*</em>:</label>
+                                <input type="text" name="special_group" id="" placeholder="Enter organization name"
                                     value="<?php echo $row['special_group']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
 
 
-
-
-
                             <div class="request-details">
                                 <label>Deadline:</label>
-                                <input type="date" name="deadline" id="" value="<?php echo $row['deadline']; ?>" <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                <input type="date" name="deadline" id="deadline"
+                                    value="<?php echo $row['deadline']; ?>"
+                                    <?php echo ($row['request_status'] === 'pending' || $row['pattern_status'] === 'completed' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>
+                                    min="<?php echo date('Y-m-d'); ?>"> <!-- Prevent selection of past dates -->
                             </div>
 
 
 
                             <div class="request-details">
-                                <label>Down Payment(₱):</label>
+                                <label>Down Payment (₱):</label>
                                 <input type="number" name="down_payment" id="down_payment"
-                                    value="<?php echo $row['down_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    value="<?php echo $row['down_payment']; ?>"
+                                    oninput="validatePayments(event)"
+                                    <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
-                            <div class="request-details">
+
+                            <div class="request-details" style="display: none;">
                                 <label>Down Payment Date:</label>
                                 <input type="date" name="down_payment_date" id=""
                                     value="<?php echo !empty($row['down_payment_date']) ? htmlspecialchars($row['down_payment_date']) : ''; ?>"
                                     readonly>
                             </div>
+
+
 
 
 
@@ -515,6 +574,9 @@ if ($result->num_rows > 0) {
 
 
 
+                            <p style="text-align:right">Note: You can only select a tailor after the pattern is completed</p>
+
+
 
 
                             <?php
@@ -528,7 +590,7 @@ if ($result->num_rows > 0) {
                             ?>
 
                             <div class="request-details">
-                                <label>Assigned Tailor:</label>
+                                <label>Assigned Tailor: </label>
 
                                 <input type="hidden" name="request_id" id="request_id" value="<?php echo $row['request_id']; ?>">
 
@@ -545,6 +607,7 @@ if ($result->num_rows > 0) {
                                     ?>
                                 </select>
                             </div>
+
 
 
                             <div class="request-details">
@@ -580,7 +643,6 @@ if ($result->num_rows > 0) {
 
 
 
-
                         </div>
 
                         <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'cancelled' || $row['request_status'] === 'pending' || $row['request_status'] === 'completed' || $row['work_status'] === 'completed') ? 'none' : 'flex'; ?>">
@@ -611,52 +673,141 @@ if ($result->num_rows > 0) {
 
 
 
-                        <h2 style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                        <h2 style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : ''; ?>">
                             Final Request Information</h2>
 
-                        <div class="request-details-container2">
-
-
-
-
+                        <div class="request-details-container2" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' ) ? 'none' : 'flex'; ?>">
 
                             <div class="request-details">
-                                <label>Final Payment(₱):</label>
+                                <label>Final Payment (₱):</label>
                                 <input type="number" name="final_payment" id="final_payment"
-                                    value="<?php echo $row['final_payment']; ?>" oninput="calculateBalance()" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
-                            </div>
-
-                            <div class="request-details">
-                                <label>Final Payment Date:</label>
-                                <input type="date" name="final_payment_date" id=""
-                                    value="<?php echo !empty($row['final_payment_date']) ? htmlspecialchars($row['final_payment_date']) : ''; ?>"
-                                    readonly>
-                            </div>
-
-                            <div class="request-details">
-                                <label>Balance(₱):</label>
-                                <input type="number" name="balance" id="balance" readonly
-                                    value="<?php echo $row['balance']; ?>">
-                            </div>
-
-                            <div class="request-details">
-                                <label> Refund(₱): <em>(situational)</em></label>
-                                <input type="number" name="refund" id="refund" value="<?php echo $row['refund']; ?>"
+                                    value="<?php echo $row['final_payment']; ?>"
+                                    oninput="validatePayments(event)"
                                     <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
 
                             <div class="request-details">
-                                <label>Refund_reason: <em>*if applicable*</em></label>
-                                <textarea name="refund_reason" id="refund-reason" <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>><?php echo $row['refund_reason']; ?></textarea>
+                                <label>Balance (₱):</label>
+                                <input type="number" name="balance" id="balance" readonly
+                                    value="<?php echo $row['balance']; ?>">
                             </div>
 
+
+
+
+                            <script>
+                                function validatePayments(event) {
+                                    var fee = parseFloat(document.getElementById('fee')?.value) || 0;
+                                    var downPaymentField = document.getElementById('down_payment');
+                                    var finalPaymentField = document.getElementById('final_payment');
+                                    var balanceField = document.getElementById('balance');
+
+                                    var downPayment = parseFloat(downPaymentField.value) || 0;
+                                    var finalPayment = parseFloat(finalPaymentField.value) || 0;
+
+                                    // Validate Down Payment
+                                    var maxDownPayment = fee - finalPayment;
+                                    if (event.target.id === 'down_payment' && downPayment > maxDownPayment) {
+                                        downPaymentField.value = maxDownPayment.toFixed(2);
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Invalid Input',
+                                            text: 'Down Payment cannot exceed the remaining balance.',
+                                            confirmButtonText: 'Okay'
+                                        });
+                                        downPayment = maxDownPayment; // Adjust downPayment to the maximum allowed
+                                    }
+
+                                    // Validate Final Payment
+                                    var maxFinalPayment = fee - downPayment;
+                                    if (event.target.id === 'final_payment' && finalPayment > maxFinalPayment) {
+                                        finalPaymentField.value = maxFinalPayment.toFixed(2);
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Invalid Input',
+                                            text: 'Final Payment cannot exceed the remaining balance.',
+                                            confirmButtonText: 'Okay'
+                                        });
+                                        finalPayment = maxFinalPayment; // Adjust finalPayment to the maximum allowed
+                                    }
+
+                                    // Update Balance (ensure it doesn't go negative)
+                                    var balance = fee - (downPayment + finalPayment);
+                                    if (balance < 0) {
+                                        balance = 0; // Cap balance at 0 if it would go negative
+                                    }
+
+                                    balanceField.value = balance.toFixed(2);
+                                }
+
+                                // Ensure balance is validated on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    validatePayments({
+                                        target: {
+                                            id: null
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
-                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
-                            <button type="submit" name="complete_request" id="complete_button"
+
+
+                        <!-- Checkbox to enable the Complete Order Button -->
+                        <div class="custom-checkbox" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                            <input type="checkbox" id="confirmComplete" onclick="toggleCompleteButton()">
+                            <label for="confirmComplete">I confirm to complete this request</label>
+
+                        </div>
+
+                      
+
+
+                        <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                            <button disabled type="submit" name="complete_request" id="complete_button"
                                 class="accept_button">Complete</button>
                         </div>
+
+                          <!-- Style for the Complete Order Button when disabled -->
+                          <style>
+
+                          
+                            .first-button-container .accept_button:disabled {
+                                cursor: not-allowed;
+                            }
+
+                            .custom-checkbox {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 10px;
+                            }
+
+                            .custom-checkbox label {
+                                font-size: 1.5rem;
+                            }
+                        </style>
+
+                        <script>
+                            // Function to enable/disable the Complete Order button based on checkbox status
+                            function toggleCompleteButton() {
+                                var checkBox = document.getElementById('confirmComplete');
+                                var completeButton = document.getElementById('complete_button');
+
+                                // Enable the Complete Order button if the checkbox is checked
+                                if (checkBox.checked) {
+                                    completeButton.disabled = false;
+                                } else {
+                                    completeButton.disabled = true;
+                                }
+                            }
+                        </script>
+
+
+
+
+
                         <p class="note"
-                            style="display:<?php echo ($row['request_status'] === 'completed') ? 'none' : 'block'; ?>">
+                            style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
                             <b>Instruction:</b> This section contains the final step where the payment is
                             entered. If a refund is necessary, it will be recorded here. Ensure that all fields are
                             completed and double-check the data entered to avoid errors. Once everything is set up,
@@ -673,7 +824,20 @@ if ($result->num_rows > 0) {
 
                         <!-- update and ongoing  -->
 
+
+                        </form>
+
                 </div> <!-- information-container -->
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -756,17 +920,3 @@ if ($result->num_rows > 0) {
 
 
 
-
-
-<!-- Balance Calculator -->
-<script>
-    function calculateBalance() {
-        var fee = parseFloat(document.getElementById('fee').value) || 0;
-        var downPayment = parseFloat(document.getElementById('down_payment').value) || 0;
-        var finalPayment = parseFloat(document.getElementById('final_payment').value) || 0;
-
-        var balance = fee - (downPayment + finalPayment);
-
-        document.getElementById('balance').value = balance.toFixed(2);
-    }
-</script>

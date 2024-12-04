@@ -99,7 +99,7 @@ if (!$result) {
                                     <th>Service Name</th>
                                     <th>Gender</th>
                                     <th>Address</th>
-                                    <th>Special Group</th>
+                                    <th>Organization</th>
                                     <th>Fitting Date</th>
                                     <th>Photos</th>
                                 </tr>

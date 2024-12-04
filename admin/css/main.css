@@ -121,6 +121,10 @@ p {
     font-family: 'Anton', Arial, sans-serif;
 }
 
+label{
+    font-family: 'Anton', Arial, sans-serif;
+}
+
 h1 {
     font-size: 6rem;
     color: var(--text-color);

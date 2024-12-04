@@ -8,93 +8,87 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-// Handle date filters and modify queries
-$fromDate = isset($_GET['from_date']) ? $_GET['from_date'] : null;
-$toDate = isset($_GET['to_date']) ? $_GET['to_date'] : null;
+$fromDate = $_GET['from_date'] ?? null;
+$toDate = $_GET['to_date'] ?? null;
+$orderStatus = $_GET['order_status'] ?? null;
 
-$dateFilteredOrders = [];
-$totalIncome = 0;
-$totalOrders = 0;
+$queryConditions = [];
+$queryParams = [];
 
+// Handle date filtering
 if ($fromDate && $toDate) {
-    // Fetch filtered orders
-    $dateFilteredQuery = "SELECT * FROM royale_product_order_tbl WHERE DATE(datetime_order) BETWEEN ? AND ?";
-    $stmt = $conn->prepare($dateFilteredQuery);
-    $stmt->bind_param("ss", $fromDate, $toDate);
-    $stmt->execute();
-    $dateFilteredResult = $stmt->get_result();
-    $dateFilteredOrders = $dateFilteredResult->fetch_all(MYSQLI_ASSOC);
-
-    // Calculate total income
-    $incomeQuery = "SELECT SUM(payment) AS total_income FROM royale_product_order_tbl WHERE DATE(payment_date) BETWEEN ? AND ?";
-    $incomeStmt = $conn->prepare($incomeQuery);
-    $incomeStmt->bind_param("ss", $fromDate, $toDate);
-    $incomeStmt->execute();
-    $incomeResult = $incomeStmt->get_result();
-    $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
-
-    // Count total orders
-    $orderCountQuery = "SELECT COUNT(*) AS total_orders FROM royale_product_order_tbl WHERE DATE(datetime_order) BETWEEN ? AND ?";
-    $orderCountStmt = $conn->prepare($orderCountQuery);
-    $orderCountStmt->bind_param("ss", $fromDate, $toDate);
-    $orderCountStmt->execute();
-    $orderCountResult = $orderCountStmt->get_result();
-    $totalOrders = $orderCountResult->fetch_assoc()['total_orders'] ?? 0;
-} else {
-    // Fetch all orders if no date filter is applied
-    $sql = "SELECT * FROM royale_product_order_tbl";
-    $result = $conn->query($sql);
-    $dateFilteredOrders = $result->fetch_all(MYSQLI_ASSOC);
-
-    // Calculate total income and orders for all data
-    $incomeQuery = "SELECT SUM(payment) AS total_income FROM royale_product_order_tbl";
-    $incomeResult = $conn->query($incomeQuery);
-    $totalIncome = $incomeResult->fetch_assoc()['total_income'] ?? 0;
-
-    $orderCountQuery = "SELECT COUNT(*) AS total_orders FROM royale_product_order_tbl";
-    $orderCountResult = $conn->query($orderCountQuery);
-    $totalOrders = $orderCountResult->fetch_assoc()['total_orders'] ?? 0;
+    $queryConditions[] = "DATE(datetime_order) BETWEEN ? AND ?";
+    $queryParams[] = $fromDate;
+    $queryParams[] = $toDate;
+} elseif ($fromDate) {
+    $queryConditions[] = "DATE(datetime_order) >= ?";
+    $queryParams[] = $fromDate;
+} elseif ($toDate) {
+    $queryConditions[] = "DATE(datetime_order) <= ?";
+    $queryParams[] = $toDate;
 }
 
-// Fetch statistics for product types and order statuses
+// Handle order status filtering
+if ($orderStatus) {
+    $queryConditions[] = "order_status = ?";
+    $queryParams[] = $orderStatus;
+}
+
+// Combine conditions
+$whereClause = !empty($queryConditions) ? "WHERE " . implode(" AND ", $queryConditions) : "";
+
+// Fetch filtered orders using your provided SQL query
+$orderQuery = "SELECT `order_id`, `user_id`, `order_type`, `order_variation`, `order_status`, `user_name`, `user_contact_number`, `user_gender`, `user_email`, `user_address`, `pickup_date`, `pickup_time`, `product_days_of_rent`, `product_id`, `product_name`, `product_type`, `product_gender`, `product_size`, `product_quantity`, `product_price`, `product_rent_price`, `product_photo`, `payment`, `payment_date`, `datetime_order` FROM `royale_product_order_tbl` $whereClause";
+$stmt = $conn->prepare($orderQuery);
+if (!empty($queryParams)) {
+    $stmt->bind_param(str_repeat("s", count($queryParams)), ...$queryParams);
+}
+$stmt->execute();
+$orderReports = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Calculate total order income
+$incomeQuery = "SELECT SUM(payment) AS total_income FROM royale_product_order_tbl $whereClause";
+$incomeStmt = $conn->prepare($incomeQuery);
+if (!empty($queryParams)) {
+    $incomeStmt->bind_param(str_repeat("s", count($queryParams)), ...$queryParams);
+}
+$incomeStmt->execute();
+$totalIncome = $incomeStmt->get_result()->fetch_assoc()['total_income'] ?? 0;
+
+// Count total orders
+$orderCountQuery = "SELECT COUNT(*) AS total_orders FROM royale_product_order_tbl $whereClause";
+$orderCountStmt = $conn->prepare($orderCountQuery);
+if (!empty($queryParams)) {
+    $orderCountStmt->bind_param(str_repeat("s", count($queryParams)), ...$queryParams);
+}
+$orderCountStmt->execute();
+$totalOrders = $orderCountStmt->get_result()->fetch_assoc()['total_orders'] ?? 0;
+
+// Fetch statistics for order types, product names, and order statuses
 $stats = [];
 
-// Most ordered product type and counts
-$productTypeQuery = "SELECT product_type, COUNT(*) as count FROM royale_product_order_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") . " GROUP BY product_type ORDER BY count DESC";
-$productTypeStmt = $conn->prepare($productTypeQuery);
-if ($fromDate && $toDate) {
-    $productTypeStmt->bind_param("ss", $fromDate, $toDate);
+// Most ordered products and counts, limited to top 3
+$productQuery = "SELECT product_name, COUNT(*) as count FROM royale_product_order_tbl $whereClause GROUP BY product_name ORDER BY count DESC LIMIT 3";
+$productStmt = $conn->prepare($productQuery);
+if (!empty($queryParams)) {
+    $productStmt->bind_param(str_repeat("s", count($queryParams)), ...$queryParams);
 }
-$productTypeStmt->execute();
-$productTypeResult = $productTypeStmt->get_result();
-$stats['product_types'] = $productTypeResult->fetch_all(MYSQLI_ASSOC);
+$productStmt->execute();
+$productResult = $productStmt->get_result();
+$stats['products'] = $productResult->fetch_all(MYSQLI_ASSOC);
+
 
 // Order status counts
-$orderStatusQuery = "SELECT order_status, COUNT(*) as count FROM royale_product_order_tbl " . ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") . " GROUP BY order_status";
+$orderStatusQuery = "SELECT order_status, COUNT(*) as count FROM royale_product_order_tbl $whereClause GROUP BY order_status";
 $orderStatusStmt = $conn->prepare($orderStatusQuery);
-if ($fromDate && $toDate) {
-    $orderStatusStmt->bind_param("ss", $fromDate, $toDate);
+if (!empty($queryParams)) {
+    $orderStatusStmt->bind_param(str_repeat("s", count($queryParams)), ...$queryParams);
 }
 $orderStatusStmt->execute();
 $orderStatusResult = $orderStatusStmt->get_result();
 $stats['order_statuses'] = $orderStatusResult->fetch_all(MYSQLI_ASSOC);
-
-
-// Most ordered product ID
-$mostOrderedProductQuery = "SELECT product_id, COUNT(*) as count FROM royale_product_order_tbl " .
-    ($fromDate && $toDate ? "WHERE DATE(datetime_order) BETWEEN ? AND ?" : "") .
-    " GROUP BY product_id ORDER BY count DESC LIMIT 1";
-$mostOrderedProductStmt = $conn->prepare($mostOrderedProductQuery);
-if ($fromDate && $toDate) {
-    $mostOrderedProductStmt->bind_param("ss", $fromDate, $toDate);
-}
-$mostOrderedProductStmt->execute();
-$mostOrderedProductResult = $mostOrderedProductStmt->get_result();
-$mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,7 +97,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Reports</title>
 
-    <!-- important file -->
+    <!-- Important file -->
     <?php include 'important.php'; ?>
 
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
@@ -121,7 +115,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         <main>
             <div class="header-container">
                 <div class="header-label-container">
-                    <i class="fa-solid fa-box"></i>
+                    <i class="fa-solid fa-clipboard-list"></i>
                     <label for="">Order Reports</label>
                 </div>
 
@@ -134,38 +128,28 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
                         <!-- Statistics Section -->
                         <div class="statistics-section">
                             <h3>Royale Order Statistics</h3>
+
                             <div class="stats-container">
                                 <!-- Total Income -->
                                 <div class="stat-box">
                                     <h4>Total Income</h4>
-                                    <p><strong>₱<?php echo number_format($totalIncome, 2); ?></strong></p>
+                                    <p><strong style="font-size: 4rem;">₱<?php echo number_format($totalIncome, 2); ?></strong></p>
                                 </div>
 
                                 <!-- Total Orders -->
                                 <div class="stat-box">
                                     <h4>Total Orders</h4>
-                                    <p><strong><?php echo $totalOrders; ?></strong></p>
+                                    <p><strong style="font-size: 4rem;"><?php echo $totalOrders; ?></strong></p>
                                 </div>
 
                                 <div class="stat-box">
-                                    <h4>Picked Order Product Type:</h4>
-                                    <?php if (empty($stats['product_types'])): ?>
+                                    <h4>Top 3 Most Ordered Products</h4>
+                                    <?php if (empty($stats['products'])): ?>
                                         <p><strong>N/A</strong></p>
                                     <?php else: ?>
-                                        <?php foreach ($stats['product_types'] as $type): ?>
-                                            <p><?php echo $type['product_type']; ?>: <strong><?php echo $type['count']; ?></strong></p>
+                                        <?php foreach ($stats['products'] as $product): ?>
+                                            <p><?php echo $product['product_name']; ?>: <strong><?php echo $product['count']; ?></strong></p>
                                         <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </div>
-
-                                <!-- Most Ordered Product ID -->
-                                <div class="stat-box">
-                                    <h4>Most Ordered Product</h4>
-                                    <?php if (empty($mostOrderedProduct)): ?>
-                                        <p><strong>N/A</strong></p>
-                                    <?php else: ?>
-                                        <p>Product ID: <strong><?php echo $mostOrderedProduct['product_id']; ?></strong></p>
-                                        <p>Orders: <strong><?php echo $mostOrderedProduct['count']; ?></strong></p>
                                     <?php endif; ?>
                                 </div>
 
@@ -186,20 +170,37 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
 
                             <!-- Date Range Filters -->
                             <div class="filter-by-date">
-                                <h3>Filter by Date</h3>
-                                <form method="GET" class="filter-form">
+                                <h3>Filter by Order Date and Status</h3>
+                                <form method="GET" id="filterForm">
                                     <div class="filter-input-group">
                                         <label for="from_date">From:</label>
-                                        <input type="date" id="from_date" name="from_date" value="<?php echo htmlspecialchars($fromDate); ?>" required>
+                                        <input type="date" id="from_date" name="from_date" value="<?php echo htmlspecialchars($fromDate); ?>">
                                     </div>
                                     <div class="filter-input-group">
                                         <label for="to_date">To:</label>
-                                        <input type="date" id="to_date" name="to_date" value="<?php echo htmlspecialchars($toDate); ?>" required>
+                                        <input type="date" id="to_date" name="to_date" value="<?php echo htmlspecialchars($toDate); ?>">
                                     </div>
-                                    <button type="submit" class="filter-btn">Filter</button>
+                                    <div class="filter-input-group">
+                                        <label for="order_status">Order Status:</label>
+                                        <select id="order_status" name="order_status">
+                                            <option value="">All</option>
+                                            <option value="Cancelled" <?php echo ($orderStatus === "Cancelled" ? "selected" : ""); ?>>Cancelled</option>
+                                            <option value="Pending" <?php echo ($orderStatus === "Pending" ? "selected" : ""); ?>>Pending</option>
+                                            <option value="Accepted" <?php echo ($orderStatus === "Accepted" ? "selected" : ""); ?>>Accepted</option>
+                                            <option value="Completed" <?php echo ($orderStatus === "Completed" ? "selected" : ""); ?>>Completed</option>
+
+                                        </select>
+                                    </div>
                                 </form>
                             </div>
 
+                            <script>
+                                document.querySelectorAll('#from_date, #to_date, #order_status').forEach(element => {
+                                    element.addEventListener('change', function() {
+                                        document.getElementById('filterForm').submit();
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <!-- Table Section -->
@@ -208,59 +209,60 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
                                 <thead>
                                     <tr>
                                         <th>Order ID</th>
-                                        <th>User ID</th>
-                                        <th>Customer Name</th>
+                                        <th>Name</th>
                                         <th>Product</th>
-                                        <th>Size</th>
                                         <th>Type</th>
-                                        <th>Variation</th>
-                                        <th>Photo</th>
-                                        <th>Status</th>
-                                        <th>Contact</th>
-                                        <th>Pickup Date</th>
-                                        <th>Pickup Time</th>
-                                        <th>Rent Days</th>
+                                        <th>Order Variation</th>
                                         <th>Payment</th>
-                                        <th>Payment Date</th>
+                                        <th>Order Status</th>
                                         <th>Order Date</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if (empty($dateFilteredOrders)): ?>
+                                    <?php if (empty($orderReports)): ?>
                                         <tr>
-                                            <td colspan="16" style="text-align: center;">No orders on the selected date</td>
+                                            <td colspan="9">No orders found.</td>
                                         </tr>
                                     <?php else: ?>
-                                        <?php foreach ($dateFilteredOrders as $order): ?>
-                                            <tr>
+                                        <?php foreach ($orderReports as $order): ?>
+                                            <tr class="order-row"
+                                                data-id="<?php echo $order['order_id']; ?>"
+                                                data-user-id="<?php echo $order['user_id']; ?>"
+                                                data-order-type="<?php echo $order['order_type']; ?>"
+                                                data-order-variation="<?php echo $order['order_variation']; ?>"
+                                                data-order-status="<?php echo $order['order_status']; ?>"
+                                                data-user-name="<?php echo $order['user_name']; ?>"
+                                                data-user-contact="<?php echo $order['user_contact_number']; ?>"
+                                                data-user-gender="<?php echo $order['user_gender']; ?>"
+                                                data-user-email="<?php echo $order['user_email']; ?>"
+                                                data-user-address="<?php echo $order['user_address']; ?>"
+                                                data-pickup-date="<?php echo $order['pickup_date']; ?>"
+                                                data-pickup-time="<?php echo $order['pickup_time']; ?>"
+                                                data-days-of-rent="<?php echo $order['product_days_of_rent']; ?>"
+                                                data-product-id="<?php echo $order['product_id']; ?>"
+                                                data-product-name="<?php echo $order['product_name']; ?>"
+                                                data-product-type="<?php echo $order['product_type']; ?>"
+                                                data-product-gender="<?php echo $order['product_gender']; ?>"
+                                                data-product-size="<?php echo $order['product_size']; ?>"
+                                                data-product-quantity="<?php echo $order['product_quantity']; ?>"
+                                                data-product-price="<?php echo $order['product_price']; ?>"
+                                                data-product-rent-price="<?php echo $order['product_rent_price']; ?>"
+                                                data-product-photo="<?php echo $order['product_photo']; ?>"
+                                                data-payment="<?php echo $order['payment']; ?>"
+                                                data-payment-date="<?php echo $order['payment_date']; ?>"
+                                                data-order-date="<?php echo $order['datetime_order']; ?>">
+                                                <!-- Add your table data (columns) here -->
                                                 <td><?php echo $order['order_id']; ?></td>
-                                                <td><?php echo $order['user_id']; ?></td>
                                                 <td><?php echo $order['user_name']; ?></td>
                                                 <td><?php echo $order['product_name']; ?></td>
-                                                <td><?php echo $order['product_size']; ?></td>
-                                                <td><?php echo $order['order_type']; ?></td>
+                                                <td><?php echo $order['product_type']; ?></td>
                                                 <td><?php echo $order['order_variation']; ?></td>
-                                                <td style="display:flex; flex-direction: row;">
-                                                    <?php if (!empty($order['product_photo'])): ?>
-                                                        <?php
-                                                        $photos = explode(',', $order['product_photo']); // Split the comma-separated values
-                                                        foreach ($photos as $photo):
-                                                        ?>
-                                                            <img src="products/<?php echo trim($photo); ?>" alt="Photo" style="max-width: 40px; max-height: 40px; margin-right: 5px; border-radius: 5px;">
-                                                        <?php endforeach; ?>
-                                                    <?php else: ?>
-                                                        N/A
-                                                    <?php endif; ?>
-                                                </td> 
+                                                <td><?php echo $order['payment']; ?></td>
                                                 <td><?php echo $order['order_status']; ?></td>
-                                                <td><?php echo $order['user_contact_number']; ?></td>
-                                                <td><?php echo $order['pickup_date']; ?></td>
-                                                <td><?php echo $order['pickup_time']; ?></td>
-                                                <td><?php echo $order['product_days_of_rent']; ?></td>
-                                                <td>₱<?php echo number_format($order['payment'], 2); ?></td>
-                                                <td><?php echo $order['payment_date']; ?></td>
                                                 <td><?php echo $order['datetime_order']; ?></td>
                                             </tr>
+
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </tbody>
@@ -269,21 +271,163 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
 
                     </div>
                 </div>
+
             </div>
         </main>
+
     </div>
+
+
 
 </body>
 
 </html>
 
+<!-- Modal Structure -->
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Order Details</h3>
+        <p><strong>Order ID:</strong> <span id="modalOrderId"></span></p>
+        <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+        <p><strong>Name:</strong> <span id="modalUserName"></span></p>
+        <p><strong>Contact Number:</strong> <span id="modalUserContact"></span></p>
+        <p><strong>Gender:</strong> <span id="modalUserGender"></span></p>
+        <p><strong>Email:</strong> <span id="modalUserEmail"></span></p>
+        <p><strong>Address:</strong> <span id="modalUserAddress"></span></p>
+        <p><strong>Pickup Date:</strong> <span id="modalPickupDate"></span></p>
+        <p><strong>Pickup Time:</strong> <span id="modalPickupTime"></span></p>
+        <p><strong>Order Type:</strong> <span id="modalOrderType"></span></p>
+        <p><strong>Order Variation:</strong> <span id="modalOrderVariation"></span></p>
+        <p><strong>Product Name:</strong> <span id="modalProductName"></span></p>
+        <p><strong>Product Type:</strong> <span id="modalProductType"></span></p>
+        <p><strong>Product Gender:</strong> <span id="modalProductGender"></span></p>
+        <p><strong>Product Size:</strong> <span id="modalProductSize"></span></p>
+        <p><strong>Quantity:</strong> <span id="modalProductQuantity"></span></p>
+        <p><strong>Price:</strong> ₱<span id="modalProductPrice"></span></p>
+        <p><strong>Rent Price:</strong> ₱<span id="modalProductRentPrice"></span></p>
+        <p><strong>Days of Rent:</strong> <span id="modalDaysOfRent"></span></p>
+        <p><strong>Payment:</strong> <span id="modalPayment"></span></p>
+        <p><strong>Payment Date:</strong> <span id="modalPaymentDate"></span></p>
+        <p><strong>Order Date:</strong> <span id="modalOrderDate"></span></p>
+        <p><strong>Status:</strong> <span id="modalOrderStatus"></span></p>
+    </div>
+</div>
+
+<script>
+    // Get modal element
+    const modal = document.getElementById('orderModal');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Get all the rows
+    const rows = document.querySelectorAll('.order-row');
+
+    // Add click event listener to each row
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            // Extract data attributes from the row
+            document.getElementById('modalOrderId').textContent = this.getAttribute('data-id');
+            document.getElementById('modalUserId').textContent = this.getAttribute('data-user-id');
+            document.getElementById('modalUserName').textContent = this.getAttribute('data-user-name');
+            document.getElementById('modalUserContact').textContent = this.getAttribute('data-user-contact');
+            document.getElementById('modalUserGender').textContent = this.getAttribute('data-user-gender');
+            document.getElementById('modalUserEmail').textContent = this.getAttribute('data-user-email');
+            document.getElementById('modalUserAddress').textContent = this.getAttribute('data-user-address');
+            document.getElementById('modalPickupDate').textContent = this.getAttribute('data-pickup-date');
+            document.getElementById('modalPickupTime').textContent = this.getAttribute('data-pickup-time');
+            document.getElementById('modalOrderType').textContent = this.getAttribute('data-order-type');
+            document.getElementById('modalOrderVariation').textContent = this.getAttribute('data-order-variation');
+            document.getElementById('modalProductName').textContent = this.getAttribute('data-product-name');
+            document.getElementById('modalProductType').textContent = this.getAttribute('data-product-type');
+            document.getElementById('modalProductGender').textContent = this.getAttribute('data-product-gender');
+            document.getElementById('modalProductSize').textContent = this.getAttribute('data-product-size');
+            document.getElementById('modalProductQuantity').textContent = this.getAttribute('data-product-quantity');
+            document.getElementById('modalProductPrice').textContent = this.getAttribute('data-product-price');
+            document.getElementById('modalProductRentPrice').textContent = this.getAttribute('data-product-rent-price');
+            document.getElementById('modalDaysOfRent').textContent = this.getAttribute('data-days-of-rent');
+            document.getElementById('modalPayment').textContent = this.getAttribute('data-payment');
+            document.getElementById('modalPaymentDate').textContent = this.getAttribute('data-payment-date');
+            document.getElementById('modalOrderDate').textContent = this.getAttribute('data-order-date');
+            document.getElementById('modalOrderStatus').textContent = this.getAttribute('data-order-status');
+
+            // Display modal
+            modal.style.display = 'block';
+        });
+    });
+
+    // Close modal when clicking on the close button
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close modal if clicked outside of the modal content
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
 
 
 
 
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
+    .modal-content {
+        background-color: var(--first-bgcolor);
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 5px;
+        width: 80%;
+        max-width: 600px;
 
+    }
 
+    .modal-content h3 {
+        color: var(--text-color);
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-family: 'Anton', Arial, sans-serif;
+    }
+
+    .modal-content p {
+        color: var(--text-color);
+        font-size: 1.4rem;
+        font-family: 'Anton', Arial, sans-serif;
+
+    }
+
+    .modal-content p strong {
+
+        font-family: 'Anton', Arial, sans-serif;
+    }
+
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
 
 
 
@@ -299,15 +443,16 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
     }
 
     .statistics-section h3 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         margin-bottom: 10px;
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .stats-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 10px;
     }
 
     .stat-box {
@@ -316,22 +461,23 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         padding: 15px;
         border-radius: 8px;
         text-align: center;
-        flex: 1;
-        min-width: 200px;
+        flex-grow: 1;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         color: var(--text-color2)
     }
 
     .stat-box h4 {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-        color: var(--text-color);
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: gray;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .stat-box p {
-        font-size: 1.6rem;
+        font-size: 2.5rem;
         margin: 0;
-        color: var(--text-color2);
+        color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .status-stats {
@@ -344,6 +490,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         min-width: 200px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         color: var(--text-color);
+
     }
 
     .status-stats ul {
@@ -352,12 +499,14 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
     }
 
     .status-stats h4 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         margin-bottom: 10px;
+        color: gray;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .status-stats ul li {
-        font-size: 1.6rem;
+        font-size: 2rem;
         margin: 5px 0;
         color: (--text-color2);
     }
@@ -371,19 +520,22 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         background-color: var(--second-bgcolor);
         padding-top: 20px;
         border-radius: 10px;
+
     }
 
     .filter-by-date h3 {
         margin-bottom: 15px;
-        font-size: 20px;
+        font-size: 2rem;
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
-    .filter-form {
+    .filter-by-date form {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 10px;
         align-items: center;
+        flex-direction: row;
     }
 
     .filter-input-group {
@@ -393,9 +545,10 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
     }
 
     .filter-input-group label {
-        font-size: 14px;
+        font-size: 1.5rem;
         color: var(--text-color2);
         font-weight: bold;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .filter-input-group input {
@@ -405,6 +558,19 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         font-size: 14px;
         color: var(--text-color);
         background-color: var(--first-bgcolor);
+        font-family: 'Anton', Arial, sans-serif;
+        flex: 1;
+    }
+
+    .filter-input-group select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        color: var(--text-color);
+        background-color: var(--first-bgcolor);
+        font-family: 'Anton', Arial, sans-serif;
+        flex: 1;
     }
 
     .filter-btn {
@@ -488,6 +654,7 @@ $mostOrderedProduct = $mostOrderedProductResult->fetch_assoc();
         padding: 10px;
         border: 1px solid #ddd;
         cursor: normal;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     th {

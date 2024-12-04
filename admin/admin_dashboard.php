@@ -916,7 +916,7 @@ GROUP BY down_payment_date";
             max-width: 49%;
             max-height: 295px;
             background-color: var(--first-bgcolor);
-            border: 1px dashed var(--box-shadow);
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
             padding: 20px;
             border-radius: 5px;
         }

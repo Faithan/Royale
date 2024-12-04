@@ -48,6 +48,7 @@ try {
         if ($stmt->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Form successfully submitted.';
+            
         } else {
             throw new Exception('Database error: ' . $stmt->error);
         }

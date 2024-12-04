@@ -82,7 +82,7 @@ $employees = $employeeResult->fetch_all(MYSQLI_ASSOC);
                 <div class="content">
 
                     <div class="report-container">
-                        <h3 style=" font-size: 2.5rem; margin: 10px 0; color: var(--text-color);">Royale Employee Statistics</h3>
+                        <h3 style=" font-size: 2rem; margin: 10px 0; color: var(--text-color);   font-family: 'Anton', Arial, sans-serif;">Royale Employee Statistics</h3>
                         <!-- Top 3 Boxes -->
                         <div class="top-employees-container">
                             <div class="top-box">
@@ -232,7 +232,7 @@ $employees = $employeeResult->fetch_all(MYSQLI_ASSOC);
 
     .modal-content {
         background-color: var(--first-bgcolor);
-       
+        font-family: 'Anton', Arial, sans-serif;
         padding: 20px;
         border-radius: 8px;
         width:100%;
@@ -278,12 +278,14 @@ $employees = $employeeResult->fetch_all(MYSQLI_ASSOC);
     th,
     td {
         border: 1px solid var(--box-shadow);
+
     }
 
     th,
     td {
         padding: 10px;
         text-align: center;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .filters-container {
@@ -319,6 +321,7 @@ $employees = $employeeResult->fetch_all(MYSQLI_ASSOC);
         border: 1px solid var(--box-shadow);
         background-color: var(--second-bgcolor);
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .top-users-container {
@@ -345,9 +348,11 @@ $employees = $employeeResult->fetch_all(MYSQLI_ASSOC);
         margin-bottom: 10px;
         font-size: 1.8rem;
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .top-box p {
         font-size: 1.6rem;
+        font-family: 'Anton', Arial, sans-serif;
     }
 </style>

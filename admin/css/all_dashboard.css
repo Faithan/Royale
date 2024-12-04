@@ -225,6 +225,7 @@ th {
     border: 1px solid var(--box-shadow);
     position: sticky;
     top: 0;
+    font-family: 'Anton', Arial, sans-serif;
 
 }
 
@@ -239,6 +240,7 @@ td {
     border: 1px solid var(--box-shadow);
     cursor: pointer;
     max-width: 100px;
+    font-family: 'Anton', Arial, sans-serif;
 
 }
 

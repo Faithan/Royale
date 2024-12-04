@@ -64,7 +64,14 @@ if ($result->num_rows > 0) {
                 <div class="content" data-status="<?php echo ucfirst($row['order_status']); ?>">
                     <h1 class="hidden">View Order</h1>
 
-                    <form method="POST" action="online_order_action.php" class="order-details-container">
+
+
+
+
+
+
+
+                       <form method="POST" action="online_order_action.php" class="order-details-container">
                         <div class="information-container">
 
                             <div class="order-details-img hidden">
@@ -85,12 +92,61 @@ if ($result->num_rows > 0) {
                                 style="display:<?php echo ($row['order_status'] === 'completed') || $row['order_status'] === 'cancelled' ? 'block' : 'none'; ?>">
                                 Customer and Request Recorded Information</h2>
 
+
                             <div class="first-button-container"
                                 style="align-self: center; display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'accepted') ? 'none' : 'block'; ?>">
-                                <button type="submit" name="cancel_order" class="cancel_button" id="cancel_button">Reject</button>
+
+                                <button type="button" name="cancel_order" id="cancel_button" class="cancel_button" onclick="cancelOrder()">Cancel</button>
                                 <button type="submit" name="accept_order" class="accept_button" id="accept_button">Accept</button>
                             </div>
 
+
+                            <script>
+                                function cancelOrder() {
+                                    Swal.fire({
+                                        title: 'Reason for Cancellation',
+                                        input: 'text',
+                                        inputPlaceholder: 'Type your reason here...',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Submit',
+                                        cancelButtonText: 'Dismiss',
+                                        inputValidator: (value) => {
+                                            if (!value) {
+                                                return 'You need to provide a reason!';
+                                            }
+                                        }
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Submit the form with the cancellation reason
+                                            const form = document.createElement('form');
+                                            form.method = 'POST';
+                                            form.action = 'online_order_action.php';
+
+                                            // Add the hidden input fields for order ID and cancellation reason
+                                            const reasonInput = document.createElement('input');
+                                            reasonInput.type = 'hidden';
+                                            reasonInput.name = 'cancellation_reason';
+                                            reasonInput.value = result.value; // The text entered by the user
+                                            form.appendChild(reasonInput);
+
+                                            const orderIdInput = document.createElement('input');
+                                            orderIdInput.type = 'hidden';
+                                            orderIdInput.name = 'order_id';
+                                            orderIdInput.value = '<?php echo $order_id; ?>';
+                                            form.appendChild(orderIdInput);
+
+                                            const cancelActionInput = document.createElement('input');
+                                            cancelActionInput.type = 'hidden';
+                                            cancelActionInput.name = 'cancel_order';
+                                            cancelActionInput.value = true;
+                                            form.appendChild(cancelActionInput);
+
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        }
+                                    });
+                                }
+                            </script>
 
                             <div class="order-details-container2 hidden">
                                 <div class="order-details">
@@ -106,33 +162,32 @@ if ($result->num_rows > 0) {
 
                                 <div class="order-details">
                                     <label>Customer's Name:</label>
-                                    <input type="text" name="user_name"
+                                    <input readonly type="text" name="user_name"
                                         value="<?php echo ucfirst($row['user_name']); ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="order-details">
                                     <label>Contact Number:</label>
-                                    <input type="number" name="user_contact_number"
+                                    <input readonly type="number" name="user_contact_number"
                                         value="<?php echo $row['user_contact_number']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="order-details">
                                     <label>Gender:</label>
-                                    <input type="text" name="user_gender"
+                                    <input readonly type="text" name="user_gender"
                                         value="<?php echo ucfirst($row['user_gender']); ?>" readonly>
                                 </div>
 
                                 <div class="order-details">
                                     <label>Address:</label>
-                                    <input type="text" name="user_address" value="<?php echo $row['user_address']; ?>"
+                                    <input readonly type="text" name="user_address" value="<?php echo $row['user_address']; ?>"
                                         <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
                                 <div class="order-details">
                                     <label>Email:</label>
-                                    <input type="text" name="user_email" value="<?php echo $row['user_email']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                    <input readonly type="text" name="user_email" value="<?php echo $row['user_email']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
-
 
 
                                 <div class="order-details">
@@ -179,8 +234,6 @@ if ($result->num_rows > 0) {
                                         readonly>
                                 </div>
 
-
-
                                 <div class="order-details">
                                     <label>Product Size:</label>
                                     <input type="text" name="product_size"
@@ -196,7 +249,7 @@ if ($result->num_rows > 0) {
                                 <div class="order-details"
                                     style="display:<?php echo ($row['order_variation'] === 'buy') ? 'flex' : 'none'; ?>">
                                     <label>Price (₱):</label>
-                                    <input type="number" name="product_price"
+                                    <input readonly type="number" name="product_price"
                                         value="<?php echo $row['product_price']; ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
 
@@ -232,6 +285,12 @@ if ($result->num_rows > 0) {
                                         value="<?php echo $row['datetime_order']; ?>" readonly>
                                 </div>
 
+                                <div class="order-details" style="display: <?php echo ($row['order_status'] === 'cancelled') ? '' : 'none'; ?>">
+                                    <label style="color:red;">Cancellation Reason:</label>
+                                    <input type="text" style="color: red;"
+                                        value="<?php echo $row['cancellation_reason']; ?>" readonly>
+                                </div>
+
                             </div>
 
                             <p class="note"
@@ -249,42 +308,43 @@ if ($result->num_rows > 0) {
 
 
 
+
                             <h2 class="hidden"
-                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
+                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'pending' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
                                 Payment Section</h2>
 
 
-                            <div class="order-details-container2 hidden">
-
-                                <div class="order-details" style="display:<?php echo in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'; ?>">
+                            <div class="order-details-container2 hidden" style="display: <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'pending') ? 'none' : ''; ?>">
+                                <div class="order-details" style="display: <?php echo ($row['order_status'] === 'completed') ? 'none' : (in_array($row['order_variation'], ['rent', 'buy']) ? 'flex' : 'none'); ?>;">
                                     <label>Balance (₱):</label>
-                                    <input type="number" id="balance" readonly  value="<?php
-                                                                                            if (isset($row['product_quantity'], $row['product_rent_price'])) {
-                                                                                                if ($row['order_variation'] === 'rent') {
-                                                                                                    // Calculate balance for rent
-                                                                                                    $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']);
-                                                                                                } elseif ($row['order_variation'] === 'buy') {
-                                                                                                    // Calculate balance for buy
-                                                                                                    $balance = ($row['product_quantity'] * $row['product_price']);
-                                                                                                } else {
-                                                                                                    $balance = 0; // Default if order variation doesn't match
-                                                                                                }
-                                                                                                echo htmlspecialchars($balance);
+                                    <input type="number" id="balance" readonly value="<?php
+                                                                                        if (isset($row['product_quantity'], $row['product_rent_price'])) {
+                                                                                            if ($row['order_variation'] === 'rent') {
+                                                                                                // Calculate balance for rent
+                                                                                                $balance = ($row['product_quantity'] * $row['product_days_of_rent'] * $row['product_rent_price']);
+                                                                                            } elseif ($row['order_variation'] === 'buy') {
+                                                                                                // Calculate balance for buy
+                                                                                                $balance = ($row['product_quantity'] * $row['product_price']);
                                                                                             } else {
-                                                                                                echo '';
+                                                                                                $balance = 0; // Default if order variation doesn't match
                                                                                             }
-                                                                                            ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
+                                                                                            echo htmlspecialchars($balance);
+                                                                                        } else {
+                                                                                            echo '';
+                                                                                        }
+                                                                                        ?>" <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>>
                                 </div>
+
 
                                 <div class="order-details">
                                     <label>Payment (₱):</label>
-                                    <input type="number" id="payment" name="payment"
+                                    <input readonly type="number" id="payment" name="payment"
                                         value="<?php echo isset($row['payment']) ? htmlspecialchars($row['payment']) : ''; ?>"
                                         <?php echo ($row['order_status'] === 'cancelled' || $row['order_status'] === 'completed') ? 'readonly' : ''; ?>
                                         <?php echo ($row['order_status'] === 'accepted') ? 'required' : ''; ?>>
                                 </div>
 
-                                <div class="order-details">
+                                <div class="order-details" style="display:none;">
                                     <label>Remaining Balance (₱):</label>
                                     <input type="number" id="remaining_balance" name="balance" value="0" readonly>
                                 </div>
@@ -302,26 +362,36 @@ if ($result->num_rows > 0) {
                                         document.getElementById('remaining_balance').value = remainingBalance.toFixed(2);
                                     }
 
+                                    // Function to set the payment field based on the balance
+                                    function setPaymentToBalance() {
+                                        var balance = parseFloat(document.getElementById('balance').value) || 0;
+
+                                        // Automatically set the payment value to balance
+                                        document.getElementById('payment').value = balance;
+
+                                        // Recalculate the remaining balance after setting payment
+                                        calculateRemainingBalance();
+                                    }
+
                                     // Event listeners for real-time calculation
                                     document.getElementById('balance').addEventListener('input', calculateRemainingBalance);
                                     document.getElementById('payment').addEventListener('input', calculateRemainingBalance);
 
-                                    // Trigger calculation when page loads
-                                    window.addEventListener('load', calculateRemainingBalance);
+                                    // Set payment to balance when the page loads
+                                    window.addEventListener('load', setPaymentToBalance);
                                 </script>
 
 
 
-                                <div class="order-details">
+                                <div class="order-details" style="display:none;">
                                     <label>Payment's Date:</label>
                                     <input type="date" name="payment_date"
                                         value="<?php echo !empty($row['payment_date']) ? htmlspecialchars($row['payment_date']) : ''; ?>" readonly>
                                 </div>
 
-
                             </div>
                             <p class="note"
-                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
+                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'pending' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
                                 <b>Instruction:</b> This section contains the Payment Information. Take note to make
                                 sure fill up the empty fields before making this order completed.
                             </p>
@@ -333,18 +403,77 @@ if ($result->num_rows > 0) {
                                 This order has been finalized. The information above is now read-only.
                             </p>
 
+                            <!-- Checkbox to enable the Complete Order Button -->
+                            <div class="custom-checkbox"   style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === 'pending' ) ? 'none' : ''; ?>">
+                                <input type="checkbox" id="confirmComplete" onclick="toggleCompleteButton()">
+                                <label for="confirmComplete">I confirm to complete this order</label>
+
+                            </div>
+
+                            <!-- Style for the Complete Order Button when disabled -->
+                            <style>
+                                .accept_button:disabled {
+
+                                    cursor: not-allowed;
+                                }
+
+                                .custom-checkbox {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 10px;
+                                }
+
+                                .custom-checkbox label {
+                                    font-size: 1.5rem;
+                                }
+                            </style>
+
+                            <script>
+                                // Function to enable/disable the Complete Order button based on checkbox status
+                                function toggleCompleteButton() {
+                                    var checkBox = document.getElementById('confirmComplete');
+                                    var completeButton = document.getElementById('completeButton');
+
+                                    // Enable the Complete Order button if the checkbox is checked
+                                    if (checkBox.checked) {
+                                        completeButton.disabled = false;
+                                    } else {
+                                        completeButton.disabled = true;
+                                    }
+                                }
+                            </script>
+
+
 
                         </div>
+
 
 
                         <div class="first-button-container"
                             style="align-self: center; display:<?php echo ($row['order_status'] === 'pending' || $row['order_status'] === 'completed' || $row['order_status'] === 'cancelled' || $row['order_status'] === '') ? 'none' : 'block'; ?>">
-                            <button type="submit" name="cancel_order" class="cancel_button" id="cancel_button">Cancel</button>
-                            <button type="submit" name="complete_order" class="accept_button" id="complete_button">Complete Order</button>
+
+                            <!-- Cancel Order Button -->
+                            <button type="button" name="cancel_order" id="cancel_button" class="cancel_button" onclick="cancelOrder()">Cancel</button>
+
+
+                            <!-- Complete Order Button (Initially Disabled) -->
+                            <button type="submit" name="complete_order" class="accept_button" id="completeButton" disabled>Complete Order</button>
                         </div>
 
 
+
+
+
                     </form>
+
+
+
+
+
+
+
+
 
                     <!-- order-details-container -->
                     <div class="view-button-container">

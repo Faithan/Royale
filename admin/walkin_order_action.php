@@ -10,13 +10,13 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 
+if (isset($_POST['cancel_order']) && isset($_POST['cancellation_reason'])) {
+    $order_id = $_POST['order_id'];
+    $cancellation_reason = $_POST['cancellation_reason'];
 
-if (isset($_POST['cancel_order'])) {
-    $request_id = $_POST['order_id'];
-
-    // Prepare the SQL query to update the request_status to 'cancelled'
-    $stmt = $conn->prepare("UPDATE royale_product_order_tbl SET order_status = 'cancelled' WHERE order_id = ?");
-    $stmt->bind_param("i", $request_id);
+    // Prepare the SQL query to update the request_status to 'cancelled' and save the reason
+    $stmt = $conn->prepare("UPDATE royale_product_order_tbl SET order_status = 'cancelled', cancellation_reason = ? WHERE order_id = ?");
+    $stmt->bind_param("si", $cancellation_reason, $order_id);
 
     if ($stmt->execute()) {
         // Redirect back with a success message

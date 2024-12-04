@@ -82,9 +82,9 @@ $users = $userResult->fetch_all(MYSQLI_ASSOC);
 
                     <div class="report-container">
 
-                        <h3 style=" font-size: 2.5rem;
+                        <h3 style=" font-size: 2rem;
                         margin: 10px 0;
-                         color: var(--text-color);">Royale User Statistics</h3>
+                         color: var(--text-color); font-family: 'Anton', Arial, sans-serif; ">Royale User Statistics</h3>
                         <!-- Top 3 Boxes -->
                         <div class="top-users-container">
 
@@ -238,7 +238,7 @@ $users = $userResult->fetch_all(MYSQLI_ASSOC);
 
     .modal-content {
         background-color: var(--first-bgcolor);
-        
+        font-family: 'Anton', Arial, sans-serif;
         padding: 20px;
         border-radius: 8px;
         width:100%;
@@ -293,6 +293,7 @@ $users = $userResult->fetch_all(MYSQLI_ASSOC);
     th,
     td {
         border: 1px solid var(--box-shadow);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     th,
@@ -308,6 +309,7 @@ $users = $userResult->fetch_all(MYSQLI_ASSOC);
         border: 1px solid var(--box-shadow);
         background-color: var(--second-bgcolor);
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
 
@@ -329,15 +331,20 @@ $users = $userResult->fetch_all(MYSQLI_ASSOC);
         min-width: 200px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         color: var(--text-color2)
+        
     }
 
     .top-box h3 {
         margin-bottom: 10px;
         font-size: 1.8rem;
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
+
 
     .top-box p {
         font-size: 1.6rem;
+        font-family: 'Anton', Arial, sans-serif;
+        
     }
 </style>

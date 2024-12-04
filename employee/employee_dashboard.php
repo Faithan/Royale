@@ -95,8 +95,8 @@ if (count($positionsArray) === 2) {
                             <p>Name: <?php echo htmlspecialchars($row['name']); ?></p>
                             <p>Contact: <?php echo htmlspecialchars($row['contact_number']); ?></p>
                             <p>Address: <?php echo htmlspecialchars($row['address']); ?></p>
-                            <p>Message: <?php echo htmlspecialchars($row['message']); ?></p>
-                            <p>Special Group: <?php echo htmlspecialchars($row['special_group']); ?></p>
+                          
+                            <p>Organization: <?php echo htmlspecialchars($row['special_group']); ?></p>
                             <p>Fitting Date: <?php echo htmlspecialchars($row['fitting_date']); ?></p>
                             <p>Fitting Time: <?php echo htmlspecialchars($row['fitting_time']); ?></p>
                             <p>Deadline: <?php echo htmlspecialchars($row['deadline']); ?></p>
@@ -150,11 +150,11 @@ if (count($positionsArray) === 2) {
         const name = $(this).find('p').eq(1).text().replace('Name: ', '');
         const contact = $(this).find('p').eq(2).text().replace('Contact: ', '');
         const address = $(this).find('p').eq(3).text().replace('Address: ', '');
-        const message = $(this).find('p').eq(4).text().replace('Message: ', '');
-        const specialGroup = $(this).find('p').eq(5).text().replace('Special Group: ', '');
-        const fittingDate = $(this).find('p').eq(6).text().replace('Fitting Date: ', '');
-        const fittingTime = $(this).find('p').eq(7).text().replace('Fitting Time: ', '');
-        const deadline = $(this).find('p').eq(8).text().replace('Deadline: ', '');
+
+        const specialGroup = $(this).find('p').eq(4).text().replace('Organization: ', '');
+        const fittingDate = $(this).find('p').eq(5).text().replace('Fitting Date: ', '');
+        const fittingTime = $(this).find('p').eq(6).text().replace('Fitting Time: ', '');
+        const deadline = $(this).find('p').eq(7).text().replace('Deadline: ', '');
         const photos = $(this).find('.request-images img').map(function() {
             return $(this).attr('src');
         }).get();
@@ -166,8 +166,8 @@ if (count($positionsArray) === 2) {
     <p style="font-size:1.8rem;">Name: ${name}</p>
     <p style="font-size:1.8rem;">Contact: ${contact}</p>
     <p style="font-size:1.8rem;">Address: ${address}</p>
-    <p style="font-size:1.8rem;">Message: ${message}</p>
-    <p style="font-size:1.8rem;">Special Group: ${specialGroup}</p>
+ 
+    <p style="font-size:1.8rem;">Organization: ${specialGroup}</p>
     <p style="font-size:1.8rem;">Fitting Date: ${fittingDate}</p>
     <p style="font-size:1.8rem;">Fitting Time: ${fittingTime}</p>
     <p style="font-size:1.8rem;">Deadline: ${deadline}</p>
@@ -420,7 +420,7 @@ if (count($positionsArray) === 2) {
         gap: 10px;
     }
 
-    .modal-actions button{
+    .modal-actions button {
         border: 1px solid var(--box-shadow);
     }
 

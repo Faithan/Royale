@@ -10,13 +10,13 @@ if (!isset($_SESSION['admin_id'])) {
 
 
 
-
-if (isset($_POST['cancel_request'])) {
+if (isset($_POST['cancel_request']) && isset($_POST['cancellation_reason'])) {
     $request_id = $_POST['request_id'];
+    $cancellation_reason = $_POST['cancellation_reason'];
 
-    // Prepare the SQL query to update the request_status to 'cancelled'
-    $stmt = $conn->prepare("UPDATE royale_request_tbl SET request_status = 'cancelled' WHERE request_id = ?");
-    $stmt->bind_param("i", $request_id);
+    // Prepare the SQL query to update the request_status to 'cancelled' and save the reason
+    $stmt = $conn->prepare("UPDATE royale_request_tbl SET request_status = 'cancelled', cancellation_reason = ? WHERE request_id = ?");
+    $stmt->bind_param("si", $cancellation_reason, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back with a success message
@@ -26,7 +26,6 @@ if (isset($_POST['cancel_request'])) {
         echo "Error updating record: " . $stmt->error;
     }
 }
-
 
 
 
@@ -169,25 +168,26 @@ if (isset($_POST['update_request'])) {
 
 if (isset($_POST['complete_request'])) {
     $request_id = $_POST['request_id'];
+  
     $final_payment = !empty($_POST['final_payment']) ? $_POST['final_payment'] : null;
     // Set final_payment_date to today's date if not provided
     $final_payment_date = !empty($_POST['final_payment_date']) ? $_POST['final_payment_date'] : date('Y-m-d');
     $balance = !empty($_POST['balance']) ? $_POST['balance'] : null;
-    $refund = !empty($_POST['refund']) ? $_POST['refund'] : null;
-
+  
     // Prepare SQL query
     $stmt = $conn->prepare("
         UPDATE royale_request_tbl 
         SET request_status = 'completed',
+           
             final_payment = IFNULL(?, final_payment),
             final_payment_date = IFNULL(?, final_payment_date),
-            balance = IFNULL(?, balance),
-            refund = IFNULL(?, refund)
+            balance = IFNULL(?, balance)
+          
         WHERE request_id = ?
     ");
 
     // Bind parameters (6 values for the columns and 1 for the where clause)
-    $stmt->bind_param("ssssi", $final_payment, $final_payment_date, $balance, $refund, $request_id);
+    $stmt->bind_param("sssi", $final_payment, $final_payment_date, $balance, $request_id);
 
     if ($stmt->execute()) {
         // Redirect back to the request view or show a success message

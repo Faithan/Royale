@@ -79,7 +79,7 @@ $products = $productResult->fetch_all(MYSQLI_ASSOC);
                 <div class="content">
 
                     <div class="report-container">
-                        <h3 style="font-size: 2.5rem; margin: 10px 0; color: var(--text-color);">Product Statistics</h3>
+                        <h3 style="font-size: 2rem; margin: 10px 0; color: var(--text-color);   font-family: 'Anton', Arial, sans-serif;">Product Statistics</h3>
                         <!-- Top 5 Best Ordered Products -->
                         <div class="top-products-container">
                             <div class="top-box">
@@ -317,6 +317,7 @@ $products = $productResult->fetch_all(MYSQLI_ASSOC);
     td {
         padding: 10px;
         text-align: center;
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .filters-container {
@@ -380,9 +381,11 @@ $products = $productResult->fetch_all(MYSQLI_ASSOC);
         margin-bottom: 10px;
         font-size: 1.8rem;
         color: var(--text-color);
+        font-family: 'Anton', Arial, sans-serif;
     }
 
     .top-box p {
         font-size: 1.6rem;
+        font-family: 'Anton', Arial, sans-serif;
     }
 </style>
