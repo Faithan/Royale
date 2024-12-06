@@ -11,7 +11,7 @@
     $user_id = $_SESSION['user_id'];
 
     // Prepare SQL statement to get records for the logged-in user, ordered by request_id in descending order
-    $sql = "SELECT * FROM royale_request_tbl WHERE user_id = ? ORDER BY request_id DESC";
+    $sql = "SELECT * FROM royale_request_tbl WHERE user_id = ? ORDER BY request_id DESC ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id); // Bind the user_id as an integer
     $stmt->execute();
@@ -41,10 +41,10 @@
 
             <div class="toggle-container hidden" style="display:flex; justify-content:flex-end">
                 <button id="toggle-completed" data-showing="false" style="color:green">
-                    <i class="fa-solid fa-eye"></i> Show Completed Requests
+                    <i class="fa-solid fa-eye"></i> Show Completed
                 </button>
                 <button id="toggle-cancelled" data-showing="false" style="color:red">
-                    <i class="fa-solid fa-eye"></i> Show Cancelled Requests
+                    <i class="fa-solid fa-eye"></i> Show Cancelled
                 </button>
             </div>
 
@@ -154,7 +154,7 @@
 
                 // Reset the "Show Cancelled" button
                 cancelledButton.setAttribute('data-showing', 'false');
-                cancelledButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Cancelled Requests';
+                cancelledButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Cancelled';
 
                 requestContainers.forEach(container => {
                     const isCompleted = container.getAttribute('data-completed') === 'true';
@@ -173,8 +173,8 @@
 
                 completedButton.setAttribute('data-showing', !isShowingCompleted);
                 completedButton.innerHTML = isShowingCompleted ?
-                    '<i class="fa-solid fa-eye"></i> Show Completed Requests' :
-                    '<i class="fa-solid fa-eye-slash"></i> Show Non-Completed Requests';
+                    '<i class="fa-solid fa-eye"></i> Show Completed' :
+                    '<i class="fa-solid fa-eye-slash"></i> Show Non-Completed';
             });
 
             // Toggle cancelled requests
@@ -186,7 +186,7 @@
 
                 // Reset the "Show Completed" button
                 completedButton.setAttribute('data-showing', 'false');
-                completedButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Completed Requests';
+                completedButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Completed';
 
                 requestContainers.forEach(container => {
                     const isCancelled = container.getAttribute('data-cancelled') === 'true';
@@ -205,8 +205,8 @@
 
                 cancelledButton.setAttribute('data-showing', !isShowingCancelled);
                 cancelledButton.innerHTML = isShowingCancelled ?
-                    '<i class="fa-solid fa-eye"></i> Show Cancelled Requests' :
-                    '<i class="fa-solid fa-eye-slash"></i> Show Non-Cancelled Requests';
+                    '<i class="fa-solid fa-eye"></i> Show Cancelled' :
+                    '<i class="fa-solid fa-eye-slash"></i> Show Non-Cancelled';
             });
 
             // Initial setup: show only pending and ongoing requests

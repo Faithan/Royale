@@ -27,7 +27,7 @@
 
     <h1>INFORMATION</h1>
 
-    <a href="#">Contanct Us</a>
+    <a href="#">Contact Us</a>
     <a href="#">Terms of Service</a>
     <a href="#">Privacy Policy</a>
 
@@ -45,7 +45,7 @@
 
 
     <p>Be the first to know about events, new content, products, or brands at Royale.</p>
-    <a href="#"><b>Subcribe to our newsletter</b></a>
+    <a href="#"><b>Subscribe to our newsletter</b></a>
     <p>FOLLOW US ON</p>
 
 

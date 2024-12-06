@@ -41,10 +41,10 @@
 
             <div class="toggle-container hidden" style="display:flex; justify-content:flex-end">
                 <button id="toggle-completed" data-showing="false" style="color:green">
-                    <i class="fa-solid fa-eye"></i> Show Completed Order
+                    <i class="fa-solid fa-eye"></i> Show Completed
                 </button>
                 <button id="toggle-cancelled" data-showing="false" style="color:red">
-                    <i class="fa-solid fa-eye"></i> Show Cancelled Order
+                    <i class="fa-solid fa-eye"></i> Show Cancelled
                 </button>
             </div>
 
@@ -150,7 +150,7 @@
 
                 // Reset the "Show Cancelled" button
                 cancelledButton.setAttribute('data-showing', 'false');
-                cancelledButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Cancelled Orders';
+                cancelledButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Cancelled';
 
                 orderContainers.forEach(container => {
                     const isCompleted = container.getAttribute('data-completed') === 'true';
@@ -169,8 +169,8 @@
 
                 completedButton.setAttribute('data-showing', !isShowingCompleted);
                 completedButton.innerHTML = isShowingCompleted ?
-                    '<i class="fa-solid fa-eye"></i> Show Completed Orders' :
-                    '<i class="fa-solid fa-eye-slash"></i> Hide Completed Orders';
+                    '<i class="fa-solid fa-eye"></i> Show Completed' :
+                    '<i class="fa-solid fa-eye-slash"></i> Hide Completed';
             });
 
             // Toggle cancelled orders
@@ -182,7 +182,7 @@
 
                 // Reset the "Show Completed" button
                 completedButton.setAttribute('data-showing', 'false');
-                completedButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Completed Orders';
+                completedButton.innerHTML = '<i class="fa-solid fa-eye"></i> Show Completed';
 
                 orderContainers.forEach(container => {
                     const isCancelled = container.getAttribute('data-cancelled') === 'true';
@@ -201,8 +201,8 @@
 
                 cancelledButton.setAttribute('data-showing', !isShowingCancelled);
                 cancelledButton.innerHTML = isShowingCancelled ?
-                    '<i class="fa-solid fa-eye"></i> Show Cancelled Orders' :
-                    '<i class="fa-solid fa-eye-slash"></i> Hide Cancelled Orders';
+                    '<i class="fa-solid fa-eye"></i> Show Cancelled' :
+                    '<i class="fa-solid fa-eye-slash"></i> Hide Cancelled';
             });
             // Initial setup: show only pending and ongoing orders
             document.querySelectorAll('.order-container').forEach(container => {
