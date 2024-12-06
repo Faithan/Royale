@@ -113,13 +113,15 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
         <style>
             .badge {
                 position: absolute;
-                top: -6px;
-                right: -10px;
+                top: -10px;
+                right: -12px;
                 background-color: red;
                 color: white;
                 border-radius: 50%;
                 padding: 3px 6px;
-                font-size: 1rem;
+                font-size: 1.3rem;
+                font-family: 'Anton', Arial, sans-serif; 
+                font-weight: bold;
             }
         </style>
 
@@ -267,6 +269,7 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if user is logged in
             font-size: 1.2rem;
             margin-left: 10px;
             vertical-align: top;
+            font-family: 'Anton', Arial, sans-serif; 
         }
     </style>
 

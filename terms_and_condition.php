@@ -56,7 +56,7 @@ session_start(); // Start session if required for user interactions
                 <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website.</p>
 
                 <h2>9. Contact Us</h2>
-                <p>If you have any questions about these terms, please contact us at <a href="index.php#contact">our contact page</a>.</p>
+                <p>If you have any questions about these terms, please contact us at our contact page.</p>
             </div>
         </section>
     </main>
