@@ -26,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
     <!-- important file -->
     <?php
     include 'important.php'
-        ?>
+    ?>
 
     <link rel="stylesheet" href="css_main/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css_main/login.css?v=<?php echo time(); ?>">
@@ -46,65 +46,65 @@ if (isset($_SESSION['user_id'])) {
 
         <div class="form-container sign-up">
             <form id="signup-form" method="POST" action="signup.php">
-                <h1>Create Account</h1>
-                <span>enter your credentials</span>
+                <h1 style="margin-bottom:10px;">Create Account</h1>
+                <span>Enter your credentials</span>
                 <input type="text" name="user_name" placeholder="Name" required>
                 <input type="email" name="user_email" placeholder="Email" required>
-                <input type="password" name="user_password" placeholder="Password" required>
-
+                <input type="password" id="user_password" name="user_password" placeholder="Password" required>
+                <input type="password" id="confirm_password" placeholder="Confirm Password" required>
 
                 <div class="terms-and-conditions-container hidden">
-                        
-                        <label for="termsCheckbox"><input type="checkbox" id="termsCheckbox" name="terms" style="padding: 0; color:var(--second-bgcolor);" required> I agree to the <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
-                        </label>
+                    <label for="termsCheckbox">
+                        <input type="checkbox" id="termsCheckbox" name="terms" style="padding: 0; color:var(--second-bgcolor);" required>
+                        I agree to the <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
+                    </label>
 
-                        <style>
-                            .terms-and-conditions-container {
-                             
-                                display: flex;
-                                flex-direction: row;
-                                align-items: center;
-                                justify-content: center;
-                                font-size: 1.4rem;
-                                background-color: var(--first-bgcolor);
-                            }
+                    <style>
+                        .terms-and-conditions-container {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1.4rem;
+                            background-color: var(--first-bgcolor);
+                        }
 
-                            .terms-and-conditions-container label {
-                                text-align: center;
-                                flex-wrap: nowrap;
-                             
-                                text-transform: uppercase;
-                                color: var(--text-color);
-                            }
-                            .terms-and-conditions-container label a{
-                                font-size: 1.4rem;
-                            }
-                        </style>
-                    </div>
+                        .terms-and-conditions-container label {
+                            text-align: center;
+                            flex-wrap: nowrap;
+                            text-transform: uppercase;
+                            color: var(--text-color);
+                        }
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const form = document.querySelector('form.product-info-container');
-                            const termsCheckbox = document.getElementById('termsCheckbox');
-
-                            form.addEventListener('submit', function(event) {
-                                // Check if the terms checkbox is checked
-                                if (!termsCheckbox.checked) {
-                                    event.preventDefault(); // Prevent form submission
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Terms and Conditions',
-                                        text: 'You must agree to the Terms and Conditions before submitting.',
-                                        confirmButtonText: 'Okay',
-                                    });
-                                }
-                            });
-                        });
-                    </script>
-
+                        .terms-and-conditions-container label a {
+                            font-size: 1.4rem;
+                        }
+                    </style>
+                </div>
 
                 <button type="submit" name="signup">Sign Up</button>
             </form>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const signupForm = document.getElementById('signup-form');
+                    const passwordField = document.getElementById('user_password');
+                    const confirmPasswordField = document.getElementById('confirm_password');
+
+                    signupForm.addEventListener('submit', function(event) {
+                        if (passwordField.value !== confirmPasswordField.value) {
+                            event.preventDefault(); // Prevent form submission
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Password Mismatch',
+                                text: 'Password and Confirm Password do not match!',
+                                confirmButtonText: 'Okay'
+                            });
+                        }
+                    });
+                });
+            </script>
+
         </div>
 
 
@@ -114,7 +114,7 @@ if (isset($_SESSION['user_id'])) {
                 <span>use your email and password</span>
                 <input type="email" name="user_email" placeholder="Email" required>
                 <input type="password" name="user_password" placeholder="Password" required>
-               
+
                 <button type="submit" name="signin">Sign In</button>
             </form>
         </div>
@@ -175,7 +175,8 @@ if (isset($_SESSION['user_id'])) {
 
 
 <!-- script -->
-<script>const container = document.getElementById('container');
+<script>
+    const container = document.getElementById('container');
     const registerBtn = document.getElementById('register');
     const loginBtn = document.getElementById('login');
 
@@ -185,15 +186,15 @@ if (isset($_SESSION['user_id'])) {
 
     loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
-    });</script>
+    });
+</script>
 
 
 
 
 <!-- logout message -->
 <script>
-   
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get('status');
 
@@ -205,7 +206,7 @@ if (isset($_SESSION['user_id'])) {
             toastr.error('An error occurred. Please try again.', 'Error');
         } else if (status === 'exists') {
             toastr.error('An account with this email already exists.', 'Error');
-        }else if (status === 'inactive') {
+        } else if (status === 'inactive') {
             toastr.error('This account is inactive.', 'Error');
         }
     });

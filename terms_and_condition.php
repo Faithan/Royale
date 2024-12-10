@@ -41,21 +41,18 @@ session_start(); // Start session if required for user interactions
                 <p>It is your responsibility to maintain the confidentiality of your account information. Royale is not liable for any unauthorized access to your account.</p>
 
                 <h2>4. Orders and Payments</h2>
-                <p>All orders are subject to availability and acceptance. Payment must be completed as per the methods provided on our platform.</p>
+                <p>All orders are subject to availability and acceptance. Payment must be completed through walk-in.</p>
 
-                <h2>5. Cancellations and Refunds</h2>
-                <p>Cancellations and refund policies vary by service and product. Please refer to the specific policies on the relevant pages.</p>
-
-                <h2>6. Intellectual Property</h2>
+                <h2>5. Intellectual Property</h2>
                 <p>All content, trademarks, and materials on this website are owned by Royale or licensed to us. You are not permitted to reproduce or distribute them without our permission.</p>
 
-                <h2>7. Limitation of Liability</h2>
+                <h2>6. Limitation of Liability</h2>
                 <p>Royale shall not be held responsible for any direct, indirect, or consequential damages arising from your use of our platform.</p>
 
-                <h2>8. Changes to Terms</h2>
+                <h2>7. Changes to Terms</h2>
                 <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website.</p>
 
-                <h2>9. Contact Us</h2>
+                <h2>8. Contact Us</h2>
                 <p>If you have any questions about these terms, please contact us at our contact page.</p>
             </div>
         </section>
