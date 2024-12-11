@@ -425,12 +425,14 @@ if (isset($_GET['view_id'])) {
 
                                     <div class="customer-input-container hidden">
                                         <input type="date" name="pickup_date" placeholder="Enter date of pickup"
-                                            title="Select the date for pickup" required>
+                                            title="Select the date for pickup" required
+                                            min="<?= date('Y-m-d'); ?>">
+
                                         <input type="time" name="pickup_time" placeholder="Enter time of pickup"
                                             title="Select the time for pickup" required>
                                     </div>
 
-                                
+
 
 
 
@@ -531,7 +533,7 @@ if (isset($_GET['view_id'])) {
                                     <input type="checkbox" id="termsCheckbox" name="terms" required>
                                     <label for="termsCheckbox">
                                         I agree to the
-                                        <a href="terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
+                                        <a href="../terms_and_condition.php" target="_blank" style="color:blue">Terms and Conditions</a>.
                                     </label>
 
                                     <style>
@@ -669,7 +671,7 @@ if (isset($_GET['view_id'])) {
 
 
 
-                             
+
 
 
 

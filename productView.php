@@ -146,7 +146,7 @@ if (isset($_GET['view_id'])) {
                     <div style="display: flex; gap: 5px; align-items:center; justify-content:center;">
 
                         <label for="product-type"> <?php echo $view_data['product_type']; ?></label>
-                        <label for="price">₱ <?php echo $view_data['price']; ?></label>
+                        <label for="price">Php <?php echo $view_data['price']; ?></label>
 
                     </div>
 
@@ -530,7 +530,7 @@ if (isset($_GET['view_id'])) {
                     </h1>
 
                     <div class="customer-input-container visibility-hidden" id="days-container">
-                        <input type="number" name="days_of_rent" placeholder="Enter number of days" title="Enter number of days">
+                        <input type="number" name="days_of_rent" placeholder="Enter number of days" min="1" title="Enter number of days">
                     </div>
 
 

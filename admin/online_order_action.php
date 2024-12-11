@@ -17,19 +17,73 @@ if (isset($_POST['cancel_order']) && isset($_POST['cancellation_reason'])) {
     $order_id = $_POST['order_id'];
     $cancellation_reason = $_POST['cancellation_reason'];
 
-    // Prepare the SQL query to update the request_status to 'cancelled' and save the reason
-    $stmt = $conn->prepare("UPDATE royale_product_order_tbl SET order_status = 'cancelled', cancellation_reason = ? WHERE order_id = ?");
-    $stmt->bind_param("si", $cancellation_reason, $order_id);
+    // Fetch product details from the order
+    $fetch_order_query = "SELECT product_id, product_size, product_quantity FROM royale_product_order_tbl WHERE order_id = ?";
+    if ($fetch_stmt = $conn->prepare($fetch_order_query)) {
+        $fetch_stmt->bind_param("i", $order_id);
 
-    if ($stmt->execute()) {
-        // Redirect back with a success message
-        header("Location: online_order.php?status=cancelled");
-        exit();
+        if ($fetch_stmt->execute()) {
+            $fetch_stmt->bind_result($product_id, $product_size, $product_quantity);
+            $fetch_stmt->fetch();
+            $fetch_stmt->close();
+
+            // Determine the product size column to update
+            $update_size_column = '';
+            switch ($product_size) {
+                case 'extra_small':
+                    $update_size_column = 'extra_small';
+                    break;
+                case 'small':
+                    $update_size_column = 'small';
+                    break;
+                case 'medium':
+                    $update_size_column = 'medium';
+                    break;
+                case 'large':
+                    $update_size_column = 'large';
+                    break;
+                case 'extra_large':
+                    $update_size_column = 'extra_large';
+                    break;
+                default:
+                    echo "Invalid product size.";
+                    exit;
+            }
+
+            // Restore the product stock
+            $restore_stock_query = "UPDATE products SET $update_size_column = $update_size_column + ? WHERE id = ?";
+            if ($restore_stmt = $conn->prepare($restore_stock_query)) {
+                $restore_stmt->bind_param("ii", $product_quantity, $product_id);
+
+                if ($restore_stmt->execute()) {
+                    $restore_stmt->close();
+
+                    // Update the order status to 'cancelled' and save the cancellation reason
+                    $stmt = $conn->prepare("UPDATE royale_product_order_tbl SET order_status = 'cancelled', cancellation_reason = ? WHERE order_id = ?");
+                    $stmt->bind_param("si", $cancellation_reason, $order_id);
+
+                    if ($stmt->execute()) {
+                        $stmt->close();
+
+                        // Redirect back with a success message
+                        header("Location: online_order.php?status=cancelled");
+                        exit();
+                    } else {
+                        echo "Error updating order status: " . $stmt->error;
+                    }
+                } else {
+                    echo "Error restoring product stock: " . $restore_stmt->error;
+                }
+            } else {
+                echo "Failed to prepare stock restoration query.";
+            }
+        } else {
+            echo "Error fetching order details: " . $fetch_stmt->error;
+        }
     } else {
-        echo "Error updating record: " . $stmt->error;
+        echo "Failed to prepare order fetch query.";
     }
 }
-
 
 
 

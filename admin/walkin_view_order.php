@@ -397,14 +397,13 @@ if ($result->num_rows > 0) {
 
                             </div>
                             <p class="note"
-                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
+                                style="display:<?php echo ($row['order_status'] === 'pending' || $row['order_status'] === 'completed' || $row['order_status'] === 'cancelled') ? 'none' : 'block'; ?>">
                                 <b>Instruction:</b> This section contains the Payment Information. Take note to make
                                 sure fill up the empty fields before making this order completed.
                             </p>
 
 
-                            <p class="note"
-                                style="display:<?php echo ($row['order_status'] === 'completed' || $row['order_status'] === 'pending' || $row['order_status'] === 'cancelled') ? 'block' : 'none'; ?>">
+                            <p class="note" style="display:<?php echo ($row['order_status'] === 'completed'  || $row['order_status'] === 'cancelled') ? 'block' : 'none'; ?>">
                                 <strong>Order Completed:</strong>
                                 This order has been finalized. The information above is now read-only.
                             </p>

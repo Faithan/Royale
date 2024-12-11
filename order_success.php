@@ -225,7 +225,7 @@ session_start();
         <p>Your order has been placed successfully.</p>
         <p>Please wait for your order confirmation. We will contact you as soon as we have reviewed your order.<br>
             Thank you for shopping with us!</p>
-        <a href="index.php" class="success-button">Return to Home</a>
+        <a href="my_order.php" class="success-button">Return to my orders</a>
     </div>
 
     <script>
