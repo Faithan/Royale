@@ -79,6 +79,25 @@ if (!isset($_SESSION['admin_id'])) {
 
                                 <label for="newEmployeeBirthdate">Birthdate:</label>
                                 <input type="date" id="newEmployeeBirthdate" name="employee_birthdate" required>
+                                <script>
+                                    // Set the max attribute to ensure the user is at least 18 years old
+                                    const birthdateInput = document.getElementById('newEmployeeBirthdate');
+                                    const today = new Date();
+                                    const minAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate()); // 18 years ago
+                                    birthdateInput.max = minAgeDate.toISOString().split('T')[0]; // Set max to YYYY-MM-DD format
+
+                                    // Validate on input
+                                    birthdateInput.addEventListener('change', function() {
+                                        const selectedDate = new Date(this.value);
+                                        if (selectedDate > minAgeDate) {
+                                            alert('Employee must be at least 18 years old.');
+                                            this.value = ''; // Clear the input if invalid
+                                        }
+                                    });
+                                </script>
+
+                                <p><em>must be 18years old or older</em></p>
+
 
                                 <label for="newEmployeeGender">Gender:</label>
                                 <select id="newEmployeeGender" name="employee_gender" required>
@@ -471,8 +490,8 @@ if (!isset($_SESSION['admin_id'])) {
     .employee-birthdate,
     .employee-date {
         font-size: 13px;
-       color: gray;
-         margin: 2px 0;
+        color: gray;
+        margin: 2px 0;
     }
 
 
@@ -520,13 +539,13 @@ if (!isset($_SESSION['admin_id'])) {
         right: 10px;
         font-size: 24px;
         cursor: pointer;
-        color:var(--text-color)
+        color: var(--text-color)
     }
 
     h2 {
         margin-top: 0;
         margin-bottom: 5px;
-        color:var(--text-color);
+        color: var(--text-color);
         font-weight: bold;
         font-size: 2rem;
     }
@@ -553,7 +572,7 @@ if (!isset($_SESSION['admin_id'])) {
         margin-top: 5px;
         transition: border-color 0.3s;
         background-color: var(--second-bgcolor);
-        color:var(--text-color)
+        color: var(--text-color)
     }
 
     input[type="text"]:focus,

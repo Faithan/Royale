@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
 
 
 
-            <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
+                <div class="content" data-status="<?php echo ucfirst($row['request_status']); ?>">
                     <h1 class="hidden">View Request</h1>
 
                     <!-- accept or cancel -->
@@ -286,8 +286,8 @@ if ($result->num_rows > 0) {
                                 </div>
 
                                 <div class="request-details" style="display: <?php echo ($row['request_status'] === 'cancelled') ? '' : 'none'; ?>">
-                                    <label>Cancellation Reason:</label>
-                                    <input readonly type="text" id=""
+                                    <label style="color:red;">Cancellation Reason:</label>
+                                    <input readonly type="text" id="" style="color:red;"
                                         value="<?php echo $row['cancellation_reason']; ?>" <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'ongoing' || $row['request_status'] === 'completed') ? 'disabled' : ''; ?>>
                                 </div>
 
@@ -676,12 +676,13 @@ if ($result->num_rows > 0) {
                         <h2 style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : ''; ?>">
                             Final Request Information</h2>
 
-                        <div class="request-details-container2" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' ) ? 'none' : 'flex'; ?>">
+                        <div class="request-details-container2" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted') ? 'none' : 'flex'; ?>">
 
                             <div class="request-details">
                                 <label>Final Payment (₱):</label>
                                 <input type="number" name="final_payment" id="final_payment"
                                     value="<?php echo $row['final_payment']; ?>"
+                                    onclick="setFinalPaymentToBalance()"
                                     oninput="validatePayments(event)"
                                     <?php echo ($row['request_status'] === 'completed') ? 'readonly' : ''; ?>>
                             </div>
@@ -692,10 +693,24 @@ if ($result->num_rows > 0) {
                                     value="<?php echo $row['balance']; ?>">
                             </div>
 
-
-
-
                             <script>
+                                function setFinalPaymentToBalance() {
+                                    var fee = parseFloat(document.getElementById('fee')?.value) || 0;
+                                    var downPaymentField = document.getElementById('down_payment');
+                                    var finalPaymentField = document.getElementById('final_payment');
+
+                                    var downPayment = parseFloat(downPaymentField.value) || 0;
+                                    var remainingBalance = fee - downPayment;
+
+                                    // Automatically set final payment to remaining balance
+                                    finalPaymentField.value = remainingBalance.toFixed(2);
+                                    validatePayments({
+                                        target: {
+                                            id: 'final_payment'
+                                        }
+                                    }); // Trigger validation to ensure consistency
+                                }
+
                                 function validatePayments(event) {
                                     var fee = parseFloat(document.getElementById('fee')?.value) || 0;
                                     var downPaymentField = document.getElementById('down_payment');
@@ -705,38 +720,36 @@ if ($result->num_rows > 0) {
                                     var downPayment = parseFloat(downPaymentField.value) || 0;
                                     var finalPayment = parseFloat(finalPaymentField.value) || 0;
 
-                                    // Validate Down Payment
-                                    var maxDownPayment = fee - finalPayment;
-                                    if (event.target.id === 'down_payment' && downPayment > maxDownPayment) {
-                                        downPaymentField.value = maxDownPayment.toFixed(2);
-                                        Swal.fire({
-                                            icon: 'warning',
-                                            title: 'Invalid Input',
-                                            text: 'Down Payment cannot exceed the remaining balance.',
-                                            confirmButtonText: 'Okay'
-                                        });
-                                        downPayment = maxDownPayment; // Adjust downPayment to the maximum allowed
+                                    // Validate Down Payment (cannot exceed fee)
+                                    if (event.target.id === 'down_payment') {
+                                        if (downPayment > fee) {
+                                            downPaymentField.value = fee.toFixed(2);
+                                            Swal.fire({
+                                                icon: 'warning',
+                                                title: 'Invalid Input',
+                                                text: 'Down Payment cannot exceed the total fee.',
+                                                confirmButtonText: 'Okay'
+                                            });
+                                            downPayment = fee;
+                                        }
                                     }
 
-                                    // Validate Final Payment
-                                    var maxFinalPayment = fee - downPayment;
-                                    if (event.target.id === 'final_payment' && finalPayment > maxFinalPayment) {
-                                        finalPaymentField.value = maxFinalPayment.toFixed(2);
-                                        Swal.fire({
-                                            icon: 'warning',
-                                            title: 'Invalid Input',
-                                            text: 'Final Payment cannot exceed the remaining balance.',
-                                            confirmButtonText: 'Okay'
-                                        });
-                                        finalPayment = maxFinalPayment; // Adjust finalPayment to the maximum allowed
+                                    // Calculate remaining balance after down payment
+                                    var remainingBalance = fee - downPayment;
+
+                                    // Validate Final Payment (ensure it matches the remaining balance)
+                                    if (event.target.id === 'final_payment') {
+                                        if (finalPayment > remainingBalance) {
+                                            finalPaymentField.value = remainingBalance.toFixed(2);
+                                            finalPayment = remainingBalance;
+                                        } else if (finalPayment < remainingBalance) {
+                                            finalPaymentField.value = remainingBalance.toFixed(2);
+                                            finalPayment = remainingBalance;
+                                        }
                                     }
 
                                     // Update Balance (ensure it doesn't go negative)
-                                    var balance = fee - (downPayment + finalPayment);
-                                    if (balance < 0) {
-                                        balance = 0; // Cap balance at 0 if it would go negative
-                                    }
-
+                                    var balance = Math.max(0, fee - (downPayment + finalPayment));
                                     balanceField.value = balance.toFixed(2);
                                 }
 
@@ -749,6 +762,7 @@ if ($result->num_rows > 0) {
                                     });
                                 });
                             </script>
+
                         </div>
 
 
@@ -759,7 +773,7 @@ if ($result->num_rows > 0) {
 
                         </div>
 
-                      
+
 
 
                         <div class="first-button-container" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
@@ -767,10 +781,8 @@ if ($result->num_rows > 0) {
                                 class="accept_button">Complete</button>
                         </div>
 
-                          <!-- Style for the Complete Order Button when disabled -->
-                          <style>
-
-                          
+                        <!-- Style for the Complete Order Button when disabled -->
+                        <style>
                             .first-button-container .accept_button:disabled {
                                 cursor: not-allowed;
                             }
@@ -825,7 +837,7 @@ if ($result->num_rows > 0) {
                         <!-- update and ongoing  -->
 
 
-                        </form>
+                    </form>
 
                 </div> <!-- information-container -->
 
@@ -903,20 +915,3 @@ if ($result->num_rows > 0) {
         document.getElementById('imageModal').style.display = 'none';
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

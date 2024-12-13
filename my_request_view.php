@@ -182,13 +182,13 @@ if (isset($_GET['request_id'])) {
                 </p>
 
 
-                
+
                 <?php if ($row['request_status'] == 'cancelled'): ?>
-                        <p style="color:red;"><strong>Cancellation Reason:</strong> <?php echo htmlspecialchars($row['cancellation_reason']); ?></p>
-                    <?php endif; ?>
+                    <p style="color:red;"><strong>Cancellation Reason:</strong> <?php echo htmlspecialchars($row['cancellation_reason']); ?></p>
+                <?php endif; ?>
             </div>
 
-
+           
 
             <div class="invoice-container" id="invoice-container">
                 <div class="invoice-header">
@@ -223,7 +223,7 @@ if (isset($_GET['request_id'])) {
                         <p><strong>Fitting Time:</strong> <?php echo htmlspecialchars($row['fitting_time']); ?></p>
 
                         <p><strong>Deadline:</strong> <?php echo htmlspecialchars($row['deadline']); ?></p>
-                        <p><strong>Special Group:</strong>
+                        <p><strong>Organization:</strong>
                             <?php echo !empty($row['special_group']) ? htmlspecialchars($row['special_group']) : 'N/A'; ?>
                         </p>
 
@@ -244,7 +244,7 @@ if (isset($_GET['request_id'])) {
                         <p><strong>Final Payment:</strong> ₱<?php echo number_format($row['final_payment'], 2); ?> (Paid on: <?php echo htmlspecialchars($row['final_payment_date']); ?>)</p>
                     </div>
 
-                    
+
 
 
 
@@ -359,11 +359,11 @@ if (isset($_GET['request_id'])) {
                     font-size: 1.4rem;
                     color: #555555;
                     line-height: 1.6;
-                    
+
                 }
 
                 .section p strong {
-                 
+
                     color: #001C31;
                     text-transform: uppercase;
 
@@ -408,8 +408,8 @@ if (isset($_GET['request_id'])) {
                         font-size: 1.4rem;
                         color: #555555;
                         line-height: 1.6;
-                     
-                      
+
+
                     }
                 }
             </style>
@@ -443,9 +443,9 @@ if (isset($_GET['request_id'])) {
 
 
 <script>
-    document.getElementById('cancel-request').addEventListener('click', function () {
+    document.getElementById('cancel-request').addEventListener('click', function() {
         const requestId = <?php echo json_encode($row['request_id']); ?>; // Get request_id
-        
+
         Swal.fire({
             title: 'Are you sure?',
             text: "Please provide a reason for cancellation.",
@@ -464,7 +464,7 @@ if (isset($_GET['request_id'])) {
         }).then((result) => {
             if (result.isConfirmed) {
                 const reason = result.value; // Get the cancellation reason
-                
+
                 // Send AJAX request to cancel the request
                 fetch('cancel_request.php', {
                         method: 'POST',

@@ -1,3 +1,10 @@
+<?php
+// Set the default timezone
+date_default_timezone_set('Asia/Manila'); // Adjust based on your server's location
+?>
+
+
+
 <!-- fontawesome -->
 <link href="../fontawesome/css/fontawesome.css" rel="stylesheet" />
 <link href="../fontawesome/css/brands.css" rel="stylesheet" />

@@ -100,18 +100,6 @@ $requestStatusResult = $requestStatusStmt->get_result();
 $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -222,7 +210,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
                                             <option value="Accepted" <?php echo ($requestStatus === "Accepted" ? "selected" : ""); ?>>Accepted</option>
                                             <option value="Ongoing" <?php echo ($requestStatus === "Ongoing" ? "selected" : ""); ?>>Ongoing</option>
                                             <option value="Completed" <?php echo ($requestStatus === "Completed" ? "selected" : ""); ?>>Completed</option>
-                                          
+
                                         </select>
                                     </div>
                                 </form>
@@ -237,6 +225,15 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
                             </script>
 
 
+                        </div>
+
+                        <!-- for print div -->
+                        <div style="text-align: right; margin-bottom: 5px; padding:5px;">
+                            <a href="generateRequest_pdf.php?from_date=<?php echo $fromDate; ?>&to_date=<?php echo $toDate; ?>&request_status=<?php echo $requestStatus; ?>" target="_blank">
+                                <button style="padding:5px;">
+                                    <i class="fa-solid fa-download"></i> Download Report
+                                </button>
+                            </a>
                         </div>
 
                         <!-- Table Section -->
@@ -512,7 +509,7 @@ $stats['request_statuses'] = $requestStatusResult->fetch_all(MYSQLI_ASSOC);
         background-color: var(--second-bgcolor);
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
     }
 
     .statistics-section h3 {

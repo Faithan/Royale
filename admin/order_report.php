@@ -203,6 +203,15 @@ $stats['order_statuses'] = $orderStatusResult->fetch_all(MYSQLI_ASSOC);
                             </script>
                         </div>
 
+
+                        <!-- for print div -->
+                        <div style="text-align: right; margin-bottom: 5px; padding:5px;">
+                            <a href="generateOrder_pdf.php?from_date=<?php echo $fromDate; ?>&to_date=<?php echo $toDate; ?>&request_status=<?php echo $requestStatus; ?>" target="_blank">
+                                <button style="padding:5px;">
+                                    <i class="fa-solid fa-download"></i> Download Report
+                                </button>
+                            </a>
+                        </div>
                         <!-- Table Section -->
                         <div class="report-table-container">
                             <table id="orderTable">
@@ -439,7 +448,7 @@ $stats['order_statuses'] = $orderStatusResult->fetch_all(MYSQLI_ASSOC);
         background-color: var(--second-bgcolor);
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
     }
 
     .statistics-section h3 {

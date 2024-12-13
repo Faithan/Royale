@@ -205,7 +205,7 @@ if (isset($_GET['view_id'])) {
                             <?php if (!empty($quantities)): ?>
                                 <?php foreach ($quantities as $size_col => $quantity): ?>
                                     <label class="size-box <?php echo $quantity == 0 ? 'disabled' : ''; ?>">
-                                        <input type="radio" name="product_size" value="<?php echo $size_col; ?>" data-quantity="<?php echo $quantity; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
+                                        <input required type="radio" name="product_size" value="<?php echo $size_col; ?>" data-quantity="<?php echo $quantity; ?>" <?php echo $quantity == 0 ? 'disabled' : ''; ?>>
                                         <span><?php echo ucfirst(str_replace('_', ' ', $size_col)) . ' (' . $quantity . ')'; ?></span>
                                     </label>
                                 <?php endforeach; ?>
@@ -584,7 +584,7 @@ if (isset($_GET['view_id'])) {
                     <div class="product-buttons-container">
                         <div id="buy-button">
                             <button class="action-button" type="submit" name="action" value="buy">
-                                <i class="fa-solid fa-cart-shopping"></i> BUY ₱<?php echo $view_data['price']; ?>
+                                <i class="fa-solid fa-cart-shopping"></i> BUY ₱<?php echo $view_data['price']; ?>/product
                             </button>
                         </div>
 
