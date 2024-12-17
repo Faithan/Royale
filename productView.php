@@ -424,9 +424,11 @@ if (isset($_GET['view_id'])) {
 
                             <input type="time" name="pickup_time" placeholder="Enter time of pickup"
                                 title="Select the time for pickup" required>
+
+                        
                         </div>
 
-
+                    
 
 
 

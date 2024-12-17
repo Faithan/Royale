@@ -716,6 +716,7 @@ if ($result->num_rows > 0) {
                                     var downPaymentField = document.getElementById('down_payment');
                                     var finalPaymentField = document.getElementById('final_payment');
                                     var balanceField = document.getElementById('balance');
+                                    var completeButton = document.getElementById('complete_button');
 
                                     var downPayment = parseFloat(downPaymentField.value) || 0;
                                     var finalPayment = parseFloat(finalPaymentField.value) || 0;
@@ -751,6 +752,13 @@ if ($result->num_rows > 0) {
                                     // Update Balance (ensure it doesn't go negative)
                                     var balance = Math.max(0, fee - (downPayment + finalPayment));
                                     balanceField.value = balance.toFixed(2);
+
+                                    // Disable/enable the Complete button based on the balance
+                                    if (balance > 0) {
+                                        completeButton.disabled = true; // Disable if balance is not 0
+                                    } else {
+                                        completeButton.disabled = false; // Enable if balance is 0
+                                    }
                                 }
 
                                 // Ensure balance is validated on page load
@@ -766,12 +774,6 @@ if ($result->num_rows > 0) {
                         </div>
 
 
-                        <!-- Checkbox to enable the Complete Order Button -->
-                        <div class="custom-checkbox" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
-                            <input type="checkbox" id="confirmComplete" onclick="toggleCompleteButton()">
-                            <label for="confirmComplete">I confirm to complete this request</label>
-
-                        </div>
 
 
 
@@ -780,6 +782,12 @@ if ($result->num_rows > 0) {
                             <button disabled type="submit" name="complete_request" id="complete_button"
                                 class="accept_button">Complete</button>
                         </div>
+
+                        <!-- Checkbox to enable the Complete Order Button -->
+                        <div class="custom-checkbox" style="display: <?php echo ($row['request_status'] === 'accepted' || $row['request_status'] === 'pending' || $row['request_status'] === 'cancelled' || $row['work_status'] === 'pending' || $row['work_status'] === 'rejected' || $row['work_status'] === 'in progress' || $row['work_status'] === 'accepted' || $row['request_status'] === 'completed') ? 'none' : 'flex'; ?>">
+                            <label for="confirmComplete">I confirm to complete this request</label>
+                        </div>
+
 
                         <!-- Style for the Complete Order Button when disabled -->
                         <style>
@@ -838,6 +846,7 @@ if ($result->num_rows > 0) {
 
 
                     </form>
+
 
                 </div> <!-- information-container -->
 

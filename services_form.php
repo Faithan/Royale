@@ -136,7 +136,13 @@ if (isset($_GET['view_id'])) {
 
                 <input type="time" name="time" placeholder="Enter time" title="Select the time "
                     required>
+                <p style="margin-top: 10px; font-size:1.2rem; text-align:right;">
+                    "Note: Reservation time is tentative and subject to change by admin. Please verify upon confirmation."
+                </p>
             </div>
+
+
+
 
             <h2 class="hidden">Upload Photo/s <em style="font-size:1.4rem; color:gray;">(if applicable)</em></h2>
 
